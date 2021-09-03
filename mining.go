@@ -1,9 +1,7 @@
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
-	"log"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -12,14 +10,18 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/bbalet/stopwords"
 	"github.com/gocarina/gocsv"
-	"github.com/reiver/go-porterstemmer"
+	"github.com/kljensen/snowball"
+
+	"github.com/carloszimm/stack-mining/lda"
+	"github.com/carloszimm/stack-mining/util"
 )
 
-var filesPath string = filepath.Join("..", "..", "Data Explorer", "31-08-2021", "rxjs")
+var filesPath string = filepath.Join("..", "..", "Data Explorer", "8-29-2021", "rxswift")
 
 type Post struct {
 	Id           int    `csv:"Id"`
-	Body         string `csv:"body"`
+	Title        string `csv:"Title"`
+	Body         string `csv:"Body"`
 	CreationDate string `csv:"-"`
 }
 
@@ -29,9 +31,7 @@ func init() {
 
 func main() {
 	files, err := ioutil.ReadDir(filesPath)
-	if err != nil {
-		log.Fatal(err)
-	}
+	util.CheckError(err)
 
 	var count = 0
 	c := make(chan []*Post)
@@ -50,7 +50,13 @@ func main() {
 
 	mergedPosts := mergeArrays(resultPosts)
 
-	fmt.Println("Total questions:", len(mergedPosts))
+	//fmt.Println("Total questions:", len(mergedPosts))
+	corpus := make([]string, len(mergedPosts))
+	for _, val := range mergedPosts {
+		corpus = append(corpus, val)
+	}
+
+	lda.LDA(corpus)
 }
 
 func mergeArrays(postsArray [][]*Post) map[int]string {
@@ -69,10 +75,7 @@ func mergeArrays(postsArray [][]*Post) map[int]string {
 
 func readCSV(path string, c chan []*Post) {
 	postsFile, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE, os.ModePerm)
-
-	if err != nil {
-		panic(err)
-	}
+	util.CheckError(err)
 	defer postsFile.Close()
 
 	posts := []*Post{}
@@ -91,19 +94,21 @@ func cleanText(posts *[]*Post) {
 	// puctuation
 	puctReg := regexp.MustCompile(`\p{P}`)
 	spaceReg := regexp.MustCompile(`\s+`)
+	specReg := regexp.MustCompile(`[^\w\s\p{P}]`)
 
 	for _, post := range *posts {
 		// load the HTML document
 		doc, err := goquery.NewDocumentFromReader(strings.NewReader(post.Body))
-		if err != nil {
-			log.Fatal(err)
-		}
+		util.CheckError(err)
 
 		// remove code, pre, and blockquotes tags
 		doc.Find("code, pre, blockquotes").Remove()
 
 		// get text from html
 		text := doc.Find("body").Text()
+
+		// remove strange chars
+		text = specReg.ReplaceAllString(text, "")
 
 		text = stopwords.CleanString(text, "en", false)
 
@@ -121,7 +126,9 @@ func stem(text string) string {
 	text = ""
 
 	for _, textPart := range textSplitted {
-		text += " " + porterstemmer.StemString(textPart)
+		stemmed, err := snowball.Stem(textPart, "english", false)
+		util.CheckError(err)
+		text += " " + stemmed
 	}
 
 	return strings.TrimSpace(text)

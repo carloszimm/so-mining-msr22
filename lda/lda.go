@@ -76,7 +76,7 @@ func writeData(topic string, words map[string]float64) {
 
 	sort.Sort(p)
 
-	f, err := os.Create("./lda/results/" + topic + ".txt")
+	f, err := os.Create("./results/" + topic + ".txt")
 	util.CheckError(err)
 	defer f.Close()
 

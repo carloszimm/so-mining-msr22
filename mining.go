@@ -13,17 +13,11 @@ import (
 	"github.com/kljensen/snowball"
 
 	"github.com/carloszimm/stack-mining/lda"
+	"github.com/carloszimm/stack-mining/types"
 	"github.com/carloszimm/stack-mining/util"
 )
 
-var filesPath string = filepath.Join("..", "..", "Data Explorer", "8-29-2021", "rxswift")
-
-type Post struct {
-	Id           int    `csv:"Id"`
-	Title        string `csv:"Title"`
-	Body         string `csv:"Body"`
-	CreationDate string `csv:"-"`
-}
+var filesPath string = filepath.Join("..", "..", "Data Explorer", "9-5-2021", "rxswift")
 
 func init() {
 	stopwords.LoadStopWordsFromFile("stopwords.txt", "en", "\n")
@@ -34,14 +28,14 @@ func main() {
 	util.CheckError(err)
 
 	var count = 0
-	c := make(chan []*Post)
+	c := make(chan []*types.Post)
 
 	for i, f := range files {
 		go readCSV(filepath.Join(filesPath, f.Name()), c)
 		count = i
 	}
 
-	var resultPosts [][]*Post
+	var resultPosts [][]*types.Post
 
 	for i := 0; i < count+1; i++ {
 		posts := <-c
@@ -59,7 +53,7 @@ func main() {
 	lda.LDA(corpus)
 }
 
-func mergeArrays(postsArray [][]*Post) map[int]string {
+func mergeArrays(postsArray [][]*types.Post) map[int]string {
 	result := make(map[int]string)
 
 	for _, posts := range postsArray {
@@ -73,12 +67,12 @@ func mergeArrays(postsArray [][]*Post) map[int]string {
 	return result
 }
 
-func readCSV(path string, c chan []*Post) {
+func readCSV(path string, c chan []*types.Post) {
 	postsFile, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE, os.ModePerm)
 	util.CheckError(err)
 	defer postsFile.Close()
 
-	posts := []*Post{}
+	posts := []*types.Post{}
 
 	if err := gocsv.UnmarshalFile(postsFile, &posts); err != nil {
 		panic(err)
@@ -89,7 +83,7 @@ func readCSV(path string, c chan []*Post) {
 	c <- posts
 }
 
-func cleanText(posts *[]*Post) {
+func cleanText(posts *[]*types.Post) {
 
 	// puctuation
 	puctReg := regexp.MustCompile(`\p{P}`)

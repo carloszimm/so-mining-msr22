@@ -1,10 +1,12 @@
 package main
 
 import (
+	"io/fs"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
+	"sort"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -17,7 +19,7 @@ import (
 	"github.com/carloszimm/stack-mining/util"
 )
 
-var filesPath string = filepath.Join("..", "..", "Data Explorer", "9-5-2021", "rxswift")
+var filesPath string = filepath.Join("data explorer", "rxswift")
 
 func init() {
 	stopwords.LoadStopWordsFromFile("stopwords.txt", "en", "\n")
@@ -27,41 +29,55 @@ func main() {
 	files, err := ioutil.ReadDir(filesPath)
 	util.CheckError(err)
 
-	var count = 0
-	c := make(chan []*types.Post)
-
-	for i, f := range files {
-		go readCSV(filepath.Join(filesPath, f.Name()), c)
-		count = i
-	}
-
-	var resultPosts [][]*types.Post
-
-	for i := 0; i < count+1; i++ {
-		posts := <-c
-		resultPosts = append(resultPosts, posts)
-	}
-
-	mergedPosts := mergeArrays(resultPosts)
+	posts := readCSVs(files)
 
 	//fmt.Println("Total questions:", len(mergedPosts))
-	corpus := make([]string, len(mergedPosts))
-	for _, val := range mergedPosts {
-		corpus = append(corpus, val)
+	corpus := make([]string, 0, len(posts))
+	for _, val := range posts {
+		corpus = append(corpus, val.Body)
 	}
 
 	lda.LDA(corpus)
 }
 
-func mergeArrays(postsArray [][]*types.Post) map[int]string {
-	result := make(map[int]string)
+func readCSVs(files []fs.FileInfo) []*types.Post {
+	c := make(chan []*types.Post)
+
+	for _, f := range files {
+		go readCSV(filepath.Join(filesPath, f.Name()), c)
+	}
+
+	var resultPosts [][]*types.Post
+
+	for i := 0; i < len(files); i++ {
+		posts := <-c
+		resultPosts = append(resultPosts, posts)
+	}
+
+	return sortPosts(removeDuplicates(resultPosts))
+}
+
+func sortPosts(posts []*types.Post) []*types.Post {
+	sort.SliceStable(posts, func(i, j int) bool {
+		return posts[i].Id < posts[j].Id
+	})
+	return posts
+}
+
+func removeDuplicates(postsArray [][]*types.Post) []*types.Post {
+	resultSet := make(map[int]*types.Post)
 
 	for _, posts := range postsArray {
 		for _, post := range posts {
-			if _, ok := result[post.Id]; !ok {
-				result[post.Id] = post.Body
+			if _, ok := resultSet[post.Id]; !ok {
+				resultSet[post.Id] = post
 			}
 		}
+	}
+
+	result := make([]*types.Post, 0, len(resultSet))
+	for _, post := range resultSet {
+		result = append(result, post)
 	}
 
 	return result

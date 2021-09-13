@@ -12,9 +12,8 @@ import (
 )
 
 var (
-	puctReg  *regexp.Regexp = regexp.MustCompile(`\p{P}`)
-	spaceReg                = regexp.MustCompile(`\s+`)
-	specReg                 = regexp.MustCompile(`[^\w\s\p{P}]`)
+	puctReg *regexp.Regexp = regexp.MustCompile(`\p{P}`)
+	specReg                = regexp.MustCompile(`[^\w\s\p{P}]`)
 )
 
 func init() {
@@ -89,8 +88,7 @@ func removePunct(in <-chan string) <-chan string {
 
 	go func() {
 		for text := range in {
-			// remove puctuation and extra space
-			//out <- strings.TrimSpace(spaceReg.ReplaceAllString(puctReg.ReplaceAllString(text, ""), " "))
+			// remove puctuation
 			out <- puctReg.ReplaceAllString(text, "")
 		}
 		close(out)

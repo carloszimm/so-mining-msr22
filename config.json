@@ -1,0 +1,18 @@
+[
+  {
+    "dir": "rxswift",
+    "field": "Title",
+    "minTopics": 0,
+    "maxTopics": 0,
+    "sampleWords": 20,
+    "fileName": "rxswift"
+  },
+  {
+    "dir": "rxswift",
+    "field": "Body",
+    "minTopics": 0,
+    "maxTopics": 0,
+    "sampleWords": 20,
+    "fileName": "rxswift"
+  }
+]

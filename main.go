@@ -3,31 +3,49 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
 	"path/filepath"
 
+	"github.com/carloszimm/stack-mining/config"
 	"github.com/carloszimm/stack-mining/csv"
 	"github.com/carloszimm/stack-mining/lda"
 	"github.com/carloszimm/stack-mining/processing"
 	"github.com/carloszimm/stack-mining/util"
 )
 
-var filesPath string = filepath.Join("data explorer", "rxswift")
+var configs []config.Config
+
+func init() {
+	configs = config.ReadConfig()
+}
 
 func main() {
-	files, err := ioutil.ReadDir(filesPath)
-	util.CheckError(err)
+	var filesPath string
 
-	posts := csv.ReadPostsCSVs(filesPath, files)
-	fmt.Println("Processing:", len(posts), "documents")
+	for _, cfg := range configs {
+		filesPath = filepath.Join(config.DataExplorerPath, cfg.Dir)
 
-	corpus := make([]string, 0, len(posts))
+		files, err := ioutil.ReadDir(filesPath)
+		util.CheckError(err)
 
-	out := processing.SetupPipeline(posts, "Body")
-	for text := range out {
-		corpus = append(corpus, text)
+		posts := csv.ReadPostsCSVs(filesPath, files)
+		log.Println("Processing:", len(posts), "documents for", cfg.Dir, "using", cfg.Field, "field")
+
+		corpus := make([]string, 0, len(posts))
+
+		out := processing.SetupPipeline(posts, cfg.Field)
+		for text := range out {
+			corpus = append(corpus, text)
+		}
+		log.Println("Preprocessing finished! Running LDA...")
+
+		if cfg.MinTopics > 0 {
+			for i := cfg.MinTopics; i <= cfg.MaxTopics; i++ {
+				docTopicDist, topicWordDist := lda.LDA(i, cfg.SampleWords, corpus)
+				fmt.Println(docTopicDist, topicWordDist)
+			}
+		}
+
+		log.Println("LDA finished!")
 	}
-	fmt.Println("Preprocessing finished! Running LDA...")
-
-	docTopicDist, topicWordDist := lda.LDA(20, 20, corpus)
-	fmt.Println(docTopicDist, topicWordDist)
 }

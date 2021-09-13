@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"path/filepath"
 
@@ -17,14 +18,16 @@ func main() {
 	util.CheckError(err)
 
 	posts := csv.ReadPostsCSVs(filesPath, files)
+	fmt.Println("Processing:", len(posts), "documents")
 
-	//fmt.Println("Total questions:", len(mergedPosts))
 	corpus := make([]string, 0, len(posts))
 
 	out := processing.SetupPipeline(posts, "Body")
 	for text := range out {
 		corpus = append(corpus, text)
 	}
+	fmt.Println("Preprocessing finished! Running LDA...")
 
-	lda.LDA(corpus)
+	docTopicDist, topicWordDist := lda.LDA(20, 20, corpus)
+	fmt.Println(docTopicDist, topicWordDist)
 }

@@ -6,7 +6,7 @@ import (
 	"github.com/james-bowman/nlp"
 )
 
-func LDA(topics int, corpus []string) (*[][]types.TopicDist, *[][]types.WordDist) {
+func LDA(topics int, wordsTopicSample int, corpus []string) ([][]types.TopicDist, [][]types.WordDist) {
 
 	vectoriser := nlp.NewCountVectoriser()
 	lda := nlp.NewLatentDirichletAllocation(topics)
@@ -47,7 +47,10 @@ func LDA(topics int, corpus []string) (*[][]types.TopicDist, *[][]types.WordDist
 			topicWordDist[topic] = append(topicWordDist[topic],
 				types.WordDist{Word: vocab[word], Probability: topicsOverWords.At(topic, word)})
 		}
+
+		types.SortLdaDesc(topicWordDist[topic])
+		topicWordDist[topic] = topicWordDist[topic][:wordsTopicSample]
 	}
 
-	return &docTopicDist, &topicWordDist
+	return docTopicDist, topicWordDist
 }

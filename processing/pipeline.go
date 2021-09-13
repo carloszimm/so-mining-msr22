@@ -34,7 +34,7 @@ func processPosts(posts []*types.Post, field string) <-chan string {
 	out := make(chan string)
 	go func() {
 		for _, val := range posts {
-			out <- util.GetFieldString(val, field)
+			out <- types.GetFieldString(val, field)
 		}
 		close(out)
 	}()

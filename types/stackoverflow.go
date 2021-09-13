@@ -1,6 +1,9 @@
 package types
 
-import "time"
+import (
+	"reflect"
+	"time"
+)
 
 const layout string = "2006-01-02 15:04:05"
 
@@ -51,4 +54,10 @@ type Post struct {
 	ClosedDate            DateTime `csv:"ClosedDate"`
 	CommunityOwnedDate    DateTime `csv:"CommunityOwnedDate"`
 	ContentLicense        string   `csv:"ContentLicense"`
+}
+
+func GetFieldString(v *Post, field string) string {
+	r := reflect.ValueOf(v)
+	f := reflect.Indirect(r).FieldByName(field)
+	return string(f.String())
 }

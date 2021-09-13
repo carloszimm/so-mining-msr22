@@ -72,6 +72,8 @@ func removeStrangeChars(in <-chan string) <-chan string {
 	return out
 }
 
+// already maps to lowercase letters
+// https://github.com/bbalet/stopwords/blob/master/stopwords.go
 func removeStopWords(in <-chan string) <-chan string {
 	out := make(chan string)
 	go func() {
@@ -96,6 +98,8 @@ func removePunct(in <-chan string) <-chan string {
 	return out
 }
 
+// already maps to lowercase letters
+// https://github.com/kljensen/snowball/blob/master/english/stem.go
 func stem(in <-chan string) <-chan string {
 	out := make(chan string)
 	go func() {

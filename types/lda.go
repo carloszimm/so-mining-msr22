@@ -1,6 +1,9 @@
 package types
 
-import "sort"
+import (
+	"fmt"
+	"sort"
+)
 
 type TopicDist struct {
 	Topic       int
@@ -10,6 +13,10 @@ type TopicDist struct {
 type WordDist struct {
 	Word        string
 	Probability float64
+}
+
+func (wd WordDist) String() string {
+	return fmt.Sprintf("%v(%.3f%%)", wd.Word, wd.Probability*100)
 }
 
 func SortLdaDesc(i interface{}) {

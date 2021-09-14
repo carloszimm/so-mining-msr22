@@ -10,6 +10,7 @@ import (
 )
 
 const DataExplorerPath string = "data explorer"
+const ResultPath string = "results"
 
 type Config struct {
 	Dir         string `json:"dir" validate:"required"`

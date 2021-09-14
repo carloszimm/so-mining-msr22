@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/carloszimm/stack-mining/config"
-	"github.com/carloszimm/stack-mining/csv"
+	csvUtils "github.com/carloszimm/stack-mining/csv"
 	"github.com/carloszimm/stack-mining/lda"
 	"github.com/carloszimm/stack-mining/processing"
 	"github.com/carloszimm/stack-mining/util"
@@ -28,7 +28,7 @@ func main() {
 		files, err := ioutil.ReadDir(filesPath)
 		util.CheckError(err)
 
-		posts := csv.ReadPostsCSVs(filesPath, files)
+		posts := csvUtils.ReadPostsCSVs(filesPath, files)
 		log.Println("Processing:", len(posts), "documents for", cfg.Dir, "using", cfg.Field, "field")
 
 		corpus := make([]string, 0, len(posts))
@@ -40,9 +40,11 @@ func main() {
 		log.Println("Preprocessing finished! Running LDA...")
 
 		if cfg.MinTopics > 0 {
+			csvUtils.WriteFolder(cfg.FileName)
 			for i := cfg.MinTopics; i <= cfg.MaxTopics; i++ {
 				docTopicDist, topicWordDist := lda.LDA(i, cfg.SampleWords, corpus)
 				fmt.Println(docTopicDist, topicWordDist)
+				go csvUtils.WriteTopicDist(cfg, i, topicWordDist)
 			}
 		}
 

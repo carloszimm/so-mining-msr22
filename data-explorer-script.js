@@ -73,4 +73,7 @@ async function executeQuery(dist = 0) {
   }
 }
 
-executeQuery();
+executeQuery(0); //rxjava
+//executeQuery(1); //rxjs
+//executeQuery(2); //rxkotlin
+//executeQuery(3); //rxswift

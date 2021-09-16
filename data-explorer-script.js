@@ -1,31 +1,35 @@
 /*
-	Processes results while inside an editing query page in Stack Exchange Data Explorer
-	Permission needs to be given(allowed) to the page for downloading many files
+  Processes results while inside an editing query page in Stack Exchange Data Explorer
+  It must be executed under the console pane and user must also be logged in
+  Permission needs to be given(allowed) to the page for downloading many files
 */
 
 let tagNames = [
-["rxjs","rxjs5","rxjs6","rxjs-observables","rxjs-pipeable-operators",
-"reactive-extensions-js","rxjs-marbles","rxjs-dom","rxjs-lettable-operators","rxjs-subscriptions",
-"rxfire","rxjs-compat","rxjs-test-scheduler","rxjs-pipe","rxjs7","rx-angular"],
-["rx-swift"]];
+  ["rx-java", "rx-java2", "rx-java3", "rxpermissions", "rx-java-completable", "rxpaparazzo"], //rxjava
+  ["rxjs", "rxjs5", "rxjs6", "rxjs-observables", "rxjs-pipeable-operators",
+    "reactive-extensions-js", "rxjs-marbles", "rxjs-dom", "rxjs-lettable-operators", "rxjs-subscriptions",
+    "rxfire", "rxjs-compat", "rxjs-test-scheduler", "rxjs-pipe", "rxjs7", "rx-angular"], //rxjs
+  ["rx-kotlin", "rx-kotlin2"], //rxkotlin
+  ["rx-swift", "rxdatasources", "rxalamofire", "rxtest", "rx-blocking"] //rxswift
+];
 
 // loads the in-page CodeMirror instance
-let editor = document.querySelector('.CodeMirror').CodeMirror;
+const editor = document.querySelector('.CodeMirror').CodeMirror;
 
-function buildQuery(tagName){
-return `select p.* from posts p inner join PostTags ps
+function buildQuery(tagName) {
+  return `select p.* from posts p inner join PostTags ps
 on p.Id = ps.PostId inner join Tags t on ps.TagId = t.Id and
 t.TagName = '${tagName}' where p.ParentId is null order by p.Id`;
 }
 
-function writeQuery(query){
-	editor.clearHistory();
-	editor.setValue(query);
+function writeQuery(query) {
+  editor.clearHistory();
+  editor.setValue(query);
 }
 
 function timeoutPromiseResolve(interval) {
   return new Promise((resolve, reject) => {
-    setTimeout(function(){
+    setTimeout(function () {
       resolve();
     }, interval);
   });
@@ -33,41 +37,40 @@ function timeoutPromiseResolve(interval) {
 
 function verifyResult(timer) {
   return new Promise((resolve, reject) => {
-    const interval = setInterval(function(){
-		let errorElem = document.getElementById("error-message");
-		let loading = document.getElementById("loading");
-		if(errorElem.style.display != 'none'){
-			reject(new Error(errorElem));
-			clearInterval(interval);
-		}else {
-			if(loading.style.display == 'none'){
-				resolve();
-				clearInterval(interval);
-			}
-		}
+    const interval = setInterval(function () {
+      let errorElem = document.getElementById("error-message");
+      let loading = document.getElementById("loading");
+      if (errorElem.style.display != 'none') {
+        reject(new Error(errorElem));
+        clearInterval(interval);
+      } else {
+        if (loading.style.display == 'none') {
+          resolve();
+          clearInterval(interval);
+        }
+      }
     }, timer);
   });
 };
 
-async function processQuery(query){
-	console.log("Processing query...");
-	writeQuery(query);
-	document.getElementById("submit-query").click();
-	await verifyResult(5000); //5s
+async function processQuery(query) {
+  console.log("Processing query...");
+  writeQuery(query);
+  document.getElementById("submit-query").click();
+  await verifyResult(5000); //5s
 }
-  
-async function executeQuery(){
-	try{
-		for(let i = 0; i<tagNames.length; i++){
-			for(let j = 0; j<tagNames[i].length; j++){
-				await processQuery(buildQuery(tagNames[i][j]));
-				document.getElementById("resultSetsButton").click();
-				await timeoutPromiseResolve(10000); //10s
-			}
-		}
-	}catch(e){
-		console.log(e);
-	}
+
+async function executeQuery(dist = 0) {
+  try {
+    for (let j = 0; j < tagNames[dist].length; j++) {
+      await processQuery(buildQuery(tagNames[dist][j]));
+      document.getElementById("resultSetsButton").click();
+      await timeoutPromiseResolve(10000); //10s
+    }
+    console.log("Done!");
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 executeQuery();

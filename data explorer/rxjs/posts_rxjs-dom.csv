@@ -1,0 +1,833 @@
+Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCount,Body,OwnerUserId,OwnerDisplayName,LastEditorUserId,LastEditorDisplayName,LastEditDate,LastActivityDate,Title,Tags,AnswerCount,CommentCount,FavoriteCount,ClosedDate,CommunityOwnedDate,ContentLicense
+"39978716","1","39978855","","2016-10-11 13:43:53","","1","60","<p>I'm using <a href=""https://github.com/Reactive-Extensions/RxJS-DOM"" rel=""nofollow"">Reactive Extension DOM</a> for listening event from DOM. Here is my sample code: </p>
+
+<pre><code>var input = document.getElementById('test_id');
+var source = Rx.DOM.change(input);
+var subscription = source.subscribe(
+        function (x) {
+          console.log(x);
+        },
+        function (err) {
+          console.log('Error: ' + err);
+        },
+        function () {
+          console.log('Completed');
+        });
+</code></pre>
+
+<p>This code works when <code>test_id</code> is on page when <code>document.ready</code> finish. But I'm using AJAX request, so <code>test_id</code> just appears after a time when ajax request is sent and received on client. How can I make RxDom notify this.</p>
+
+<p>Thanks.</p>
+","1493868","","310726","","2016-10-11 13:52:16","2016-10-11 13:52:16","RxDom: not working when new id created","<javascript><ajax><rxjs><rxjs-dom>","1","0","","","","CC BY-SA 3.0"
+"40015709","1","40024810","","2016-10-13 08:16:46","","0","107","<p>I'm using <a href=""https://github.com/Reactive-Extensions/RxJS-DOM"" rel=""nofollow"">Reactive Extension DOM</a> for listening event from DOM. Currently I meet one problem: I have an input A and div B and div C. Changing input A will affect B, and changing content of B will change content of div C. So, it means: if I change input A, div B and div C will automatically change.</p>
+
+<p>Currently I meet problem: when input A is changed, input B changed successfully but not C. I don't know because RxDom doesn't support changing recursive or because div doesn't have change event. Here is my short code:</p>
+
+<pre><code>var input = document.getElementById('test_id');
+    var source = Rx.DOM.change(input);
+    var subscription = source.subscribe(
+            function (x) {
+              console.log(x);
+            },
+            function (err) {
+              console.log('Error: ' + err);
+            },
+            function () {
+              console.log('Completed');
+            });
+</code></pre>
+
+<p>Obviously I can listen to event of input A and then change C but that is not really the way I want and it looks like a workaround version. Because due to business, div C depends on div B rather than input A. </p>
+","1493868","","","","","2016-10-14 09:45:26","RxDom: Update content of div recursive when an input is changed","<javascript><rxjs><rxjs-dom>","1","0","","","","CC BY-SA 3.0"
+"40464108","1","40464581","","2016-11-07 11:29:26","","3","1326","<p>I'm handling a mouseover event using <code>Observable.fromEvent()</code>, with various chained operators. How would I go about unit testing this?</p>
+
+<pre><code>export const bindMouseover = (link) =&gt; Observable.fromEvent(link, 'mouseover')
+    .filter(event =&gt; Nav.hasSubNav(event.target))
+    .map(event =&gt; Nav.getSubNav(event.target))
+    .filter(target =&gt; !Nav.elementIsVisible(target))
+    .subscribe((target) =&gt; {
+      Nav.hideElements(subNavs);
+      Nav.showElement(target);
+    });
+</code></pre>
+","931036","","","","","2016-11-07 12:00:38","How to test RxJS events","<javascript><rxjs><rxjs5><rxjs-dom>","1","0","","","","CC BY-SA 3.0"
+"40489540","1","","","2016-11-08 14:32:38","","1","871","<p>I have a ReactJS &amp; Redux application, and using RxJS for async AJAX with cancellation and error handling. The middleware (for Redux) I am using to connect Redux and RxJS is redux-observable.</p>
+
+<p>I am having a request to the server which also handles errors and cancellation, this is the epic:</p>
+
+<pre><code>const RecipesEpic = action$ =&gt;
+action$.ofType(FETCH_RECIPES)
+    .mergeMap(action =&gt; {
+        return Observable.ajax({
+            method: ""get"",
+            url: url
+        })
+            .map(payload =&gt; {
+                return ({ type: FETCH_RECIPES_FULFILLED, payload })
+            })
+            .catch(error =&gt; Observable.of({
+                type: FETCH_RECIPES_REJECTED,
+                payload: error
+            }))
+            .takeUntil(action$.ofType(FETCH_RECIPES_CANCELLED))
+    })
+
+export default RecipesEpic
+</code></pre>
+
+<p><strong>I'm trying to implement a loading indicator, first I want to log to the console how many percents completed of the request (by using XHR2), and then I will implement the UI. In simple words: How to implement XHR2 download progress in RxJS DOM Request?</strong></p>
+
+<p>I didn't find any resources online about this question, and I hope other people who are searching for this question will have an answer.</p>
+
+<p>Thank you!</p>
+","6203305","","","","","2016-11-13 06:56:32","ReactJS Redux RxJS AJAX loading indicator","<ajax><reactjs><redux><rxjs><rxjs-dom>","1","0","0","","","CC BY-SA 3.0"
+"41025242","1","41025494","","2016-12-07 18:57:51","","0","734","<p>I`m trying to test the catch function of a rxjs observer but catch never run.</p>
+
+<p>test.js</p>
+
+<pre><code>it.only('On fail restore password', () =&gt; {
+    sandbox = sinon.stub(Observable.ajax, 'post').returns(new Error());
+    store.dispatch(restorePasswordVi('prueba'));
+    expect(store.getActions()).toInclude({ success: false, type: SET_RESTORE_PASSWORD_SUCCESS });
+  });
+</code></pre>
+
+<p>Epic please see <a href=""https://redux-observable.js.org/"" rel=""nofollow noreferrer"">https://redux-observable.js.org/</a></p>
+
+<pre><code>export function restorePasswordViEpic(action$: Observable&lt;Action&gt;, store: Store) {
+  return action$
+    .ofType(RESTORE_PASSWORD_VI)
+    .switchMap(({ user }) =&gt; {
+      store.dispatch(blockLoading(true));
+      return Observable
+       .ajax
+       .post(`${config.host}/auth/restore-password`, { user })
+         .map(() =&gt; setRestorePasswordSuccess(true))
+         .catch(() =&gt; {
+           return Observable.of(setMessage('Se ha producido un error por favor intente de nuevo.'));
+         });
+    });
+}
+</code></pre>
+","3626118","","","","","2016-12-07 19:13:26","Stub catch on redux-observable epic","<rxjs><sinon><rxjs5><redux-observable><rxjs-dom>","1","0","","","","CC BY-SA 3.0"
+"41121614","1","41121704","","2016-12-13 12:52:25","","0","660","<p>I am trying to find the cleanest solution to use <code>filter()</code> operator in order to filter my observables.</p>
+
+<p>Here I am replicating the service call to get a <code>femaleList</code> separately </p>
+
+<pre><code>export class MyComp implements OnInit {
+
+    maleList: IContact[] = [];
+    femaleList: IContact[] = [];    
+
+    constructor(private _contactService: ContactService) { }
+    ngOnInit() : void {
+        this._contactService.getContacts()
+         .filter(male =&gt; male.gender === 'M')
+        subscribe(maleList =&gt; this.maleList = maleList);
+
+        this._contactService.getContacts()
+         .filter(female =&gt; female.gender === 'F')
+        subscribe(femaleList =&gt; this.femaleList = femaleList);
+     } }
+</code></pre>
+
+<p><strong>Contactlist</strong></p>
+
+<pre><code> [{
+      ""id"" : 1,
+      ""name"" : ""Todd"",
+      ""gender"" : ""M""
+    }, {
+      ""id"" : 2,
+      ""name"" : ""Lillian"",
+      ""gender"" : ""F""
+    }]
+</code></pre>
+
+<p>Is there any option in RxJS operators with single observable to assign to two variables.</p>
+
+<p>How can i filter the Contacts and assign it to <code>maleList</code> and <code>femaleList</code> using <strong>RxJS</strong> <code>filter()</code> operator.</p>
+
+<p>Thanks in advance</p>
+","4728339","","310726","","2016-12-13 13:13:59","2018-04-26 08:56:52","RxJS filter() operator","<angular><rxjs><angular2-services><rxjs5><rxjs-dom>","3","0","1","","","CC BY-SA 3.0"
+"41520909","1","41521028","","2017-01-07 11:25:00","","6","1297","<p>I know a little bit of BaconJS, but now I'm trying to learn RxJS by creating a ""User is typing..."" indicator. It's pretty simple, it can be explained in two simple rules:</p>
+
+<ol>
+<li>When the user is typing, the indicator should be immediately visible.</li>
+<li>When the user stops typing, the indicator should still be visible until 1 second after the user's last typing action.</li>
+</ol>
+
+<p>I'm not sure if this is correct, but I have so far created two streams:</p>
+
+<ol>
+<li>One heartbeat stream that emits a <code>0</code> every second.</li>
+<li>One stream to capture the user typing events and emit a <code>1</code> for every event.</li>
+</ol>
+
+<p>Then I merge them together, and simply tap into the result. If it's a <code>1</code>, then I show the indicator. If it's a <code>0</code>, then I hide the indicator.</p>
+
+<p>This is what that looks like:</p>
+
+<pre class=""lang-js prettyprint-override""><code>const showTyping = () =&gt;
+  $('.typing').text('User is typing...');
+
+const showIdle = () =&gt;
+  $('.typing').text('');
+
+// 1 second heartbeats are mapped to 0
+const heartbeat$ = Rx.Observable
+  .interval(1000)
+  .mapTo(0);
+
+// user typing events are mapped to 1
+const input$ = Rx.Observable
+  .fromEvent($('#input'), 'input')
+  .mapTo(1);
+
+// we merge the streams together
+const state$ = heartbeat$
+  .merge(input$)
+  .do(val =&gt; val === 0 ? showIdle() : showTyping())
+  .subscribe(console.log);
+</code></pre>
+
+<p>Here is a link to the JSBin: </p>
+
+<p><a href=""http://jsbin.com/vekixuv/edit?js,console,output"" rel=""nofollow noreferrer"">http://jsbin.com/vekixuv/edit?js,console,output</a></p>
+
+<p>There are several problems and questions I have with this implementation:</p>
+
+<ol>
+<li>Sometimes when the user is typing, a <code>0</code> sneaks through, so the indicator flashes away for a split second before coming back on the next user keystroke.</li>
+<li>It's not guaranteed that the indicator will disappear 1 second after the user stops typing. It's only guaranteed that the indicator will disappear within 1 second (which is kind of the opposite of what we want).</li>
+<li>Is using a heartbeat stream the correct RxJS way to do this? I have a feeling it might not be.</li>
+</ol>
+
+<p>I have a feeling that I am completely off-base with my implementation, I appreciate any help that you may be able to provide. Thanks.</p>
+","839793","","310726","","2017-01-07 12:00:33","2017-01-07 12:00:33","How to use RxJS to display a ""user is typing"" indicator?","<javascript><rxjs><rxjs5><rxjs-dom>","2","0","2","","","CC BY-SA 3.0"
+"41901450","1","","","2017-01-27 19:18:50","","0","319","<p>I have the next Observable i trying to filter to get the user in network but .mapTo(phone => verifyPhoneInNetwork(phone, country)) return AjaxObservable instead of the ajax response</p>
+
+<pre><code>function verifyInNetwork(contacts: any, country: string) {
+  const inNetworkOb = Observable
+    .from(contacts)
+    .map(contact =&gt; contact.phones)
+    .map(phone =&gt; verifyPhoneInNetwork(phone, country))
+    .first(({response}) =&gt; {
+      return !response.invalid &amp;&amp; !response.exists;
+    })
+    .isEmpty()
+    .filter(empty =&gt; empty);
+</code></pre>
+","3626118","","","","","2017-01-27 19:39:17","Rxjs is getting AjaxObservable instead of ajax response","<rxjs><observable><rxjs5><rxjs-dom>","1","0","","","","CC BY-SA 3.0"
+"43272234","1","43273438","","2017-04-07 07:32:11","","1","144","<p>I am currently working on a Angular 2 project where I need to call specific functions only and only after ALL the elements on the page are loaded. I tried to use eventFrom function from Observable, it worked when I was expecting a 'click' operation, but once I switched to 'load"" it did not fire at all. Next I tried to use Rxjs-DOM load function and it does not fire either.</p>
+
+<p>Here is the code I have right now:</p>
+
+<p><div class=""snippet"" data-lang=""js"" data-hide=""false"" data-console=""true"" data-babel=""false"">
+<div class=""snippet-code"">
+<pre class=""snippet-code-js lang-js prettyprint-override""><code>ngAfterViewInit(): void {
+  let input = this.container.nativeElement.getElementsByClassName('list-item');
+
+  let source = Rx.DOM.load(input);
+
+  let subscription = source.subscribe((x) =&gt; {
+      console.log('Next!');
+    },
+    (err) =&gt; {
+      console.log('Error: ' + err);
+    },
+    () =&gt; {
+      let temp = this.container.nativeElement.getElementsByClassName('list-item');
+      console.log(temp.length);
+    });
+
+}</code></pre>
+<pre class=""snippet-code-html lang-html prettyprint-override""><code>&lt;div class=""list-wrapper""&gt;
+  &lt;div class=""list""&gt;
+    &lt;div class=""list-item"" *ngFor=""let item of items""&gt;
+      &lt;img src={{item.image}} alt=""{{item.title}}""&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+</div>
+</div>
+</p>
+
+<pre><code> ""@angular/core"": ""4.0.1"",
+    ""@types/rx-dom"": ""^7.0.0"",
+    ""angular2-infinite-scroll"": ""0.3.4"",
+    ""gulp-run"": ""1.7.1"",
+    ""rxjs"": ""5.2.1-smooth""
+</code></pre>
+
+<p><code>temp.length</code> is always 0. 
+If I set a <code>timeout</code> there it will work perfectly as all the elements get 2-3 seconds to load and then <code>temp</code> is not empty. But timeout is not desirable in this case. 
+Is there anything I am doing wrong? 
+Another questions is if there is any other way in Angular 2 to call functions only after all the dom elements are ACTUALLY loaded.</p>
+
+<p>Thank you in advance.</p>
+","4332884","","","","","2017-04-07 08:35:22","Rxjs-DOM load function does not fire angular 2","<angular><rxjs-dom>","1","0","","","","CC BY-SA 3.0"
+"43639399","1","","","2017-04-26 16:08:05","","0","296","<p><strong>UPDATE</strong></p>
+
+<p>I've tried to make a standalone version here: <a href=""https://codepen.io/neezer/pen/pPRJar"" rel=""nofollow noreferrer"">https://codepen.io/neezer/pen/pPRJar</a></p>
+
+<p>It doesn't work quite like my local copy, but I'm hoping it similar enough that you can see where I'm trying to go.</p>
+
+<p>I'm not getting quite the same behavior as well because I changed the listener target to <code>document</code>, which seemed to help some.</p>
+
+<p>Also, I'm using RxJS v5 and the latest version of React.</p>
+
+<hr>
+
+<p>Still getting the hang of <a href=""https://github.com/Reactive-Extensions/RxJS"" rel=""nofollow noreferrer"">RxJS</a>...</p>
+
+<p>I have two Observables: one subscribed to mouseover x coordinates on a table to show a resize column, and the other to allow the user to drag on that column.</p>
+
+<p>Roughly speaking, the first one looks like this (all of the below defined in a <code>componentDidUpdate</code> lifecycle method in a React component):</p>
+
+<pre><code>Rx.DOM.mouseover(tableEl)
+  .map(/* some complicated x coordinate checking */)
+  .distinctUntilChanged()
+  .subscribe(/* setState call */)
+</code></pre>
+
+<p>That works great, and gives me this:</p>
+
+<p><img src=""https://d.pr/i/gu8eG+"" alt=""img""></p>
+
+<p>So now I want to provide the actual ""drag"" behavior, and I tried setting up a new Observable like so</p>
+
+<pre><code>// `resizerEl` is the black element that appears on hover
+// from the previous observable; it's just a div that gets
+// repositioned and conditionally created
+Rx.DOM.mousedown(resizerEl)
+  .flatMap(md =&gt; {
+    md.preventDefault()
+
+    return Rx.DOM.mousemove(tableEl)
+      .map(mm =&gt; mm.x - md.x)
+      .takeUntil(Rx.DOM.mouseup(document))
+  })
+  .subscribe(/* do column resizing stuff */)
+</code></pre>
+
+<p>There are three problems with that:</p>
+
+<ol>
+<li>Once I've done my first ""drag"", I can't do any more. My understanding is that <code>takeUntil</code> completes the Observable, and I'm not sure how I can ""restart"" it.</li>
+<li>The <code>mousemove</code> from the first observable is still active while I'm dragging, so my black div will disappear once my <code>x</code> position changes enough to trigger that behavior.</li>
+<li>The binding on the second Observable doesn't always seem to trigger (it's unreliable). I think there might be a race condition or something happening here because sometimes I'll refresh the page and I'll get the drag <em>once</em> (from #1), and other times I won't get it at all.</li>
+</ol>
+
+<p><img src=""https://d.pr/i/Z4pMi+"" alt=""ss""></p>
+
+<p>Note at first after a clean refresh I can't drag the handle (#3), then I refresh, and I can't drag the handle past the bounds setup from the first Observable--and the black resizer bar disappears and reappears as my mouse's x coordinate enters and leaves that envelope (#2).</p>
+
+<hr>
+
+<p>I've been head-banging on this for quite some time now and would really appreciate any insight as to what I'm doing wrong here. In short, I want</p>
+
+<ul>
+<li>the first Observable to ""pause"" when I'm dragging, then resume when I'm done dragging</li>
+<li>the second Observable to not ""complete"" (or ""restart"") once a drag is done</li>
+<li>the second Observable to reliably work</li>
+</ul>
+
+<p>As I mentioned earlier, I currently have this logic setup in a React component's <code>componentDidUpdate</code> lifecycle method, the shape of which looks roughly like this:</p>
+
+<pre><code>componentWillUpdate() {
+  // bail if we don't have the ref to our table
+  if (!tableEl) {
+    return;
+  }
+
+  // try not to have a new Observable defined on each component update
+  if (!this.resizerDrag$ &amp;&amp; this.resizer) {
+    this.resizerDrag$ = // second Observable from above
+  }
+
+  // try not to have a new Observable defined on each component update
+  if (!this.resizerPos$) {
+    this.resizerPos$ = // first Observable from above
+  }
+}
+</code></pre>
+","32154","","32154","","2017-04-26 21:50:01","2017-04-26 21:50:01","RxJS DOM pause observable while another ""is dragging""?","<reactjs><rxjs><rxjs-dom>","1","2","","","","CC BY-SA 3.0"
+"44119987","1","44121349","","2017-05-22 18:42:52","","0","170","<p>I've just included RxJS 5.4.0 and RxJS-DOM 7.0.3 on a page and got this error in the console:</p>
+
+<blockquote>
+  <blockquote>
+    <p>TypeError: Cannot read property 'AbstractObserver' of undefined</p>
+  </blockquote>
+</blockquote>
+
+<p>Please help with this error.</p>
+","2896495","","","","","2017-05-22 20:11:14","RxJS-DOM - Cannot read property 'AbstractObserver' of undefined","<rxjs5><rxjs-dom>","1","0","","","","CC BY-SA 3.0"
+"44320557","1","","","2017-06-02 04:00:57","","2","341","<p>I'm using <code>rx.DOM.ajax</code> <a href=""https://github.com/Reactive-Extensions/RxJS-DOM/blob/master/doc/operators/ajax.md"" rel=""nofollow noreferrer"">https://github.com/Reactive-Extensions/RxJS-DOM/blob/master/doc/operators/ajax.md</a></p>
+
+<p>I'm trying to get some data from a url using POST but it doesn't return anything.</p>
+
+<p>Here's the code:</p>
+
+<pre><code>Rx.DOM.ajax({
+    url: 'src/php/search.php',
+    method: ""POST"",
+    body: {
+      extra: ""Extra""
+    }
+  });
+</code></pre>
+
+<p>If I <code>print_r($_POST)</code> there's nothing in it. I'm expecting the server to receive a <code>$_POST</code>.</p>
+","6554121","","","","","2017-06-02 04:25:12","rxjs-dom how to pass data into POST","<javascript><php><ajax><rxjs><rxjs-dom>","1","3","","","","CC BY-SA 3.0"
+"44994242","1","","","2017-07-09 07:53:36","","2","295","<p>Redux-Observable has a dependency on RxJS.</p>
+
+<p>I need to use the filereader function from RxJS-DOM.</p>
+
+<p><a href=""https://github.com/Reactive-Extensions/RxJS-DOM/blob/master/doc/operators/filereader.md"" rel=""nofollow noreferrer"">https://github.com/Reactive-Extensions/RxJS-DOM/blob/master/doc/operators/filereader.md</a></p>
+
+<p>It looks like RxJS-DOM contains the same basic set of APIs as RxJS (plus the DOM ones).</p>
+
+<p>Is it possible to ask Redux-Observable to use RxJS-DOM rather than RxJS? Importing both is bloating the size of my build.</p>
+","4962759","","","","","2017-07-10 22:11:59","Can I used RxJS-DOM over RxJS with Redux-Observable","<rxjs><redux-observable><rxjs-dom>","1","1","","","","CC BY-SA 3.0"
+"45330340","1","","","2017-07-26 14:45:39","","1","170","<p>I'm facing some issues with <code>ajax.delete</code>. I'm running the code below where a <strong>DELETE</strong> request from <code>ajax</code> is being done and if the first fails, it keeps retrying until the request is successful.</p>
+
+<pre><code>let RetryStrategy = attempts =&gt; attempts
+    .zip(Observable.range(1, 4))
+    .flatMap(([error, i]) =&gt; {
+        if (i &gt; 3) {
+            return Observable.throw('Network error occured')
+        }
+        return Observable.timer(i * 1000)
+    })
+
+export const deleteSurveyQuestionEpic = (action$, {getState, dispatch}) =&gt;
+    action$.ofType('MY_ACTION')
+        .switchMap(
+            action =&gt; ajax.delete(`myURL`)
+                .map(res =&gt; res.response)
+                .flatMap(response =&gt; {
+                    console.log(response) // &lt;-- returns null
+                    return arrayRemove('formName', 'questions', 1) // &lt;-- redux-form action-creator
+                })
+                .retryWhen(RetryStrategy)
+                .takeUntil(action$.ofType('MY_CANCEL_ACTION'))
+                .catch((e) =&gt; {
+                    return Observable.of(
+                        errorSurvey((e.xhr &amp;&amp; `Error ${e.xhr.statusText}: ${e.xhr.statusText}`) || 'Network error occured')
+                    )
+                })
+        )
+</code></pre>
+
+<p>The problem is that in the network tab I see that the DELETE request returns <strong>200 - OK</strong> but the ajax.delete understands it as an error.</p>
+
+<p>While looking for this issue i found <a href=""https://stackoverflow.com/questions/40708264/proper-use-of-redux-ovservable-ajax-http-methods-put-delete-post#comment68644560_40708264"">this comment</a> where @jayphelps is wondering if the browser makes a CORS request.</p>
+
+<p>This is the case for me, while browser before each network request it makes a CORS request and after that it makes the regular request.</p>
+
+<p>I'm confused and I'm not sure if this is an issue that is caused by the CORS process or I'm missing something in my implementation, once the PUT and GET requests work fine.</p>
+
+<p>NOTE:
+I tried to add play with <code>ajax.delete</code>'s <code>crossDomain</code> option, but I didn't manage to solve my issue.</p>
+
+<hr>
+
+<p><strong>Solved</strong></p>
+
+<p>The problem was pretty easy to solve.
+I didn't return an Observable from <code>flatMap</code>. RxJS operators <strong>must</strong> return an observable.</p>
+
+<pre><code>.flatMap(response =&gt; {
+    console.log(response) // &lt;-- returns null
+    // An Observable needs to be returned instead of redux action creator
+    return arrayRemove('formName', 'questions', 1) 
+})
+</code></pre>
+
+<p>I also made <a href=""https://codepen.io/stelioschar/pen/zdqmRM"" rel=""nofollow noreferrer"">this test</a> where I implemented a simple RxJS process without the redux-observable implementation. This example contains the case where multiple redux actions-creators are being called. </p>
+","1055160","","1033581","","2018-05-03 02:32:32","2018-05-03 02:32:32","RxJS - ajax.delete keeps retrying until the observable fails while DELETE request was 200 OK","<redux><rxjs><rxjs5><redux-observable><rxjs-dom>","0","3","0","","","CC BY-SA 4.0"
+"45495188","1","45520322","","2017-08-03 21:58:06","","18","18993","<p>What is the best way to handle multiple events on the same DOM node in rxjs 5.1?</p>
+
+<p><code>fromEvent($element, 'event_name')</code> but I can specify only one event at a time.</p>
+
+<p>I want handle <code>scroll wheel touchmove touchend</code> events.</p>
+","3130446","","","","","2021-05-25 07:11:10","Rxjs, fromEvent to handle multiple events","<angular><rxjs5><rxjs-dom>","4","0","5","","","CC BY-SA 3.0"
+"45778994","1","","","2017-08-20 06:06:09","","2","3679","<p>Not sure is there any way to set default request headers in rxjs like we do with <a href=""https://github.com/mzabriskie/axios"" rel=""nofollow noreferrer"">axios js</a> as- </p>
+
+
+
+<pre class=""lang-js prettyprint-override""><code>axios.defaults.headers.common['Authorization'] = 'c7b9392955ce63b38cf0901b7e523efbf7613001526117c79376122b7be2a9519d49c5ff5de1e217db93beae2f2033e9';
+</code></pre>
+
+
+
+<p>Here is my epic code where i want to set request headers -</p>
+
+
+
+<pre class=""lang-js prettyprint-override""><code>export default function epicFetchProducts(action$, store) {
+    return action$.ofType(FETCH_PRODUCTS_REQUEST)
+    .mergeMap(action =&gt;
+        ajax.get(`http://localhost/products?${action.q}`)
+      .map(response =&gt; doFetchProductsFulfilled(response))
+    );
+}
+</code></pre>
+
+
+
+<p>Please help.</p>
+","2234618","","2234618","","2017-08-20 10:12:06","2018-08-05 05:21:40","RxJs How to set default request headers?","<rxjs><redux-observable><rxjs-dom>","2","0","2","","","CC BY-SA 3.0"
+"46238596","1","46239352","","2017-09-15 11:34:00","","1","247","<p>I want to create an observable which  <br>
+1. Gets token  with getToken2 method <br>
+2. Use this token to get userdata with flatMap <br>
+3. Assign just received userData and token( which was received via flatMap) to localStorage <br>
+The problem is that I am unable to access the token in second map method. <br>So How can I transfer this token value in stream so I can access it. </p>
+
+<pre><code>  getCurrentUser2() {
+       return this.getToken2()
+         .flatMap((token) =&gt; this.http.get(this.URL + '/ROS/profile?token=' + token))
+         .map((res) =&gt; res.json().data)
+         .map((response) =&gt; {
+
+             localStorage.setItem('currentUser', JSON.stringify({
+               token:token, ,**want to access token value here**
+               userProfile: response
+             }));
+             localStorage.setItem('orgId', response.structure.id);
+             return this.toUser(response, '12');
+
+         });
+  }
+</code></pre>
+
+<p>Please give me idea to solve this issue.<br>
+Kind Regards</p>
+","7943893","","","","","2017-09-15 12:15:08","RxJS: Transfer values in stream","<angular><rxjs><reactive-programming><angular2-observables><rxjs-dom>","1","0","","","","CC BY-SA 3.0"
+"47220718","1","47221055","","2017-11-10 10:31:21","","0","131","<p>i want to return token from localStorage and catch error. </p>
+
+<pre><code>Observable.of(JSON.parse(localStorage.getItem('currentUser')).token)
+.catch((er) =&gt; Observable.of(console.log(er))
+</code></pre>
+
+<p>But it does not catch it. Interesting is when I use try catch method ,I can catch error</p>
+
+<pre><code>  try {
+      return Observable.of(JSON.parse(localStorage.getItem('currentUser')).token);
+    } catch (er) {
+      console.log(er);
+    }
+</code></pre>
+
+<p>What is the reason of that? Hope someone give advice.<a href=""https://i.stack.imgur.com/wtZaL.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/wtZaL.png"" alt=""enter image description here""></a>
+Thanks</p>
+","7943893","","7943893","","2017-11-10 10:47:54","2017-11-10 10:49:49","Rx.Observable.Of error is not catched","<angular><rxjs><observable><rxjs5><rxjs-dom>","1","6","1","","","CC BY-SA 3.0"
+"48000905","1","48000945","","2017-12-28 02:26:00","","0","472","<p>I'm trying to retrieve some data using rxjs. It returns 200, but response is null. Is there any extra step to retrieve response? </p>
+
+<p>Test api; <a href=""https://reqres.in"" rel=""nofollow noreferrer"">https://reqres.in</a></p>
+
+<p>Thanks.</p>
+
+<pre><code>import {ajax} from 'rxjs/observable/dom/ajax';
+
+import 'rxjs/add/operator/map';
+
+
+ajax.get({
+            url: ""https://reqres.in/api/users?page=2"",
+            // crossDomain: true,
+            method: ""GET"",
+        })
+            .subscribe(data =&gt; {
+                console.log(data)
+                debugger
+            })
+</code></pre>
+
+<p><a href=""https://i.stack.imgur.com/PAgZX.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/PAgZX.png"" alt=""enter image description here""></a></p>
+","2746389","","","","","2017-12-28 02:53:16","RxJS ajax returns null response","<javascript><rxjs><rxjs5><rxjs-dom>","1","1","","","","CC BY-SA 3.0"
+"48377005","1","48379491","","2018-01-22 08:02:30","","1","698","<p><strong>Using RxJS 5 i want to solve the following:</strong></p>
+
+<p>Lets say that Im fetching a list of categories of sorts from a REST API. </p>
+
+<p>Based on each and one of those categories, I want to fetch sub categories from another REST endpoint.</p>
+
+<p>Then, based on each and one of those sub categories, I want to fetch products and for each and one of those products we need to fetch the detailed description.</p>
+
+<p>This I have solved. The problem is that the ajax calls escalate and under just a minute over 30k calls are made which results in bringing the server to its knees.</p>
+
+<p>Now, since this is a nightly job Im okay with it taking some time as long as it completes successfully.</p>
+
+<p>This is what I have:</p>
+
+<pre><code>getCategories() // Wraps ajax call and returns payload with array of categories
+      .switchMap(categories =&gt; Observable.from(categories))
+      .mergeMap(category =&gt; 
+        getSubCategories(category) // Wraps ajax call and returns payload with array of sub categories
+          .catch(err =&gt; {
+            console.error('Error when fetching sub categories for category:', category);
+            console.error(err);
+            return Observable.empty();
+          })
+      )
+      .mergeMap(subCategories =&gt; Observable.from(subCategories))
+      .mergeMap(subCategory =&gt; 
+        getProducts(subCategory) // Wraps ajax call and returns payload with array of products
+        .catch(err =&gt; {
+          console.error('Error when fetching products for sub category:', subCategory);
+          console.error(err);
+          return Observable.empty();
+        })
+      )
+      .mergeMap(products =&gt; Observable.from(products))
+      .mergeMap(product =&gt; 
+        getProductDetails(product) // Wraps ajax call and returns payload with product details
+        .catch(err =&gt; {
+          console.error('Error when fetching product details for product:', product);
+          console.error(err);
+          return Observable.empty();
+        })
+      )
+      .mergeMap(productDetails =&gt; saveToDb(productDetails))
+      .catch(err =&gt; {
+        console.error(err);
+      })
+      .subscribe();
+</code></pre>
+
+<p>After the initial request where i fetch the categories, I want to:</p>
+
+<p>Every call made to fetch sub categories should wait until the previous one is done. Only 5 ajax calls should be made at once when fetching products and those products details. After those 5 calls are done we trigger the next 5 calls etc.</p>
+
+<p>Alternatively it could be controlled with time as in waiting x seconds before we do the next ajax call etc.</p>
+
+<p>How would I go about to solve this in a nice with using RxJS based on my example above?</p>
+","1547996","","","","","2018-01-22 10:32:11","How to control pressure of multiple ajax calls with RxJS","<javascript><node.js><rxjs><rxjs5><rxjs-dom>","1","0","","","","CC BY-SA 3.0"
+"48472550","1","48499465","","2018-01-27 04:16:36","","1","311","<p>Calling Youtube API in </p>
+
+<pre><code>ngOnInit(){
+
+var finalURL = ""https://www.googleapis.com/youtube/v3/search?key=""+this.api+""&amp;channelId=""+this.chanId+""&amp;part=snippet,id&amp;order=date&amp;maxResults=""+this.result+""""
+console.log(finalURL);
+
+ this.obser$ = this.http.get(finalURL).subscribe(response=&gt;{
+
+  console.log(response);
+
+  let ytresults= response.json();
+  console.log(ytresults);
+
+   ytresults.items.forEach(obj =&gt; {
+       console.log(obj.id.videoId);
+       this.ytvideolist.push(obj.id.videoId);
+
+    });
+  console.log(this.ytvideolist); 
+} 
+</code></pre>
+
+<p>trying here to make the video url sanitized </p>
+
+<pre><code>&lt;li *ngFor= ""let id of ytvideolist""&gt;
+  &lt;iframe [src]=""getEmbedUrl(id)"" frameborder=""0"" allowfullscreen&gt;&lt;/iframe&gt;
+&lt;/li&gt;
+</code></pre>
+
+<p>Using DOM sanitizer in the function getEmbedUrl(id)</p>
+
+<pre><code> getEmbedUrl(id){
+      console.log(id);
+    return this.sanitizer.bypassSecurityTrustResourceUrl('https://youtube.com/embed/'+id);
+   }
+</code></pre>
+
+<p>Everything is working fine videos are getting fetched but part of the DOM continuously getting refreshed. I tried to do unsubscribe at all the component lifecycle hooks. But If I unsubscribe I won't fetch any results only. Is there any other work-around or am I missing some thing here! </p>
+","8270735","","","","","2018-01-29 10:51:06","Part of the DOM continuously getting refreshed in Angular 5. While trying to fetch videos from YouTube API","<youtube-api><angular5><youtube-data-api><rxjs-dom>","1","0","","","","CC BY-SA 3.0"
+"49542770","1","49543849","","2018-03-28 19:34:51","","7","6511","<p>I have a need/desire to use more than six parameters in a forkJoin. Currently, based on the answer to another <a href=""https://stackoverflow.com/questions/46350396/observable-forkjoin-wrong-return-type-when-more-than-6-arguments"">related question</a> it doesn't appear possible to send more than 6 parameters to forkJoin.</p>
+
+<p>However, based on the offical documentation, it says ""forkJoin is an operator that takes any number of Observables which can be passed either as an array or directly as arguments.""</p>
+
+<p><a href=""http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#static-method-forkJoin"" rel=""noreferrer"">forkJoin</a> - Official Docs</p>
+
+<p>Well, I'm doing that and I get an error TS2322:Type 'foo' is not assignable to type 'bar[]'. </p>
+
+<p>In my research I've also found that it's best not to send the arguments as an array if you have promises that return different types, as that will type cast them to all the same type. - <a href=""https://stackoverflow.com/questions/45738810/typescript-typing-error-with-forkjoin"">Source</a></p>
+
+<p>Here's my code. I'm using the latest version of Typescript and Angular 4.</p>
+
+<pre><code>ngOnInit() {
+    this.spinner.show();
+    Observable.forkJoin(
+        this.loadParams(),              // Returns an Observable&lt;Object&gt;
+        this.service.getPromiseType1(), // The rest return Observable&lt;Array&gt;
+        this.service.getPromiseType2(),
+        this.service.getPromiseType3(),
+        this.service.getPromiseType4(),
+        this.service.getPromiseType5(),
+        this.service.getPromiseType6(),
+    ).finally(() =&gt; this.spinner.hide())
+        .subscribe(
+            ([param, promise1, promise2, promise3, promise4, promise5, promise6]) =&gt; {
+                this.job = job;
+                this.value1 = promise1;
+                this.value2 = promise2;
+                this.value3 = promise3;
+                this.value4 = promise4;
+                this.value5 = promise5;
+                this.value6 = promise6;
+            }, (error) =&gt; {errorHandlingFunction}
+   });
+</code></pre>
+
+<p>If I remove any single parameter so that it's passing six parameters to forkJoin, it works fine. So my question is, in my case where I want to load the object observable and subsequent array observables all in one call, is there another way to do this? Is this a bug with forkJoin since the official documentation says it should be able to accept any number of Observables? </p>
+
+<p>I've tried creating an Array of type Observable and using array.forEach() inside the forkJoin but it complains about returning type void. That seemed like a janky way of doing it anyhow. </p>
+","9409896","","","","","2019-12-17 16:10:45","Work around for more than 6 forkJoin parameters?","<angular><typescript><rxjs><angular2-observables><rxjs-dom>","5","2","","","","CC BY-SA 3.0"
+"50268476","1","50324698","","2018-05-10 08:16:35","","2","955","<p>I have a simple websocket server built following <a href=""https://medium.com/dailyjs/real-time-apps-with-typescript-integrating-web-sockets-node-angular-e2b57cbd1ec1?t=1&amp;cn=ZmxleGlibGVfcmVjcw%3D%3D&amp;refsrc=email&amp;iid=9b197a27b4a14948b1d2fd4ad999e0a1&amp;uid=39235406&amp;nid=244%20276893704"" rel=""nofollow noreferrer"">this example</a></p>
+
+<pre><code>import { createServer, Server } from 'http';
+import * as express from 'express';
+import * as socketIo from 'socket.io';
+
+export class MobileObjectServer {
+    public static readonly PORT:number = 8081;
+    private app: express.Application;
+    private server: Server;
+    private io: socketIo.Server;
+    private port: string | number;
+
+    constructor() {
+        this.createApp();
+        this.config();
+        this.createServer();
+        this.sockets();
+        this.listen();
+    }
+
+    private createApp() {
+        this.app = express();
+    }
+
+    private createServer() {
+        this.server = createServer(this.app);
+    }
+
+    private config() {
+        this.port = process.env.PORT || MobileObjectServer.PORT;
+    }
+
+    private sockets() {
+        this.io = socketIo(this.server);
+    }
+
+    private listen() {
+        this.server.listen(this.port, () =&gt; {
+            console.log('Running server on port %s', this.port);
+        });
+
+        this.io.on('connect', (socket: any) =&gt; {
+            console.log('Connected client on port %s.', this.port);
+            socket.on('message', m =&gt; {
+                console.log('[server](message): %s', JSON.stringify(m));
+                this.io.emit('message', m);
+            });
+
+            socket.on('disconnect', () =&gt; {
+                console.log('Client disconnected');
+            });
+        });
+    }
+
+    public getApp(): express.Application {
+        return this.app;
+    }
+}
+</code></pre>
+
+<p>This code runs smoothly. I can launch the websocket server on my machine and I can connect if I use the <strong>socket.io-client</strong> library.</p>
+
+<p>Now I would like to connect to such server from a client using the <code>webSocket</code> and <code>WebSocketSubject</code> facilities provided by RxJs but I am encountering some basic problems just trying to connect.</p>
+
+<p>If I do </p>
+
+<pre><code>import { webSocket } from 'rxjs/observable/dom/webSocket';
+webSocket('http://localhost:8081')
+</code></pre>
+
+<p>nothing happens, no connection is established.</p>
+
+<p>If I use <code>'ws://localhost:8081'</code> as connection string then I get an error like this</p>
+
+<pre><code>WebSocketSubject.js:142 WebSocket connection to 'ws://localhost:8081/' failed: Connection closed before receiving a handshake response
+</code></pre>
+
+<p>I am sure I am making a very basic mistake, but I have currently no clue on where.</p>
+","5699993","","","","","2018-05-14 07:02:46","RxJs webSocket not able to connect to a websocket server implemented with socket.io","<websocket><socket.io><rxjs><rxjs-dom>","1","0","","","","CC BY-SA 4.0"
+"50310637","1","50322466","","2018-05-12 21:01:35","","0","662","<p>i have an issue when user click very fast on two buttons that update in firebase database same object and the same property. the issue that only one of the request save and the rest override. its happen in case user clicked on both button on the same second.</p>
+
+<p>my question is if there a way to execute the click streams with minimum delay between them. i want that there will be minimum of 2 seconds between every execution. thanks for the help.</p>
+
+<p>I want to record all clicks but execute the functionality with minimum delay between. </p>
+
+<p><div class=""snippet"" data-lang=""js"" data-hide=""false"" data-console=""true"" data-babel=""false"">
+<div class=""snippet-code"">
+<pre class=""snippet-code-js lang-js prettyprint-override""><code>(function($){ 
+    $(function($, undefined){
+       var count = 0;
+        const click$ = Rx.Observable.fromEvent($('.btn'), 'click').share();
+
+        click$
+            .map((ev)=&gt; {
+                count ++;
+                return count;
+            })
+            .bufferTime(1000)
+            .filter(buffer =&gt; buffer.length &gt; 0)
+             
+            .do((buffer) =&gt; console.log(`new buffer: ${buffer}`))
+            .map((buffer)=&gt; {
+              return  Rx.Observable.fromArray(buffer).concatMap(streams =&gt; Rx.Observable.of(streams).delay(2000))
+            })
+            .flatMap((s)=&gt; s)
+            .subscribe((a)=&gt; {
+                console.log(`${a} : ${new Date()}`)
+            });
+    });
+
+})(jQuery);</code></pre>
+<pre class=""snippet-code-html lang-html prettyprint-override""><code>&lt;script src=""https://cdnjs.cloudflare.com/ajax/libs/rxjs/4.1.0/rx.all.js""&gt;&lt;/script&gt;
+&lt;script src=""https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js""&gt;&lt;/script&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html lang=""en""&gt;
+&lt;head&gt;
+    &lt;meta charset=""UTF-8""&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;button class=""btn""&gt;Click&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+</div>
+</div>
+</p>
+
+<p>the issue is when i click multiple times more than second. streams from different buffer will execute on the same time. how i can solve it :(
+example: </p>
+
+<p>new buffer: 1,2,3,4</p>
+
+<p>new buffer: 5,6,7,8,9,10</p>
+
+<p>1 : Sat May 12 2018 17:22:29 GMT-0600 (MDT)</p>
+
+<p>new buffer: 11,12,13</p>
+
+<p>5 : Sat May 12 2018 17:22:30 GMT-0600 (MDT)</p>
+
+<p>2 : Sat May 12 2018 17:22:31 GMT-0600 (MDT)</p>
+
+<p>11 : Sat May 12 2018 17:22:31 GMT-0600 (MDT)</p>
+
+<p>2 and 11 happened on the same time. how i can solve it :(</p>
+","8987378","","8987378","","2018-05-13 05:19:27","2018-05-14 02:41:03","separate stream of click events by minimum delay between each other with Rxjs","<firebase-realtime-database><rxjs><rxjs5><data-stream><rxjs-dom>","2","3","","","","CC BY-SA 4.0"

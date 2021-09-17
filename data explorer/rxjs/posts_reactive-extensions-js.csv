@@ -1,0 +1,3599 @@
+Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCount,Body,OwnerUserId,OwnerDisplayName,LastEditorUserId,LastEditorDisplayName,LastEditDate,LastActivityDate,Title,Tags,AnswerCount,CommentCount,FavoriteCount,ClosedDate,CommunityOwnedDate,ContentLicense
+"2501013","1","","","2010-03-23 15:12:33","","7","4310","<p>Microsoft have published <a href=""http://msdn.microsoft.com/en-us/devlabs/ee794896.aspx"" rel=""noreferrer"">Reactive Extensions for Javascript</a>.
+It should make asynchronous (and event based) web-ui programming easy.</p>
+
+<p>There are currently <a href=""http://live.visitmix.com/MIX10/Sessions/FTL01"" rel=""noreferrer"">a video</a> and <a href=""http://weblogs.asp.net/podwysocki/archive/2010/03/21/introduction-to-the-reactive-extensions-for-javascript-jquery-live-event-integration.aspx"" rel=""noreferrer"">some</a> tutorials.
+But how cool UI could I really make? Do you know any good demos or code examples using rx.js?</p>
+","17791","","11635","","2010-04-26 08:58:45","2011-09-05 09:57:39","Reactive Extensions for Javascript code examples","<javascript><reactive-extensions-js>","1","2","3","","","CC BY-SA 2.5"
+"3125861","1","","","2010-06-26 23:43:39","","3","3062","<p>I'm trying to understand <a href=""http://msdn.microsoft.com/en-us/devlabs/ee794896.aspx"" rel=""nofollow noreferrer"">Reactive JS</a>.  In JQuery I can trigger custom events as</p>
+
+<pre><code>$(document).bind('eventbus', function(e, d) { console.log(d);});
+$(document).trigger('eventbus', 'test');
+</code></pre>
+
+<p>and pass around data (i.e. 'test'). It's not clear how to do this in RxJS.  I could try to convert the jquery events as</p>
+
+<pre><code>var observable = $(document).ToObservable('eventbus');
+</code></pre>
+
+<p>but observable returns the event object but not my data object.   How do I trigger custom events with data using RxJS?  Do I always need to piggyback on some other event type?  My goal is to create a simple eventbus using RxJS.</p>
+","118402","","","","","2011-04-25 20:56:58","Trigger custom event in Rx JS","<javascript><jquery><reactive-extensions-js>","2","0","1","","","CC BY-SA 2.5"
+"3296974","1","3304773","","2010-07-21 07:08:02","","2","1924","<p>I wonder which is the best approach to trigger an event after several (unordered) ajax calls finished.</p>
+
+<p>To make it a bit clearer, I would like to call a Method doSomethingGreat() which triggers several ajax calls, the order in which those succeed ins unnecessary. I just want to trigger an event 'SomethingGreatFinished' when all of those calls succeeded. I also don't want to chain these calls, because that would be lacking performance and would be totally against the idea of asynchronous programming.</p>
+
+<p>I wonder if a.) there is a common pattern for that, b.) this can be done with the Reactive Extensions for JavaScript (RxJs) or c.) with native jquery features.</p>
+
+<p>Any help is appreciated!</p>
+","288703","","","","","2010-07-21 23:53:06","trigger event after several ajax calls succeeded","<jquery><ajax><events><triggers><reactive-extensions-js>","3","3","","","","CC BY-SA 2.5"
+"4245545","1","4247892","","2010-11-22 12:49:11","","1","717","<p>I have an observable that when it fires a message is displayed. After a delay I want to fade that message out, unless in the mean time that observable has fired again.</p>
+
+<p>In other words given an observable, I want to create another observable, such that when the last event fired the first observable is more than a specified time ago the created observable fires that last event.</p>
+","27782","","27782","","2010-11-23 10:24:56","2010-11-23 10:24:56","Buffer/Ignore events until period of inactivity then fire only last event","<javascript><events><reactive-extensions-js>","1","0","2","","","CC BY-SA 2.5"
+"4336645","1","4389212","","2010-12-02 15:31:33","","8","987","<p>I want to start learning <a href=""http://msdn.microsoft.com/en-us/devlabs/ee794896.aspx"" rel=""nofollow noreferrer"">Rx.js</a> and I'm looking for a cool example to start the ball rolling. How do I detect <a href=""http://en.wikipedia.org/wiki/Konami_Code"" rel=""nofollow noreferrer"">konami code</a> with Rx.js?</p>
+
+<p>I want to detect a sequence of key press events (up up down down left right left right B A) and display an image if this happens.</p>
+","196451","","1015495","","2015-06-12 12:41:35","2015-06-12 12:41:35","How to detect konami code with Rx.js (reactive extensions for javascript)?","<reactive-extensions-js>","2","0","1","","","CC BY-SA 2.5"
+"4438957","1","4441471","","2010-12-14 12:06:32","","0","199","<p>I've got an object in JS in which I'm trying to test out the Reactive Framework In an event subscription I'd like to call an instance method of the enclosing class where the subscription is defined, like this; </p>
+
+<pre><code>function MyClass()
+{
+    var DoSomething = function(a,b) { ... }
+
+    var InstanceVariable = 1;
+
+    this.uiEvent = uiDiv.jqueryUiWidget(""widget"")
+        .toObservable(""change"")
+        .Subscribe(
+                function (event)
+                {
+                    // Want to call the instance method in the enclosing class
+                    DoSomething(1,2);
+                });
+
+    this.uiEvent2 = uiDiv.jqueryUiWidget(""widget"")
+        .toObservable(""change"")
+        .Subscribe(
+                function (event)
+                {
+                    // Want to use the instance variable within here
+                    alert(InstanceVariable);  
+                });
+}
+</code></pre>
+
+<p>How can I do this (since the ""this"" scope is that of the subscription)? Do I have to pass the function/variable through when setting up the subscription in some way? </p>
+
+<p>If I attempt to do this, I get an error in all browsers saying that the instance variables or methods don't exist: ""this"" within the scope of the function where I want to call the instance members refers to the Observer and so has functions of OnNext, OnCompleted etc.</p>
+
+<p>Many Thanks,</p>
+
+<p>Paul</p>
+","541894","","541894","","2010-12-14 17:18:26","2010-12-14 17:18:26","Using instance variables/methods within Reactive Framework subscription in Javascript","<javascript><system.reactive><reactive-extensions-js>","1","0","","","","CC BY-SA 2.5"
+"6002024","1","6003966","","2011-05-14 13:12:04","","1","170","<p>I'm trying to use RxJS in some GUI scenarios. I came across an interesting case.
+I have a widget where one can view, edit and create entities. </p>
+
+<p>When you click on the ""AddNewEntity"" Button. The editwidget creates an empty entity, loads it and changes into edit mode. However, if you are already in edit mode, it kindly askes if you like to revert changes first and once you clicked ""yes"" the same happens as described earlier.</p>
+
+<p>So I thought Rx might help me with that. Here is the code.</p>
+
+<pre><code>        Rx.Observable.Merge([
+
+            editWidget.getObservable('AddNewEntityButtonClicked')
+                      .Where(isNotInEditMode),
+            editWidget.getObservable('AddNewEntityButtonClicked')
+                      .Where(isInEditMode)
+                      .Select(function (id) {
+                          return dialogWidget.question(""Reject Changes?"", ""You are in edit mode. Reject Changes?"")
+                            .Where(function (answer) { return answer === true; });
+                      })
+                      .Switch()
+        ])
+        .Subscribe(self, function () {
+            var entity = createNewEntity();
+            editWidget.loadEntity(currentEntity);
+            editWidget.setEditMode();
+        });
+</code></pre>
+
+<p>Basically I'm merging two streams. One stream of clicks to the button which is filtered by the state of the widget where the state is ""NotInEditMode"". And another stream of clicks to the button that is filtered to the opposite state plus is projected into the return value stream of the dialog. Notice that the return value of the dialog is an AsyncSubject of bool which represents the given answer.</p>
+
+<p>Now the tricky part! It doesnt work this way! Why? Because when the state is ""NotInEditMode"", the first stream matches, <em>it sets the widget into edit mode</em> and now the second stream (which runs afterwards because of the order inside the merge) will also match which basically results into a completly inconsitent state (unlocked edit mode plus open dialog).</p>
+
+<p>I found two ways to fix it. The first one, change the order inside the merge so that it looks like this:</p>
+
+<pre><code>        Rx.Observable.Merge([
+            editWidget.getObservable('AddNewEntityButtonClicked')
+                      .Where(isInEditMode)
+                      .Select(function (id) {
+                          return dialogWidget.question(""Reject Changes?"", ""You are in edit mode. Reject Changes?"")
+                            .Where(function (answer) { return answer === true; });
+                      })
+                      .Switch(),
+            editWidget.getObservable('AddNewEntityButtonClicked')
+                      .Where(isNotInEditMode)                
+        ])
+        .Subscribe(self, function () {
+            var entity = createNewEntity();
+            editWidget.loadEntity(currentEntity);
+            editWidget.setEditMode();
+        });
+</code></pre>
+
+<p>However, I dislike this solution. It's not obvious to the reader.</p>
+
+<p>Fortunatly, I found another solution:</p>
+
+<pre><code>        Rx.Observable.Merge([
+
+            editWidget.getObservable('AddNewEntityButtonClicked')
+                      .Where(isNotInEditMode),
+            editWidget.getObservable('AddNewEntityButtonClicked')
+                      .Where(isInEditMode)
+                      .Select(function (id) {
+                          return dialogWidget.question(""Reject Changes?"", ""You are in edit mode. Reject Changes?"")
+                            .Where(function (answer) { return answer === true; });
+                      })
+                      .Switch()
+        ])
+        .Take(1)
+        .Repeat()
+        .Subscribe(self, function () {
+            var entity = createNewEntity();
+            editWidget.loadEntity(currentEntity);
+            editWidget.setEditMode();
+        });
+</code></pre>
+
+<p>The idea behind is that there can only be one way to go so the first matching scenario should abort all others.</p>
+
+<p>However, I wonder if there might be a cleaner solution or if I'm trying to use Rx for things it wasnt designed for ;-)</p>
+","288703","","","","","2011-05-14 18:29:13","Distinct between possible streams, looking for a clean solution","<system.reactive><reactive-programming><reactive-extensions-js>","1","0","","","","CC BY-SA 3.0"
+"8421695","1","8422388","","2011-12-07 19:58:03","","44","6813","<p>Is SignalR the same thing is Reactive Extensions?  Can you explain why or why not?</p>
+","280602","","","","","2015-05-11 00:28:15","SignalR vs. Reactive Extensions","<system.reactive><signalr><reactive-extensions-js>","1","1","18","","","CC BY-SA 3.0"
+"8661106","1","8661210","","2011-12-28 20:46:00","","0","812","<p>I'm trying to make non-blocking calls to 3 public APIs, i.e website A,B,C and then forward the results back to the rails app as JSON datas. I asked if this is possible in node.js on another forum and it seems it is and someone pointed me to this solution that involves using node.js Step module and async library:</p>
+
+<pre><code>Step( 
+// Make 3 async calls in parallel 
+  function loadStuff() { 
+    getResultFromSiteA(params1, this.parallel()); 
+    getResultFromSiteB(params2, this.parallel()); 
+    getResultFromSiteC(params3, this.parallel()); 
+  }, 
+// Pass the result to Rails when you're done 
+  function passOntoRails(err, resultsA, resultsB, resultsC) { 
+    if (err) { throw err; } 
+    passResultsToRails(resultsA, resultsB, resultsC); 
+  } 
+)
+</code></pre>
+
+<p>Recently I also found <a href=""https://stackoverflow.com/questions/3296974/trigger-event-after-several-ajax-calls-succeeded"">similar question here</a>. The answer suggests using forkjoin operator available within js extension I've never heard of; 'reactive js'. </p>
+
+<p>So from what I can understand there's 2 ways of doing this; the first one through node.js and the second way is through simple multiple asynchronous ajax calls from client side using 'reactive'.</p>
+
+<p>I'd like to know if one way simply performs better/faster than another? thanks. any opinions/answers/suggestions would be appreciated.</p>
+","711926","","-1","","2017-05-23 10:34:26","2011-12-28 20:56:01","Multiple asynchronous public API calls (rails+node.js or reactive js)","<javascript><node.js><reactive-extensions-js>","1","0","1","","","CC BY-SA 3.0"
+"8748937","1","8749339","","2012-01-05 20:00:14","","1","197","<p>I wan't to get text change events from input but limit them to 3 per second.</p>
+
+<p>Rx support my wish? how can I achieve this ability?</p>
+","67505","","","","","2012-01-07 17:57:00","How to buffer events with Rx extentions for JS","<reactive-extensions-js>","1","0","","","","CC BY-SA 3.0"
+"9314060","1","","","2012-02-16 15:31:03","","6","3011","<p>I have an observable collection to which I want to keep feeding objects and they should reach observers even after someone has subscribed to it (which ofcourse is the main aim of an observable). How do I do it? </p>
+
+<p>In the following program, after the subscription has happened I want to feed in 3 more numbers which should reach observers. How do I do this? </p>
+
+<p>I don't want to go via the route where I implement my own Observable class by implementing <code>IObservable&lt;int&gt;</code> and use <code>Publish</code> method? Is there any other way to achieve this?</p>
+
+<pre><code>public class Program
+{
+    static void Main(string[] args)
+    {
+        var collection = new List&lt;double&gt; { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        var observableCollection = collection.ToObservable();
+        observableCollection.Subscribe(OnNext);
+        //now I want to add 100, 101, 102 which should reach my observers
+        //I know this wont' work
+        collection.Add(100);
+        collection.Add(101);
+        collection.Add(102);
+        Console.ReadLine();
+    }
+
+    private static void OnNext(double i)
+    {
+        Console.WriteLine(""OnNext - {0}"", i);
+    }
+}
+</code></pre>
+","149190","","149190","","2012-02-16 16:12:51","2012-02-16 19:02:37","How do I update/add  items in/to an IObservable<int> dynamically?","<c#><c#-4.0><system.reactive><reactive-extensions-js>","1","1","2","","","CC BY-SA 3.0"
+"9416812","1","9421070","","2012-02-23 16:13:40","","0","83","<p>I have the following Rx Query that produces a IObservable problem is it does not work with Publish() so as the number of subscribers increases so does the memmory load</p>
+
+<pre><code>// Works
+Observable
+    .Interval(TimeSpan.FromSeconds(1.0))
+    .Select(_ =&gt; XDocument.Load(""http://test.com/data.xml""));
+
+// Broken
+Observable
+    .Interval(TimeSpan.FromSeconds(1.0))
+    .Select(_ =&gt; XDocument.Load(""http://test.com/data.xml"")).Publish();
+</code></pre>
+
+<p>Is there a better way of createing such an Observable?</p>
+","466750","","","","","2012-02-23 20:50:14","Rx Publish() breaks IObservable of XDocuments","<system.reactive><reactive-programming><reactive-extensions-js>","1","2","","","","CC BY-SA 3.0"
+"9580569","1","9582149","","2012-03-06 08:59:51","","0","524","<p>I need to proxy all the different event streams through one subject.</p>
+
+<p>I came up with this code:</p>
+
+
+
+<pre class=""lang-js prettyprint-override""><code>var mySubject,
+    getObservable;
+
+getObservable = function (subject, eventName) {
+    return subject
+        .asObservable()
+        .filter(function (x) {
+            return x.EventName === eventName;
+        })
+        .flatMap(function (x) {
+            if (x.Type === 'onNext') {
+                return Rx.Observable.return(x.Data);
+            }
+
+            if (x.Type === 'onError') {
+                return Rx.Observable.throw(x.Data);
+            }
+
+            return Rx.Observable.empty();
+        });
+};
+
+mySubject = new Rx.Subject();
+
+getObservable(mySubject, 'foo')
+    .subscribe(function(x){ 
+        console.log('foo onNext ' + x); 
+    }, function(x){ 
+        console.log('foo onError ' + x); 
+    }, function(){ 
+        console.log('foo onComplete');
+    });
+
+getObservable(mySubject, 'bar')
+    .subscribe(function(x){ 
+        console.log('bar onNext ' + x); 
+    }, function(x){ 
+        console.log('bar onError ' + x); 
+    }, function(){ 
+        console.log('bar onComplete');
+    });
+
+mySubject.onNext({Type: 'onNext', EventName: 'foo', Data: 5});
+mySubject.onNext({Type: 'onCompleted', EventName: 'foo'});
+
+mySubject.onNext({Type: 'onNext', EventName: 'bar', Data: 5});
+mySubject.onNext({Type: 'onError', EventName: 'bar', Data: 'Error message'});
+</code></pre>
+
+<p>Got output:</p>
+
+<pre class=""lang-js prettyprint-override""><code>foo onNext 5
+
+bar onNext 5
+bar onError Error message
+</code></pre>
+
+<p>Expected output:</p>
+
+<pre class=""lang-js prettyprint-override""><code>foo onNext 5  
+foo onCompleted
+
+bar onNext 5
+bar onError Error message
+</code></pre>
+
+<p>For the <code>bar</code> event, that works like a charm: <code>onNext</code> will be propagated and as soon as the error raises the <code>onError</code> function gets called and the event stream finishes. However, I can't get it to work for the <code>onComplete</code>.</p>
+
+<p>Whenever a complete notification raises I do see that <code>Rx.Observable.empty()</code> gets called but that doesn't cause the subscribers <code>onComplete</code> handler to be called. Instead, its calling its <code>onNext</code> handler.</p>
+","288703","","368691","","2015-08-02 11:05:33","2015-08-02 11:05:33","Using one subject to propagate completly different event streams through","<system.reactive><reactive-extensions-js><rxjs>","2","0","","","","CC BY-SA 3.0"
+"9598140","1","9612261","","2012-03-07 08:37:16","","2","521","<p>I noticed that the Observable.While and Observable.Prune methods are part of the Microsoft.Phone.Reactive namespace. Just curious as to why this is given these methods should be applicable to all OS?</p>
+","87416","","41071","","2012-03-07 09:20:16","2012-03-08 02:54:23","Why are methods Observable.While and Observable.Prune in the Microsoft.Phone.Reactive namespace?","<c#><system.reactive><reactive-extensions-js>","1","0","1","","","CC BY-SA 3.0"
+"9735775","1","","","2012-03-16 10:40:21","","22","18731","
+
+<p>I have a hot observable (a subject in this case):</p>
+
+<pre class=""lang-js prettyprint-override""><code>var subject = new Rx.Subject();
+</code></pre>
+
+<p>I want to create another observable that every time a new subscriptions is being made immediately fires out the last value that was produced.</p>
+
+<p>So in pseudo code:</p>
+
+<pre class=""lang-js prettyprint-override""><code>var myObservableWithLastValue = subject.publishLast();
+
+subject.onNext(3);
+
+myObservableWithLastValue.subscribe(function(x){
+    console.log(x); //should write 3
+});
+
+myObservableWithLastValue.subscribe(function(x){
+    console.log(x); //should write 3, too
+});
+
+subject.onNext(4);
+
+myObservableWithLastValue.subscribe(function(x){
+    console.log(x); //should write 4
+});
+</code></pre>
+
+<p>This is roughly what I want and it seems to work. However, I guess there must be some built in mechanism to achieve the same</p>
+
+<pre class=""lang-js prettyprint-override""><code>Rx.Observable.prototype.keepLatest = function () {
+    var latestValue;
+
+    var disposable = this.subscribe(function (value) {
+        latestValue = value;
+    });
+
+    return Rx.Observable.create(function (observer) {
+        observer.onNext(latestValue);
+        return disposable.dispose;
+    });
+};
+</code></pre>
+","288703","","368691","","2015-08-03 06:22:32","2016-12-03 10:55:05","Publish the last value of an observable","<rxjs><reactive-extensions-js>","3","0","4","","","CC BY-SA 3.0"
+"9898918","1","","","2012-03-27 22:57:49","","9","4249","<p>I've been having some trouble with a recursive chain of observables.</p>
+
+<p>I am working with RxJS, which is currently in version 1.0.10621, and contains most basic Rx functionality, in conjunction with Rx for jQuery.</p>
+
+<p>Let me introduce an example scenario for my problem:
+I am polling the <a href=""https://dev.twitter.com/docs/using-search"" rel=""noreferrer"">Twitter search API</a> (JSON response) for tweets/updates containing a certain keyword. The response also includes a ""refresh_url"" which one should use to generate follow-up request. The response to that follow-up request will again contain a new refresh_url, etc.</p>
+
+<p>Rx.jQuery allows me to make the Twitter search API call an observable event, which produces one onNext and then completes. What I have tried so far is to have the onNext handler remember the refresh_url and use it in the onCompleted handler to produce both a new observable and corresponding observer for the next request. This way, one observable + observer pair follows the other indefinitely.</p>
+
+<p>The problem with this approach is:</p>
+
+<ol>
+<li><p>The follow-up observable/observer are already alive when their predecessors have not yet been disposed of.</p></li>
+<li><p>I have to do lots of nasty bookkeeping to maintain a valid reference to the currently living observer, of which there can actually be two. (One in onCompleted and the other somewhere else in its life-cycle) This reference is, of course, needed to unsubscribe/dispose of the observer.
+An alternative to the bookkeeping would be to implement a side effect by the means of a ""still running?""-boolean, as I have done in my example.</p></li>
+</ol>
+
+<p>Example code:</p>
+
+<pre><code>            running = true;
+            twitterUrl = ""http://search.twitter.com/search.json"";
+            twitterQuery = ""?rpp=10&amp;q="" + encodeURIComponent(text);
+            twitterMaxId = 0; //actually twitter ignores its since_id parameter
+
+            newTweetObserver = function () {
+                return Rx.Observer.create(
+                        function (tweet) {
+                            if (tweet.id &gt; twitterMaxId) {
+                                twitterMaxId = tweet.id;
+                                displayTweet(tweet);
+                            }
+                        }
+                    );
+            }
+
+            createTwitterObserver = function() {
+                twitterObserver = Rx.Observer.create(
+                        function (response) {
+                            if (response.textStatus == ""success"") {
+                                var data = response.data;
+                                if (data.error == undefined) {
+                                    twitterQuery = data.refresh_url;
+                                    var tweetObservable;
+                                    tweetObservable = Rx.Observable.fromArray(data.results.reverse());
+                                    tweetObservable.subscribe(newTweetObserver());
+                                }
+                            }
+                        },
+                        function(error) { alert(error); },
+                        function () {
+                            //create and listen to new observer that includes a delay 
+                            if (running) {
+                                twitterObservable = $.getJSONPAsObservable(twitterUrl, twitterQuery).delay(3000);
+                                twitterObservable.subscribe(createTwitterObserver());
+                            }
+                        } 
+                    );
+                return twitterObserver;
+            }
+            twitterObservable = $.getJSONPAsObservable(twitterUrl, twitterQuery);
+            twitterObservable.subscribe(createTwitterObserver());
+</code></pre>
+
+<p>Don't be fooled by the double layer of observables/observers from requests to tweets.
+My example concerns itself mainly with the first layer: requesting data from Twitter. If in solving this problem the second layer (converting responses into tweets) can become one with the first one, that would be fantastic; But i think that's a whole different thing. For now.</p>
+
+<p>Erik Meijer pointed out the Expand operator to me (see example below), and suggested <a href=""http://headinthebox.posterous.com/"" rel=""noreferrer"">Join patterns</a> as an alternative.</p>
+
+<pre><code>var ys = Observable.Expand
+(new[]{0}.ToObservable() // initial sequence
+                   , i =&gt; ( i == 10 ? Observable.Empty&lt;int&gt;() // terminate
+         : new[]{i+1}.ToObservable() // recurse
+ )
+);
+
+ys.ToArray().Select(a =&gt; string.Join("","", a)).DumpLive();
+</code></pre>
+
+<p>This should be copy-pastable into LINQPad. It assumes singleton observables and produces one final observer.</p>
+
+<p>So my question is: How can I do the expand trick nicest in RxJS?</p>
+
+<p>EDIT:<br/>
+The expand operator can probably be implemented as shown in <a href=""http://social.msdn.microsoft.com/Forums/da-DK/rx/thread/2746e373-bf43-4381-834c-8cc182704ae9"" rel=""noreferrer"">this thread</a>. But one would need <a href=""https://developer.mozilla.org/en/New_in_JavaScript_1.7#Generators"" rel=""noreferrer"">generators</a> (and I only have JS &lt; 1.6).<br/>
+Unfortunately <a href=""http://nuget.org/packages/RxJS-Main/2.0.20304-beta"" rel=""noreferrer"">RxJS 2.0.20304-beta</a> does not implement the Extend method.</p>
+","1296709","","1296709","","2013-02-02 16:50:11","2013-12-24 19:06:51","RxJS: Recursive list of observables and single observer","<javascript><reactive-programming><reactive-extensions-js><rxjs>","1","3","2","","","CC BY-SA 3.0"
+"12175863","1","","","2012-08-29 10:27:02","","0","159","<p>I am trying to create an Observable of onSelectRow events in jqGrid
+using the syntax below:</p>
+
+<pre><code>grid.jqGrid().toObservable(""onSelectRow"").Select(function (event) {
+                 return alert($(event.target).val());
+            });
+</code></pre>
+
+<p>Nothing seems to be happening. Most examples bind to simple events like click in documentation. I cannot find any complex implementation examples. How can this achieved?</p>
+","31750","","1374763","","2012-08-29 11:05:13","2012-08-29 11:05:13","jqGrid and Rx Reactive javascript extensions","<jquery><jqgrid><reactive-extensions-js>","0","2","","","","CC BY-SA 3.0"
+"12179795","1","23837710","","2012-08-29 14:04:50","","6","5482","<p>Is there any solution like following one for RxJS?
+<a href=""https://stackoverflow.com/questions/7821404/is-it-possible-to-invoke-subscriberss-onnexts-on-different-threads-in-rx"">Is it possible to invoke subscribers&#39;s OnNexts on different threads in Rx?</a></p>
+
+<p>P.S. My first, naive approach(in CoffeeScript) had obviously failed:</p>
+
+<pre><code>hObs = Rx.Observable.interval(35000)
+    .startWith(-1)
+    .select(moment().format(""D MMMM, HH:mm:ss""))
+    .publish()
+
+hObs.subscribe((x)-&gt;console.log(x))
+hObs.connect()
+hObs.subscribe((x)-&gt;console.log(x, 1))
+hObs.connect() 
+</code></pre>
+
+<p>Second subscription returns nothing for 35s interval, and so on</p>
+","1116027","","-1","","2017-05-23 12:22:48","2016-04-19 08:16:11","RxJS multiple subscriptions for Observable.Interval","<javascript><reactive-extensions-js><rxjs>","1","0","","","","CC BY-SA 3.0"
+"12222385","1","","","2012-08-31 20:58:41","","9","748","<p>I have installed visual studio 2010 express and then Reactive Extensions 2.0. When I start my app in debug mode, part of code where reactive extensions is used following exception is thrown:</p>
+
+<pre><code>    The assembly with display name 'System.Reactive.Debugger' failed to load in the 'Load' binding context of the AppDomain with ID 1. The cause of the failure was: 
+
+System.IO.FileNotFoundException: Could not load file or assembly 
+
+'System.Reactive.Debugger, Version=2.0.20823.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35' or one of its dependencies
+</code></pre>
+
+<p>The problem is that nowhere I can find this dll - System.Reactive.Debugger.</p>
+","1639633","","137508","","2012-08-31 21:06:18","2012-10-10 13:24:22","Can't find assembly - System.Reactive.Debugger","<visual-studio-2010><reactive-extensions-js>","0","0","","","","CC BY-SA 3.0"
+"12246177","1","","","2012-09-03 10:36:08","","1","132","<p>maybe I missed purpose of RX for javascript library, but I think it should handle this scenario nicely.</p>
+
+<p>I would like to have periodic events generated through observable. Subscriber should take first event and make ajax request. Other events while this one is processed should be ignored. After completion should observer receive next generated event.</p>
+
+<p>Any suggestions? Many thanks.</p>
+","1643396","","1643396","","2012-09-03 14:17:28","2012-09-03 14:17:28","rx javascript periodic event ignore until handled first","<javascript><reactive-extensions-js>","0","0","","","","CC BY-SA 3.0"
+"12391902","1","13395848","","2012-09-12 15:44:20","","0","115","<p>About two years ago, there was an awesome RXUI-For-Web prototype from Microsoft Research, that came with an example html page that animated the text 'Time flies like an arrow' across your page as you moved your mouse.  I have been trying to find the prototypes again, but MS research has reorganized those pages and I can't find the original example projects again.  Does anyone know where this has moved to?  Does anyone know an alternate location I can find the original 'Time Flies' example at?</p>
+","78576","","5728","","2012-09-13 07:55:29","2013-03-05 11:17:47","Where can I find the RXUI Javascript 'Time Flies' example?","<javascript><system.reactive><reactive-extensions-js>","2","0","","","","CC BY-SA 3.0"
+"14288293","1","14297693","","2013-01-11 23:24:59","","4","4782","<p>I am trying to learn the new Reactive Extensions framework for .Net, and it sounds like the perfect solution for my application.  After studying examples ( and being fairly weak with LINQ still ), I am struggling to figure out how to leverage the RX framework to accomplish the task below.</p>
+
+<p>The goal is to create a configurable event ""relay"" between a custom data source and the GUI.  The relay will use LINQ to test and filter the incoming events, cache the qualified events in a list while waiting for the next time interval, then sync to the GUI thread and playback the events in the order that they were received.</p>
+
+<p>How can you use RX to coordinate caching, filtering, and relaying multiple events, such as events for adding, changing, and removing values from a custom data source ?</p>
+
+<p>This may be asking a lot, but any guidance in how to approach this problem would be very appreciated.  See example code below...</p>
+
+<pre><code>public delegate void EventDelegateAdd(Thing thing);
+public delegate void EventDelegateChange(Thing thing);
+public delegate void EventDelegateRemove(Thing thing);
+
+public delegate void EventDelegateBulkChangesStart();
+public delegate void EventDelegateBulkChangesEnd();
+
+// The ""Things"" that are stored in MyCustomDataSource
+
+public class Thing
+{
+    public string Key { get; set; }
+    public string Title { get; set; }
+    public object OtherStuff { get; set; }
+}
+
+// A custom observable data source with events that indicate when Things are
+// added, changed, or removed.
+
+public class MyCustomDataSource
+{
+    public event EventDelegateAdd AddingThing;
+    public event EventDelegateChange ChangingThing;
+    public event EventDelegateRemove RemovingThing;
+
+    // The rest of the class that manages the database of Things...
+}
+
+// This class forms a configurable event bridge between the MyCustomDataSource and
+// the GUI.  The goal is to cache, filter, and throttle the events so that the GUI
+// updates only occasionally with bulk changes that are relevant for that control.
+
+public class MyEventCachingBridge
+{
+    private MyCustomDataSource mSource;
+
+    public event EventDelegateAdd AddingThing;
+    public event EventDelegateChange ChangingThing;
+    public event EventDelegateRemove RemovingThing;
+
+    public event EventDelegateBulkChangesStart BulkChangesStart;
+    public event EventDelegateBulkChangesEnd BulkChangesEnd;
+
+
+    public MyEventCachingBridge(MyCustomDataSource source, int eventRelayInterval)
+    {
+        mSource = source;
+
+        // Magical Reactive Extensions code goes here that subscribes to all 3 events...
+        //
+        //   mSource.AddingThing
+        //   mSource.ChangingThing
+        //   mSource.RemovingThing
+        // 
+        //  ...filters and records a list of the events as they are received ( maintaining order of events too ),
+        //  then every eventRelayInterval milliseconds, plays back the events in bulk to update the GUI 
+        //  ( on the GUIs thread ).  Note that LINQ will be used to filter the Things so that a subset of
+        //  Thing changes are relayed to the GUI - i.e. - not all Thing events are observed by the GUI.
+
+    }
+
+
+    public void PlayBackCachedEvents()
+    {
+        BulkChangesStart();   // Raise Event to notify GUI to suspend screen updates
+
+        // Play back the list of events to push changes to ListView, TreeView, graphs, etc...
+        //
+        //  this.AddingThing(Thing);        // Fire events in order received
+        //  this.ChangingThing(Thing);      // Fire events in order received
+        //  this.RemovingThing(Thing);      // Fire events in order received
+
+        BulkChangesEnd();   // Raise Event to notify GUI to allow control refresh
+    }
+</code></pre>
+
+<p>Given the task described, I am not sure what should be coordinated in general class code, and what should be buried in RX statements.</p>
+
+<p>I also appreciate the fact that combining the 3 events into a single event with an enumeration indicating the purpose of the event would greatly simplify things, however there are a lot more than just 3 events to cache in the actual application.  I don't want the overhead of having to use constant Switch statement testing to identify each event.  There will be large volumes of events routed to potentially numerous GUI interfaces.</p>
+
+<p>Thanks for any suggestions.</p>
+","1689175","","48692","","2013-01-12 01:54:20","2014-11-25 14:41:01","How to use Reactive Extensions to cache, throttle, and relay multiple events?","<c#><events><caching><system.reactive><reactive-extensions-js>","2","0","5","","","CC BY-SA 3.0"
+"14466285","1","14480843","","2013-01-22 19:17:06","","24","18184","<p><a href=""https://github.com/Reactive-Extensions/RxJS/wiki/Observable#wiki-fromArray"" rel=""noreferrer"">fromArray Rx wiki on github</a></p>
+
+<pre><code>coffee&gt; rext = require 'rx'                                                 
+coffee&gt; arr = [1..5]                                                 
+[ 1, 2, 3, 4, 5 ]                                                    
+coffee&gt; obs = rext.Observable.fromArray(arr)                         
+{ _subscribe: [Function] }                                           
+coffee&gt; obs.subscribe( (x) -&gt; console.log(""added value: "" + x))      
+added value: 1                                                       
+added value: 2                                                       
+added value: 3                                                       
+added value: 4                                                       
+added value: 5                                                       
+{ isStopped: true,                                                   
+  observer:                                                          
+   { isStopped: true,                                                
+     _onNext: [Function],                                            
+     _onError: [Function: defaultError],                             
+     _onCompleted: [Function: noop] },                               
+  m: { isDisposed: true, current: null } }                           
+coffee&gt; arr.push(12)    # expecting ""added value: 12""                                              
+6                       # instead got new length of array                                              
+coffee&gt;          
+</code></pre>
+
+<p>It really looks like the <code>subscribe</code> function will only fire one time, when it's created. It seems like it's a bit of a misnomer, since I'm really just for-eaching the array instead of observing changes on it. That code is almost exactly the same as what's on the wiki though. So either I'm doing it wrong or the <code>subscribe</code> doesn't work how I expect. </p>
+","30946","","30946","","2015-08-02 17:51:34","2018-04-17 10:48:17","Can I observe additions to an array with rx.js?","<javascript><coffeescript><observable><reactive-extensions-js><rxjs>","4","0","5","","","CC BY-SA 3.0"
+"14792084","1","14803085","","2013-02-09 22:01:42","","1","105","<p>I am writing this Web application where I need to visualize filtered, sorted and paginated (on the server) collections through JavaScript (planning on using <a href=""http://isotope.metafizzy.co/"" rel=""nofollow"">Isotope</a> to present collections). These collections are dynamic, i.e. they start out with certain items, but their content may change throughout the application's lifetime. Could I implement this functionality by watching a collection on the server through Reactive Extensions for JavaScript? If so, how?</p>
+
+<h2>Example</h2>
+
+<p>For this particular problem, let's say a collection is rendered in HTML as an element <code>#container</code> with a child element of class <code>item</code> for each collection item:</p>
+
+<pre><code>&lt;div id=""container""&gt;
+  &lt;div class=""item""&gt;Item 1&lt;/div&gt;
+  &lt;div class=""item""&gt;Item 3&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>If ""Item 2"" is then added to the collection and ""Item 1"" removed from it on the server, JavaScript should react by rendering the updated collection as follows to HTML:</p>
+
+<pre><code>&lt;div id=""container""&gt;
+  &lt;div class=""item""&gt;Item 2&lt;/div&gt;
+  &lt;div class=""item""&gt;Item 3&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+
+<p>I've created an animated <a href=""http://jsfiddle.net/aknuds1/SNHeH/1/"" rel=""nofollow"">fiddle</a> to demonstrate this sort of scenario. Imagine that the changes to the collection take place on the server, and that the JavaScript simply reacts to it.</p>
+","265261","","","","","2013-02-10 21:59:33","I need to visualize a dynamic collection with JavaScript, can it be implemented with Reactive Extensions?","<javascript><system.reactive><reactive-extensions-js>","1","0","2","","","CC BY-SA 3.0"
+"15033809","1","15034747","","2013-02-22 21:52:57","","14","2821","<p>For a long time now I am trying to wrap my head around RX. And, to be true, I am never sure if I got it - or not.</p>
+
+<p>Today, I found an explanation on <a href=""http://reactive-extensions.github.com/RxJS/"">http://reactive-extensions.github.com/RxJS/</a> which - in my opinion - is horrible. It says:</p>
+
+<blockquote>
+  <p>RxJS is to events as promises are to async.</p>
+</blockquote>
+
+<p>Great. This is a sentence so full of complexity that if you do not have the slightest idea of what RX is about, after that sentence you are quite as dumb as before.</p>
+
+<p>And this is basically my problem: All the explanations in the usual places you find about RX make (at least me) feel dumb. They explain RX as a highly sophisticated concept with <em>lots</em> of  highly complicated words and terms and whatsoever, and I am never quite sure what it is about.</p>
+
+<p>So my question is: How would you explain RX to someone who is five years old? I'd like a clear, picturesque explanation of what it is, what it is good for, and what its main concepts are?</p>
+","1333873","","","user1228","2013-02-22 21:59:27","2013-02-23 02:17:09","Requesting a clear, picturesque explanation of Reactive Extensions (RX)?","<system.reactive><reactive-extensions-js>","2","2","13","","","CC BY-SA 3.0"
+"15062582","1","15065918","","2013-02-25 08:09:37","","5","1372","<p>In <a href=""https://stackoverflow.com/questions/15033809/requesting-a-clear-picturesque-explanation-of-reactive-extensions-rx"">Requesting a clear, picturesque explanation of Reactive Extensions (RX)?</a> I asked about what RX is all about, and I think, thanks to the provided answers I now got the idea.</p>
+
+<p>In the referenced question i quoted a sentence from <a href=""http://reactive-extensions.github.com/RxJS/"" rel=""nofollow noreferrer"">http://reactive-extensions.github.com/RxJS/</a> which says:</p>
+
+<blockquote>
+  <p>RxJS is to events as promises are to async.</p>
+</blockquote>
+
+<p>Although I think that I got the idea behind RX, I do not get this sentence at all. I can not even say what it is exactly that I do not understand. It's more like ... I don't see the connection between the first and the second half of the sentence.</p>
+
+<p>To me, this sentence sounds <em>important</em> and <em>impressive</em>, but I can hardly tell whether it's true or not, whether it's a great insight or not, and so on ...</p>
+
+<p>Can anybody explain what the sentence means in words someone (like me) can understand who is new to all this reactive stuff?</p>
+","1333873","","-1","","2017-05-23 11:50:40","2013-02-25 11:28:03","RxJS is to events as promises are to async","<system.reactive><reactive-programming><reactive-extensions-js>","1","1","","","","CC BY-SA 3.0"
+"15401506","1","15711507","","2013-03-14 04:57:17","","4","1810","<p>I simply want to implement</p>
+<p><a href=""https://github.com/Reactive-Extensions/RxJS"" rel=""nofollow noreferrer"">https://github.com/Reactive-Extensions/RxJS</a></p>
+<p>to my node project.</p>
+<p>Surely, there is the npm-package available, but I see it less updated, less modules, and uses only min. files, so I want to use rxjs from git sources.</p>
+<p>I downloaded RxJS-master and copy the whole files under the Dir to ../myProject/lib/rx/</p>
+<p>I see</p>
+<p><strong>rx.node.js</strong> among those files</p>
+<pre><code>var Rx = require('./rx');
+require('./rx.aggregates');
+require('./rx.binding');
+require('./rx.coincidence');
+require('./rx.experimental');
+require('./rx.joinpatterns');
+require('./rx.testing');
+require('./rx.time');
+module.exports = Rx;
+</code></pre>
+<p>so, <strong>my app.js</strong> code is like this</p>
+<pre><code>var rx = require(&quot;./lib/rx/rx.node.js&quot;)
+
+function test()
+{
+    var as = new rx.AsyncSubject()
+    setTimeout(function ()
+    {
+        as.onNext(&quot;works!&quot;)
+        as.onCompleted()
+    }, 500)
+    return as
+}
+
+var a = test().subscribe(function (result)
+{
+    console.log(&quot;Got result: &quot; + result)
+})
+</code></pre>
+<p>This gives an error as follows,</p>
+<pre><code>.../rx/lib/rx/rx.binding.js:173
+    var BehaviorSubject = Rx.BehaviorSubject = (function (_super) {
+                          ^
+ReferenceError: Rx is not defined
+    at .../rx/lib/rx/rx.binding.js:173:27
+    at Observable (.../rx/lib/rx/rx.binding.js:14:26)
+    at Object.&lt;anonymous&gt; (.../rx/lib/rx/rx.binding.js:18:2)
+    at Module._compile (module.js:449:26)
+    at Object.Module._extensions..js (module.js:467:10)
+    at Module.load (module.js:356:32)
+    at Function.Module._load (module.js:312:12)
+    at Module.require (module.js:362:17)
+    at require (module.js:378:17)
+    at Object.&lt;anonymous&gt; (.../rx/lib/rx/rx.node.js:3:1)
+
+Process finished with exit code 1
+</code></pre>
+<p>What is wrong?</p>
+<hr />
+<p>If I modify
+<strong>rx.node.js</strong> to</p>
+<pre><code>var Rx = require('./rx');
+module.exports = Rx;
+</code></pre>
+<p>The code works as expected, so obviously <em>require</em> - <em>sub modules</em> section does not go well.</p>
+<hr />
+<p>Thanks.</p>
+","","user1028880","-1","","2020-06-20 09:12:55","2014-10-30 07:33:25","Reactive-Extensions / RxJS Implementatation to node.js","<node.js><reactive-extensions-js><rxjs>","3","0","","","","CC BY-SA 3.0"
+"15705159","1","15708607","","2013-03-29 14:21:34","","0","399","<p>I use Rx.js and JqueryPromises
+I have run into a situation where i call a method to process an event published by Rx. This method however returns a promise.</p>
+
+<pre><code>eventStream.Subscribe(function(e) { methodThatReturnsPromise(e);});
+</code></pre>
+
+<p>The problem is that the processing of events is no longer deterministic. As methodThatReturnsPromise returns immediately as it defers processing.</p>
+
+<p>My question :)
+Is there a way to ""wait"" on a promise?
+Is there any hooks for Rx to use promises i.e. chain the returned promise of a subscribe to the next returned promise of subscribe, so messages are still processed in order?</p>
+","83806","","","","","2013-03-29 17:48:01","How to combine Rx.js subscription with Jquery Promise?","<jquery><promise><reactive-extensions-js>","1","0","","","","CC BY-SA 3.0"
+"16189664","1","16192294","","2013-04-24 10:29:49","","0","1199","<p>I am trying to figure out if the following is possible with any of the existing operators in RxJS, or if I need to roll my own extension:</p>
+
+<pre><code>var x = // some observable sequence 
+var y = // some observable sequence 
+var z = // some observable sequence 
+
+// 'when' should only call onNext when all of x, y and z has returned at 
+// least one value. After that, 'when' should continue to call onNext if
+// any of x, y, z changes their value.
+var w = Rx.Observable.when(x, y, z).select(function(x, y, z) {
+    // do stuff values of from z, y, x.
+});
+</code></pre>
+
+<p>Best, Egil.</p>
+","32809","","","","","2013-04-24 12:41:05","How to get a Promise like pattern with subscription in RxJS?","<javascript><reactive-extensions-js><rxjs>","1","0","","","","CC BY-SA 3.0"
+"17050086","1","17066788","","2013-06-11 17:22:05","","1","2089","<p>I found this little gem about how to get SignalR and Rx to play nicely:</p>
+
+<p><a href=""http://www.thinqlinq.com/Post.aspx/Title/SignalR-and-Reactive-Extensions-are-an-Rx-for-server-push-notifications"" rel=""nofollow"">Rx and Reactive Tutorial</a></p>
+
+<p>However as you might have noticed this only works when going from server -> client. Does anyone know how to go the other way around? I want my framework to be a bit more ""message"" based like NServiceBus and less RPC (which signalr standard examples tend to be).</p>
+
+<p>The reason for this is the weakly typed world doesn't lend itself very well to RPC. On the server side I'd love to be able to put interfaces around the client calls, but I can't because the client may not even be OO and has no concept of contracts and interfaces.</p>
+
+<p>So I'm hoping to turn everything into message based, with brokers in the middle via reactive, SOA services. Hopefully Reactive and DTOs will be the only dependencies in my code.</p>
+
+<p>So does anyone know how this can be achieved?</p>
+","860532","","","","","2013-06-12 13:27:23","SignalR and Reactive combo","<c#><signalr><system.reactive><signalr.client><reactive-extensions-js>","1","0","1","","","CC BY-SA 3.0"
+"17362902","1","17367405","","2013-06-28 10:43:55","","3","649","
+
+<p><strong>Example 1:</strong></p>
+
+<pre><code>var obsNumber = /* observable that produce numbers */;
+var obsText1 = /* observable that produce text */;
+var obsText2 = /* observable that produce text */;
+var obsContext = /* IF obsNumber &lt; 5 THEN obsText1 ELSE obsText2 */;
+</code></pre>
+
+<p><code>obsContext</code> is an observable that will return either data from <code>obsText1</code> or <code>obsText2</code>, depending on the value of <code>obsNumber</code>.</p>
+
+<p><strong>Example 2:</strong></p>
+
+<pre><code>var arrOfObservables = /* an array of observables */;
+var obsNumber = /* observable that produce numbers */;
+var obsSelect = /* arrOfObservables[obsNumber] */;
+</code></pre>
+
+<p><code>obsSelect</code> is an observable, that will return data from the selected observable from the <code>arrOfObservables</code> array determined by the value produced by <code>obsNumber</code>.</p>
+
+<p>I cannot figure out how to specify this behavior using RxJS. It seems to me I need to be able to subscribe/unsubscribe dynamically between multiple observables.</p>
+
+<p>How to make the two examples work using RxJS?</p>
+","32809","","368691","","2015-08-02 15:49:43","2015-08-02 15:49:43","Transform an observable sequence into an observable sequence producing values only from the most recent observable sequence","<reactive-programming><rxjs><reactive-extensions-js>","1","0","3","","","CC BY-SA 3.0"
+"17384879","1","17396725","","2013-06-29 21:30:38","","1","1800","<p>I have a user-programming scenario where user can end up creating two observables that depend on each other. RxJS does not allow circular dependencies, as far as I can see, the memory or stack reaches its limits and the <code>onError</code> callback is triggered with the value <code>true</code>.</p>
+
+<p>How to detect the circular dependency explicitly and throw a more descriptive error message?</p>
+
+<p>This codes illustrates how to create a circular dependency in RxJS:</p>
+
+<p><div class=""snippet"" data-lang=""js"" data-hide=""false"">
+<div class=""snippet-code"">
+<pre class=""snippet-code-js lang-js prettyprint-override""><code>var obsA,
+    obsB;
+
+obsA = Rx.Observable
+    .returnValue(42)
+    .combineLatest(obsB, function (a, b) {
+        return a + b;
+    });
+
+obsB = Rx.Observable
+    .returnValue(42)
+    .combineLatest(obsA, function (b, a) {
+        return b + a;
+    });
+
+
+obsA
+    .subscribe(function (val) {
+        console.log('onNext:' + val);
+    },
+    function (err) {
+        console.error('onError: ' + err);
+    },
+    function () {
+        console.log('onCompleted');
+    });</code></pre>
+</div>
+</div>
+</p>
+
+<p>The error message is simply <code>true</code>.</p>
+","32809","","368691","","2015-08-02 16:03:19","2015-08-02 16:31:55","Catch circular dependency between observables","<reactive-programming><rxjs><reactive-extensions-js>","1","0","","","","CC BY-SA 3.0"
+"17545046","1","17553861","","2013-07-09 09:43:48","","1","705","<p>I have a method, <code>getObs()</code>, that returns an observable, which should be shared by all callers. However, that observable might not exist when somebody calls <code>getObs()</code>, and creating it is an async operation, so my idea was to return a placeholder observable that is replaced with the real observable once it is created.</p>
+
+<p>My basic attempt goes something like this:</p>
+
+<pre><code>var createSubject = new Rx.Subject();
+var placeholder = createSubject.switchLatest();
+</code></pre>
+
+<p>Where I can return <code>placeholder</code> if the real observable does not exist when 'getObs()' is called. When the real observable is created, I use <code>createSubject.onNext(realObservable)</code>, which then passes it to <code>switchLatest()</code> that unwraps it for any subscribers.</p>
+
+<p>However, it does seem like overkill to use a Subject and switchLatest for this purpose, so I am wondering if there is a more direct solution?</p>
+","32809","","","","","2013-10-08 14:21:25","Reactive Extensions: How to create a placeholder observable?","<system.reactive><reactive-programming><reactive-extensions-js>","2","0","","","","CC BY-SA 3.0"
+"17623111","1","17660268","","2013-07-12 20:02:42","","0","268","<p>I'm trying to create new observable based on two others. I have:</p>
+
+<pre><code>var mouseClickObservable = Rx.Observable.fromEvent(this.canvas, ""click"");
+var mouseMoveObservable = Rx.Observable.fromEvent(this.canvas, ""mousemove"");
+function findObject(x, y) {/* logic for finding object under cursor here. */}
+var objectUnderCursor = this.mouseMoveObservable.select(function (ev) { 
+    return findObject(ev.clientX, clientY);
+});
+</code></pre>
+
+<p>I want to create objectClicked observable, that should produce values when user clicks on an object. I could just call findObject again, like this:</p>
+
+<pre><code>var objectClicked = this.mouseClickObservable.select(function (ev) { 
+    return findObject(ev.clientX, clientY);
+});
+</code></pre>
+
+<p>but it's very time-consuming function.</p>
+
+<p>Another way, which I currently use, is to store last hovered object in a variable, but I assume, there should be pure functional way of doing this. I tryed to use Observable.join like this:</p>
+
+<pre><code>var objectClicked = this.objectUnderCursor.join(
+    mouseClickObservable,
+    function (obj) { return this.objectUnderCursor },
+    function (ev) { return  Rx.Observable.empty() },
+    function (obj, ev) { return obj })
+</code></pre>
+
+<p>but it produces multiple values for one click</p>
+","1641035","","","","","2013-07-15 17:32:36","Join two observables in RX.js","<system.reactive><reactive-programming><reactive-extensions-js>","1","0","","","","CC BY-SA 3.0"
+"17745478","1","39133716","","2013-07-19 11:54:08","","33","19612","<p>I have two observables:</p>
+
+<ol>
+<li>An observable representing a list of checkbox inputs.</li>
+<li>An observable representing a stream of events coming from the server.</li>
+</ol>
+
+<p>I'd like to filter the second observable using values from the first one. </p>
+
+<p>The values received from the server include a <code>tag</code> property, which corresponds to values in the checkbox list. The observable resulted from the combination of the above two would only yield values from the server whose <code>tag</code> property is included in the set of ticked checkboxes.</p>
+","58808","","368691","","2015-08-02 16:40:16","2021-02-05 12:42:53","Filter an observable using values from another observable","<rxjs><reactive-extensions-js>","4","0","9","","","CC BY-SA 3.0"
+"19233282","1","28497085","","2013-10-07 19:45:12","","1","2076","<p>Trying to get my feet wet with RxJS, specifically with rx.jquery. I found a little tutorial <a href=""https://npmjs.org/package/rx-jquery"" rel=""nofollow"">here</a> and tried to set it up as follows. It's supposed to take what you type and offer suggestions, pulled from Wikipedia. The call to Wikipedia is successful (I see in Chrome's Network debugging window), but the app gives me an error:</p>
+
+<blockquote>
+  <p>Uncaught TypeError: Object #&lt;Object> has no method 'subscribe'</p>
+</blockquote>
+
+<p>I've tried several versions of jQuery (1.8.3, 1.10.2, 2.0.3), and that makes no difference. Bootstrap doesn't seem to be an issue, either. I see almost no mention of rx.jquery here (and there's no tag for it), so I don't know whether it's maybe not ready for prime-time or what. I have pulled the most recent rx.* libs, as older ones were giving me different errors.</p>
+
+<p>Of course, I can't rule out that I've just bungled something. But it's not jumping out at me.</p>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=""en""&gt;
+    &lt;head&gt;
+        &lt;title&gt;Reactive Elements&lt;/title&gt;
+        &lt;meta name=""viewport"" content=""width=device-width, initial-scale=1.0""&gt;
+        &lt;meta name=""apple-mobile-web-app-capable"" content=""yes"" /&gt;
+        &lt;link href=""/lib/bootstrap/css/bootstrap.min.css"" rel=""stylesheet"" type=""text/css"" /&gt;
+        &lt;script src=""/lib/jquery-1.8.3.min.js""&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div class=""container""&gt;
+            &lt;div class=""page-header""&gt;
+                &lt;h1&gt;Reactive Extensions &lt;small&gt;in JavaScript&lt;/small&gt;&lt;/h1&gt;
+            &lt;/div&gt;
+            &lt;input id=""textInput"" type=""text"" class=""form-control""/&gt;
+            &lt;ul id=""results""&gt;&lt;/ul&gt;
+        &lt;/div&gt;
+        &lt;script src=""/lib/rx.min.js""&gt;&lt;/script&gt;
+        &lt;script src=""/lib/rx.binding.min.js""&gt;&lt;/script&gt;
+        &lt;script src=""/lib/rx.time.min.js""&gt;&lt;/script&gt;
+        &lt;script src=""/lib/rx.jquery.min.js""&gt;&lt;/script&gt;
+        &lt;script&gt;
+            $(function () {
+                var throttledInput = $('#textInput').
+                    keyupAsObservable().
+                    map(function (ev) {
+                        return $(ev.target).val();
+                    }).
+                    filter(function (text) {
+                        return text.length &gt; 2;
+                    }).
+                    throttle(500).
+                    distinctUntilChanged();
+
+                function searchWikipedia(term) {
+                    return $.ajaxAsObservable({
+                        url: 'http://en.wikipedia.org/w/api.php',
+                        data: { action: 'opensearch',
+                            search: term,
+                            format: 'json' },
+                        dataType: 'jsonp'
+                    });
+                }
+
+                var suggestions = throttledInput.flatMapLatest(function (text) {
+                    console.debug('Searching wiki', text);
+                    return searchWikipedia(text);
+                });
+
+                var selector = $('#results');
+                suggestions.subscribe(
+                    function (data) {
+                        console.debug('Data!', data);
+                        selector.empty();
+                        $.each(data[1], function (_, text) {
+                            $('&lt;li&gt;' + text + '&lt;/li&gt;').appendTo(selector);
+                        });
+                    },
+                    function (e) {
+                        console.debug(""ERROR!"", e);
+                        selector.empty();
+                        $('&lt;li&gt;Error: ' + e + '&lt;/li&gt;').appendTo('#results');
+                    }
+                );
+            });
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+","392102","","","","","2019-03-25 09:02:32","Is anybody using rx.jquery?","<jquery><javascript-framework><reactive-extensions-js><rxjs>","1","4","1","","","CC BY-SA 3.0"
+"19415306","1","19437842","","2013-10-16 22:49:41","","18","1302","<p>How do I import in GHCJS a Javascript function like the following ?</p>
+
+<pre><code>xs.subscribe(function(x) { console.log(x) })
+</code></pre>
+
+<p>I tried various combinations of the following without success:</p>
+
+<pre><code>data Observable_
+data Disposable_
+
+type Observable a = JSRef Observable_
+type Disposable = JSRef ()
+
+foreign import javascript unsafe ""$1.subscribe($2)""
+  rx_subscribe :: Observable a -&gt; JSRef (a -&gt; IO()) -&gt; IO Disposable
+</code></pre>
+
+<p>Any help is appreciated, and links to documentation of the GHCJS FFI.</p>
+
+<p>Thanks</p>
+","316376","","15638","","2013-10-17 07:33:00","2013-10-17 21:40:42","GHCJS: How do I import a high order javascript function using FFI?","<javascript><haskell><reactive-extensions-js><rxjs><ghcjs>","1","3","2","","","CC BY-SA 3.0"
+"20791523","1","","","2013-12-26 21:30:28","","2","2313","<p>I'm trying to find some way of filtering an observable based on the value of another observable. For example, let's say we only want to receive events between time x and y. Can one filter an observable based on the value of the timer?</p>
+","2269972","","501","","2013-12-27 14:44:52","2013-12-28 14:09:47","How to filter an Observable based on the value of another?","<c#><filter><system.reactive><observable><reactive-extensions-js>","2","0","1","","","CC BY-SA 3.0"
+"21307309","1","21316504","","2014-01-23 11:49:52","","6","5216","<p>I would expect that the following code would run asynchronously:</p>
+
+<pre><code>var range = Rx.Observable.range(0, 3000000);
+
+range.subscribe(
+  function(x) {},
+  function(err) {},
+  function() {
+    console.log('Completed');
+});
+
+console.log('Hello World');
+</code></pre>
+
+<p>But that's not the case. It takes a while to go through the big range of numbers and only when it is completed the execution is resumed, you can try the code <a href=""http://jsfiddle.net/sergi/6gpcx/2/"" rel=""nofollow"">here</a>.</p>
+
+<p>I am confused as to when to expect RxJS to behave synchronously or asynchronously. Does it depend on the method used? My previous idea was that once we are in Observables/Observer land, everything in it runs asynchronously, similar to how promises work.</p>
+","78640","","674326","","2014-01-24 03:16:01","2014-01-24 03:16:01","Synchronicity in RxJS","<javascript><asynchronous><system.reactive><reactive-extensions-js><rxjs>","1","1","2","","","CC BY-SA 3.0"
+"21617433","1","","","2014-02-07 01:05:41","","4","464","<p>The rx guidelines say to avoid side effects when possible, and put them in do() (doAction in js) clauses if they are unavoidable.</p>
+
+<p>However, a very common side effect in a UI is to create some resource (say a &lt;div&gt;) that is referenced down-stream (by children widgets). You have to capture the handles for these resources so they can be passed on. E.g. if you have an array of data, each requiring a div, you would create a div for each and pass the handles for these divs to the children.</p>
+
+<p>However doAction() discards the return value of the side effect, so you can't capture the handles of the objects that are created. You have to do the side effect in a select().</p>
+
+<p>Am I looking at this all wrong? Resources that are created are state, and are side effecting. You want the state in the stream, but you can't put it in the stream without putting side effects in select(), which is contraindicated.</p>
+","1009908","","1009908","","2014-02-19 16:29:01","2014-02-19 16:29:01","side effects that create resources in rx (reactive extensions)","<javascript><reactive-extensions-js><rxjs>","2","0","2","","","CC BY-SA 3.0"
+"21868213","1","","","2014-02-19 00:01:31","","3","1355","<p>I have a stream holding an array, each element of which has an id. I need to split this into a stream per id, which will complete when the source stream no longer carries the id.</p>
+
+<p>E.g. input stream sequence with these three values </p>
+
+<pre><code>[{a:1}, {b:1}]    [{a:2}, {b:2}, {c:1}]     [{b:3}, {c:2}]
+</code></pre>
+
+<p>should return three streams</p>
+
+<pre><code>a -&gt; 1 2 |
+b -&gt; 1 2 3
+c -&gt;   1 2
+</code></pre>
+
+<p>Where a has completed on the 3rd value, since its id is gone, and c has been created on the 2nd value, since its id has appeared.</p>
+
+<p>I'm trying groupByUntil, a bit like</p>
+
+<pre><code> var input = foo.share();              
+ var output = input.selectMany(function (s) {
+                        return rx.Observable.fromArray(s);
+                }).groupByUntil(
+                        function (s) { return s.keys()[0]; },
+                        null,
+                        function (g) { return input.filter(
+                                function (s) { return !findkey(s, g.key); }
+                        ); }
+                )
+</code></pre>
+
+<p>So, group by the id, and dispose of the group when the input stream no longer has the id. This seems to work, but the two uses of input look odd to me, like there could a weird order dependency when using a single stream to control the input of the groupByUntil, and the disposal of the groups.</p>
+
+<p>Is there a better way?</p>
+
+<p><strong>update</strong></p>
+
+<p>There is, indeed, a weird timing problem here. fromArray by default uses the currentThread scheduler, which will result in events from that array being interleaved with events from input. The dispose conditions on the group are then evaluated at the wrong time (before the groups from the previous input have been processed).</p>
+
+<p>A possible workaround is to do fromArray(.., rx.Scheduler.immediate), which will keep the grouped events in sync with input.</p>
+","1009908","","1009908","","2014-02-19 18:24:45","2014-02-19 18:24:45","rx: unfold array to multiple streams","<javascript><reactive-extensions-js><rxjs>","1","0","1","","","CC BY-SA 3.0"
+"22072974","1","22101262","","2014-02-27 15:28:45","","18","2676","<p>How does one structure an rxjs app? There are about a hundred toy intro examples, but not a single example of a full app, with widgets, subwidgets, etc., showing data flow through the whole application.</p>
+
+<p>E.g. suppose you have an observable with some state. You need to pass it to a widget. That widget has subwidgets that need portions of that state. Do you do a subscribe?</p>
+
+<pre><code>sub = state.subscribe(widget)
+</code></pre>
+
+<p>Now 'widget' is outside the monad. The subwidgets can't use observable methods on state. You have the same problem if you run the widget as a side effect.</p>
+
+<pre><code>state.doAction(widget)
+</code></pre>
+
+<p>So do you pass the stream to widget? If so, what do you get back?</p>
+
+<pre><code>what = widget(state)
+</code></pre>
+
+<p>Does the widget subscribe to the state and return a disposable? Does it return a stream derived from state? If so, what's in it? Do you try to collect all the streams together from all the widgets/subwidgets/sub-sub-widgets with extensive use of selectMany(identity) to get a final application stream that you subscribe in order to kick the whole thing off?</p>
+
+<p>And if the widget creates subwidgets on demand, based on state, how does widget manage its subwidgets? I keep trying a solution with groupBy(), having a group per subwidget, but managing all the subscriptions or streams back from the nested observable is an unbelievable nightmare.</p>
+
+<p>Even one example of a whole application would be helpful.</p>
+","1009908","","1048572","","2014-03-04 23:33:25","2014-03-04 23:33:25","How to structure rxjs code","<javascript><reactive-extensions-js><rxjs>","1","0","7","","","CC BY-SA 3.0"
+"22107465","1","","","2014-02-28 23:02:07","","1","251","<p>Does anyone have an example of how RX observables can be used to help the look of asynchronos code?</p>
+
+<p>I am looking for an alternative to promises and I would like to see how it is done in rx.</p>
+","11755","","","","","2015-02-03 04:27:38","Example using observables as promises","<reactive-extensions-js>","1","0","","","","CC BY-SA 3.0"
+"22185030","1","","","2014-03-04 23:01:35","","2","500","<p>Following up on <a href=""https://stackoverflow.com/questions/22072974/how-to-structure-rxjs-code"">How to structure rxjs code</a>, concerning how to structure a widget with subwidget when using rx, how would you structure rx code where the subwidgets are data-driven?</p>
+
+<p>As a toy problem, suppose you have an external source (e.g. web service) streaming a list of stocks to watch, with value, high, low, etc. So you have an Observable stream like (time goes down):</p>
+
+<pre><code>[{id: 'csco', value: 12, high: 20, low: 10}]
+
+[{id: 'csco', value: 12, high: 20, low: 8}, 
+ {id: 'aapl', value: 29, high: 30, low: 20}]
+</code></pre>
+
+<p>You need to build a widget for each stock symbol. So the pattern in the previous question has to be modified. There's not one child, and a child is created/destroyed based on the input stream, e.g. we create a child for 'csco' on the 1st event. On the 2nd event the 'csco' child gets an update (low: 8) and we create a child for 'aapl'.</p>
+
+<p>You could move the subwidget creation to the subscribe:</p>
+
+<pre><code>function widget(state) {
+  state = state.share();
+  var children = {};
+  state.subscribe(function (s) {
+    findNew(children, s).forEach(function (stock) {
+       children[stock] = subwidget(state.select(findById.bind(null, stock)));
+    });
+    // ... delete old ones similarly
+  });
+}
+</code></pre>
+
+<p>This introduces an ordering problem: the child doesn't get the event that cause it to be created. You can work around this by doing something like <code>state.repeat(1)</code>, or <code>state.startsWith(s).select(...)</code>, but it looks a bit odd.</p>
+
+<p>Suppose the children are also returning streams. E.g. maybe the user manipulates the children to model different positions, so we want to get some computation back from the children and display an overall total, or other metric, in widget.</p>
+
+<p>Do you create a Subject in widget() and push on it the streams from the children? Like</p>
+
+<pre><code>   var positions = new Rx.Subject();
+   positions.mergeAll().subscribe(displayTotal);
+   ...
+      .. subscribe(function(s) {
+       child = subwidget(...)
+       children[stock] = child.disposable; 
+       positions.onNext(child.position);
+</code></pre>
+
+<p>This all seems pretty clunky. Is there a better way to organize it? I tried modeling it as a stream of streams, one per child, and merging the outputs. This worked poorly. It was hard to keep track of the inner subscriptions, or have multiple streams output from the children.</p>
+","1009908","","-1","","2017-05-23 11:52:00","2015-09-19 19:40:54","rx data driven subwidgets","<javascript><reactive-programming><reactive-extensions-js><rxjs>","0","1","","","","CC BY-SA 3.0"
+"22332407","1","25779152","","2014-03-11 17:39:55","","7","1908","<p>Unlike other ""FRP"" libraries, Rx doesn't prevent glitches: callbacks invoked with time-mismatched data. Is there a good way to work around this?</p>
+
+<p>As an example, imagine that we have a series of expensive computations derived from a single stream (e.g. instead of _.identity, below, we do a sort, or an ajax fetch). We do distinctUntilChanged to avoid recomputing the expensive things.</p>
+
+<pre><code>sub = new Rx.Subject();
+a = sub.distinctUntilChanged().share();
+b = a.select(_.identity).distinctUntilChanged().share();
+c = b.select(_.identity).distinctUntilChanged();
+d = Rx.Observable.combineLatest(a, b, c, function () { return _.toArray(arguments); });
+d.subscribe(console.log.bind(console));
+sub.onNext('a');
+sub.onNext('b');
+</code></pre>
+
+<p>The second event will end up causing a number of glitchy states: we get three events out, instead of one, which wastes a bunch of cpu and requires us to explicitly work around the mismatched data.</p>
+
+<p>This particular example can be worked around by dropping the distinctUntilChanged, and writing some wonky scan() functions to pass through the previous result if the input hasn't changed. Then you can zip the results, instead of using combineLatest. It's clumsy, but doable.</p>
+
+<p>However if there is asynchrony anywhere, e.g. an ajax call, then zip doesn't work: the ajax call will complete either synchronously (if cached) or asynchronously, so you can't use zip.</p>
+
+<p><strong>Edit</strong></p>
+
+<p>Trying to clarify the desired behavior with a simpler example: </p>
+
+<p>You have two streams, a and b. b depends on a. b is asynchronous, but the browser may cache it, so it can either update independently of a, or at the same time as a. So, a particular event in the browser can cause one of three things: a updates; b updates; both a and b update. The desired behavior is to have a callback (e.g. render method) invoked exactly once in all three cases.</p>
+
+<p>zip does not work, because when a or b fires alone, we get no callback from zip. combineLatest does not work because when a and b fire together we get two callbacks.</p>
+","1009908","","1009908","","2014-03-11 21:15:43","2015-03-20 11:14:23","how to avoid glitches in Rx","<javascript><reactive-programming><reactive-extensions-js><rxjs>","1","9","6","","","CC BY-SA 3.0"
+"23231909","1","23249877","","2014-04-22 23:07:59","","5","8329","<p>I'd like to use RxJS to ""bridge"" async world of events with sync world.
+Specifically I want to create an function which returns an array of events collected during some time interval.</p>
+
+<p>I can create Observable which does what I want</p>
+
+<pre class=""lang-js prettyprint-override""><code>    var source = Rx.Observable
+    .interval(100 /* ms */)
+    .bufferWithTime(1000).take(1)
+</code></pre>
+
+<p>I can print correct values just fine</p>
+
+<pre class=""lang-js prettyprint-override""><code>    var subscription = source.subscribe(
+        function (x) {
+            console.log('Next: ' + JSON.stringify(x));
+        },
+        function () {
+            console.log('Completed');   
+        });
+</code></pre>
+
+<p>This prints </p>
+
+<pre><code>    [0,1,2,3,4,5,6,7,8] 
+    Completed 
+</code></pre>
+
+<p>But want I want is to assign this array to variable. Conceptually I want something like</p>
+
+<p><code>var collectedDuringSecond = source.toPromise.getValue()</code></p>
+
+<p>The idea is that getValue would block so after the line above is done collectedDuringSecond will contain [0,1,2,3,4,5,6,7,8]</p>
+","1204010","","13112018","","2020-05-05 06:10:38","2020-05-05 06:10:38","Collect RxJS Observable to Array","<reactive-extensions-js><rxjs>","1","3","","","","CC BY-SA 4.0"
+"23479306","1","23480624","","2014-05-05 18:32:11","","0","324","<p>I am wondering how I can create an effect of  windowWithMaxCount, which would work like windowWithCount but the window size would change from 1 to maxCount.</p>
+
+<p>What I am doing is  drawing a line chart base on c stream of events. The line chart needs array of let say 50 points. When new point is arrive I need to push one point out on the right and put this new point on the left.</p>
+
+<p>So in general observable.windowWithCount(50,1) does exactly that. The only problem that for the first window I have to wait until all 50 elements become available. During this time users see nothing on the screen.</p>
+
+<p>What I want to happen instead is as soon as a first point arrives I'd like to get window of size 1, then window of size 2 etc until  I get to window of size 50 (maxCount). At this point all subsequent windows would be size 50.</p>
+
+<p>The effect on the screen would be line filling the screen from left to right until it feels all screen.</p>
+","1204010","","","","","2014-05-05 20:12:52","RxJS variable length window","<reactive-extensions-js><rxjs>","1","0","","","","CC BY-SA 3.0"
+"23818018","1","23841469","","2014-05-22 22:20:41","","5","1306","<p>I'm trying to create an observable using RxJS that does what is pictured.</p>
+
+<p><img src=""https://i.stack.imgur.com/bigsA.jpg"" alt=""Expected observable mapping""></p>
+
+<ul>
+<li>Grabs a value and waits a fixed period of time before getting the
+next one.</li>
+<li>The next one will be the last value emitted in the period of the
+wait, skipping the rest. </li>
+<li>If an wait interval goes by where no value was emitted, the next one
+should be grabbed immediately as the last example of the image
+depicts.</li>
+</ul>
+","1025514","","","","","2014-05-27 23:00:36","Create a Observable that delays the next value","<observable><reactive-extensions-js><rxjs>","2","1","1","","","CC BY-SA 3.0"
+"24107599","1","24367881","","2014-06-08 15:19:21","","5","1818","<p>I'm trying to set up the update loop of a simple game, built with observables in mind. The top-level components are a <em>model</em>, which takes input commands, and produces updates; and a <em>view</em>, which displays the received updates, and produces input. In isolation, both work fine, the problematic part is putting the two together, since both depend on the other. </p>
+
+<p>With the components being simplified to the following:</p>
+
+<pre class=""lang-js prettyprint-override""><code>var view = function (updates) {
+  return Rx.Observable.fromArray([1,2,3]);
+};
+var model = function (inputs) {
+  return inputs.map(function (i) { return i * 10; });
+};
+</code></pre>
+
+<p>The way I've hooked things together is this:</p>
+
+<pre class=""lang-js prettyprint-override""><code>var inputBuffer = new Rx.Subject();
+var updates = model(inputBuffer);
+var inputs = view(updates);
+updates.subscribe(
+    function (i) { console.log(i); },
+    function (e) { console.log(""Error: "" + e); },
+    function () { console.log(""Completed""); }
+);
+inputs.subscribe(inputBuffer);
+</code></pre>
+
+<p>That is, I add a subject as a placeholder for the input stream, and attach the model to that. Then, after the view is constructed, I pass on the actual inputs to the placeholder subject, thus closing the loop.</p>
+
+<p>I can't help but feel this is not the proper way to do things, however. Using a subject for this seems to be overkill. Is there a way to do the same thing with publish() or defer() or something along those lines?</p>
+
+<p><strong>UPDATE:</strong> Here's a less abstract example to illustrate what I'm having problems with. Below you see the code for a simple ""game"", where the player needs to click on a target to hit it. The target can either appear on the left or on the right, and whenever it is hit, it switches to the other side. Seems simple enough, but I still have the feeling I'm missing something...</p>
+
+<pre><code>//-- Helper methods and whatnot
+// Variables to easily represent the two states of the target
+var left = 'left';
+var right = 'right';
+// Transition from one side to the other
+var flip = function (side) {
+  if (side === left) {
+    return right;
+  } else {
+    return left;
+  }
+};
+// Creates a predicate used for hit testing in the view
+var nearby = function (target, radius) {
+  return function (position) {
+    var min = target - radius;
+    var max = target + radius;
+    return position &gt;= min &amp;&amp; position &lt;= max;
+  };
+};
+// Same as Observable.prototype.scan, but it also yields the initial value immediately.
+var initScan = function (values, init, updater) {
+  var initValue = Rx.Observable.return(init);
+  var restValues = values.scan(init, updater);
+  return initValue.concat(restValues);
+};
+
+//-- Part 1: From input to state --
+var process = function (inputs) {
+  // Determine new state based on current state and input
+  var update = function(current, input) {
+    // Input value ignored here because there's only one possible state transition
+    return flip(current);
+  };
+  return initScan(inputs, left, update);
+};
+//-- Part 2: From display to inputs --
+var display = function (states) {
+  // Simulate clicks from the user at various positions (only one dimension, for simplicity)
+  var clicks = Rx.Observable.interval(800)
+      .map(function (v) {return (v * 5) % 30; })
+      .do(function (v) { console.log(""Shooting at: "" + v)})
+      .publish();
+  clicks.connect();
+
+  // Display position of target depending on the model
+  var targetPos = states.map(function (state) {
+    return state === left ? 5 : 25;
+  });
+  // Determine which clicks are hits based on displayed position
+  return targetPos.flatMapLatest(function (target) {
+    return clicks
+        .filter(nearby(target, 10))
+        .map(function (pos) { return ""HIT! (@ ""+ pos +"")""; })
+        .do(console.log);
+  });
+};
+
+//-- Part 3: Putting the loop together 
+/**
+ * Creates the following feedback loop:
+ * - Commands are passed to the process function to generate updates.
+ * - Updates are passed to the display function to generates further commands.
+ * - (this closes the loop)
+ */
+var feedback = function (process, display) {
+  var inputBuffer = new Rx.Subject(),
+      updates = process(inputBuffer),
+      inputs = display(updates);
+  inputs.subscribe(inputBuffer);
+};
+feedback(process, display);
+</code></pre>
+","2260931","","2260931","","2014-06-25 16:56:53","2014-06-26 07:54:21","How to define cycles with observables","<system.reactive><reactive-programming><rxjs><reactive-extensions-js>","3","5","1","","","CC BY-SA 3.0"
+"24593632","1","","","2014-07-06 07:27:17","","11","6248","<p>Is it possible to split a single observable flux in multiple other observables?</p>
+
+<p>My use case is a form that a user can submit. The submit action is handled in an observable, and on this action, there's a validator listening.</p>
+
+<pre><code>submitAction.forEach(validate)
+</code></pre>
+
+<p>The thing is I want to bind actions to either the <code>success</code> or the <code>failure</code> of the validator check.</p>
+
+<pre><code>validationFailure.forEach(outputErrors)
+validationSuccess.forEach(goToPage)
+</code></pre>
+
+<p>I'm not sure how similar cases are handled in reactive programming - it may be that splitting the observable is just not the right solution for handling this kind of issue.</p>
+
+<p>Anyway, how would you handle a similar case?</p>
+","1024223","","","","","2014-07-10 19:39:01","RxJS split observable sequence in multiple output","<javascript><rxjs><reactive-extensions-js>","1","0","4","","","CC BY-SA 3.0"
+"24598299","1","24600950","","2014-07-06 17:12:35","","0","2210","<p>Folks, I have an app using RxJS to handle mouse events.  I am composing these events into more complex observable 'gestures'.  One such gesture is ""shake"".</p>
+
+<p>The series of events I am trying to compose are:  </p>
+
+<pre><code>mousedown  
+mousemove left  
+mousemove right  
+mousemove left  
+mousemove right  
+mouseup
+</code></pre>
+
+<p>What I am finding is that </p>
+
+<pre><code>mousedown  
+mouseup
+mousemove left  
+mousemove right  
+mousemove left  
+mousemove right  
+</code></pre>
+
+<p>is also triggering the same result.</p>
+
+<p>I have made <a href=""http://codepen.io/anon/pen/zKnFB"" rel=""nofollow"">a fiddle demonstrating the issue on codepen</a>.</p>
+
+<p>My question in general is:  How do you express in RxJS that a obeservable, such as mouseup, should cancel and restart the composition of an observable?    </p>
+
+<p>As another example of the issue (from the same fiddle), the following events</p>
+
+<pre><code>mousedown  
+mouseup
+mousedown  
+mouseup
+mousedown  
+mousemove left  
+mousemove right  
+mousemove left  
+mousemove right  
+</code></pre>
+
+<p>Result in 3 shake events.  I would like it to result in one.</p>
+","279393","","","","","2014-07-06 22:35:57","How to cancel a composed RxJS observable","<system.reactive><reactive-programming><rxjs><reactive-extensions-js>","1","0","1","","","CC BY-SA 3.0"
+"24816691","1","24816917","","2014-07-18 03:16:02","","1","2495","<p>If I have an event type; say a click event. That I want to fire 3 unique ajax requests for but I want to subscribe to the final result of all 3 requests</p>
+
+<p>What is the proper design pattern for this sequence.</p>
+
+<p>My current code block looks something like this</p>
+
+<pre><code>$rootScope.$eventToObservable('selectUser')
+    .throttle(500)
+    .map(data =&gt; {
+        return angular.copy(data.additionalArguments[0].entity);
+    })
+    .select(d =&gt; {
+        return {
+            Member: MemberService.getMember(d.ID),
+            otherData: MemberService.dataOtherData(d.ID),
+            Notes: MemberService.getNotes(d.ID),
+            Log: MemberService.getLog(d.ID)
+        }
+    })
+    .switchLatest() //Code current dies here with an object is not a function error. I believe because the return object is not an obserable. But not sure what the proper design pattern is.
+    .subscribe(model =&gt; {
+        //I would like that model would contain an object with the result of the 3 responses above.
+        $scope.model = model;
+});
+</code></pre>
+","613399","","","","","2014-07-19 00:00:00","RxJS sending multiple unique ajax requests on event","<javascript><ajax><events><rxjs><reactive-extensions-js>","1","1","","","","CC BY-SA 3.0"
+"24856662","1","24870693","","2014-07-21 01:45:42","","20","9756","<p>RxJs stops listening to click events when an inner observable errors (Ajax request). I'm trying to figure out how to keep the event listener hooked to the button click event and gracefully handle the inner ajax error.</p>
+
+<p>Here is my example code and a link to plunkr</p>
+
+<pre><code>var input = $(""#testBtn"");
+var test = Rx.Observable.fromEvent(input,'click');
+
+var testAjax = function() {
+  return Rx.Observable.range(0,3).then(function(x){ 
+    if(x==2)throw ""RAWR""; //Simulating a promise error.
+    return x;
+  });
+}
+
+test.map(function(){
+  return Rx.Observable.when(testAjax());
+})
+.switchLatest()
+.subscribe(
+  function (x) {
+      console.log('Next: ', x);
+  },
+  function (err) {
+      console.log('Error: ' + err);   
+  },
+  function () {
+      console.log('Completed');   
+  });
+</code></pre>
+
+<p><a href=""http://plnkr.co/edit/NGMB7RkBbpN1ji4mfzih"">http://plnkr.co/edit/NGMB7RkBbpN1ji4mfzih</a></p>
+","613399","","613399","","2014-07-21 02:36:27","2016-07-06 23:36:31","RxJS Continue Listening After Ajax Error","<javascript><ajax><error-handling><rxjs><reactive-extensions-js>","3","2","8","","","CC BY-SA 3.0"
+"25633248","1","25648987","","2014-09-02 22:15:42","","4","1892","<p>In my system I have a source, two ""steps"" that map the source to a new value, and then a sum that combines those two steps to create a final value. The initial run through of this system works as I hoped, generating a single sum of 3.</p>
+
+<pre><code>var source = new Rx.BehaviorSubject(0);    
+var stepOne = source.map(function (value) {
+    return value + 1;
+});
+var stepTwo = source.map(function (value) {
+    return value + 2;
+});    
+var sum = Rx.Observable.combineLatest(
+    stepOne,
+    stepTwo,
+    function (s1, s2) {
+        console.log('calc sum: ' + (s1 + s2));
+        return s1 + s2;
+    }).subscribe(function (sum) {
+    });
+</code></pre>
+
+<p>Outputs:</p>
+
+<pre><code>&gt; calc sum: 3
+</code></pre>
+
+<p>But if I then put in a new value for source I get two results like this:</p>
+
+<pre><code>source.onNext(1);
+
+&gt; calc sum: 4
+&gt; calc sum: 5
+</code></pre>
+
+<p>The first is an intermediate result… as the new source value passes through one part of the system, and then I get the final result when all values have finished propagating.</p>
+
+<p>So my questions is, what's the recommended way to configure things so that a new value pushed into source will pass through the system atomically and only generate one sum result?</p>
+
+<p>Thanks!</p>
+","789636","","","","","2014-09-03 16:08:48","How do I sync RxJS updates so that intermediate values aren't passed through the stream?","<rxjs><reactive-extensions-js>","1","0","","","","CC BY-SA 3.0"
+"25893983","1","25907657","","2014-09-17 14:57:34","","4","1558","<p>Let's say I have an array <strong>items</strong></p>
+
+<p>I know I can create an observable from this array using</p>
+
+<pre><code>Rx.Observable.fromArray(items)
+</code></pre>
+
+<p>How do I create a lazily infinitely repeating observable from this (i.e.: repeating the items as long as they are being requested)?</p>
+
+<p>Tried</p>
+
+<pre><code>Rx.Observable.fromArray(items).repeat()
+</code></pre>
+
+<p>But this doesn't execute lazily and therefor locks up the browser.</p>
+","194651","","","","","2016-01-28 20:55:43","Create infinite repeatable Observable from array","<reactive-programming><rxjs><reactive-extensions-js>","2","0","0","","","CC BY-SA 3.0"
+"26202588","1","26205634","","2014-10-05 12:30:34","","0","2086","<p>I am having difficulty in seeing the difference between switchLatest and flatmapLatest in RxJs with the difference being one flattens a nested observable affer the fact like in scala whilst the other is the equivalent of doing it before returning the new flattened collection?</p>
+
+<p>Am I missing something. </p>
+","891812","","","","","2014-10-05 18:04:45","What is the difference between switchLatest and flatmapLastest in RxJs","<javascript><scala><reactive-programming><rxjs><reactive-extensions-js>","1","0","2","","","CC BY-SA 3.0"
+"26664793","1","","","2014-10-30 22:54:37","","2","386","<p>If I create an observable utilizing the $createObservableFunction method and I subscribe to that observable multiple times. The last subscriber overrides any other subscriber.</p>
+
+<p>However if I create an observable with rx.Observable.interval() and subscribe to that multiple times. Both subscribers fire on the interval.</p>
+
+<p>Why? More importantly how do I get the $createObservableFunction to fire both subscribers.</p>
+
+<pre><code>app.controller('MainCtrl', function($scope, rx) {
+
+  var test = $scope.$createObservableFunction('testClick');
+  var test2 = rx.Observable.interval(3000);
+
+
+  test.subscribe(function(){
+    console.log('I never run, why?');
+  });
+
+  test.subscribe(function(){
+    console.log('Why am I overriding the above subscribe');
+  });
+
+
+  test2.subscribe(function(){
+    console.log('This observable runs both subscribed functions')
+  });
+
+  test2.subscribe(function(){
+    console.log('See this gets called and so does the above');
+  });
+
+
+});
+</code></pre>
+
+<p>Example plunker that illustrates the issue. <a href=""http://plnkr.co/edit/kXa2ol?p=preview"" rel=""nofollow"">http://plnkr.co/edit/kXa2ol?p=preview</a></p>
+","613399","","","","","2015-09-15 22:16:19","$createObservableFunction subscriber gets overriden","<angularjs><rxjs><reactive-extensions-js>","1","2","","","","CC BY-SA 3.0"
+"27172435","1","29114551","","2014-11-27 14:00:14","","5","4621","<p>I am using RxJs to count how many packets arrive in a particular time window. My code basically looks like this:</p>
+
+<pre><code>var packetSubject = new Rx.Subject();
+var packetsInWindow = [];
+
+function startMonitoring() {
+    var subscription = packetSubject
+        .windowWithTime(1000)
+        .select(function(window) {
+            window.toArray().subscribe(function(elements) {
+                packetsInWindow.push(elements.length);
+            });
+        })
+        .subscribe();
+}
+
+function newPacket(packet) {
+    packetSubject.onNext(packet);
+}
+</code></pre>
+
+<p>How to unit test this code using Rx TestScheduler? I could not find any suitable example for testing Subjects. </p>
+","983502","","","","","2017-01-27 03:58:53","Testing Subject using TestScheduler in RxJs","<javascript><unit-testing><rxjs><reactive-extensions-js>","2","0","1","","","CC BY-SA 3.0"
+"27342011","1","27342268","","2014-12-07 11:09:07","","0","612","<p>I'm trying to restrict what events coming from common message bus should be emitted to server.
+Allowed events are on <code>outgoingEvents</code> array. Problem is that to properly send them th server I need event name.</p>
+
+<pre><code>var Events = new EventEmitter();
+var outgoingEvents = [
+    'messageSubmit'
+];
+
+var outgoingMessages = Observable.fromArray(outgoingEvents)
+.flatMap(function(eventName) {
+    return Observable.fromEvent(Events, eventName);
+}).subscribe(function() {
+    // need event name here to properly encode message:
+
+    // var eventName = ... should be 'messageSubmit'
+    // var args = [].slice.call(arguments, 1);
+    // var encoded = JSON.stringify({ name: eventName, args: args });
+    // socket.send(encoded);
+});
+
+Events.emit('messageSubmit', { message: 'Submitted!' }, {flags: 'ABC'});
+</code></pre>
+","1600598","","1600598","","2014-12-07 11:19:33","2014-12-07 11:43:40","How do I get event name of Observable created with .fromEvent","<javascript><rxjs><reactive-extensions-js>","1","0","","","","CC BY-SA 3.0"
+"27514310","1","27514478","","2014-12-16 21:33:39","","9","4976","<p>I have a service which returns data in pages. The response to one page contains details on how to query for the next page.</p>
+
+<p>My approach is to return the response data and then immediately concat a deferred call to the same observable sequence if there are more pages available.</p>
+
+<pre><code>function getPageFromServer(index) {
+  // return dummy data for testcase
+  return {nextpage:index+1, data:[1,2,3]};
+}
+
+function getPagedItems(index) {
+  return Observable.return(getPageFromServer(index))
+    .flatMap(function(response) {
+      if (response.nextpage !== null) {
+        return Observable.fromArray(response.data)
+          .concat(Observable.defer(function() {return getPagedItems(response.nextpage);}));
+      }
+
+      return Observable.fromArray(response.data);
+    });
+}
+
+getPagedItems(0).subscribe(
+  function(item) {
+    console.log(new Date(), item);
+  },
+  function(error) {
+    console.log(error);
+  }
+)
+</code></pre>
+
+<p>This must be the wrong approach, because within 2 seconds you get:</p>
+
+<pre><code>      throw e;
+            ^
+RangeError: Maximum call stack size exceeded
+    at CompositeDisposablePrototype.dispose (/Users/me/node_modules/rx/dist/rx.all.js:654:51)
+</code></pre>
+
+<p>What is the correct approach to pagination?</p>
+","47056","","","","","2018-12-05 12:56:00","Turning paginated requests into an Observable stream with RxJs","<javascript><rxjs><reactive-extensions-js>","4","0","6","","","CC BY-SA 3.0"
+"27596693","1","27616121","","2014-12-22 04:43:47","","1","297","<p>As an exercise I'm trying to build 2 dependent streams which update one another.</p>
+
+<p>The test application is simply an ""Inches &lt;-> Centimeters"" converter, with both inputs editable.</p>
+
+<p>The issue I am experiencing is that I cannot get how can I stop recursion that causes one field change.</p>
+
+<p>To better explain the issue let's have a look at the relevant part of code:</p>
+
+<pre><code>var cmValue = new Rx.BehaviorSubject(0),
+    inValue = new Rx.BehaviorSubject(0);
+
+# handler #1
+cmValue.distinctUntilChanged().subscribe(function(v) {
+    inValue.onNext(cmToIn(v));
+});
+
+# handler #2
+inValue.distinctUntilChanged().subscribe(function (v) {
+    cmValue.onNext(inToCm(v));
+});
+</code></pre>
+
+<p>So we define to Subjects each of which holds the current corresponding value.</p>
+
+<p>Now imagine we change the value in inches to <code>2</code> (using <code>inValue.onNext(2);</code> or via keyboard).</p>
+
+<p>What happens next - is the handler #2 is triggered and it invokes a corresponding recalculation of a value in centimeters. Which results to <code>cmValue.onNext(0.7874015748031495)</code>.</p>
+
+<p>This call in fact is then handled by handler #1 and causes the value in inches (the one we put manually) to be recalculated, using <code>0.7874015748031495 * 2.54</code> formula which causes another <code>inValue.onNext(1.99999999999999973)</code> call.</p>
+
+<p>Luckily - due to FP rounding error that's where we stop. But in other scenarios this may lead to more loops or even to an infinite recursion.</p>
+
+<p>As you can see - I partially solved the issue applying <code>.distinctUntilChanged()</code> which at least protects us from an infinite recursion on any change, but as we can see - in this case it's does not solve the problem entirely since values are not identical (due to FP operations nature).</p>
+
+<p>So the question is: how would one implement a <strong>generic</strong> two-way binding that does not cause self-recursion at all?</p>
+
+<p>I emphasized generic to make a note that using <code>.select()</code> with rounding would be a partial solution for this particular issue, and not the generic one (which I and everyone else would prefer).</p>
+
+<p>The complete code and demo: <a href=""http://jsfiddle.net/ewr67eLr/"" rel=""nofollow"">http://jsfiddle.net/ewr67eLr/</a></p>
+","251311","","251311","","2014-12-22 07:38:24","2014-12-24 20:29:29","Safe update for 2 dependent streams","<javascript><reactive-programming><rxjs><reactive-extensions-js>","4","2","","","","CC BY-SA 3.0"
+"27630508","1","27708609","","2014-12-24 01:59:07","","10","1738","<p>Disclaimer: it is the continuation for the previous <a href=""https://stackoverflow.com/q/27596693/251311"">Safe update for 2 dependent streams</a> question</p>
+
+<p>What is the <em>idiomatic</em> way to handle errors in RxJS (or any other RX implementation) that allows the stream to not terminate?</p>
+
+<p>Relevant code is</p>
+
+<pre><code>function convert(unit, value) {
+    var request = {};
+    request[unit] = value;
+
+    var conversion = $.ajax({
+        method: 'POST',
+        url: './convert.php',
+        data: request,
+        dataType: 'json'
+    }).promise();
+
+    return Rx.Observable.fromPromise(conversion).takeUntil(inInput.merge(cmInput));
+}
+
+var cmElement = document.getElementById('cm'),
+    inElement = document.getElementById('in');
+
+var cmInput = Rx.Observable.fromEvent(cmElement, 'input').map(targetValue),
+    inInput = Rx.Observable.fromEvent(inElement, 'input').map(targetValue);
+
+var inches = cmInput
+    .flatMap(convert.bind(null, 'cm'))
+    .startWith(0);
+
+var centimeters = inInput
+    .flatMap(convert.bind(null, 'in'))
+    .startWith(0);
+</code></pre>
+
+<p>So as you can see we use the stream of input field changes and pass it through the <code>convert</code> function that converts it into another unit and passes the result further.</p>
+
+<p>If the error during <code>$.ajax()</code> call occurs then it's propagated up and the whole <code>inches</code> or <code>cetimeters</code> stream stops (it actually is expected).</p>
+
+<p>But how would I implement it to not do so?</p>
+
+<p>So that I could handle error gracefully, like show error message and try again when new data arrives?</p>
+
+<p>My current idea is to introduce a composite type like Haskell's <code>Data.Either</code> and stream it instead of scalar doubles.</p>
+
+<p>Thoughts?</p>
+
+<p><strong>UPD</strong>: Yes, I've read <a href=""https://stackoverflow.com/q/13310557/251311"">Handling Exceptions in Reactive Extensions without stopping sequence</a> but I still hope there are better ways.</p>
+","251311","","-1","","2017-05-23 12:09:41","2014-12-30 16:03:25","Idiomatic way to recover from stream onError","<javascript><reactive-programming><rxjs><reactive-extensions-js>","2","1","4","","","CC BY-SA 3.0"
+"28678206","1","28697364","","2015-02-23 16:17:58","","-1","507","<p><a href=""http://plnkr.co/edit/34fih9n8CkZtPaz6FvGm?p=streamer"" rel=""nofollow"">Live example.</a></p>
+
+<p>I'm completely new to Rx*. I'm trying to create a reactive version of MVC using RxJS for my thesis. It's loosely based on <a href=""https://github.com/staltz/mvi-example"" rel=""nofollow"">https://github.com/staltz/mvi-example</a></p>
+
+<p>I probably should've studied RxJS more before starting to code, but I've realised I usually learn the best by just jumping to the deep end of the pool. Now I'm completely stuck however.</p>
+
+<p>The View has a text field with a numeric value and a button. Pressing the button changes the color of the text, clicking the text iterates the numeric value. The value is stored in the model, so that ""chain"" goes through all three objects (View->Controller->Model->View). Pressing the button does not require the model, so that chain is View->Controller->View.</p>
+
+<p>Everything else works, but the final part of the chains (->View) is giving me trouble. Clicking on the text (in the View) propagates changes to the Controller and to the Model, but the View is not notified of the change in the Model. I don't understand why, since the way I understand this all these are implemented in the same way.</p>
+
+<p>I've added comments to the code sample below to designate the functions that don't get called. </p>
+
+<p>The code is available <a href=""http://plnkr.co/edit/34fih9n8CkZtPaz6FvGm?p=streamer"" rel=""nofollow"">here</a>. Note that, like I said, the code is for my thesis so some design decisions and the app itself may seem odd. Below I've also tried to include the parts I feel are most relevant. I know I should provide a complete example, but it's kind of impossible in this case.</p>
+
+<p>The ""obs"" parameter that objects get is an internal data structure that I use to store observables. The relevant part is</p>
+
+<pre><code>var OBSERVABLES = {
+    observe: function(source, observer, observer_name) {
+      this.request(source, function(s) {
+        console.log(""\t["" + source + "" is being observed by "" + observer_name + "" ("" + s.constructor.name + "" -&gt; "" + observer.constructor.name + "")]"")
+
+        return s.subscribe(
+          function myOnNext(x) {
+            console.log(""\t("" + source + "") "" + s.constructor.name + "" -&gt; OnNext -&gt; ("" + observer_name + "") "" + observer.constructor.name)
+            observer.onNext(x)
+          },
+          function myOnError(err) {
+            console.log(error)
+          })
+      })
+    },
+</code></pre>
+
+<p>View.js</p>
+
+<pre><code>var modelAmount = new Rx.Subject()
+var textClicks = new Rx.Subject()
+var buttonClicks = new Rx.Subject()
+var changeColors = new Rx.Subject()
+
+function View(obs, div) {
+  console.log(""View :: New View"")
+  obs = obs
+  div = div
+  var self = this
+
+  obs.observe(""clickAmount"", modelAmount, ""modelAmount"")
+  obs.observe(""changeColor"", changeColors, ""changeColors"")
+  obs.add(""textClicks"", textClicks)
+  obs.add(""buttonClicks"", buttonClicks)
+
+  //Draw HTML elements
+  render(div);
+}
+...
+function onClick() {
+  console.log(""View :: onClick() emits 'textClicks'"");
+  textClicks.onNext()
+}
+
+function onButtonClick() {
+  console.log(""View :: onButtonClick() emits 'buttonClicks'"");
+  buttonClicks.onNext()
+}
+
+//Listen to controllers instruction to change the color
+// DOES NOT WORK
+var changeNumberColor = changeColors.map(function(c) {
+  console.log(""View :: Listened to 'changeColor'"")
+  if (c === undefined) {
+    c = getColor()
+  }
+
+  CONTENT.css('color', c)
+});
+
+//Listen to model's instruction to change the value
+// DOES NOT WORK
+var setValue = modelAmount.last(function(latestValue) {
+  console.log(""View :: Listened to 'clickAmount'"")
+  console.log(""View :: setValue("" + latestValue + "")"")
+  CONTENT.text(latestValue)
+});
+</code></pre>
+
+<p>Controller.js</p>
+
+<pre><code>  var inputTextClicks = new Rx.Subject();
+  var inputButtonClicks = new Rx.Subject();
+
+  var obs = null;
+
+  function Controller(obs){
+    console.log(""Controller :: New Controller"")
+    obs = obs
+
+    obs.observe(""textClicks"", inputTextClicks, ""inputTextClicks"")
+    obs.observe(""buttonClicks"", inputButtonClicks, ""inputButtonClicks"")
+
+    obs.add(""addAmount"", addAmount);
+    obs.add(""changeColor"", changeColor);
+  }
+
+  //Listen to input events and give instructions to model
+  var addAmount = inputTextClicks.map(function(){
+    console.log(""Controller :: addAmount() listened to 'textClicks' and emits 'addAmount'"")
+    return 1;
+  });
+
+  //Listen to button presses and give instructions to the view
+  var changeColor = inputButtonClicks.map(function(){
+    console.log(""Controller :: ChangeColor() listened to 'buttonClicks' and emits 'changeColor'"")
+    return 1;
+  });
+</code></pre>
+
+<p>Model.js</p>
+
+<pre><code>  var controllerAddAmount = new Rx.Subject();
+
+  var obs = null;
+
+  //Stores the texts value. Starts at 0
+  var VALUE = 0;
+
+  function Model(obs){
+    console.log(""Model :: New Model"")
+    obs = obs
+
+    obs.observe(""addAmount"", controllerAddAmount, ""controllerAddAmount"")
+    obs.add(""clickAmount"", amountChanged)
+  }
+
+  //Listen to the controller about changing the value, notify the view about the new value
+  var amountChanged = controllerAddAmount.map(function(val){
+    console.log(""Model :: amountChanged() listened to 'addAmount' and emits 'clickAmount'"")
+    VALUE += val
+    console.log(""Model :: Amount Changed to "" + VALUE)
+    return VALUE;
+  })
+</code></pre>
+
+<p>So the problem is View.setValue() and View.setNumberColor().</p>
+","748511","","674326","","2015-02-24 13:42:10","2015-02-24 13:42:10","I have a chain of Rx.Subjects (A->B->C->A), but the final step is not working","<javascript><system.reactive><reactive-programming><rxjs><reactive-extensions-js>","1","2","0","","","CC BY-SA 3.0"
+"28706484","1","","","2015-02-24 21:18:13","","4","726","<p>I need to implement a behavior: </p>
+
+<ul>
+<li>when element clicked - one thing happens</li>
+<li>but when it's clicked and held for more than one second, something else happens (e.g element becomes draggable) and then the first event never fires</li>
+</ul>
+
+<p>I think I know how to catch click&amp;hold type of events, but how to distinguish between first and second? </p>
+
+<p>Can you show me how to do that using this <a href=""http://jsbin.com/faruci/5/edit?js,output"" rel=""nofollow"">jsbin</a>. I already made the ""click, hold &amp; drag"" part, except that it is still firing the 'click' event after dragging the element and it shouldn't.</p>
+
+<p>again: element clicked - one event, click and hold - element is draggable (even after mouse up) and when clicked again it's back to normal (undraggable) state.</p>
+
+<p>I am not looking for a trivial solution, it has to be built using <code>Rx.Observable</code> or at least Bacon's <code>streamEvent</code> object</p>
+
+<p>Thank you</p>
+","116395","","116395","","2015-02-24 22:46:41","2015-02-25 12:16:54","Separating single clicks from click and hold","<frp><rxjs><bacon.js><reactive-extensions-js>","2","3","","","","CC BY-SA 3.0"
+"28748792","1","29006539","","2015-02-26 17:22:20","","6","898","<p>I've got a special producer consumer problem in RxJS: The producer slowly produces elements. A consumer is requesting elements and often has to wait for the producer. This can be achieved by zipping the producer and the request stream:</p>
+
+<pre><code>var produce = getProduceStream();
+var request = getRequestStream();
+
+var consume = Rx.Observable.zipArray(produce, request).pluck(0);
+</code></pre>
+
+<p>Sometimes a request gets aborted. A produced element should only consumed after a not aborted request:</p>
+
+<pre><code>produce:  -------------p1-------------------------p2---------&gt;
+request:  --r1--------------r2---------------r3--------------&gt;
+abort:    ------a(r1)------------------a(?)------------------&gt;
+consume:  ------------------c(p1, r2)-------------c(p2, r3)--&gt;
+</code></pre>
+
+<p>The first request <code>r1</code> would consume the first produced element <code>p1</code>, but <code>r1</code> gets aborted by <code>a(r1)</code> before it can consume <code>p1</code>. <code>p1</code> is produced and gets consumed <code>c(p1, r2)</code> on second request <code>r2</code>. The second abort <code>a(?)</code> is ignored, because no unanswered request happened before. The third request <code>r3</code> has to wait on the next produced element <code>p2</code> and is not aborted till <code>p2</code> is produced. Thus, <code>p2</code> is consumed <code>c(p2, r3)</code> immediately after it got produced.</p>
+
+<p>How can I achieve this in RxJS?</p>
+
+<p><strong>Edit:</strong>
+I created an <a href=""http://jsbin.com/zihiceguce/1/edit?js,output"" rel=""nofollow noreferrer"">example</a> with a QUnit test on jsbin. You can edit the function <code>createConsume(produce, request, abort)</code> to try/test your solution.</p>
+
+<p>The example contains the function definition of the <a href=""https://stackoverflow.com/a/28756459/1065654"">previously accepted answer</a>.</p>
+","1065654","","-1","","2017-05-23 12:06:10","2015-03-12 09:54:27","RxJS: Producer-consumer with abort","<javascript><reactive-programming><rxjs><reactive-extensions-js>","3","3","2","","","CC BY-SA 3.0"
+"29022441","1","29032744","","2015-03-12 23:47:13","","3","1253","<p>I'm trying to figure out how to use <a href=""https://github.com/Reactive-Extensions/RxJS"" rel=""nofollow"">rx.js</a> with a dog-simple example, but can't figure out what reference or file I'm missing that means it isn't working.</p>
+
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Empty&lt;/title&gt;
+    &lt;script src=""/Scripts/rx.js""&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;script&gt;
+        var thing = Rx.Observable.fromEvent(document, 'keydown');
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>That's literally it. The script line correctly loads a local copy of rx.js 2.4.1 freshly downloaded from nuget.</p>
+
+<p>I'm getting the error Rx.Observable.fromEvent is not a function, so I'm assuming that there is a missing reference.</p>
+
+<p>It might just be the time of night, but I'm struggling to see what I'm doing wrong. Any help?</p>
+","2047108","","","","","2015-03-14 15:32:09","Unable to create Rx.Observable from JS event","<javascript><rxjs><reactive-extensions-js>","1","4","","","","CC BY-SA 3.0"
+"29606905","1","","","2015-04-13 13:45:20","","8","2567","<p>I'm struggling to get my head around the ""Rx"" way of displaying a loading indicator for an AJAX stream.</p>
+
+<pre><code>$scope.$createObservableFunction(""load"")
+        .take(1)
+        .do(function(){
+            $scope.loading = true;
+        })
+        .flatMap(contentService.AJAX_THINGY_AS_OBSERVABLE)
+        .delay(300)
+        .subscribe(function(content){
+            console.log(""content"",content);
+        },function(error){
+            $scope.error = error
+        },function() {
+            $scope.loading = false;
+        });
+</code></pre>
+
+<p>As far as I understand it I should use <code>.do()</code> for side effects, which I suppose setting <code>loading</code> is, but it doesn't feel like the right way of doing things.</p>
+
+<p>Can anyone provide a cleaner/better/proper example of how to do this? </p>
+
+<p>Thanks!</p>
+
+<p><strong>UPDATE 1</strong></p>
+
+<p>I decided to split this into 2 streams; <code>requestSource</code> and <code>responseSource</code>.</p>
+
+<pre><code>var loadRequestSource = $scope.$createObservableFunction(""load"")
+    .share();
+
+var loadResponseSource = loadRequestSource
+    .flatMap(contentService.AJAX_THINGY_AS_OBSERVABLE)
+    .throttle(1000)
+    .share();
+</code></pre>
+
+<p>Then have 2 separate subscribers:</p>
+
+<pre><code>loadRequestSource.subscribe(function () {
+    $scope.loading = true;
+});
+
+loadResponseSource.subscribe(function (response) {
+    /* enter logic */
+    $scope.loading = false;
+    $scope.$digest();
+}, function (err) {
+    $scope.error = err;
+    $scope.loading = false;
+    $scope.$digest();
+});
+</code></pre>
+
+<p>I'm liking this approach as it keeps the role of the subscribes accurate. The response subscriber doesn't need to care about setting <code>loading</code> to <code>true</code>. It only cares about setting it to <code>false</code>.</p>
+","925471","","925471","","2015-04-16 10:28:05","2016-03-01 15:55:41","RxJS - Loading indicator","<angularjs><rxjs><reactive-extensions-js>","1","3","3","","","CC BY-SA 3.0"
+"30379201","1","","","2015-05-21 16:17:27","","1","1048","<p>In a Node application I'm trying to process a stream of events using RxJS. The event stream is a list of changes to many documents. I'm using groupBy to partition the stream into new streams by documentId. But I'm wondering, once a document is closed on the client and no new events are added to the stream for that documentId, will groupBy dispose of that document's stream once it is empty? If not, how would I manually do that? I want to avoid a memory leak caused by new documents streams being create but never destroyed.</p>
+","202240","","674326","","2015-05-21 21:40:37","2015-05-22 01:13:39","Will Rx.Observable.groupBy clean up empty streams?","<javascript><system.reactive><reactive-programming><rx-java><reactive-extensions-js>","2","2","","","","CC BY-SA 3.0"
+"30530317","1","30533872","","2015-05-29 13:00:30","","5","1677","<p>I'm trying to get into reactive programming. I use array-functions like map, filter and reduce all the time and love that I can do array manipulation without creating state.</p>
+
+<p>As an exercise, I'm trying to create a filterable list with RxJS without introducing state variables. In the end it should work similar to this:</p>
+
+<p><img src=""https://i.stack.imgur.com/TD4oM.png"" alt=""enter image description here"">
+<img src=""https://i.stack.imgur.com/Y0Z4S.png"" alt=""enter image description here""></p>
+
+<p>I would know how to accomplish this with naive JavaScript or AngularJS/ReactJS but I'm trying to do this with nothing but RxJS and without creating state variables:</p>
+
+<pre><code>var list = [
+  'John',
+  'Marie',
+  'Max',
+  'Eduard',
+  'Collin'
+];
+
+Rx.Observable.fromEvent(document.querySelector('#filter'), 'keyup')
+  .map(function(e) { return e.target.value; });
+
+// i need to get the search value in here somehow:
+Rx.Observable.from(list).filter(function() {}); 
+</code></pre>
+
+<p><strong>Now how do I get the search value into my filter function on the observable that I created from my list?</strong></p>
+
+<p>Thanks a lot for your help!</p>
+","1240061","","","","","2016-05-02 19:28:56","Creating a filterable list with RxJS","<javascript><functional-programming><reactive-programming><rxjs><reactive-extensions-js>","4","0","","","","CC BY-SA 3.0"
+"30563675","1","30571014","","2015-05-31 23:12:25","","4","4593","<p>I have two merged observables with a scan after the merge. The first one is a simple range and the other is a Subject. Whenever the Subject emits a new value with <code>onNext</code> I concatenate that value in the scan and return the new array as the accumulator. If I dispose of my subscription, and then subscribe again it replays the values from the range but I have lost the ones from the Subject. In the code below I want my second subscription to have a final value of <code>[1, 2, 3, 4, 5]</code></p>
+
+<p>What would be the best way to do this? Right now I have another Subject where I store that final value and subscribe to that, but it <em>feels</em> wrong.</p>
+
+<p>Here's a simple version that demonstrates what is happening:</p>
+
+<pre><code>var Rx = require('rx');
+
+var source = Rx.Observable.range(1, 3);
+
+var adder = new Rx.Subject();
+
+var merged = source.merge(adder)
+                    .scan([], function(accum, x) {
+                        return accum.concat(x);
+                    });
+
+var subscription1 = merged.subscribe(function(x) {console.log(x)});
+adder.onNext(4);
+adder.onNext(5);
+
+subscription1.dispose();
+
+console.log('After Disposal');
+
+var subscription2 = merged.subscribe(function(x) {console.log(x)});
+</code></pre>
+
+<p>This outputs:</p>
+
+<pre><code>[ 1 ]
+[ 1, 2 ]
+[ 1, 2, 3 ]
+[ 1, 2, 3, 4 ]
+[ 1, 2, 3, 4, 5 ]
+After Disposal
+[ 1 ]
+[ 1, 2 ]
+[ 1, 2, 3 ]
+</code></pre>
+","2383305","","","","","2015-06-01 10:21:49","How to store accumulated result of a scan with rxjs","<javascript><reactive-programming><rxjs><reactive-extensions-js>","2","3","","","","CC BY-SA 3.0"
+"30736561","1","30737260","","2015-06-09 15:32:16","","2","1080","<p>Having a simple <code>Rxjs</code> stream, i faced this situation:</p>
+
+<pre><code>Rx.Observable
+  .fromArray([1,2,3,4,5,6])
+// if commented from here 
+  .windowWithCount(2, 1)
+  .selectMany(function(x) {
+    return x.toArray();
+  })
+// to here .. the error bubbles up
+  .subscribe(function(x) {
+    console.log('x:',x)
+    throw new Error(""AAHAAHHAHA!"");  
+  });
+</code></pre>
+
+<p>with the <code>windowWithCount + selectMany</code> the error is silently catched internally and isn't catchable and it isn't notified in console neither </p>
+
+<p>commenting those 2 blocks the error is notified on console at least<br>
+I don't think this is supposed to be, or am i missing something?<br>
+<a href=""http://jsbin.com/gujuyadesa/2/edit?js,console"" rel=""nofollow"">here the jsbin</a></p>
+","1455910","","1455910","","2015-06-09 15:46:19","2015-06-09 16:03:13","Rxjs swallows errors","<javascript><rxjs><reactive-extensions-js>","1","1","","","","CC BY-SA 3.0"
+"30876829","1","30878646","","2015-06-16 19:48:10","","2","304","<p>I have a web page where there are a bunch of items that the user can click on. clicking on any item, depending on it's type, will send an ajax request to the server and then display more items.
+If the request results in an error, I want to display it and then allow the user to continue clicking or interacting with the page as before.</p>
+
+<p>My code looks like this</p>
+
+<pre><code>$scope.$createObservableFunction(""clickHandler"")
+    .flatMapLatest(function (args) {
+        //send the ajax request to the server
+    })
+    .retry()
+    .subscribe(function (data) {
+         //handle getting the data from the server
+    })
+</code></pre>
+
+<p>where exactly can I handle the error case? I expect errors to happen, and I always want to re-subscribe to the source, but I want a chance to handle that error.</p>
+","3234163","","3234163","","2015-06-17 14:50:01","2015-06-17 14:50:01","handling errors with flatMapLatest and retry","<javascript><rxjs><reactive-extensions-js>","1","2","","","","CC BY-SA 3.0"
+"30933667","1","30942712","","2015-06-19 08:38:47","","1","1097","<p>Theoretically it should be possible to implement any RxJS operator (except <code>just()</code> and <code>flatMap()</code>) through <code>flatMap()</code>. For instance <code>map()</code> can be implemented as</p>
+
+<pre><code>function map(source, selector) {
+  return source.flatMap(x =&gt; Rx.Observable.just(selector(x)));
+}
+</code></pre>
+
+<p>How to implement <code>merge()</code> through <code>flatMap()</code>? (avoiding <code>mergeAll()</code> too, of course)</p>
+","315752","","1264804","","2015-06-19 17:11:14","2019-10-24 03:33:10","Merge implemented as flatMap","<javascript><reactive-programming><rxjs><reactive-extensions-js>","1","5","","","","CC BY-SA 3.0"
+"31366735","1","","","2015-07-12 10:21:28","","9","9139","<p>I am trying to convert my promise based code to RxJs but have a hard time to get my head around Rx especially RxJs.</p>
+
+<p>I have a an array with paths.</p>
+
+<pre><code>var paths = [""imagePath1"",""imagePath2""];
+</code></pre>
+
+<p>And I like to load images in Javascript</p>
+
+<pre><code>var img = new Image();
+img.src = imagePath;
+image.onload // &lt;- when this callback fires I'll add them to the images array
+</code></pre>
+
+<p>and when all Images are loaded I like to execute a method on.</p>
+
+<p>I know there is </p>
+
+<pre><code>Rx.Observable.fromArray(imagepathes)
+</code></pre>
+
+<p>there is also something like</p>
+
+<pre><code>Rx.Observable.fromCallback(...)
+</code></pre>
+
+<p>and there is something like <code>flatMapLatest(...)</code>
+And <code>Rx.Observable.interval</code> or timebased scheduler</p>
+
+<p>Based on my research I would assume that these would be the ingredients to solve it but I cannot get the composition to work.</p>
+
+<p>So how do I load images from a array paths and when all images are loaded I execute a method based on an interval?</p>
+
+<p>Thanks for any help. </p>
+","84750","","","","","2021-01-20 18:05:37","How to load images async with RxJs and perform a method when all loaded","<javascript><rxjs><reactive-extensions-js>","7","1","5","","","CC BY-SA 3.0"
+"31456853","1","31460738","","2015-07-16 14:18:08","","1","1345","<p>I'm working on an Angular application which shows a list of items fetched from a RESTful API. The content of the list depends on a query.
+The query can be passed either by filling in an input field, using a submit button or by adding it to the URL as query parameter.</p>
+
+<p>To make sure everything runs in order and prevent asynchronous issues, I’m using <a href=""https://github.com/Reactive-Extensions/RxJS"" rel=""nofollow noreferrer"">RxJS</a>.</p>
+
+<p>Now I’m wondering how I can handle errors, since they can occur in the middle of a stream, eg. when the HTTP-request fails.</p>
+
+<h2>The query as input stream</h2>
+
+<p>These are two <code>Observables</code>, which both send a sequence of queries.</p>
+
+<pre><code>// first observable for the submit button
+submitFormObservable = $scope.$createObservableFunction('search');
+
+// second observable for when the input value changes
+inputObservable = $scope.$toObservable('query')
+  .map(function (change) {
+    return change.newValue;
+  });
+</code></pre>
+
+<h2>Fetching for the results</h2>
+
+<p>The <code>Observable</code> below triggers when the query has been changed and fetches the results from the API.</p>
+
+<pre><code>var mainStream = Rx.Observable.merge([submitFormObservable, inputObservable])
+  .where(function (query) {
+    return query &amp;&amp; query.length &gt; 0;
+  })
+  .debounce(400)
+  .distinctUntilChanged()
+  .select(getResultsForQuery)
+  .switchLatest();
+</code></pre>
+
+<h2>Handling errors</h2>
+
+<p>Now I don’t know how to handle errors when eg. the <code>getResultsForQuery</code> throws an error.
+I would like to display the error instead of the results, but prevent the <code>Observable</code> from handling new events.</p>
+
+<p>Currently I've solved it by creating two new streams from the Observable, one to handle the result when successful and one when an error occurs. The response data for when the query was invalid contains an <code>error</code> property.</p>
+
+<p><strong>Success stream</strong></p>
+
+<pre><code>// stream containing the album information from LastFm
+mainStream
+  .filter(function (response) {
+    return !response.data.error;
+  })
+  .map(function (response) {
+    return response.data.result;
+  })
+  .subscribe(function (result) {
+    $scope.error = undefined;
+    $scope.result = result;
+  });
+</code></pre>
+
+<p><strong>Error stream</strong></p>
+
+<pre><code>mainStream
+  .filter(function (response) {
+      return response.data.error;
+    })
+   .map(function (response) {
+      return response.data;
+  });
+  .subscribe(function (error) {
+    $scope.result = [];
+    $scope.error = error;
+  });
+</code></pre>
+
+<h2>Possible solutions</h2>
+
+<ol>
+<li><p>I've read about <a href=""https://stackoverflow.com/questions/24856662/rxjs-continue-listening-after-ajax-error/24870693#24870693"">throwing and catching errors</a>, but the problem here is the stream seems to stop after the first error and doesn't trigger new events.</p></li>
+<li><p>Using <code>onErrorResumeNext</code> is <a href=""https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/errors.md#ignoring-errors-with-onerrorresumenext"" rel=""nofollow noreferrer"">described in the docs</a> to ignore errors and make sure the stream continues after an error. But I can't find a way to correctly 'handle' the error and show it to the end user.</p></li>
+</ol>
+
+<h2>Question</h2>
+
+<p>Is there a recommended approach on how to handle errors in a situation like this? Is it necessary to create two streams for this, or is it recommended to throw an exception?</p>
+
+<p>It's important that the user knows something went wrong, and the stream doesn't stop after the first error.</p>
+","363448","","-1","","2017-05-23 10:30:43","2015-07-16 17:24:54","How to handle errors in RxJS using Angular","<javascript><angularjs><reactive-programming><rxjs><reactive-extensions-js>","1","1","1","","","CC BY-SA 3.0"
+"31700733","1","31703874","","2015-07-29 12:43:15","","4","287","<p>Is there a way to make sure the order on how subscribers get updated is ensured?</p>
+
+<p>I've got a hot observable and my first subscriber does some sync work to update a variable and my next subscriber then has to initialise a service (only once!), and only after that variable is ensured to be set!</p>
+
+<p>it looks like this:</p>
+
+<pre><code>import App from './App'
+
+var appSource = App.init() // gets the hot observable
+
+// our second subscriber
+appSource.take(1).subscribe(() =&gt; {
+  // take 1 to only run this once
+  nextService.init()
+})
+</code></pre>
+
+<p>where <code>App.init</code> looks like this:</p>
+
+<pre><code>...
+init() {
+  var source = this.createObservable() // returns a hot interval observable that fetches a resource every few minutes
+
+  // first subscriber, updates the `myVar` every few minutes
+  source.subscribe((data) =&gt; this.myVar = data)
+
+  return source
+}
+...
+</code></pre>
+
+<p>this currently works, but I am unsure if it will always follow the order 100%.</p>
+
+<p><strong>EDIT:</strong></p>
+
+<p>As I've heard, subscribers will be invoked FIFO. So the order is somewhat assured.</p>
+","1246198","","1246198","","2015-07-29 15:18:26","2015-07-29 15:18:26","Ensure order that subscribers get updated","<javascript><functional-programming><reactive-programming><rxjs><reactive-extensions-js>","1","0","","","","CC BY-SA 3.0"
+"32097094","1","32099639","","2015-08-19 13:35:22","","0","221","<p>I am trying to control the inflow for a slow subscriber. Tried the below in NodeJS </p>
+
+<pre><code>var xmlNodeStream = Rx.Observable.from([1,2,3,4,5,6,7,8,9,10,11]);
+
+var commJson = xmlNodeStream.bufferWithCount(2).publish();
+
+var FastSubscriber = commJson.subscribe(
+      function (x) { console.log('----------\nFastSub: onNext: %s', x); },
+      function (e) { console.log('FastSub: onError: %s', e); },
+      function () { console.log('FastSub: onCompleted'); });
+
+var slowSubscriber = commJson.subscribe(function (x) {
+    setTimeout(function () { console.log(""============\nSlowsub called: "", x); }, 5000);
+});
+
+commJson.connect();
+</code></pre>
+
+<p>When I <a href=""http://code.runnable.com/VdSFzy8_recjllXQ/rxjs-buffer-for-node-js-and-hello-world"" rel=""nofollow"">run the above code</a>, I would expect the slow subscriber to pause for 5 seconds  <em>everytime</em> before next data-batch is received. </p>
+
+<p>But that is not happening. After an initial 5 second delay, all data is <strong>flooded</strong> to <code>slowSubscriber</code> in batches of 2.</p>
+
+<p>What is the right way to control the inflow so that slow subscibers can take their time (and preferably fast ones can wait for the slow ones to complete) ?</p>
+","451456","","451456","","2015-08-19 13:48:47","2015-08-19 15:22:48","RxJS bufferWithCount() not pausing for timeout","<javascript><node.js><rxjs><reactive-extensions-js>","1","0","","","","CC BY-SA 3.0"
+"32759128","1","32762779","","2015-09-24 10:32:56","","4","1568","<p>I'm trying to create a stream/observable that... </p>
+
+<ol>
+<li>Only outputs events when it has subscribers</li>
+<li>Provides any new subscribers with the latest value. </li>
+</ol>
+
+<p>The concrete case is that I need an observable that makes an Async API call whenever a particular event happens, but only if it has subscribers. I'm trying to avoid unnecessary API calls.</p>
+
+<p>I've managed to create a stream that only fires when it has subscribers like this...</p>
+
+<pre><code>let dataStream = Rx.Observable
+   .interval(1000) // Fire an event every second
+   .singleInstance() // Only do something when we have subscribers
+   .startWith(null) // kick start as soon as something subscribes
+   .flatMapLatest(interval =&gt; SomeAPI.someDataGet()) // get data, returns a promise
+</code></pre>
+
+<p>And this works. If I <code>console.log(...)</code> in the <code>SomeAPI.someDataGet</code> method, I only see it firing when the stream has subscribers. And my implementation looks really nice because I do this to subscribe and unsubscribe which fits in very nicely with React component lifecycle methods. </p>
+
+<pre><code>let sub1;
+sub1 = dataStream.subscribe(x =&gt; console.log('sub1', x));
+sub1.dispose();
+</code></pre>
+
+<p>I also want any new subscribers to receive the latest value the instant they subscribe. This is where I'm struggling. If I do this...</p>
+
+<pre><code>let sub1, sub2;
+sub1 = dataStream.subscribe(x =&gt; console.log('sub1', x));
+
+setTimeout( () =&gt; {
+    sub2 = dataStream.subscribe(x =&gt; console.log('sub2', x));
+}, 1500)
+</code></pre>
+
+<p>...I don't see the <code>console.log</code> for <code>sub2</code> until the next interval.</p>
+
+<p>If my understanding is correct. I need a <a href=""https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/creating.md#cold-vs-hot-observables"" rel=""nofollow noreferrer"">Hot Observable</a>. So I have tried to create a stream like this...</p>
+
+<pre><code>let dataStream = Rx.Observable
+   .interval(1000) // Fire an event every second
+   .singleInstance() // Only do something when we have subscribers
+   .startWith(null) // kick start as soon as something subscribes
+   .flatMapLatest(interval =&gt; SomeAPI.someDataGet()) // get data
+   .publish() // Make this a hot observable;
+</code></pre>
+
+<p>Which as I understand it, should make <code>dataStream</code> a <code>hot observable</code>.</p>
+
+<p>However, in my tests the second subscription still doesn't receive data until the next interval. In addition, this would introduce the requirement to connect and disconnect the dataStream when subscribing which is something I would like to avoid if possible. </p>
+
+<p>I'm brand new to RxJS and I would not be surprised if I've misunderstood what's happening here.</p>
+","64586","","247257","","2020-01-18 21:40:52","2020-01-18 21:40:52","How to create an Observable that only fires when it has subscribers, and provides the latest value to new subscribers immediately","<javascript><rxjs><frp><reactive-extensions-js>","1","0","1","","","CC BY-SA 3.0"
+"33353869","1","33355207","","2015-10-26 19:19:00","","11","7690","<p>What is the cleanest way to perform a side-effect when the <strong>last subscription</strong> for a RxJS Observable is disposed? This may occur <strong>before the Observable has terminated</strong>.</p>
+
+<p>Let's say that I need a function returning an <code>Observable</code> that emits changes to a resource. I'd like to perform a cleanup action when <em>all subscriptions</em> have been disposed.</p>
+
+
+
+<pre class=""lang-js prettyprint-override""><code>var observable = streamResourceChanges(resource);
+var subscription1 = observable.subscribe(observer1);
+var subscription2 = observable.subscribe(observer2);
+// ...
+subscription1.dispose();  // Does not perform the cleanup
+subscription2.dispose();  // Performs the cleanup
+</code></pre>
+
+<p>The only way I've found to define a subscription disposal action is to use <a href=""https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/creating.md"" rel=""noreferrer""><code>Rx.Observable.create</code></a>. The last disposal can be handled by sharing a subscription, for example with <a href=""https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/operators/singleinstance.md"" rel=""noreferrer""><code>Observable.prototype.singleInstance()</code></a>.</p>
+
+<p>For example:</p>
+
+<pre class=""lang-js prettyprint-override""><code>function streamResourceChanges(resource) {
+    return Rx.Observable.create(function(observer) {
+        // Subscribe the observer for resource changes...
+        // Return a cleanup function
+        return function() {
+            // Perform cleanup here...
+            console.log(""Cleanup performed!"");
+        };
+    }).singleInstance();
+}
+</code></pre>
+
+<p>Is there a neater way to define a side-effect for subscription disposal, similar to <code>doOnNext</code>, <code>doOnCompleted</code> or <code>doOnError</code>?</p>
+
+<pre class=""lang-js prettyprint-override""><code>var withCleanup = withoutCleanup.doOnDispose(function() {
+    // Perform cleanup here...
+});
+</code></pre>
+","3363825","","3363825","","2015-10-27 09:13:27","2015-10-27 09:13:27","RxJS Observable: performing cleanup when the last subscription is disposed?","<javascript><rxjs><reactive-extensions-js>","1","0","","","","CC BY-SA 3.0"
+"33595954","1","33596332","","2015-11-08 16:04:45","","7","3281","<p>Why doesn't the flatMap cause downstream reductions to fire?</p>
+
+<p>I got code like:</p>
+
+<pre><code>handleFiles.flatMap(files =&gt;
+  Rx.Observable.from(files).
+  flatMap((file, i) =&gt; fileReader(file, i)).
+  reduce((form, file, i) =&gt; {
+    form.append('file[' + i + ']', result);
+    console.log('reduce step', file);
+    return form;
+  }, new FormData()).
+  tap(console.log.bind(console, 'after reduce'))
+).
+subscribe(console.log.bind(console, 'response'));
+</code></pre>
+
+<p>And the problem is that the 'after reduce' tap is never hit. Why?</p>
+
+<p>The log is like:</p>
+
+<pre><code>reduce step [data]
+reduce step [data]
+</code></pre>
+
+<p>Screenshot:</p>
+
+<p><a href=""https://i.stack.imgur.com/4sCda.png"" rel=""noreferrer""><img src=""https://i.stack.imgur.com/4sCda.png"" alt=""Error screenshot""></a></p>
+","63621","","63621","","2015-11-08 16:19:59","2020-05-20 20:40:17","RxJS reduce doesn't continue","<javascript><reactive-programming><rxjs><reactive-extensions-js>","3","0","","","","CC BY-SA 3.0"
+"34337058","1","34341520","","2015-12-17 14:30:49","","2","1334","<p>in RxJava there is the Observable.toBlocking() operator to retrieve the data of the observable synchronously. I can not find a similiar operator for RxJS.
+I want to use this operator to improve my code with Rx and without using another functional programming library...</p>
+","3038183","","","","","2015-12-17 18:15:18","RxJS - toBlocking operator","<rxjs><reactive-extensions-js>","1","0","0","","","CC BY-SA 3.0"
+"34397162","1","35356214","","2015-12-21 13:44:32","","53","44126","<p>I'm using AngularJS 2 Beta 0 and I'm trying to create an RxJS Observable from an event on a window object.  I believe I know the formula for capturing the event as an Observable in my service:</p>
+
+<pre><code>var observ = Observable.fromEvent(this.windowHandle, 'hashchange');
+</code></pre>
+
+<p>The problem is that every time I try run this code, I get an error stating that 'fromEvent' is not a function.</p>
+
+<pre><code>Uncaught EXCEPTION: Error during evaluation of ""click""
+ORIGINAL EXCEPTION: TypeError: Observable_1.Observable.fromEvent is not a function
+</code></pre>
+
+<p>This seems to imply to me that I'm not handling my <code>import</code> correctly now that RxJS is not included in the build of Angular 2, though the rest of my application functions properly, which to me means that RxJS is where it is supposed to be.</p>
+
+<p>My import in the service looks like this:</p>
+
+<pre><code>import {Observable} from 'rxjs/Observable';
+</code></pre>
+
+<p>Though I have also tried to use this instead (with the appropriate changes to the code), with the same results:</p>
+
+<pre><code>import {FromEventObservable} from 'rxjs/observable/fromEvent';
+</code></pre>
+
+<p>I have the following configuration in my Index.html:</p>
+
+<pre><code>&lt;script&gt;
+    System.config({
+        map: {
+            rxjs: 'node_modules/rxjs'
+        },
+        packages: {
+            'app': {defaultExtension: 'js'},
+            'rxjs': {defaultExtension: 'js'}
+        }
+    });
+    System.import('app/app');
+&lt;/script&gt;
+</code></pre>
+
+<p>Can somebody tell me what I'm doing incorrectly?</p>
+","1480995","","1480995","","2017-09-15 16:55:05","2017-09-15 16:55:05","Angular2 RxJS getting 'Observable_1.Observable.fromEvent is not a function' error","<javascript><angular><typescript><rxjs><reactive-extensions-js>","2","0","10","","","CC BY-SA 3.0"
+"34627927","1","","","2016-01-06 07:40:00","","0","1155","<p>So I have an observable which makes an HTTP post to get the access token from a server. I have another which performs a get to the same server, but requires the access token from the first to exist. So I would like to be able to subscribe to both observables at the same time in two different places, but the GET observable must of course wait on the POST observable. How can I make an observable wait on another Observables subscribe completion?</p>
+","5640511","","9079040","","2017-12-14 09:56:24","2017-12-14 09:56:24","RxJS Observable That waits on Observable","<javascript><angular><rxjs><reactive-extensions-js>","2","0","","","","CC BY-SA 3.0"
+"34905013","1","","","2016-01-20 16:13:10","","4","194","<p>Can someone explain to me why Angular 2 requires the RxJS library and how it exactly relates to Observables &amp; Angular 2</p>
+","5768523","","","","","2016-01-21 10:49:24","RxJS: Reactive-Extensions for JavaScript with Angular 2","<angular><reactive-extensions-js>","1","1","","","","CC BY-SA 3.0"
+"35478038","1","36660407","","2016-02-18 09:51:25","","0","1305","<p>I have a bunch of events, each of which has to be triggered after the previous one with a delay specific to this event.</p>
+
+<p><code>Rx.Observable.interval</code> gives a possibility to provide just one interval.</p>
+
+<p>Is there a way to provide different intervals?</p>
+","979349","","979349","","2016-02-18 10:45:54","2016-04-16 05:17:54","Rx.Observable.interval with different interval for each event","<javascript><reactive-programming><rxjs><reactive-extensions-js>","2","3","1","","","CC BY-SA 3.0"
+"35740821","1","35762723","","2016-03-02 07:21:01","","1","874","<p>In RxJS version 5, the following code results in the process being terminated after three iterations of both subscriptions:</p>
+
+<pre><code>var Rx = require(""rxjs"");
+
+const published$ = Rx.Observable.interval(1000).publish();
+
+published$.subscribe(index =&gt; {
+    console.log(`One: ${index}`);
+
+    if (index == 3) throw new Error(""ded."");
+});
+
+published$.forEach(index =&gt; {
+    console.log(`Two: ${index}`);
+});
+
+published$.connect();
+</code></pre>
+
+<p>However, my understanding was that an error thrown in the next handler would simply unsubscribe that particular subscription, and not cause the underlying observable to terminate. My expected output would be that the ""One"" subscription would unsubscribe, but the interval would continue to produce results to the ""Two"" subscription.</p>
+
+<p>This behavior is causing me issues, where I may have multiple subscriptions to an underlying hot observable - yet a single exception thrown on any of those subscriptions causes the underlying observable to completely terminate.</p>
+
+<p>It's especially annoying when I'm in development using hot module reloading, since any programming error in any subscription causes me to have to refresh the entire page to re-start the observable sequences.</p>
+
+<p>Is there a way, without wrapping each of my subscriptions in a try/catch, to have an exception thrown in my next handler to simply unsubscribe that ONE subscription, and not terminate the underlying observable?</p>
+
+<p>------------ EDIT ------------</p>
+
+<p>I've found the behavior that I'm looking for, by setting syncErrorThrowable to true on the subscription object returned by ""subscribe"". It seems that the only time this is ever set to true in the codebase is via the ""do"" operator.</p>
+
+<p>Should I take advantage of this field? I feel pretty dirty using it, but on the other hand I find it strange that the ""do"" operator has different error handling semantics than the ""next"" subscription handler.</p>
+
+<p>Here's the primary block of code affected by this flag:
+<a href=""https://github.com/ReactiveX/RxJS/blob/master/src%2FSubscriber.ts#L132"" rel=""nofollow"">https://github.com/ReactiveX/RxJS/blob/master/src%2FSubscriber.ts#L132</a></p>
+
+<p>If it's set to false, this method gets invoked:
+<a href=""https://github.com/ReactiveX/RxJS/blob/master/src%2FSubscriber.ts#L179"" rel=""nofollow"">https://github.com/ReactiveX/RxJS/blob/master/src%2FSubscriber.ts#L179</a></p>
+
+<p>Whereas if it's set to true, this method is used instead:
+<a href=""https://github.com/ReactiveX/RxJS/blob/master/src%2FSubscriber.ts#L188"" rel=""nofollow"">https://github.com/ReactiveX/RxJS/blob/master/src%2FSubscriber.ts#L188</a> </p>
+
+<p>The difference is that the first method will re-throw the exception back up the callstack, whereas the second one instead propagates the error forward to subsequent subscriptions.</p>
+
+<p>Why does the do operator propagate the error forward, whereas the ""next"" handler bubbles the error back up? This seems odd to me.</p>
+","","user19302","","user19302","2016-03-03 00:31:16","2016-03-03 03:37:32","Proper way to deal with errors thrown in ""onNext"" for hot, shared, observables","<javascript><reactive-programming><rxjs><reactive-extensions-js><rxjs5>","1","0","1","","","CC BY-SA 3.0"
+"35875588","1","35877246","","2016-03-08 18:51:18","","1","44","<p>In the example below I'm taking a user and creating a directory for that user. I want to simply log that the user as been created. What's the best way to get access to the <code>user</code> variable later in the chain?</p>
+
+<pre><code>let ensureUser$ = ghUser$
+  .map(u =&gt; Rx.Observable.fromPromise(createDir(u)))
+  .flatMapLatest(x =&gt; x)
+  .do(() =&gt; debug('created user dir'))
+</code></pre>
+
+<p>I want to do something like:</p>
+
+<pre><code>let ensureUser$ = ghUser$
+  .map(u =&gt; Rx.Observable.fromPromise(createDir(u)))
+  .flatMapLatest(x =&gt; x)
+  .do(() =&gt; debug(`created user dir ${u}`))
+</code></pre>
+","340688","","","","","2016-03-10 15:25:56","Access variables later in the chain","<javascript><rxjs><reactive-extensions-js>","2","1","","","","CC BY-SA 3.0"
+"36007911","1","36012813","","2016-03-15 09:56:45","","25","14697","<p>How do i execute the following scenario in the browser with RxJs:</p>
+
+<ul>
+<li>submit data to queue for processing</li>
+<li>get back the job id</li>
+<li>poll another endpoint every 1s until result is available or 60seconds have passed(then fail)</li>
+</ul>
+
+<p>Intermediate solution that i've come up with:</p>
+
+<pre><code> Rx.Observable
+    .fromPromise(submitJobToQueue(jobData))
+    .flatMap(jobQueueData =&gt; 
+      Rx.Observable
+            .interval(1000)
+            .delay(5000)
+            .map(_ =&gt; jobQueueData.jobId)
+            .take(55)
+    )
+    .flatMap(jobId =&gt; Rx.Observable.fromPromise(pollQueueForResult(jobId)))
+    .filter(result =&gt; result.completed)
+    .subscribe(
+      result =&gt; console.log('Result', result),
+      error =&gt;  console.log('Error', error)
+    );
+</code></pre>
+
+<ol>
+<li>Is there a way without intermediate variables to stop the timer once the data arrives or error occurs? I now i could introduce new observable and then use <code>takeUntil</code></li>
+<li>Is <code>flatMap</code> usage here semantically correct? Maybe this whole thing should be rewritten and not chained with <code>flatMap</code> ?</li>
+</ol>
+","911849","","","","","2020-05-05 21:54:44","RxJs: poll until interval done or correct data received","<javascript><rxjs><reactive-extensions-js>","5","0","7","","","CC BY-SA 3.0"
+"36152713","1","36166755","","2016-03-22 11:05:11","","1","227","<p>Scenario:</p>
+
+<ol>
+<li>User uses filters which are combined into single stream</li>
+<li>When filters change, event to the backend is fired to get ""cheap"" data</li>
+<li>When ""cheap"" data arrives, another request, with same parameters is fired to different endpoint, that returns ""expensive"" data which will be used to enrich cheap data. Request should be delayed by 1 second, and only fired if user does not change any of the filters (else it should wait for 1 second)</li>
+</ol>
+
+<p>And i'm struggling with 3) option without intermediate variables.</p>
+
+<pre><code>let filterStream = Rx.Observable
+.combineLatest(
+  filterX,
+  filterY,
+  (filterX, filterY) =&gt; {
+    x: filterX,
+    y: filterY
+  }
+ )
+ .map((filters) =&gt; {
+  limit: 100,
+  s: filters.x.a,
+  f: filters.x.b + filters.y.c,
+})
+.distinctUntilChanged()
+
+
+let cheapDataStream = filterStream
+.flatMapLatest((filterQuery) =&gt;
+Rx.Observable.fromPromise(cheapBackendApiCall(filterQuery)))
+
+// render cheap results
+cheapDataStream
+.map(result =&gt; transformForDisplay(result))
+.subscribe(result =&gt; { 
+  //render
+  // how do i invoke expensiveApiCall() with `filterQuery` data here?
+  // with a delay, and only if filterQuery has not changed?
+
+});
+</code></pre>
+","911849","","","","","2016-03-22 22:53:27","RxJs: access data before flatMapLatest after flatMapLatest finished","<javascript><rxjs><reactive-extensions-js>","3","2","","","","CC BY-SA 3.0"
+"38005750","1","38007053","","2016-06-24 04:45:24","","1","6241","<p>In <code>ngOnInit()</code> I have ""return x"" which I want to put into <code>Observable</code>, then perform transformations and return again in the same format.</p>
+
+<p>Here is the working plunker: <a href=""http://plnkr.co/edit/z26799bSy17mAL4P5MiD?p=preview"" rel=""nofollow"">http://plnkr.co/edit/z26799bSy17mAL4P5MiD?p=preview</a></p>
+
+<pre><code>import {Component} from '@angular/core'
+import { Observable } from 'rxjs'
+import * as Rx from 'rxjs/Rx'
+
+@Component({
+  selector: 'my-app',
+  providers: [],
+  template: `
+    &lt;div&gt;
+      &lt;h2&gt;{{name}}&lt;/h2&gt;
+
+      &lt;button (click)=""addToArray()""&gt;Add&lt;/button&gt;
+      &lt;ul&gt;
+        &lt;li *ngFor=""let item of data$ | async""&gt;{{ item }}&lt;/li&gt;
+      &lt;/ul&gt;
+
+    &lt;/div&gt;
+  `,
+  directives: []
+})
+export class App {
+
+  data = [""one"",""two"",""three""]
+  data$: Observable&lt;Array&lt;string&gt;&gt;;
+
+  constructor() {
+    this.name = 'Angular2 array to observable example'
+  }
+
+  ngOnInit() {
+    this.data$ = Rx.Observable.of(this.data)
+      .map(data =&gt; {
+        let x = data
+        x.push(""4"")
+
+        ///
+        ///  TRANSFORM X IN THIS SECTION OF THE CODE
+        ///  HERE BY PUTTING IT INTO OBSERVABLE
+        ///  PERFORMING TRANSFORMATIONS AND
+        ///  RETURNING THE DATA TO BE RENDERED IN TEMPLATE
+        ///
+
+        return x
+      })
+  }
+
+  addToArray() {
+    this.data.push('more numbers')
+  }      
+}
+</code></pre>
+","6024613","","1679310","","2016-06-24 06:40:54","2016-06-24 08:07:43","Convert Array to Observable, perform transformations and return again as Array?","<typescript><angular><rxjs><rxjs5><reactive-extensions-js>","1","4","","","","CC BY-SA 3.0"
+"38481764","1","38482172","","2016-07-20 12:46:48","","64","45536","<p>I try to chain multiple rx.js observables and pass the data. <code>Flatmap</code> should be the fitting operator but with an import of</p>
+
+<pre><code>import { Observable } from 'rxjs/Observable';
+</code></pre>
+
+<p>it is not found:</p>
+
+<pre><code>Error TS2339: Property 'flatmap' does not exist on type 'Observable&lt;Coordinates&gt;'
+</code></pre>
+
+<p>Version <code>5.0.0-beta.6</code> of rx.js is used.</p>
+
+<pre><code>public getCurrentLocationAddress():Observable&lt;String&gt; {
+    return Observable.fromPromise(Geolocation.getCurrentPosition())
+      .map(location =&gt; location.coords)
+      .flatmap(coordinates =&gt; {
+        console.log(coordinates);
+        return this.http.request(this.geoCodingServer + ""/json?latlng="" + coordinates.latitude + "","" + coordinates.longitude)
+          .map((res: Response) =&gt; {
+                       let data = res.json();
+                       return data.results[0].formatted_address;
+              });
+      });
+  }
+</code></pre>
+","2587904","","2587904","","2016-07-20 12:53:38","2019-05-05 11:40:32","rxjs flatmap missing","<rxjs><observable><reactive-extensions-js>","6","1","6","","","CC BY-SA 3.0"
+"39231343","1","39266413","","2016-08-30 15:17:44","","3","1945","<p><a href=""http://jsbin.com/potiqa/edit?html,js,console"" rel=""nofollow"">JSBIN Sample</a></p>
+
+<p>I have a changeable set of child components (POJO object) that each have its own state stream. Each time a user triggers addChild/removeChild/clearChildren, a new set of children state streams is emitted with #switchMap. So far so good! (And so amazed by RxJS!)</p>
+
+<p>With <code>Rx.Observable.from(arrayOfStateStreams).combineAll()</code> I get a good result as long as the <code>arrayOfStateStreams</code> isn't an empty array.</p>
+
+<p>Since this is a partial state that is combined(Latest) on a higher level, I need to get an empty array emitted or the global state tree will contain old state data that is no longer true!</p>
+
+<p>I can emit some reserved token like <code>['EMPTY-ARRAY-PLACEHOLDER-TOKEN']</code>, but that's just weird.
+A better way would be to always append one last stream into the array so the last index can be considered trash. Still confusing code and state though.
+Using <code>[null]</code> is not OK, since we could have a child state of <code>'null'</code>.</p>
+
+<p>Anyone who can solve this in a good way? Can't this be supported since there should be no other representation of an empty array after #combineAll?</p>
+","2083576","","415661","","2016-08-30 15:39:29","2021-09-02 13:43:04","combineAll does not emit on empty array","<rxjs><rxjs5><reactive-extensions-js>","3","1","1","","","CC BY-SA 3.0"
+"39356336","1","39358649","","2016-09-06 19:18:19","","3","3277","<p>I am new to ReactiveExtensions and I do not get to work s.th. that I think should be a very common usecase. I want to receive a new value only after a specific period of time has passed without a new next value. In the bottom example this period of time is 1 second. The <a href=""https://github.com/Reactive-Extensions/RxJS/blob/master/doc/api/core/operators/debounce.md"" rel=""nofollow noreferrer"">debounce-operator</a> seems to do exactly what I want. I do not get it to work though. </p>
+
+<pre><code>const observable$ = new Rx.Observable(observer =&gt; {
+
+ observer.next('start');
+
+ setTimeout(() =&gt; {
+  observer.next(1);
+ }, 100);
+ setTimeout(() =&gt; {
+  observer.next(2);
+ }, 200);
+ setTimeout(() =&gt; {
+  observer.next(3);
+ }, 300);
+ setTimeout(() =&gt; {
+  observer.next(4);
+ }, 400);
+
+ setTimeout(() =&gt; {
+  observer.next('end');
+ }, 1500);
+});
+
+let sub = observable$
+      .debounce(1000) //debounce(1000, null) does not work either
+      .take(100)
+      .subscribe(data =&gt; {
+          console.log(data);
+         }, 
+         err =&gt; console.log(err.message), 
+         complete =&gt; console.log('Observable completed')
+       )
+</code></pre>
+
+<p>What I want to get is a console-output of only:</p>
+
+<pre><code>""start""
+""end""
+</code></pre>
+
+<p>In my IDE (Webstorm) the above code does not even compile although the documentation states that the second argument is optional. On <a href=""http://jsbin.com/vubafod/edit?js,console"" rel=""nofollow noreferrer"">jsbin.com</a> i get the following error: ""this.durationSelector.call is not a function"" (I admit, I dont know yet how to apply schedulers in rxjs). In the documentation they use only a number, too. Most examples of debounce i found on google use only a number, i.e. this <a href=""https://stackoverflow.com/questions/30840247/what-does-rxjs-observable-debounce-do"">example on Stackoverflow</a>. Why doesn't this work in my case?</p>
+
+<p>Thanks for your help!</p>
+
+<p>PS: I use rxjs 5.0.0-beta.6.</p>
+
+<p>EDIT: With the help of the answers here I did find the actual soltion I wanted:</p>
+
+<pre><code>const observable$ = new Rx.Observable(observer =&gt; {
+
+observer.next('start');
+
+ setTimeout(() =&gt; {
+  observer.next(1);
+ }, 1100); //&lt;-- If you change 1100 to i.e. 900 you just get ""end"" in the output, because there is no 1s periode during which no new value arrives. 
+ setTimeout(() =&gt; {
+  observer.next(2);
+ }, 1200);
+ setTimeout(() =&gt; {
+  observer.next(3);
+ }, 1300);
+ setTimeout(() =&gt; {
+  observer.next(4);
+ }, 1400);
+ setTimeout(() =&gt; {
+  observer.next(5);
+ }, 1500);
+
+ setTimeout(() =&gt; {
+  observer.next('end');
+ }, 1501);
+
+
+});
+
+let sub = observable$
+      .debounceTime(1000)
+      .take(10)
+      .subscribe(data =&gt; {
+         console.log(data);
+       }, 
+       err =&gt; console.log(err.message), 
+       complete =&gt; console.log('Observable completed')
+);
+</code></pre>
+","5580311","","-1","","2017-05-23 12:00:56","2016-09-07 14:11:52","RxJs: New value only after a period of time has passed","<javascript><rxjs><rxjs5><reactive-extensions-js>","2","0","1","","","CC BY-SA 3.0"
+"39512662","1","","","2016-09-15 13:43:03","","0","32","<p>I cannot figure out how can I solve the following problem.</p>
+
+<p>There is an object type:</p>
+
+<pre><code>Box { 
+    Fruit[n]: {
+      Kinds[n]: {  
+        id: string;
+        name: string;
+      }
+    }
+}
+</code></pre>
+
+<p>I got the box of fuits from an API call as an Observable (Angular2) [Fruit[]] then I want to populate its ""navigation property"" with another API call what gives back an observable as well like:</p>
+
+<pre><code>  Box.foreach(fruits =&gt;
+       fruits.foreach(f =&gt; 
+           f.kinds.foreach(k =&gt; 
+                k.name = kindservice.getKindName(k.id) // &lt;- observer
+    )))
+</code></pre>
+
+<p>How can I do it with RxJs?</p>
+
+<p>I tried many ways, there are many mapper but I could not figure out yet.
+I used the Observable.from(..) as well but there was no luck.</p>
+
+<p>Thank you</p>
+","1693057","","","","","2016-11-01 10:56:23","Population with embeded queries RxJs","<javascript><angular><rxjs><rxjs5><reactive-extensions-js>","1","0","","","","CC BY-SA 3.0"
+"39635879","1","39641283","","2016-09-22 09:55:15","","3","792","<p>Imagine that we have an HTML page that fires AJAX requests. We want to make sure that AJAX requests are executed in order. The next AJAX request won't be fired until the previous one completes or errors.</p>
+
+<p>I have tried to model this via a task queue using RxJS <code>concatMap</code>. Each AJAX request is modeled as an <code>Observable</code>. Everything is working great if AJAX request completes successfully, however if it errors, then the next task in the queue is not executed.</p>
+
+<p>Here is an example, that uses <code>setTimeout()</code> to simulate long running async tasks:
+</p>
+
+<pre><code>  function identity(observable) {
+    return observable;
+  }
+
+  function createTaskQueue() {
+    var subject= new Rx.Subject();
+
+    subject
+    .concatMap(identity)
+    .onErrorResumeNext(Rx.Observable.of('error'))
+    .subscribe(function(data) {
+      console.log('onNext', data);
+    }, 
+    function(error) {
+      console.log('onError', error);
+    });
+
+    return {
+      addTask: function(task) {
+        subject.next(task);
+      }
+    }
+  }
+
+  function createTask(data, delay) {
+    return Rx.Observable.create(function(obs) {
+      setTimeout(function() {
+        obs.next(data);
+        obs.complete();
+      }, delay);
+    });
+  }
+
+  function createErrorTask(data, delay) {
+    return Rx.Observable.create(function(obs) {
+      setTimeout(function() {
+        obs.error('Error: ' + data);
+        obs.complete();
+      }, delay);
+    });
+  }
+
+  var taskQueue = createTaskQueue();
+
+  taskQueue.addTask(createTask(11, 500))
+  taskQueue.addTask(createTask(22, 200));
+  taskQueue.addTask(createErrorTask(33, 1000));
+  taskQueue.addTask(createTask(44, 300));
+  taskQueue.addTask(createErrorTask(55, 300));
+  taskQueue.addTask(createTask(66, 300));
+</code></pre>
+
+<p>Here is an executable example: <a href=""https://jsfiddle.net/artur_ciocanu/s6ftxwnf/"" rel=""nofollow"">https://jsfiddle.net/artur_ciocanu/s6ftxwnf/</a>.</p>
+
+<p>When I run this code the following is printed to the console:
+<code>
+onNext 11
+onNext 22
+onNext error
+</code></p>
+
+<p>Which is expected, but I wonder why the other tasks like 44, 55, etc are not executed.</p>
+
+<p>I am pretty sure I am doing something stupid with <code>onErrorResumeNext()</code> or may be the whole approach is totally wrong.</p>
+
+<p>Any help is very much appreciated.</p>
+","5339525","","3743222","","2016-09-25 23:51:59","2016-09-25 23:51:59","RxJS 5 task queue, continue if a task fails","<javascript><ajax><rxjs><rxjs5><reactive-extensions-js>","2","0","1","","","CC BY-SA 3.0"
+"39722440","1","","","2016-09-27 10:36:10","","13","9254","<p>I have two behaviour subject streams what I'm trying to forkJoin with no luck.
+As I imagined it gives back the two last values of it. Is this possible to implement it somehow?</p>
+
+<p>It is not called after the subject.</p>
+
+<pre><code>let stream1 = new BehaviorSubject(2);
+let stream2 = new BehaviorSubject('two');
+
+Observable.forkJoin(stream1, stream2)
+    .subscribe(r =&gt; {
+         console.log(r);
+    });
+</code></pre>
+","1693057","","310726","","2016-09-27 14:15:02","2021-06-30 09:52:49","ForkJoin 2 BehaviorSubjects","<javascript><typescript><rxjs><reactive-extensions-js>","3","0","1","","","CC BY-SA 3.0"
+"39792634","1","39835830","","2016-09-30 13:24:17","","2","287","<p>I feel like I'm taking crazy pills when I see all these middlewares that encourage you to dispatch an action which emits other actions asynchronously. I think the async CAN (and maybe should?) be done before the store.</p>
+
+<p>To me the benefit of Rx is that you can take an incoming stream of actions, map some of them to observables of other actions, and flatMap the entire result to get an ordered series of events. Then you can chain that resultant stream into the store by dispatching each event to it.</p>
+
+<p>Not only does putting async inside of actions take the simple model of Redux and complicate it, but it means that as you time-travel debug - you may cause firing off of new AJAX requests (which can rewrite your history as you scrub?).</p>
+
+<p>I guess I feel like putting the power of RxJS in front of the store makes plenty of sense to me, but I'm confused why a library to put it in
+side the store makes sense. I agree that Observables are a great model for Epics, but I wonder if Redux is being made to care about things that it should never know about.</p>
+
+<p>Background: I've watched this video <a href=""https://www.youtube.com/watch?v=AslncyG8whg"" rel=""nofollow"">https://www.youtube.com/watch?v=AslncyG8whg</a>, have been learning Rx for a few years, Redux half a year.</p>
+","326532","","","","","2016-10-03 16:04:40","Why handle Observables inside of middleware - vs dispatching the output of combined Observables?","<redux><rxjs><reactive-extensions-js><redux-observable>","1","0","","","","CC BY-SA 3.0"
+"40046558","1","40052330","","2016-10-14 15:14:09","","1","1478","<p>I'm building an Angular2 app, so I'm getting used to Observables and Reactive Extensions as a whole. I'm using TypeScript and rxjs.</p>
+
+<p>Now I've got an observable, or a stream if you will, of an array of some objects. Let's say Person-objects. Now I've got two other streams of Person-objects and want to combine these so I get a stream which is always up to date:</p>
+
+<pre><code>var people$ = getPeople();                  // Observable&lt;Person[]&gt;
+var personAdded$ = eventHub.personAdded;    // Observable&lt;Person&gt;;
+var personRemoved$ = eventHub.personRemoved // Observable&lt;Person&gt;;
+
+var allwaysUpToDatePeople$ = people$.doSomeMagic(personAdded$, personRemoved$, ...);
+</code></pre>
+
+<p>If the people-stream emits an array of, let's say, 5 people, and after that the personAdded-stream emits a person, the allPeople-stream wil emit an array of 6. 
+If the personRemoved-stream emits a person, the allPeople-stream should emit an array of Person-objects without the one just emitted by the personRemoved-stream.</p>
+
+<p>Is there a way built into rxjs to get this behaviour?</p>
+","709455","","","","","2019-09-06 18:44:48","Combine multiple Observables with different actions/operations","<angular><rxjs><rxjs5><reactive-extensions-js><angular2-observables>","2","0","","","","CC BY-SA 3.0"
+"40095990","1","40096039","","2016-10-17 21:30:46","","2","143","<p>Say you do something like:</p>
+
+<pre><code>Rx.Observable.range(1, 5).bufferWithCount(2, 1).subscribe(console.log);
+</code></pre>
+
+<p>This returns:</p>
+
+<pre><code>[1, 2]
+[2, 3]
+[3, 4]
+[4, 5]
+[5]
+</code></pre>
+
+<p>I'd like for the result to look like (basically force the first value to emit):</p>
+
+<pre><code>[&lt;userDefined&gt;, 1]
+[1, 2]
+[3, 4]
+etc...
+</code></pre>
+","173491","","","","","2016-10-17 21:34:06","How can you seed a first item with bufferWithCount in rx.js?","<rxjs><reactive-extensions-js>","1","0","","","","CC BY-SA 3.0"
+"40407540","1","40522372","","2016-11-03 17:14:16","","0","74","<p>I'm pretty new to Reactive Programming but already in love. However it is still hard to switch my brain to it. I'm trying to follow all recommendations as ""Avoid using subjects"" and ""Avoid impure functions"" and of course ""Avoid imperative code.""</p>
+
+<p>What I'm finding hard to achieve is simple cross modules communications where one module can register ""action""/observable and the other could subscribe and react to it. A simple message bus will probably work but this will enforce the usage of Subjects and imperative code style which I'm trying to avoid.</p>
+
+<p>So here is a simple starting point I'm playing with:</p>
+
+<pre><code>    // some sandbox
+class Api {
+  constructor() {
+    this.actions = {};
+  }
+
+  registerAction(actionName, action) {
+    // I guess this part will have to be changed
+    this.actions[actionName] = action.publishReplay(10).refCount();
+    //this.actions[actionName].connect();
+  }
+
+  getAction(actionName) {
+    return this.actions[actionName];
+  }
+}
+
+const api = new Api();
+
+// -------------------------------------------------------------------
+// module 1
+let myAction = Rx.Observable.create((obs) =&gt; {
+  console.log(""EXECUTING"");
+  obs.next(""42 "" + Date.now());
+  obs.complete();
+});
+
+api.registerAction(""myAction"", myAction);
+
+let myTrigger = Rx.Observable.interval(1000).take(2);
+
+let executedAction = myTrigger
+.flatMap(x =&gt; api.getAction(""myAction""))
+.subscribe(
+  (x) =&gt; { console.log(`executed action: ${x}`); },
+  (e) =&gt; {}, 
+  () =&gt; { console.log(""completed"");});
+
+// -------------------------------------------------------------------
+// module 2
+api.getAction(""myAction"")
+  .subscribe(
+  (x) =&gt; { console.log(`SECOND executed action: ${x}`); },
+  (e) =&gt; {}, 
+  () =&gt; { console.log(""SECOND completed"");});
+</code></pre>
+
+<p>So currently at the moment the second module subscribes it ""triggers"" the ""myAction"" Observable. And in a real life scenario that could be an ajax call. Is there any way to make all subscribers delay/wait until ""myAction"" is called properly from module1? And again - its easy to do it using subjects but I'm trying to do it following recommended practices.</p>
+","1875216","","","","","2016-11-10 07:48:14","RxJS/ReactiveX Proper modules communication","<rxjs><rxjs5><reactivex><reactive-extensions-js>","2","2","","","","CC BY-SA 3.0"
+"41204055","1","41204200","","2016-12-17 23:29:18","","1","4550","<p>I am doing some http requests and use rxjs for successfull notification of the result:</p>
+
+<pre><code>  getReportings(departmentId: number): Observable&lt;any&gt; {
+        return Observable.forkJoin(
+            this.http.get('/api/members/' + departmentId).map(res =&gt; res.json()),
+            this.http.get('/api/reports/' + departmentId).map(res =&gt; res.json())
+        );
+    }
+</code></pre>
+
+<p>When both http requests are done I want inside the getReportings method to iterate the reports array , read some values and for each report make again a new http request with those values.</p>
+
+<p>All in all I have 2 (member/reports) + appr. 4 to 8 (other stuff) requests.</p>
+
+<p>When all appr. 6 to 8 requests are done I want to get ALL data from the previous 6 to 8 requests in the successfull handler.</p>
+
+<p>How can I do this with rxjs?</p>
+
+<p>UPDATE</p>
+
+<p>As user olsn asked for more details and I understand him now whats his concern I put more data here (<strong>pseudo code</strong>) how the 6 to 8 requests should look like:</p>
+
+<pre><code>getReportings(departmentId: number): Observable&lt;any&gt; {
+    return Observable.forkJoin(
+        this.http.get('/api/members/' + departmentId).map(res =&gt; res.json()),
+        this.http.get('/api/reports/' + departmentId).map(res =&gt; res.json())
+    ).switchMap((result: [any[], any[]]) =&gt; {
+        let members: any[] = result[0];
+        let reports: any[] = result[1];
+        let allNewStreams: Observable&lt;any&gt;[] = [
+            Observable.of(members),
+            Observable.of(reports)
+        ]; 
+
+        for(let report of reports)
+        {
+            allNewStreams.push(
+this.http.get(report.url + ?key1=report.name1?).map(res =&gt; res.json()));
+        }
+
+
+        return Observable.forkJoin(allNewStreams); // will contain members, reports + 4-6 other results in an array [members[], reports[], ...other stuff]
+    });
+}
+</code></pre>
+","320460","","320460","","2016-12-18 17:39:46","2016-12-18 20:44:35","rxjs with multiple forkjoin when doing http requests","<angular><rxjs><angular2-http><reactive-extensions-js>","1","0","2","","","CC BY-SA 3.0"
+"41304086","1","41304659","","2016-12-23 15:32:41","","1","547","<p>I'm having problems with making an RxJS5 observable stream behave in a way that I want it to.</p>
+
+<p>The stream is supposed to send an HTTP request to a website using axios, and if the response is an HTTP error (which axios coerces to a JavaScript error), the observable sequence should wait 10 milliseconds and then try resending the request (for some reason the website that I'm sending the request to doesn't like it when you retry sending the request immediately and keeps throwing errors, but mostly behaves fine with a 10 ms delay).</p>
+
+<pre><code>Rx.Observable
+  .fromPromise(axios('http://example.com/12345'))
+  .map(x =&gt; new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+      resolve(x)
+    }, 2000)
+  }))
+  .debounceTime(2000)
+  .do(console.log)
+  .retry(10)
+  .subscribe(console.log, console.error)
+</code></pre>
+
+<p>I have an example on Codepen with a few changes, to make it more apparent, how the stream works: <a href=""http://codepen.io/leakyabstractions/pen/pNmvyZ?editors=0010"" rel=""nofollow noreferrer"">http://codepen.io/leakyabstractions/pen/pNmvyZ?editors=0010</a></p>
+
+<p>I tried using <code>.delay()</code>, <code>.debounceTime()</code>, <code>.timer()</code>, <code>.timeInterval()</code> and <code>.timeout()</code> in the place of the <code>.map()</code> operator, but nothing (including <code>.map()</code>) works. What am i doing wrong?</p>
+","6002579","","","","","2016-12-28 12:25:19","How to delay retrying to send an HTTP request with RxJS5?","<javascript><reactive-programming><rxjs5><reactive-extensions-js><reactive>","2","0","","","","CC BY-SA 3.0"
+"41492283","1","","","2017-01-05 18:37:06","","4","752","<p>I am new to Rx, and I would really appreciate a little help with error handling. I have the following code, which is basically a typeahead:</p>
+
+<pre><code>var observable = Rx.Observable.fromEvent(searchField, 'keyup')
+    .map(ev =&gt; ev.target.value)
+    .filter(text =&gt; text.length &gt; 2)
+    .debounce(500 /* ms */)
+    .distinctUntilChanged()
+    .flatMapLatest(getAsyncSearchResults);
+
+observable.subscribe(function(value) {
+        console.log(""onNext"");
+        throw ""error""; // THIS TERMINATES THE OBSERVABLE
+    },
+    function(error) {
+        console.log(""Error"");
+    },
+    function() {
+        console.log(""Completed"");
+    });
+</code></pre>
+
+<p>The Observable terminates after an exception occurs in onNext function. This seems an unwanted behavior to me, since I don't want to wrap all of my onNext code inside a try-catch. Is there any way that I could tell the observable to keep issuing notification no matter what exception occurs?</p>
+","3399283","","","","","2018-04-08 03:36:29","RxJS - Continue sending notifications after error occurs in onNext","<rxjs><reactive-programming><reactive-extensions-js>","3","1","2","","","CC BY-SA 3.0"
+"42647567","1","42647651","","2017-03-07 11:49:31","","10","2452","<p>The following code emits an <code>int</code> after <code>5000ms</code> and then another in every <code>5000ms</code> later:</p>
+
+<pre><code>let evens = Observable.interval(5000)
+     .map(i =&gt; {
+          return i * 2;
+      });
+
+ evens.subscribe((i) =&gt; {
+      console.log(i);
+ });
+</code></pre>
+
+<p>Is it possible to do this, but have the first result immediately (<code>0ms</code>), and then wait <code>5000m</code>s between subsequent results?</p>
+","522330","","310726","","2017-03-07 11:56:37","2019-01-17 09:30:50","RxJS Interval without delay","<javascript><typescript><rxjs><rxjs5><reactive-extensions-js>","1","0","","","","CC BY-SA 3.0"
+"42780734","1","","","2017-03-14 08:08:42","","3","54","<p>What's the difference/relationship between those two github groups:</p>
+
+<ul>
+<li>Reactive-Extensions (<a href=""https://github.com/Reactive-Extensions"" rel=""nofollow noreferrer"">https://github.com/Reactive-Extensions</a>)</li>
+<li>ReactiveX (<a href=""https://github.com/ReactiveX"" rel=""nofollow noreferrer"">https://github.com/ReactiveX</a>)</li>
+</ul>
+","1253826","","310726","","2017-03-19 15:17:46","2017-03-19 15:17:46","What's the relationship between Reactive-Extension and ReactiveX","<rxjs><reactive-programming><rxjs5><reactivex><reactive-extensions-js>","1","0","","","","CC BY-SA 3.0"
+"42891300","1","","","2017-03-19 19:39:03","","1","93","<p>I am looking to cache the result of a specific Angular2 HTTP call (getting my user profile from the server), and I want that cache to remain valid until I update the profile.</p>
+
+<p>This is the code I have, which does cache the value, but never updates it, even if the profile is changed.</p>
+
+<pre class=""lang-ts prettyprint-override""><code>readonly user$: Observable&lt;User&gt; = this.http
+    .get(`${this.baseUrl}/me`)
+    .map(r =&gt; r.json())
+    .publishLast()
+    .refCount();
+
+updateProfile(user: User): Observable&lt;any&gt; {
+    return this.http.put(`${this.baseUrl}/me`, user);
+    // cause the existing user$-subscriptions to update with the user value
+}
+</code></pre>
+
+<p>Preferably I want the profile to update the existing subscriptions with the <code>user</code> value passed to <code>updateProfile</code>. Can this be done nicely in an Rx-y way, or do I have to resort to using a <code>Subject</code> and updating that manually?</p>
+","1606","","","","","2017-03-19 19:54:50","Execute HTTP call once and cache value until some condition changes","<angular><rxjs><reactive-extensions-js>","1","0","","","","CC BY-SA 3.0"
+"43664273","1","","","2017-04-27 17:23:51","","1","777","<p>For example, assume that we have stream like following</p>
+
+<pre><code>Stream 1 | -1-2-3-1-2-3--4-----------
+</code></pre>
+
+<p>after debounce, I would like to have the emitted stream looks like as follows:</p>
+
+<pre><code>Stream 2 | ---------------1-2-3--4------
+</code></pre>
+
+<p>There are lots of examples how to debounce the stream, but they take all value as the same trigger.</p>
+
+<p>The following is the example code I found in reactitve-extension website,</p>
+
+<pre><code>var Rx = require('rxjs/Rx');
+var times = [
+    { value: 1, time: 100 },
+    { value: 2, time: 200 },
+    { value: 3, time: 300 },
+    { value: 1, time: 400 },
+    { value: 2, time: 500 },
+    { value: 3, time: 600 },
+    { value: 4, time: 800 }
+];
+
+// Delay each item by time and project value;
+var source = Rx.Observable.from(times)
+  .flatMap(function (item) {
+    return Rx.Observable
+      .of(item.value)
+      .delay(item.time);
+  })
+  .debounceTime(500 /* ms */);
+
+var subscription = source.subscribe(
+  function (x) {
+    console.log('Next: %s', x);
+  },
+  function (err) {
+    console.log('Error: %s', err);
+  },
+  function () {
+    console.log('Completed');
+  });
+</code></pre>
+
+<p>The console output would be</p>
+
+<pre><code>Next: 4
+Completed
+</code></pre>
+
+<p>But I would like to get the following output</p>
+
+<pre><code>Next: 1
+Next: 2
+Next: 3
+Next: 4
+Completed
+</code></pre>
+
+<p>Maxime give good answer.
+I also try myself. Hope help someone who have the same question.</p>
+
+<pre><code>var Rx = require('rxjs/Rx');
+var times = [
+    { value: 1, time: 100 },
+    { value: 2, time: 200 },
+    { value: 3, time: 300 },
+    { value: 1, time: 400 },
+    { value: 2, time: 500 },
+    { value: 3, time: 600 },
+    { value: 4, time: 800 },
+    { value: 5, time: 1500 }
+];
+
+// Delay each item by time and project value;
+var source = Rx.Observable.from(times)
+  .flatMap(function (item) {
+    return Rx.Observable
+      .of(item.value)
+      .delay(item.time);
+  })
+  .do(obj =&gt; console.log('stream 1:', obj, 'at', Date.now() - startTime, `ms`))
+  .groupBy(obj =&gt; obj)
+  .flatMap(group =&gt; group.debounceTime(500))
+
+let startTime = Date.now();
+var subscription = source.subscribe(
+  function (x) {
+    console.log('stream 2: %s', x, 'at', Date.now() - startTime, 'ms');
+  },
+  function (err) {
+    console.log('Error: %s', err);
+  },
+  function () {
+    console.log('Completed');
+  });
+</code></pre>
+
+<p>The console will output</p>
+
+<pre><code>stream 1: 1 at 135 ms
+stream 1: 2 at 206 ms
+stream 1: 3 at 309 ms
+stream 1: 1 at 409 ms
+stream 1: 2 at 509 ms
+stream 1: 3 at 607 ms
+stream 1: 4 at 809 ms
+stream 2: 1 at 911 ms
+stream 2: 2 at 1015 ms
+stream 2: 3 at 1109 ms
+stream 2: 4 at 1310 ms
+stream 1: 5 at 1510 ms
+stream 2: 5 at 1512 ms
+Completed
+</code></pre>
+","7932725","","7932725","","2017-04-28 13:36:51","2017-04-28 13:36:51","How to use debounce stream based on value?","<rxjs><reactive-programming><reactive-extensions-js>","1","4","0","","","CC BY-SA 3.0"
+"45336170","1","45338547","","2017-07-26 19:48:42","","0","137","<p>I've been trying to tackle this problem for a while now, I would guess this is a pretty common problem but what I want to do is augment items in an array coming from an observable, and the augmentation happens with an observable or promiselike
+So I want something like the following:</p>
+
+<pre><code>function augment(person: Person): Observable&lt;PersonWithAddress&gt; { 
+    // does ajax call or something
+}
+
+const items$: Observable&lt;Person[]&gt;;
+
+items$
+    .do(x =&gt; {}) // x would be of type Person[]
+    .flatFlatMap(person =&gt; { // person would be of type Person
+        return augment(person); // this would return an Observable&lt;PersonWithAddress&gt;
+    })
+    .subscribe(peopleWithAddresses =&gt; { // peopleWithAddresses would be of type PersonWithAddress[]
+    })
+</code></pre>
+
+<p>Is there some kind of operator for this, I get I can augment or map a single item emitted from an observable to something else coming from an observable with flatMap, but is there something like flatFlatMap or so.</p>
+","709455","","","","","2017-07-26 22:37:08","Augment seperate values in observable of array - RxJS","<rxjs><observable><reactive-extensions-js>","1","0","","","","CC BY-SA 3.0"
+"45896728","1","45896799","","2017-08-26 15:01:38","","2","22","<p>Kind of beginner question here: in an Ionic2 component, I have 2 different service calls using Observables:</p>
+
+<pre><code>  getTimelineEvents() {
+    this.receiptsEventsRequestState = RequestState.Pending;
+    this.chargesEventsRequestState = RequestState.Pending;
+
+    this.miscService.getCustomerReceiptsEvents()
+      .subscribe(
+        (events: TimelineEvent[]) =&gt; {
+         this.receiptsEventsRequestState = RequestState.Success;
+         this.receiptsEvents = events;
+         },
+      );
+
+    this.miscService.getCustomerChargesEvents()
+      .subscribe(
+        (events: TimelineEvent[]) =&gt; {
+        this.chargesEventsRequestState = RequestState.Success;}
+        this.chargesEvents = events;
+      );
+
+  }
+</code></pre>
+
+<p>I'd like to know when both <code>getCustomerReceiptsEvents</code> and <code>getCustomerChargesEvents</code> are successful sothat I can call another method (this method needs chargesEvents and receiptsEvents data).</p>
+
+<p>Thanks.</p>
+","2255491","","2131286","","2017-08-26 15:10:54","2017-08-26 15:10:54","Ionic2/angular: how to know when 2 different observables are terminated?","<rxjs><reactive-extensions-js>","1","2","","","","CC BY-SA 3.0"
+"47577526","1","","","2017-11-30 15:57:46","","1","31","<p>There are two different organizations linked to reactivex.io: </p>
+
+<ul>
+<li><a href=""https://github.com/ReactiveX"" rel=""nofollow noreferrer"">https://github.com/ReactiveX</a></li>
+<li><a href=""https://github.com/Reactive-Extensions"" rel=""nofollow noreferrer"">https://github.com/Reactive-Extensions</a></li>
+</ul>
+
+<p>I see that Java extensions exist only in ReactiveX. </p>
+
+<p>But, Rx.NET or IxJx exist in both organizations. However the former is active in Reactive-Extensions and the latter more active in ReactiveX.</p>
+
+<p>Why there are two different organizations?</p>
+","1140754","","","","","2017-12-02 06:37:53","Which one is the Github organization for reactivex.io?","<rxjs><reactivex><reactive-extensions-js>","1","0","","","","CC BY-SA 3.0"
+"48585707","1","","","2018-02-02 15:18:31","","0","404","<p>AFAIK, observable is lazy.</p>
+
+<pre><code>import * as rxjs from 'rxjs'
+const { filter, take, map } = rxjs.operators
+
+function awesomeOpators() {
+  return take(1);
+}
+
+const numbers$ = new rxjs.Subject&lt;number&gt;();
+const start$ = numbers$.pipe(
+  awesomeOpators(),
+);
+
+
+numbers$.next(1);
+
+start$.subscribe((val) =&gt; {
+  // outputs 2
+  console.log(val)
+})
+
+numbers$.next(2)
+</code></pre>
+
+<p>How can I rewrite <code>awesomeOpators</code> such that <code>beginWithLargeNumbe$</code> starts with 1?<br>
+<a href=""https://stackblitz.com/edit/rxjs-zqkz7r?file=main.ts"" rel=""nofollow noreferrer"">https://stackblitz.com/edit/rxjs-zqkz7r?file=main.ts</a></p>
+","5006372","","5006372","","2018-02-03 02:32:21","2018-02-03 02:32:21","How can I create an eager observable from a hot observable?","<javascript><rxjs><reactive-extensions-js>","1","0","","","","CC BY-SA 3.0"
+"50230896","1","50234131","","2018-05-08 09:58:38","","0","1660","<p>A user is typing values in a form and an event is emitted every time a user edits a particular field, with the value being the field they edited.</p>
+
+<p>For example a user typing 3 times into the description field, followed by two times in the name field, would look like</p>
+
+<blockquote>
+  <p>""description"" => ""description"" => ""description"" => ""name"" => ""name"" => ...</p>
+</blockquote>
+
+<p>I want to buffer <em>unique</em> values and emit them as an array when the user stops typing for <em>x</em> amount of seconds. A value <em>may</em> reappear again in a different buffer window. </p>
+
+<p>Essentially this is to track which fields were updated when the user stopped typing and communicate with the server to save the edited values.</p>
+
+<hr>
+
+<p>I have this so far which emits <em>every</em> 3000 ms, plus it doesn't prevent duplicates when buffering but instead we ""deduplicate"" the array afterwards. </p>
+
+<pre><code>   this.update$
+      .bufferTime(3000)
+      .filter(buffer =&gt; buffer.length &gt; 0)
+      .map(buffer =&gt; [...new Set(buffer)])
+      .subscribe(x =&gt; console.log(x));
+</code></pre>
+
+<p>So it should listen until a value is emitted and then buffer <strong>unique</strong> values <em>until</em> no more values have been emitted for <em>x</em> seconds, then emit the buffer and repeat. How can one achieve this?</p>
+","777510","","777510","","2018-05-08 10:09:48","2018-05-08 12:59:54","RxJS - Buffer unique values and emit when no other values have been emitted for x seconds?","<javascript><rxjs><rxjs5><reactive-extensions-js>","2","4","3","","","CC BY-SA 4.0"
+"50274719","1","","","2018-05-10 14:01:12","","1","42","<p>I have a stream that will either complete or throw an exception (ie. not an infinite stream). </p>
+
+<p>It emits 2 values (say A and B) before it finishes. Is it possible to map the last value emitted to something else?</p>
+
+<pre><code>stream$
+    .debounceTime(100)
+    .mergeMap(element =&gt;
+      api(stream$, ...) // This emits A B
+        .last()
+        .map(lastElement =&gt; f(lastElement.result)) // produces C based on B
+</code></pre>
+
+<p>Now I have a stream containing just <code>C</code>, is it possible to keep <code>A</code> (so that the <code>$stream</code> emits <code>A C</code>) without resorting to have local variables to store the intermediate stream?</p>
+","777510","","","","","2018-05-10 14:14:56","RxJS - Map over last element of a stream","<javascript><rxjs5><reactive-extensions-js>","0","0","","","","CC BY-SA 4.0"
+"50275898","1","50299917","","2018-05-10 14:59:37","","0","22","<p>Is there is an operator which allows me to map over elements of a stream but instead of transforming them, concatenating them?</p>
+
+<p>I have a stream</p>
+
+<blockquote>
+  <p>A => B => C</p>
+</blockquote>
+
+<p><code>items$.concatMap(x =&gt; f(x))</code>
+would lead to</p>
+
+<blockquote>
+  <p>""f(A)"" => ""f(B)"" => ""f(C)""</p>
+</blockquote>
+
+<p>while <code>concat</code> does not receive an element as param so that won't work either</p>
+
+<p>I want to achieve:</p>
+
+<blockquote>
+  <p>""A"" => ""B"" => ""C"" => ""f(A)"" => f(B) => ""f(C)""</p>
+</blockquote>
+
+<p>This will do it but I have to annoyingly break up and store my stream (I guess it's fine for a small example but on a longer pipeline it is more troublesome).</p>
+
+<pre><code>item$ = Observable.of(""A"",""B"",""C"");
+
+item$.concat(item$.map(x =&gt; f(x)));
+</code></pre>
+","777510","","777510","","2018-05-10 15:08:23","2018-05-11 20:35:53","RxJS - concatenate mapped elements onto a stream","<javascript><rxjs5><reactive-extensions-js>","1","0","","","","CC BY-SA 4.0"
+"51602143","1","","","2018-07-30 20:55:11","","1","217","<p>I was trying to utilize <code>observables</code> in authentication routine in my sample app which I'm building to learn <code>ReactiveX</code>, while looking for examples I've found a neat and also well in-code commented gist (<a href=""https://gist.github.com/alxhub/1fa85d0b8ef0286b617566e65a0011b4"" rel=""nofollow noreferrer"">@alxhub</a>, thanks!) that shows how an authentication service along with interceptor could be organized, but I can't wrap my head around what's happening in there, probably due to luck of experience...
+The relevant portion of code is:</p>
+
+<pre><code>this.refreshToken = Observable.defer(() =&gt; {
+  // Defer allows us to easily execute some action when the Observable
+  // is subscribed. Here, we set the current token to `null` until the
+  // refresh operation is complete. This ensures no requests will be
+  // sent with a known bad token.
+  this.subject.next(null);
+
+return this
+  // Next, we refresh the token from the server.
+  .doRefreshToken()
+  // Set it as the active token.
+  .do(token =&gt; this.subject.next(token))
+  // Drop the value, ensuring this Observable only completes when
+  // done and doesn't emit.
+  .ignoreElements()
+  // Finally, share the Observable so we don't attempt multiple
+  // refreshes at once.
+  .shareReplay();
+});
+</code></pre>
+
+<p>which then used in interceptor like this:</p>
+
+<pre><code>.catch((err, restart) =&gt; {
+  // If the request is unauthorized, try refreshing the token before restarting.
+  if (err instanceof HttpErrorResponse &amp;&amp; err.status === 401) {
+    return Observable.concat(this.auth.refreshToken, restart);
+  }
+  throw err;
+})
+</code></pre>
+
+<p>As I understand <code>defer</code> creates a separate <code>observable</code> for each <code>observer</code>, so why do they bother to <code>shareReplay</code>? In what occasion there will be more than one <code>observer</code> on the newly created <code>observable</code>?</p>
+
+<p>Now, I wanted to to show a login dialog in case of <code>401</code>, but only one for a batch of requests, and it seems that <code>shareReplay</code> is the way to go, so I thought to put the dialog open code inside <code>doRefreshToken</code> but if it gonna be inside <code>defer</code> I'll get as much dialogs as number of unauthenticated requests I presume, so how I should organize it?</p>
+","1707245","","","","","2018-07-31 02:34:11","Does it make sense to return shareReplay from defer?","<angular><rxjs><reactivex><reactive-extensions-js>","1","0","","","","CC BY-SA 4.0"
+"51657820","1","","","2018-08-02 15:57:38","","0","889","<p>I am bit confused with Rxjs.
+I am trying to implement timer counter using observable.</p>
+
+<p>Below is link</p>
+
+<p><a href=""https://jsfiddle.net/vpx0y8fu/375/"" rel=""nofollow noreferrer"">https://jsfiddle.net/vpx0y8fu/375/</a></p>
+
+<p>Consider below code snippet i have message as source which emits value after 1 sec. I have used delayWhen operator which delays each value emitted by source. But when i am subscribing the delayed observable it is having only initial delay i.e after first value emission each value is emitted at 1 sec interval.</p>
+
+<pre><code>//emit value every second
+   const message = Rx.Observable.interval(1000);
+   //emit value after five seconds
+  //after 5 seconds, start emitting delayed values
+  const delayWhenExample = message.delayWhen(() =&gt; 
+  Rx.Observable.interval(4000));
+  //log values, delayed for 5 seconds
+  //ex. output: 5s....1...2...3
+  const subscribe = delayWhenExample.subscribe(val =&gt; 
+  console.log(val));
+</code></pre>
+
+<p>But when i use below code snippet</p>
+
+<pre><code>//emit value on click
+const message1 = Rx.Observable.fromEvent(document, 'click');
+//emit value after five seconds
+//after 5 seconds, start emitting delayed values
+const delayWhenExample1 = message1.delayWhen(() =&gt; Rx.Observable.interval(4000));
+//log values, delayed for 5 seconds
+//ex. output: 5s....1...2...3
+const subscribe1 = delayWhenExample1.subscribe(val =&gt; console.log(val));
+</code></pre>
+
+<p>Each click is delayed by 4secs.</p>
+
+<p>Could anyone point out what is the difference that i am unable to understand?</p>
+
+<p>In each of source observables from above examples when value emits it should get delayed by 4 secs but it is not happening in first example whereas second works as expected.</p>
+
+<p>Please suggest me a implementation for timer using above implementation as i don't want to do time calculations. </p>
+","7415356","","7415356","","2018-08-07 06:21:57","2018-08-07 06:21:57","How delayWhen works in observables?","<angular><observable><reactive-programming><reactive-extensions-js>","0","3","1","","","CC BY-SA 4.0"
+"54811805","1","","","2019-02-21 16:22:44","","0","974","<p>I have a situation in which I need to wait for the observable to begin emitting values before the subsequent code executes. The closest I have gotten so far is like this:</p>
+
+<pre><code>async ensureContentLoaded() {
+  if (!this.content) {
+    defer(async () =&gt; {
+      this.content = await this.getContent();
+      console.log(`Got content`);
+    }).subscribe();
+
+    console.log(`Finished`);
+  }
+</code></pre>
+
+<p>At the moment, the <code>Finished</code> console log is appearing before the <code>Got content</code>. I want the observable to 'block' until it starts to emit values. Note that <code>this.getContent()</code> returns a promise; although it could easily return an observable if that makes any difference. Also I know that <code>this.content</code> is referring to the wrong context, but that's another issue.</p>
+
+<p>How can I create an observable that will block execution until a value is emitted?</p>
+","343159","","343159","","2019-02-21 16:37:04","2019-02-22 09:21:46","Making an observable 'run' synchronously","<angular><typescript><rxjs><reactive-extensions-js>","1","6","","","","CC BY-SA 4.0"
+"55520728","1","","","2019-04-04 16:18:15","","0","735","<p>Say I have a subject somewhere in my code</p>
+
+<pre><code>mySubject$ = new Subject()
+</code></pre>
+
+<p>Elsewhere in the code, any number of subscriptions are made, e.g.</p>
+
+<pre><code>someSubscription = mySubject$.subscribe(() =&gt; console.log('I love streams'))
+anotherSubscription =  mySubject$.subscribe(() =&gt; console.log('me too!'))
+</code></pre>
+
+<p>When I <code>.next()</code>the subject, both subscription fire as expected.</p>
+
+<p>How can I hook into the rx mechanism so that I can run some code after all subscriptions have finished running their code (for that single <code>next</code> event)?</p>
+
+<p>Is there something like <code>mySubject$.onAllSubscriptionsCompleted(() =&gt; console.log('all done')</code></p>
+
+<p>Or what are alternatives to achieving this?</p>
+","102181","","","","","2019-05-03 00:28:00","Rx: Run code after all subscriptions have completed for one 'next'","<ecmascript-6><rxjs><reactive-extensions-js>","1","1","","","","CC BY-SA 4.0"
+"55930181","1","","","2019-05-01 00:15:54","","0","152","<p>I have a code that I wrote back in Angular 4 and it worked perfectly, now part of it is broken in Angular 6 and I appreciate some help.</p>
+
+<p>I have an <code>AuthService</code> class:</p>
+
+<pre><code>export class AuthService {
+
+    private loggedIn = new BehaviorSubject&lt;boolean&gt;(false);
+
+    isUserLoggedIn(): Observable&lt;boolean&gt; {
+        return this.loggedIn.asObservable();
+    }
+
+    isUserLoggedIn(): Observable&lt;boolean&gt; {
+        return this.loggedIn.asObservable();
+    }
+
+    login(username: string, password: string) {
+        let body =
+        {
+            username: username,
+            password: password
+        };
+
+        return this._http.post(Settings.apiEndpoint + ""users/authenticate"", body)
+            .map(res =&gt; {
+                localStorage.setItem('token', res[""token""]);
+                localStorage.setItem('username', res[""username""]);
+                this.isLoggedIn = true;
+                this.loggedIn.next(true);
+                return res;
+            })
+            .catch(error =&gt; {
+                this.clearAuthData();
+                return Observable.throw(error)
+            });
+    }
+
+    logout() {
+        localStorage.clear();
+        this.isLoggedIn = false;
+        this.loggedIn.next(this.isLoggedIn);
+    }
+}
+</code></pre>
+
+<p>and in my <code>AppComponent</code>, I subscribe to this subject like this in the ngOnInit:</p>
+
+<pre><code>this._auth.isUserLoggedIn()
+            .subscribe(
+                d =&gt; {
+                    console.log(""d here"", d);
+                    if (d)
+                    {
+                        this.isLoggedIn = true;
+                        this.username = this._auth.getUsername();
+                    }
+                    else {
+                        this.isLoggedIn = false;
+                    }
+                },
+                d =&gt; {
+                    console.log(""error."");
+                },
+                () =&gt; {
+                  console.log(""bull."");
+                }
+            );
+</code></pre>
+
+<p>The issue is when I logout, the AppComponent does react to the observable, but when I login it doesn't. The code is untouched as far as I can tell from what it was in Angular 4, so I cannot figure out why it is not firing.</p>
+","4660416","","","","","2019-05-01 23:04:25","Angular BehaviorSubject; the ""next"" method doesn't work","<angular><typescript><angular6><observable><reactive-extensions-js>","1","0","","","","CC BY-SA 4.0"
+"56442874","1","","","2019-06-04 11:22:18","","1","583","<p>Is there anyway we can filter button tap event based on button title like below..!!</p>
+
+<pre><code>button.rx.tap
+ .filter { ($0.titleLabel.text.count)!&gt; 0 }
+</code></pre>
+","1077457","","","","","2019-06-06 08:31:35","How to filter button tap with button title in RxSwift?","<rx-swift><reactive-extensions-js>","2","2","","","","CC BY-SA 4.0"
+"59491159","1","59491571","","2019-12-26 16:47:51","","0","42","<p>I have a very simple server polling scenario:</p>
+
+<blockquote>
+  <ol>
+  <li>call API -> 2. onSuccess -> 3. wait 500ms -> 4. go back to step 1</li>
+  </ol>
+</blockquote>
+
+<p>and</p>
+
+<blockquote>
+  <ol>
+  <li>call API -> 2. onError -> 3. finish</li>
+  </ol>
+</blockquote>
+
+<p>I want to be using rxjs as I already use rxjava. But I just can't seem to arrive on a proper solution for my problem.
+I've tried timer and interval, but the problem is that they just run infinitely with no handlers to pause them while waiting for server to response or quit altogether when error occurs. Tried using retryWhen, but was not able to get it work at all.</p>
+
+<p>This is what I want:</p>
+
+<pre><code>downloadData() {
+    console.log('downloading data')
+    $.getJSON('http://localhost:80')
+        .done((data) =&gt; {
+            console.log('done' + JSON.stringify(data))
+            setTimeout(() =&gt; { this.downloadData() }, 500)
+
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.log(`Error: ${textStatus}`)
+        })
+}
+</code></pre>
+
+<p>How to achieve the same thing in rxjs?</p>
+","1218970","","","","","2019-12-26 17:31:14","How to implement server polling in rxjs","<rxjs><reactive-programming><reactive-extensions-js>","1","0","","","","CC BY-SA 4.0"

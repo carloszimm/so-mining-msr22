@@ -1,0 +1,211 @@
+Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCount,Body,OwnerUserId,OwnerDisplayName,LastEditorUserId,LastEditorDisplayName,LastEditDate,LastActivityDate,Title,Tags,AnswerCount,CommentCount,FavoriteCount,ClosedDate,CommunityOwnedDate,ContentLicense
+"41779910","1","41784432","","2017-01-21 13:24:29","","10","8909","<p>I brought the book <em>""rxjs in action""</em> and just finish the testing section.</p>
+
+<p>Testing rxjs codes are different then usual testing, because everything are lazy loading. </p>
+
+<p>In the book, they mention two test method, either passing done(I am using QUnit and done signals async code is finish) or marble diagrams.   </p>
+
+<p>My question is, which method should I choose, that I have mentioned above? </p>
+","1743843","","542251","","2019-12-19 08:53:59","2020-12-31 11:15:20","The right way to test rxjs","<javascript><rxjs><rxjs5><rxjs-test-scheduler>","2","3","3","","","CC BY-SA 4.0"
+"57495275","1","63249110","","2019-08-14 13:02:10","","2","209","<p>If I run all tests for one epic at once only the first test passes. The other tests fail because the frame differs. But every test singly run passes.</p>
+
+<p>I could not find any related problem to this nether found something in the RxJS not the redux observable docs.
+I thought there could be some kind of a reset function on the <code>TestScheduler</code> but there isn't.</p>
+
+<p>One of my test (they all look pretty simular):</p>
+
+<pre class=""lang-js prettyprint-override""><code>test('should fail if e-mail is missing', () =&gt; {
+    testScheduler.run(({ hot, expectObservable }) =&gt; {
+        const action$ = new ActionsObservable(
+            hot('-a', {
+                a: login('', 'secret')
+            })
+        );
+
+        const output$ = epic(action$, null, null);
+
+        expectObservable(output$).toBe('-a', {
+            a: failure(
+                formErrors.credentialsEmpty(['email', 'password'])
+            )
+        });
+    });
+});
+</code></pre>
+
+<p>I expect the frame of output marble to be 1 but it is 2.
+The output of a failing test:</p>
+
+<pre><code>Array [
+        Object {
+    -     ""frame"": 1,
+    +     ""frame"": 2,
+          ""notification"": Notification {
+            ""error"": undefined,
+            ""hasValue"": true,
+            ""kind"": ""N"",
+            ""value"": Object {
+</code></pre>
+
+<hr>
+
+<p><strong>edit</strong></p>
+
+<p>I could get around that behaviour by creating one <code>TestScheduler</code> instance per test but I am not sure if I am supposed to do it this way.</p>
+","11916825","","542251","","2021-07-01 07:47:37","2021-07-01 07:47:37","Frame differs in running all test from running only one test, why?","<rxjs><redux-observable><rxjs-test-scheduler>","1","0","","","","CC BY-SA 4.0"
+"61465243","1","","","2020-04-27 17:54:59","","0","130","<p>I am trying to call <code>.next</code> on a simple subject <code>submitTask$</code>.</p>
+
+<p>My pipeline is this:</p>
+
+<pre><code>export const submitTask$ = new Subject();
+
+function epic() {
+  return submitTask$.pipe(
+    map(taskId =&gt; {
+        console.log('here');
+        return Boolean(taskId)
+    })
+  )
+}
+</code></pre>
+
+<p>I am trying to use TestScheduler to test this but cannot figure out how. I tried this:</p>
+
+<pre><code>const testScheduler = new TestScheduler((actual, expected) =&gt; {
+  expect(actual).toStrictEqual(expected);
+});
+
+testScheduler.run(({ hot, expectObservable }) =&gt; {
+
+const actions$ = hot('-', [() =&gt; submitTask$.next(task.id)]);
+
+const output$ = epic();
+
+expectObservable(output$).toBe('0', [true]);
+</code></pre>
+
+<p>However it is not working, I am never seeing the <code>console.log('here')</code></p>
+","1828637","","","","","2020-04-28 15:46:04","TestScheduler for subject","<rxjs><rxjs-test-scheduler>","1","1","","","","CC BY-SA 4.0"
+"63112596","1","","","2020-07-27 09:41:17","","1","484","<p>I try to test a simple angular component using a marble test. For that I'm using the <code>TestScheduler</code> which comes together with rxjs.</p>
+<p>Here is a stackblitz link with the code: <a href=""https://stackblitz.com/edit/angular-ivy-xwzn1z"" rel=""nofollow noreferrer"">https://stackblitz.com/edit/angular-ivy-xwzn1z</a></p>
+<p>This is a simplified version of my component:</p>
+<pre class=""lang-js prettyprint-override""><code>@Component({
+  selector: 'detail-component',
+    template: ` &lt;ng-container *ngIf=&quot;(detailsVisible$ | async)&quot;&gt; &lt;p&gt; detail visible &lt;/p&gt; &lt;/ng-container&gt;`,
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class DetailComponent implements OnInit, OnDestroy {
+  @Input() set isAdditionalContentVisible(isAdditionalContentVisible: boolean) {
+      this.resetSubject.next(isAdditionalContentVisible);
+  }
+  private readonly resetSubject = new Subject&lt;boolean&gt;();
+  private readonly toggleVisibilitySubject = new Subject&lt;void&gt;();
+  private readonly destroySubject = new Subject();
+
+  public detailsVisible$: Observable&lt;boolean&gt; = this.toggleVisibilitySubject.pipe(
+    scan((state, _) =&gt; !state, false),
+    startWith(false)
+  );
+
+  private readonly resetDetailsVisibilitySideEffect$: Observable&lt;void&gt; = this.resetSubject.asObservable().pipe(
+    withLatestFrom(this.detailsVisible$),
+    map(([resetTrigger, state]) =&gt; {
+      if (state !== resetTrigger) {
+        this.toggleVisibilitySubject.next();
+      }
+    })
+  );
+
+  constructor() {}
+
+  ngOnInit(): void {
+    this.resetDetailsVisibilitySideEffect$.pipe(takeUntil(this.destroySubject)).subscribe();
+  }
+  ngOnDestroy(): void {
+    this.destroySubject.next();
+    this.destroySubject.complete();
+  }
+
+  toggleAdditionalContentVisibility(): void {
+    this.toggleVisibilitySubject.next();
+  }
+}
+
+</code></pre>
+<p>I want to test the <code>detailsVisible$</code>-observable.</p>
+<p>For that I created following test:</p>
+<pre class=""lang-js prettyprint-override""><code>import { TestScheduler } from 'rxjs/testing';
+
+ describe('DetailComponent', () =&gt; {
+    const debug = true;
+    let scheduler: TestScheduler;
+    let component: DetailComponent;
+
+    beforeEach(() =&gt; {
+      component = new DetailComponent();
+      scheduler = new TestScheduler((actual, expected) =&gt; {
+        // asserting the two objects are equal
+        if (debug) {
+          console.log('-------------------------------');
+          console.log('Expected:\n' + JSON.stringify(expected, null, 2));
+          console.log('Actual:\n' + JSON.stringify(actual, null, 2));
+        }
+
+        expect(actual).toEqual(expected);
+      });
+    });
+    it('should finally work out', () =&gt; {
+      scheduler.run((helpers) =&gt; {
+        const { cold, hot, expectObservable, expectSubscriptions } = helpers;
+        const values = {
+          f: false,
+          t: true
+        };
+        const toggleVisibilityValues = {
+          v: void 0
+        };
+        const resetValues = {
+          f: false,
+          t: true
+        };
+        component.ngOnInit();
+        // marbles
+        // prettier-ignore
+        const detailsVisibleMarble        = 'f-t-f-t-f-t-f';
+        // prettier-ignore
+        const toggleVisibilityMarble      = '--v-v-----v--';
+        // prettier-ignore
+        const resetMarble                 = '------t-f---f';
+
+        // Mock observables
+        (component as any).toggleVisibilitySubject = cold(toggleVisibilityMarble,toggleVisibilityValues);
+        (component as any).resetSubject = cold(resetMarble, resetValues);
+
+        // output
+        expectObservable(component.detailsVisible$).toBe(detailsVisibleMarble, values);
+      });
+    });
+  });
+  
+
+</code></pre>
+<p>I tried several things but all are resulting in the follwing output:</p>
+<pre><code>  Expected $.length = 1 to equal 7.
+    Expected $[1] = undefined to equal Object({ frame: 2, notification: Notification({ kind: 'N', value: true, error: undefined, hasValue: true }) }).
+    Expected $[2] = undefined to equal Object({ frame: 4, notification: Notification({ kind: 'N', value: false, error: undefined, hasValue: true }) }).
+    Expected $[3] = undefined to equal Object({ frame: 6, notification: Notification({ kind: 'N', value: true, error: undefined, hasValue: true }) }).
+    Expected $[4] = undefined to equal Object({ frame: 8, notification: Notification({ kind: 'N', value: false, error: undefined, hasValue: true }) }).
+    Expected $[5] = undefined to equal Object({ frame: 10, notification: Notification({ kind: 'N', value: true, error: undefined, hasValue: true }) }).
+    Expected $[6] = undefined to equal Object({ frame: 12, notification: Notification({ kind: 'N', value: false, error: undefined, hasValue: true }) }).
+    &lt;Jasmine&gt;
+</code></pre>
+<p>So somehow the source of <code>detailsVisible$</code> (toggleVisibilitySubject) is never emitting any value (I only get the <code>startWith</code>-value in the result).</p>
+<p>I do not see what I'm missing. The code itself works perfectly fine.</p>
+<p>Thanks for any suggestions.</p>
+<p>Edit:
+I also tried out to</p>
+<pre><code>toggle$ = this.toggleVisibilitySubject.asObservable();
+public detailsVisible$ = this.toggle.pipe(...)
+</code></pre>
+<p>and in the test: <code>component.toggle$ =cold(toggleVisibilityMarble,toggleVisibilityValues)</code>.</p>
+","9620995","","9620995","","2020-07-27 12:14:41","2020-07-29 06:22:04","angular rxjs marble test no values emitted","<angular><rxjs><karma-jasmine><rxjs-test-scheduler>","2","0","1","","","CC BY-SA 4.0"

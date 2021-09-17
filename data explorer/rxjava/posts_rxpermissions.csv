@@ -1,0 +1,430 @@
+Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCount,Body,OwnerUserId,OwnerDisplayName,LastEditorUserId,LastEditorDisplayName,LastEditDate,LastActivityDate,Title,Tags,AnswerCount,CommentCount,FavoriteCount,ClosedDate,CommunityOwnedDate,ContentLicense
+"38808918","1","38815922","","2016-08-06 21:35:39","","-1","1039","<p><strong>Background:</strong> I'm trying to make a simple with <em>RxPermissions</em> .. I created a new project with the bellow code/setup but when I launch the app I got a dialog with the message <strong>""unfortunately package installer has stopped""</strong></p>
+
+<p><strong>gradle.build</strong></p>
+
+<pre><code>dependencies {
+  compile fileTree(dir: 'libs', include: ['*.jar'])
+  testCompile 'junit:junit:4.12'
+  compile 'com.android.support:appcompat-v7:24.1.1'
+  compile 'com.tbruyelle.rxpermissions:rxpermissions:0.7.0@aar'
+
+
+  compile 'io.reactivex:rxandroid:1.2.1'
+  // Because RxAndroid releases are few and far between, it is recommended you also
+  // explicitly depend on RxJava's latest version for bug fixes and new features.
+  compile 'io.reactivex:rxjava:1.1.6'
+
+}
+</code></pre>
+
+<p><strong>MainActivity.java</strong></p>
+
+<pre><code>public class MainActivity extends Activity {
+
+  @Override protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+
+    // Must be done during an initialization phase like onCreate
+    ((Button) findViewById(R.id.button)).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View view) {
+        RxPermissions.getInstance(MainActivity.this)
+            .request(Manifest.permission.CAMERA)
+            .subscribe(new Action1&lt;Boolean&gt;() {
+              @Override public void call(Boolean aBoolean) {
+
+              }
+            });
+      }
+    });
+
+
+  }
+}
+</code></pre>
+","3672184","","","","","2016-08-07 15:57:39","unfortunately package installer has stopped","<android><rx-java><rxpermissions>","1","4","","","","CC BY-SA 3.0"
+"41188176","1","42056516","","2016-12-16 16:02:21","","1","870","<p>I want to avoid ask others permission if the user not grant one.</p>
+
+<p>For example: I ask for read/write external storage and camera, if the user deny the first, the library ask for camera permission, camera permission is redundant in this case.</p>
+
+<pre><code>RxPermissions.getInstance(getActivity()).request(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+                .subscribe(granted -&gt; {
+                    if (granted) {
+                       dispatchCamera();
+                    } else {
+                        showError();
+                    }
+                });
+</code></pre>
+
+<p>I think I could use requestEach, but I dont know how stop to emit items if one permission is not granted and also I cant obtain the final result, if the user grant all permissions.</p>
+","3796083","","","","","2017-02-05 19:50:57","Avoid ask others permission if one is not granted with RxPermissions","<android><rx-android><rxpermissions>","1","0","0","","","CC BY-SA 3.0"
+"48931751","1","48931868","","2018-02-22 15:54:20","","1","219","<p>I use RxPermission library to handle runtime permissions easily,</p>
+
+<p>In my app I ask for location:</p>
+
+<pre><code> rxPermissions
+                .request(Manifest.permission.ACCESS_FINE_LOCATION)
+                .subscribe(granted -&gt; {
+                    if (granted) {
+                        boolean gpsEnabled, networkEnabled;
+
+                        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                        if (locationManager != null) {
+                            gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+                            networkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+                            if (gpsEnabled &amp;&amp; locationListenerGPS != null) {
+
+                                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0L, 0f, locationListenerGPS);
+                            }
+
+                            if (networkEnabled &amp;&amp; locationListenerNetwork != null) {
+                                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0L, 0f, locationListenerNetwork);
+                            }
+
+                        }
+
+
+                    } else {
+                        Log.d(""Access not granted"", ""no location"");
+                    }
+                });
+</code></pre>
+
+<p>When I open the debug-apk It works perfect but when I try to open release apk it crashes with this error:</p>
+
+<blockquote>
+  <p>FATAL EXCEPTION: main
+                                                     Process: com.magis.icbc, PID: 19522
+                                                     java.lang.InternalError
+                                                         at d.c.d.b.s.a(UnsafeAccess.java:115)
+                                                         at d.c.d.b.r.(SpscArrayQueue.java:42)
+                                                         at d.c.a.d$c.(OnSubscribeConcatMap.java:129)
+                                                         at d.c.a.d.a(OnSubscribeConcatMap.java:82)
+                                                         at d.c.a.d.a(OnSubscribeConcatMap.java:42)
+                                                         at d.d.a(Observable.java:10142)
+                                                         at d.c.a.k$e.a(OperatorMerge.java:248)
+                                                         at d.c.a.k$e.b(OperatorMerge.java:148)
+                                                         at d.c.a.h$a.b(OnSubscribeMap.java:77)
+                                                         at d.c.a.k$e.a(OperatorMerge.java:511)
+                                                         at d.c.a.k$e.a(OperatorMerge.java:466)
+                                                         at d.c.a.k$e.a(OperatorMerge.java:244)
+                                                         at d.c.a.k$e.b(OperatorMerge.java:148)
+                                                         at d.c.a.e$a.a(OnSubscribeFromArray.java:76)
+                                                         at d.c.a.e$a.a(OnSubscribeFromArray.java:58)
+                                                         at d.i.a(Subscriber.java:211)
+                                                         at d.c.a.e.a(OnSubscribeFromArray.java:32)
+                                                         at d.c.a.e.a(OnSubscribeFromArray.java:24)
+                                                         at d.c.a.g.a(OnSubscribeLift.java:48)
+                                                         at d.c.a.g.a(OnSubscribeLift.java:30)
+                                                         at d.d.a(Observable.java:10142)
+                                                         at d.c.a.h.a(OnSubscribeMap.java:48)
+                                                         at d.c.a.h.a(OnSubscribeMap.java:33)
+                                                         at d.c.a.g.a(OnSubscribeLift.java:48)
+                                                         at d.c.a.g.a(OnSubscribeLift.java:30)
+                                                         at d.c.a.g.a(OnSubscribeLift.java:48)
+                                                         at d.c.a.g.a(OnSubscribeLift.java:30)
+                                                         at d.d.a(Observable.java:10142)
+                                                         at d.c.a.h.a(OnSubscribeMap.java:48)
+                                                         at d.c.a.h.a(OnSubscribeMap.java:33)
+                                                         at d.c.a.g.a(OnSubscribeLift.java:48)
+                                                         at d.c.a.g.a(OnSubscribeLift.java:30)
+                                                         at d.d.a(Observable.java:10238)
+                                                         at d.d.b(Observable.java:10205)
+                                                         at d.d.a(Observable.java:10010)
+                                                         at com.magis.icbc.ui.activities.SplashActivity.n(SplashActivity.java:222)
+                                                         at com.magis.icbc.ui.activities.SplashActivity.onCreate(SplashActivity.java:173)
+                                                         at android.app.Activity.performCreate(Activity.java:6876)
+                                                         at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1135)
+                                                         at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:3206)
+                                                         at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:3349)
+                                                         at android.app.ActivityThread.access$1100(ActivityThread.java:221)
+                                                         at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1794)
+                                                         at android.os.Handler.dispatchMessage(Handler.java:102)
+                                                         at android.os.Looper.loop(Looper.java:158)
+                                                         at android.app.ActivityThread.main(ActivityThread.java:7224)
+                                                         at java.lang.reflect.Method.invoke(Native Method)
+                                                         at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:1230)
+                                                         at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1120)
+                                                      Caused by: java.lang.NoSuchFieldException: No field producerIndex in class
+  Ld/c/d/b/r; (declaration of 'd.c.d.b.r' appears in
+  /data/app/com.magis.icbc-1/base.apk)
+                                                         at java.lang.Class.getDeclaredField(Native Method)
+                                                         at d.c.d.b.s.a(UnsafeAccess.java:112)</p>
+</blockquote>
+
+<p>eaxctly at this line  <code>.subscribe(granted -&gt; {</code></p>
+","6683139","","","","","2018-02-22 16:00:00","RxPermission causes Internal Error in release mode","<java><android><rx-java><rx-java2><rxpermissions>","1","0","1","","","CC BY-SA 3.0"
+"53238489","1","","","2018-11-10 11:28:27","","-1","339","<p>My app needs below permissions. Which has been incorporated in AndroidManifest.xml</p>
+
+<pre><code>&lt;uses-permission android:name=""android.permission.ACCESS_COARSE_LOCATION""/&gt;
+&lt;uses-permission android:name=""android.permission.ACCESS_FINE_LOCATION""/&gt;
+&lt;uses-permission android:name=""android.permission.ACCESS_WIFI_STATE""/&gt;
+&lt;uses-permission android:name=""android.permission.ACCESS_NETWORK_STATE""/&gt;
+&lt;uses-permission android:name=""android.permission.CHANGE_WIFI_STATE""/&gt;
+&lt;uses-permission android:name=""android.permission.READ_PHONE_STATE""/&gt;
+&lt;uses-permission android:name=""android.permission.WRITE_EXTERNAL_STORAGE""/&gt;
+&lt;uses-permission android:name=""android.permission.READ_EXTERNAL_STORAGE""/&gt;
+&lt;uses-permission android:name=""android.permission.MOUNT_UNMOUNT_FILESYSTEMS""/&gt;
+&lt;uses-permission android:name=""android.permission.CAMERA""/&gt;
+&lt;uses-feature android:name=""android.hardware.camera""/&gt;
+&lt;uses-feature android:name=""android.hardware.autofocus""/&gt;
+</code></pre>
+
+<p>After upgrading to API 26</p>
+
+<blockquote>
+  <p>(targetSdkVersion 26)</p>
+</blockquote>
+
+<p>Some functionality is not working. As I need to incorporate runtime permission. I am using <a href=""https://github.com/tbruyelle/RxPermissions/"" rel=""nofollow noreferrer"">RxPermission</a> .
+The problem is my most of the implementations are placed in helper class(not inside main activity).
+when I am trying to use helper library getting error - .<a href=""https://i.stack.imgur.com/aBj0j.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/aBj0j.png"" alt=""Can not resolve constructor""></a>
+I have tried with the following options too -</p>
+
+<blockquote>
+  <p>RxPermissions rxPermissions = new RxPermissions((FragmentActivity) mContext);</p>
+</blockquote>
+
+<p>As <a href=""https://github.com/tbruyelle/RxPermissions/"" rel=""nofollow noreferrer"">RxPermission</a> require Fragment as target.Can we ask user all the permission in the main activity? A sample code will help me. Project code for <a href=""https://github.com/kaku2015/WeatherAlarmClock/blob/master/WeAC/src/main/java/com/kaku/weac/db/LocalAlbumImagePickerHelper.java#L76"" rel=""nofollow noreferrer"">reference</a> </p>
+
+<p><strong>[Fixed]</strong>
+Now I am calling from the activity. <a href=""https://github.com/kaku2015/WeatherAlarmClock/blob/4ff531449894f6156a37d2369ebbcec29d9f5705/WeAC/src/main/java/com/kaku/weac/activities/LocalAlbumActivity.java#L101"" rel=""nofollow noreferrer"">Reference</a>Code changed -</p>
+
+<pre><code>RxPermissions rxPermissions=new RxPermissions(this);
+rxPermissions.request(Manifest.permission.CAMERA)
+        .subscribe(granted -&gt; {
+            if (granted) {
+
+                //LogUtil.e(LOG_TAG, ""Granted external permission"");
+                setContentView(R.layout.activity_local_album);
+                ViewGroup backGround = (ViewGroup) findViewById(R.id.background);
+                MyUtil.setBackgroundBlur(backGround, this);
+
+                initAdapter();
+                assignViews();
+
+            } else {
+                // Oups permission denied
+            }
+        });
+</code></pre>
+
+<p><strong>[New error]</strong>
+I am getting  <code>android.os.FileUriExposedException:</code> error. Code: </p>
+
+<pre><code>public void onClick(View v) {
+    switch (v.getId()) {
+        // 返回
+        case R.id.action_back:
+            myFinish();
+            break;
+        // 拍照
+        case R.id.action_capture:
+            PackageManager pm = getPackageManager();
+            // FEATURE_CAMERA - 后置相机
+            // FEATURE_CAMERA_FRONT - 前置相机
+            if (pm.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)) {
+                // 访问相机类型
+                int requestType;
+                // 截取主题壁纸
+                if (mRequestType != 2) {
+                    requestType = REQUEST_IMAGE_CAPTURE_THEME;
+                } else { // 截取二维码logo
+                    requestType = REQUEST_IMAGE_CAPTURE_QRCODE_LOGO;
+                }
+
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                mImageUri = Uri.fromFile(MyUtil.getFileDirectory(this, ""/Android/data/"" +
+                        getPackageName() + ""/capture/temporary.jpg""));
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
+                startActivityForResult(intent, requestType);
+                overridePendingTransition(0, R.anim.zoomin);
+            }
+</code></pre>
+
+<blockquote>
+  <p>Error</p>
+</blockquote>
+
+<pre><code> Process: com.bisw.weac, PID: 20997
+android.os.FileUriExposedException: file:///storage/emulated/0/Android/data/com.bisw.weac/capture/temporary.jpg exposed beyond app through ClipData.Item.getUri()
+    at android.os.StrictMode.onFileUriExposed(StrictMode.java:1958)
+    at android.net.Uri.checkFileUriExposed(Uri.java:2356)
+    at android.content.ClipData.prepareToLeaveProcess(ClipData.java:944)
+    at android.content.Intent.prepareToLeaveProcess(Intent.java:10480)
+    at android.content.Intent.prepareToLeaveProcess(Intent.java:10465)
+    at android.app.Instrumentation.execStartActivity(Instrumentation.java:1616)
+    at android.app.Activity.startActivityForResult(Activity.java:4564)
+    at android.support.v4.app.BaseFragmentActivityApi16.startActivityForResult(BaseFragmentActivityApi16.java:54)
+    at android.support.v4.app.FragmentActivity.startActivityForResult(FragmentActivity.java:68)
+    at android.app.Activity.startActivityForResult(Activity.java:4522)
+    at android.support.v4.app.FragmentActivity.startActivityForResult(FragmentActivity.java:751)
+    at com.bisw.weac.activities.LocalAlbumActivity.onClick(LocalAlbumActivity.java:222)
+    at android.view.View.performClick(View.java:6877)
+    at android.widget.TextView.performClick(TextView.java:12651)
+    at android.view.View$PerformClick.run(View.java:26069)
+    at android.os.Handler.handleCallback(Handler.java:789)
+    at android.os.Handler.dispatchMessage(Handler.java:98)
+    at android.os.Looper.loop(Looper.java:164)
+    at android.app.ActivityThread.main(ActivityThread.java:6938)
+    at java.lang.reflect.Method.invoke(Native Method)
+    at com.android.internal.os.Zygote$MethodAndArgsCaller.run(Zygote.java:327)
+    at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:1374)
+</code></pre>
+","3226196","","3226196","","2018-11-11 16:23:17","2018-11-11 16:23:17","API 26 runtime permission & android.os.FileUriExposedException","<android><android-layout><android-fragments><android-fragmentactivity><rxpermissions>","2","2","","","","CC BY-SA 4.0"
+"55156386","1","55157491","","2019-03-14 06:41:00","","1","116","<p>I am trying to fetch contacts and show it in a list. I am using RxPermissions for that. The problem here is when I first allow the permission the view returns null and shows empty list even though the list has items in it. But when I go back to the previous activity and come back it works fine. </p>
+
+<p><strong>ContactsFragment.kt</strong></p>
+
+<pre><code>override fun onResume() {
+        super.onResume()
+        if (isPermissionGranted) {
+            Timber.d(""Permission is granted"")
+            contactsPresenter.fetchContacts(context)
+            noPermissionsWarning.visibility = View.GONE
+        } else {
+            noPermissionsWarning.visibility = View.VISIBLE
+            showContactList(ArrayList()) // Show empty list when permissions not granted
+        }
+    }
+private fun askPermissions() {
+    rxPermissions
+            .request(android.Manifest.permission.GET_ACCOUNTS,
+                    android.Manifest.permission.READ_CONTACTS,
+                    android.Manifest.permission.WRITE_CONTACTS)
+            .subscribe { permissionGranted -&gt;
+                isPermissionGranted = permissionGranted
+            }
+}
+
+
+
+override fun showContactList(selectedContacts: ArrayList&lt;Contact&gt;) {
+        contactAdapter = ContactListAdapter(selectedContacts, this, context)
+        val layoutManager = LinearLayoutManager(this.context)
+        contactsRecyclerView?.layoutManager = layoutManager
+        contactsRecyclerView?.addItemDecoration(DividerItemDecoration(
+                contactsRecyclerView?.context,
+                DividerItemDecoration.VERTICAL
+        ))
+        contactsRecyclerView?.adapter = contactAdapter
+    }
+</code></pre>
+
+<p><strong>ContactsPresenter.kt</strong> </p>
+
+<pre><code>override fun takeView(view: ContactsContract.View, context: Context?) {
+        super.takeView(view)
+        contactList.clear()
+        tempContactList.clear()
+    }
+
+    override fun fetchContacts(context: Context?) {
+        contactManager.getContacts(context)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    it.let {
+                        tempContactList.addAll(it.sortedWith(compareBy { it.userName }))
+                        contactList.addAll(it.sortedWith(compareBy { it.userName }))
+                        view?.showContactList(contactList)// this view is null at first
+                    }
+                }, {
+
+                }).addDisposableTo(disposable)
+    }
+</code></pre>
+
+<p>What would I be missing here. </p>
+
+<p>Thank you </p>
+","7482730","","7482730","","2019-03-14 06:50:57","2019-05-29 12:39:50","Android: View returning null","<android><android-fragments><kotlin><mvp><rxpermissions>","3","2","","","","CC BY-SA 4.0"
+"56445573","1","","","2019-06-04 14:04:52","","1","166","<p>I'm using <code>RxPermissions</code> to handle permissions in my Android app.
+For example I have the following code inside a <code>button's onClickListener</code> </p>
+
+<pre><code>Disposable mDispo = new RxPermissions(this)
+            .request(Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR)
+            .subscribe(isAllowed -&gt; {
+                if (isAllowed) {
+                    setResult(RESULT_OK);
+                    finish();
+                } else ExtensionsKt.showPermisionRequiredDialog(this);
+            });
+</code></pre>
+
+<p>When the button is pressed it will show the following dialog.</p>
+
+<p><a href=""https://i.stack.imgur.com/td6KE.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/td6KE.png"" alt=""enter image description here""></a></p>
+
+<p>But If I check the <code>Don't ask again</code> option and press <code>DENY</code>, the dialog will not appear again and the user is pretty much stuck until he changes the permission from the <code>app settings</code>.</p>
+
+<p>For that I made a custom dialog that will be triggered when <code>isAllowed</code> is  <code>false</code> but now the problem is that the custom dialog will appear even if the user doesn't check the <code>Don't ask again checkbox</code>, just by simply pressing <code>DENY</code>.</p>
+
+<p>How can I make the custom dialog appear at the next button <code>click</code> only if the user has checked the <code>Don't ask again</code> option previously? </p>
+","3170486","","","","","2019-06-04 14:04:52","RxPermissions deny access","<android><permissions><dialog><rxpermissions>","0","3","","","","CC BY-SA 4.0"
+"64756731","1","","","2020-11-09 17:52:13","","1","94","<p>I want to use the<a href=""https://github.com/tbruyelle/RxPermissions"" rel=""nofollow noreferrer"">tbruyelle
+RxPermissions</a> library  in my project. I can not call the <code>subcribe</code> method like here</p>
+<pre><code>rxPermissions
+    .request(Manifest.permission.ACCESS_FINE_LOCATION)
+    .subscribe(granted -&gt; {
+        if (granted) {
+           
+        } else {
+           
+        }
+    });
+</code></pre>
+<p>On the method &quot;request&quot; shows the error</p>
+<pre><code>Cannot access class 'io.reactivex.rxjava3.core.Observable'. Check your module classpath for missing or conflicting dependencies
+</code></pre>
+<p>My <code>build.gradle</code></p>
+<pre><code>repositories {
+    //For YandexMap
+    maven { url &quot;http://maven.google.com/&quot; }
+    //For RxPermission
+    maven { url 'https://jitpack.io' }
+}
+// rx - network
+implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+
+// rx
+implementation 'io.reactivex.rxjava2:rxjava:2.2.20'
+implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
+
+//RxPermission
+implementation 'com.github.tbruyelle:rxpermissions:0.12'
+  
+</code></pre>
+","9128819","","","","","2020-11-09 17:52:13","Conflict with RxPermission","<gradle><rxpermissions>","0","0","","","","CC BY-SA 4.0"
+"66437641","1","","","2021-03-02 10:31:16","","0","279","<p>I'm using RxPermissions to handle permissions inside my project.</p>
+<pre><code> 'com.github.tbruyelle:rxpermissions:0.12'
+ 'io.reactivex.rxjava3:rxjava:3.0.4'
+</code></pre>
+<p>This is my code for handling the <code>CAMERA</code> permission:</p>
+<pre><code>new RxPermissions((FragmentActivity) context).request(Manifest.permission.CAMERA)
+            .subscribe(granted -&gt; {
+                if(granted){
+                    Intent packageReceiveIntent = new Intent(context, ReceivePackageActivity.class);
+                    context.startActivity(packageReceiveIntent);
+                }
+            });
+</code></pre>
+<p>This gets called <code>onClick</code> event.</p>
+<p>For some reason the code inside the <code>Consumer</code> is not called after the <code>permission</code> is <code>granted</code> and I have to tap on the button twice to open the activity.</p>
+<p>I've used the same code in a different part of the application and it works fine, I don't get it why in a Fragment it works fine and in another it doesn't.</p>
+<p>I also tried it like this but was unsuccessful:</p>
+<pre><code> new RxPermissions(requireActivity()).request(Manifest.permission.CAMERA)
+            .subscribeOn(Schedulers.newThread())
+            .observeOn(Schedulers.computation())
+            .subscribe(aBoolean -&gt; {
+                if (aBoolean) {
+                    Intent packageReceiveIntent = new Intent(requireActivity(), ReceivePackageActivity.class);
+                    requireActivity().startActivity(packageReceiveIntent);
+                }
+            });
+</code></pre>
+","3170486","","","","","2021-07-26 06:40:45","RxPermissions not called after permission granted","<android><rx-java><android-permissions><rx-java3><rxpermissions>","2","3","","","","CC BY-SA 4.0"

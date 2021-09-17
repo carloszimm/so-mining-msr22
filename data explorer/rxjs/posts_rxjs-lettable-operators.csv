@@ -1,0 +1,811 @@
+Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCount,Body,OwnerUserId,OwnerDisplayName,LastEditorUserId,LastEditorDisplayName,LastEditDate,LastActivityDate,Title,Tags,AnswerCount,CommentCount,FavoriteCount,ClosedDate,CommunityOwnedDate,ContentLicense
+"47189540","1","47189648","","2017-11-08 20:56:19","","3","408","<p>I'm upgrading to Angular 5 and RxJS 5.5.2 and trying to import <code>Observable.of</code> operator.</p>
+
+<p>Before lettable operators, we did it like this:</p>
+
+<pre><code>import 'rxjs/add/observable/of';
+
+// Usage
+Observable.of(...)
+</code></pre>
+
+<p>But now importing from paths containing <code>add</code> is discouraged.</p>
+
+<p>So what is the proper way of importing and using lettable static operators now?</p>
+","3345644","","5394220","","2017-11-29 13:11:20","2017-11-29 13:11:20","Import of lettable operators and observable creation methods","<angular><typescript><rxjs><reactive-programming><rxjs-lettable-operators>","1","1","","","","CC BY-SA 3.0"
+"47552966","1","","","2017-11-29 12:31:47","","1","516","<p>Is there a lettable operator for <code>Observable.create()</code> imported from <code>rxjs/Observable</code>?</p>
+
+<p>I already replaced the <code>Observable.of()</code> also imported from <code>rxjs/Observable</code> by the lettable operator <code>of()</code> imported from <code>rxjs/observable/of</code>.</p>
+
+<p>But I could not find a lettable operator for the first issue, anyone who could help?</p>
+
+<p>EDIT: Not a duplicate, this question is about using Observable.create() as a lettable operator, and not about importing and using lettable static operators as Observable.of()</p>
+","7721207","","7721207","","2017-11-30 10:18:24","2018-01-27 11:49:28","RxJS lettable operators for Observable.create","<typescript><rxjs><reactive-programming><rxjs-lettable-operators>","1","2","","","","CC BY-SA 3.0"
+"47600201","1","47600954","","2017-12-01 19:26:45","","17","21149","<p>How do I do the following with lettable operators and pipe?</p>
+
+<pre class=""lang-js prettyprint-override""><code>    this.httpClient
+      .get(url)
+      .map((res: any) =&gt; {
+        const events = res.eventList;
+        return events.map(e =&gt; new EventLogModel(e));
+      })
+      .catch(this.handleError);
+</code></pre>
+
+<p>I've tried this, but I can't get <code>catchError</code> to work: <code>catchError does not exist on type Observable&lt;any&gt;</code>:</p>
+
+<pre class=""lang-js prettyprint-override""><code>    this.httpClient
+      .get(url)
+      .pipe(
+        map((res: any) =&gt; {
+          const events = res.eventList;
+          return events.map(e =&gt; new EventLogModel(e));
+        })
+      )
+      .catchError(this.handleError);
+</code></pre>
+
+<p>Also, I assume <code>catch</code> and <code>catchError</code> are the same, correct? I'm importing it like so:</p>
+
+<p><code>import { map, catchError } from 'rxjs/operators';</code></p>
+
+<p>but I wasn't sure if this was the correct operator to use.</p>
+","2094116","","2094116","","2019-03-20 15:03:52","2019-03-20 15:03:52","How do you catch with a pipe?","<angular><rxjs><observable><rxjs-lettable-operators>","1","7","4","","","CC BY-SA 4.0"
+"47889865","1","47890642","","2017-12-19 15:07:36","","4","6752","<p>I have an Angular 4 Component that is calling a Service to get data. Not the strangest of situations. After I retrieve the data and need to transform it and filter it. Apparently the way to do this nowadays is to use pipe.</p>
+
+<p>In my Component:</p>
+
+<pre><code>ngOnInit(): void {
+    this.suService.getShippingUnitTypes().subscribe(res =&gt; {
+        console.log(""Getting shipping unit types: "", res);
+    });
+}
+</code></pre>
+
+<p>In my service:</p>
+
+<pre><code>getShippingUnitTypes(): any {
+    const convertToJson = map(value =&gt; (value as any).json().XXETA_GRID_STATIC_LOV);
+    const filterShippingUnit = filter(value =&gt; (value as any).LOV_TYPE == ""SHIPPING_UNIT"");
+
+    return this.http.get(
+        this.constantsService.LOOKUP_COLUMN_BATCH_URL
+    ).pipe(convertToJson, filterShippingUnit);
+}
+</code></pre>
+
+<p>The service imports the following:</p>
+
+<pre><code>import { Injectable } from '@angular/core';
+import { Http, Response, RequestOptions, Headers, RequestMethod } from '@angular/http';
+import { Observable, pipe } from 'rxjs/Rx';
+import { map, filter } from 'rxjs/operators';
+</code></pre>
+
+<p>When debugging, the code never errors but simply never gets to the console.log() statement in the Component. If I remove the .pipe() and simply return the Observable the code logs what I would expect only without the transforming and filtering.</p>
+
+<p>I'm very new to Rxjs and using Pipe. I'm obviously not understanding something.</p>
+
+<p>Edited to Add Information:</p>
+
+<p>I put tap into the pipe like such...</p>
+
+<pre><code>pipe(tap(console.log), convertToJson, tap(console.log), filterShippingUnit, tap(console.log))
+</code></pre>
+
+<p>I didn't know that tap existed but it is useful. The first two console logs give me what I would expect. The third one, right after the filterShippingUnit, doesn't do anything. It doesn't log a value at all. Not even null.</p>
+
+<p>After convertToJson console.log spits out an array of 28 objects. One of the objects is:</p>
+
+<pre><code>{LOV_TYPE: ""SHIPPING_UNIT"", LOV_TAB_TYP_ITEM: Array(4)}
+</code></pre>
+
+<p>I would expect that object to be passed on based on the filterShippingUnit filter.</p>
+","214676","","5394220","","2017-12-19 17:01:02","2017-12-19 17:01:02","Rxjs pipe not working with angular´s Http.get()","<angular><typescript><rxjs><angular2-http><rxjs-lettable-operators>","1","8","1","","","CC BY-SA 3.0"
+"47927723","1","","","2017-12-21 15:07:45","","1","1488","<p>I have a structure I would like to flatten into one homogeneous array. The source array looks like this:</p>
+
+<pre><code>[
+  {
+    ""countryCode"": ""CA"",
+    ""countryName"": ""Canada"",
+    ""states"": [
+      {
+        ""stateCode"": ""CAAB"",
+        ""stateName"": ""Alberta"",
+        ""countryCode"": ""CA"",
+        ""stateAbbrev"": ""AB""
+      },
+      . . . 
+      {
+        ""stateCode"": ""CAYT"",
+        ""stateName"": ""Yukon Territory"",
+        ""countryCode"": ""CA"",
+        ""stateAbbrev"": ""YT""
+      }
+    ]
+  },
+  {
+    ""countryCode"": ""US"",
+    ""countryName"": ""USA"",
+    ""states"": [
+      {
+        ""stateCode"": ""USAK"",
+        ""stateName"": ""Alaska"",
+        ""countryCode"": ""US"",
+        ""stateAbbrev"": ""AK""
+      },
+      . . .
+      {
+        ""stateCode"": ""USWY"",
+        ""stateName"": ""Wyoming"",
+        ""countryCode"": ""US"",
+        ""stateAbbrev"": ""WY""
+      }
+    ]
+  }
+]
+</code></pre>
+
+<p>What I would like to transform this into should look like this:</p>
+
+<pre><code>[
+  {
+    ""value"": ""CA"",
+    ""label"": ""Canada""
+  },
+  {
+    ""value"": ""CACB"",
+    ""label"": ""Alberta""
+  },
+  . . .
+  {
+    ""value"": ""CAYT"",
+    ""label"": ""Yukon Territory""
+  },
+  {
+    ""value"": ""US"",
+    ""label"": ""USA""
+  },
+  {
+    ""value"": ""USAK"",
+    ""label"": ""Alaska""
+  },
+  . . .
+  {
+    ""value"": ""USWY"",
+    ""label"": ""Wyoming""
+  }
+]
+</code></pre>
+
+<p>So far I have:</p>
+
+<pre><code>let countries:Observable&lt;ICountry[]&gt; = 
+   this.http.get&lt;ICountry[]&gt;(`${this.buildProUrl}/states`);
+
+return countries.map(o =&gt; o.map(c =&gt; 
+  &lt;IStateDropDownItem&gt;{value: c.countryCode, label: c.countryName}));
+</code></pre>
+
+<p>It seems like there ought to be a way to merge the states belonging to each country into the resulting observable array. I've read the concatMap, mergeMap and switchMap documentation but I can't quite figure out how to put it all together.</p>
+","2969694","","","","","2017-12-21 15:36:15","How to flatten or merge arrays in rxJS","<angular><rxjs><observable><angular2-observables><rxjs-lettable-operators>","1","3","","","","CC BY-SA 3.0"
+"48025965","1","48025970","","2017-12-29 17:08:56","","9","994","<p>RxJS 5.5 allows grabbing lettable operators and piping them like so:</p>
+
+<pre><code>import { ajax } from 'rxjs/observable/dom/ajax'
+import { catchError, map, retry } from 'rxjs/operators'
+
+ajax.getJSON('https://example.com/api/test')
+.pipe(
+    retry(3, 1000),
+    map(fetchUserFulfilled),
+    catchError(console.error)
+)
+</code></pre>
+
+<p>How would I use the <code>do</code> operator between these commands?</p>
+","1624862","","","","","2018-05-23 12:01:18","How would I use `do` as an RxJS lettable operator?","<javascript><rxjs><rxjs5><rxjs-lettable-operators>","1","0","","","","CC BY-SA 3.0"
+"48069225","1","48073663","","2018-01-02 23:25:54","","0","643","<p>I am attempting to do some <code>string</code> manipulation in <code>rjxs</code>, and while I <strong>can</strong> accomplish it with the built in behaviors on the <code>string</code> class and the <code>array</code> class in <code>Javascript</code>, I'm wanting to use this as an exercise to learn even more about <code>rxjs</code> and understand a fluent code-flow better.</p>
+
+<p>To that end, it's imperative to me that I discover a way to do it that can fit in a <code>fluent</code> solution, instead of a series of variable assignments like I see in most <code>rxjs</code> examples.</p>
+
+<p>Essentially, here's the situation; I've got a string of text;</p>
+
+<pre><code>const example = `
+    key || value
+    key || value
+    key || value
+
+    value
+    value
+
+    value
+    key || key[key1] = value | key[key2] = value
+    key || value
+`;
+</code></pre>
+
+<p>The first thing that I need to do is use <code>string.split('\n')</code> to create an array of strings, so that I can through each line and perform further operation.</p>
+
+<p><code>example.string.split('\n')</code> does give the desired results, but trying to send this into <code>rxjs</code> begins to get rather mixed yield. With the <code>pipe</code> method, I know that I send the results into <code>rxjs</code> as an <code>Observable</code>, but I'm having a really troubling time grasping how to truly treat it from there without excessive nesting into the <code>map</code> operator.</p>
+
+<p>For example, if I do ...</p>
+
+<pre><code>of(example.string.split('\n')).pipe(
+   map(results =&gt; results.toString().split('||')),
+   map(results =&gt; ... ),
+   ...
+).subscribe();
+</code></pre>
+
+<p>I <strong>can</strong> start to get a semblance of what I'm looking for, but what I'd really like to do is ...</p>
+
+<pre><code>of(example).pipe(
+   split('\n'),
+   split('||'),
+   concatMap(results =&gt; ...)
+).subscribe();
+</code></pre>
+
+<p>Reading the <a href=""https://github.com/ReactiveX/rxjs/blob/master/doc/lettable-operators.md"" rel=""nofollow noreferrer"">documentation on <code>lettable operators</code>, seen here</a>, it looks like this should be a pretty easy thing to create. In theory, it should look like this in my mind;</p>
+
+<pre><code>const split = (separator: string) =&gt; &lt;T&gt;(source: Observable&lt;T&gt;) =&gt;
+    new Observable(observer =&gt; {
+        source.subscribe({
+            next(x) { observer.next(x.toString().split(separator)); },
+            error(err) { observer.error(err); },
+            complete() { observer.complete(); }
+        })
+    });
+</code></pre>
+
+<p>So that should make the whole code obvious enough;</p>
+
+<pre><code>of(example).pipe(
+    split('\n')
+).subscribe(result =&gt; console.log(`[n]::${result}`));
+</code></pre>
+
+<p>But this doesn't give me what I really expect. I expected to get an <code>array</code> of the lines, but if I output it, I get ...</p>
+
+<blockquote>
+  <p>[n]::,    key || value,    key || value,    key || value,    ,<br>
+  value,    value,    ,    value,    key || key[key1] = value |
+  key[key2] = value,    key || value,</p>
+</blockquote>
+
+<p>I'm really unclear what I'm doing wrong, here. Since it's hard to demonstrate <code>rxjs</code> in most of the code playgrounds like <code>plunkr</code> or <code>jsfiddle</code>, at least to my knowledge, I've prepared a playground environment to demonstrate my work on <code>stackblitz</code>, if it helps.</p>
+
+<p>You'll find all of the pertinent code in the <code>playground/index.ts</code> file. I've done the best I can to abstract away the need to have <strong>any</strong> knowledge of angular, as I've painstakingly earmarked the sections that should be left alone to make it continue showing output on the right side. If you do not know angular, but can help with <code>rxjs</code>, you should be able to work without ever disturbing that setup.</p>
+
+<h2><a href=""https://stackblitz.com/edit/rxjs-lettable-experiments-3hjthq"" rel=""nofollow noreferrer"">STACKBLITZ PLAYGROUND</a></h2>
+","2796614","","","","","2018-01-03 08:24:07","creating lettable rxjs ""string.split"" operator","<rxjs><rxjs5><rxjs-lettable-operators>","1","0","","","","CC BY-SA 3.0"
+"48132136","1","","","2018-01-06 21:34:35","","0","444","<p>I am undecided if this is the right place to ask this question, or StackOverflow might be best for this. So here i go.</p>
+
+<p>My introductions to rxjs was through the excellent <a href=""https://angular.io"" rel=""nofollow noreferrer"">Angular</a> framework and throughout every tutorial and in practice has been ""import whatever you need from <code>add/operator</code> and then chain it. eg.</p>
+
+<pre><code>import { Observable } from 'rxjs/Observable';
+import { empty } from 'rxjs/observable/empty';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/map';
+// Other rxjs import
+import 'rxjs/add/observable/of';
+
+Class SomeClass {
+  @Effect
+  search$ = this._action
+    .ofType&lt;search.SearchCountry&gt;(search.SEARCH_COUNTRY)
+    .map(action =&gt; {
+      return action.payload;
+    })
+    .switchMap(query =&gt; {
+      if (query === '') {
+        return empty();
+      }
+      const nextSearch$ = this._action.ofType(search.SEARCH_COUNTRY).skip(1);
+
+      return this._searchService
+        .search(query)
+        .do(query =&gt; console.log(query))
+        .takeUntil(nextSearch$)
+        .map((result: RestResponseInterface) =&gt; {
+          return new search.SearchCountryComplete(result);
+        });
+    })
+    .catch(error =&gt; {
+      return Observable.of(new search.SearchError('Undocumented API Error'));
+    });
+}
+</code></pre>
+
+<p>As <a href=""https://github.com/ReactiveX/rxjs/blob/master/doc/lettable-operators.md#usage"" rel=""nofollow noreferrer"">explained</a> in lettable documentaion, and If I am reading this right, chaining is discouraged as way forward, and pipe is the recommended implementation. The same implementation should be written as follows</p>
+
+<pre><code>import { tap, take, takeUntil, skip, map, switchMap } from 'rxjs/operators'; // Import statements have changed
+
+search$ = this._action
+    .pipe(
+        ofType&lt;search.SearchCountry&gt;(search.SEARCH_COUNTRY),
+        map(action =&gt; action.payload),
+        switchMap(query =&gt; {
+            if (query === '') {
+                return empty();
+            }
+
+            const nextSearch$ = this._action.ofType(search.SEARCH_COUNTRY).skip(1);
+
+            return this._searchService
+                .search(query)
+                .pipe(tap(qyery =&gt; console.log(query)), takeUntil(nextSearch$), map((result: RestResponseInterface) =&gt; new search.SearchCountryComplete(result)));
+        })
+    )
+    .catch(error =&gt; {
+        return Observable.of(new search.SearchError('Undocumented API Error'));
+    });
+</code></pre>
+
+<p>Because when i read the source,  especially after <a href=""https://github.com/ReactiveX/rxjs/blob/master/src/Rx.ts#L41"" rel=""nofollow noreferrer"">https://github.com/ReactiveX/rxjs/blob/master/src/Rx.ts#L41</a> its seems that chaining is perfectly acceptable, however, there is a proposal <a href=""https://github.com/ReactiveX/rxjs/issues/2913"" rel=""nofollow noreferrer"">https://github.com/ReactiveX/rxjs/issues/2913</a>, which is discussing adding <code>rxjs/add/*</code> as a seperate package.</p>
+
+<p>My question is, how will this effect chaining in future?</p>
+","228697","","","","","2018-04-05 06:39:06","On chaining and lettable operators","<rxjs5><rxjs-lettable-operators>","1","3","","","","CC BY-SA 3.0"
+"48205253","1","","","2018-01-11 10:48:38","","0","1532","<p>I'm working with Angular and rxjs 5.5 and I'm trying to get this code to work with the new pipe operator.</p>
+
+<pre><code>this.store
+  .select(state =&gt; state.userState)
+  .filter(userState =&gt; userState.loaded)
+  .do(userState =&gt; do_something)
+  .takeWhile(userState =&gt; !userState.loaded)
+  .subscribe();
+</code></pre>
+
+<p>So basically, wait until the user is loaded, then do something and terminate the observable.
+It would be something like this:</p>
+
+<pre><code>this.store
+  .select(state =&gt; state.userState)
+  .pipe(
+    filter(userState =&gt; userState.loaded),
+    do(userState =&gt; do_something),
+    takeWhile(userState =&gt; !userState.loaded)
+  )
+  .subscribe;
+</code></pre>
+
+<p>but it seems the do operator is not in the operators list anymore, so how can I achieve that? I don't want to use take(1) or similar.</p>
+
+<p>Thanks!</p>
+","4819485","","","","","2018-02-14 12:02:38","rxjs with the pipe operator","<angular><rxjs><rxjs-lettable-operators>","1","1","","","","CC BY-SA 3.0"
+"48206418","1","48208553","","2018-01-11 11:52:42","","1","1031","<p>struggling with angular and observables.</p>
+
+<p>I have a observable like this:</p>
+
+<pre><code> private searchResults: Observable&lt;any[]&gt;;
+</code></pre>
+
+<p>and I fill this with calling it like: </p>
+
+<pre><code>this.searchResults = this.searchTerms.pipe(
+        map((event: any) =&gt; event.target.value),
+        debounceTime(300),
+        distinctUntilChanged(),
+        filter((term: string) =&gt; term &amp;&amp; term.length &gt;= 3),
+        flatMap((term: string) =&gt; this.http.get&lt;any[]&gt;(`https://my-cool-rest.api/${term}`))
+    )
+</code></pre>
+
+<p>(note: searchTerms is <code>Subject&lt;string&gt;()</code> and is implemented on html like: <code>&lt;input type=""text"" (keyup)=""searchTerms.next($event)""/&gt;</code>)</p>
+
+<p>everything so far is ok, all is working as expected.</p>
+
+<p>When I receive the results, I show them in a simple UL</p>
+
+<pre><code>&lt;ul&gt;
+     &lt;li *ngFor=""let result of searchResults | async""&gt;
+          &lt;a (click)=""selectItem(result.id)&gt;{{ result.name }}&lt;/a&gt;
+     &lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>Clicking on a item will call the <code>selectItem</code> function that write the results on console  and clear the <code>searchResults</code>:</p>
+
+<pre><code>selectItem(result: string) {
+    if (result) {
+        console.log(result);
+        this.searchResults = Observable.of([]);
+    }
+}
+</code></pre>
+
+<p>Again, everything is ok. </p>
+
+<p>But if I repeat the process to search for other keywords, <code>*ngFor</code> does not show result anymore.</p>
+
+<p>To be completely secure, I subscribed to <code>searchResults</code> (e.g.: in constructor) to log it</p>
+
+<pre><code>constructor() {
+     this.searchResults.subscribe(data =&gt; console.log(data));
+}
+</code></pre>
+
+<p>and guess what? Works like a charm</p>
+
+<p>I suppose this is an angular (5+) behavior I don't understand.</p>
+
+<p>Thanks in advance!</p>
+","813728","","","","","2018-01-11 13:46:43","Angular async *ngFor not working after selection","<angular><typescript><rxjs><rxjs-lettable-operators>","1","2","","","","CC BY-SA 3.0"
+"48250322","1","","","2018-01-14 14:00:52","","2","478","<p>I'm trying to understand the best practice for importing rxjs operators</p>
+
+<p>It seems like I should import <code>share</code> this way, but, the following doesn't work because it says share expects 0 arguments.  I'm not quite sure how to call <code>share</code> correctly.</p>
+
+<pre><code>import { share } from 'rxjs/operators';
+
+...
+
+public currentUser: Observable&lt;User&gt; = share(this.currentUser$.asObservable());
+</code></pre>
+
+<p>Doing it the old way causes no problems.  However I seemed to have read that's not the preferred way to import <a href=""https://www.learnrxjs.io/concepts/operator-imports.html"" rel=""nofollow noreferrer"">https://www.learnrxjs.io/concepts/operator-imports.html</a></p>
+
+<pre><code>import 'rxjs/add/operator/share';
+
+...
+
+public currentUser: Observable&lt;User&gt; = this.currentUser$.asObservable().share();
+</code></pre>
+
+<p>How should I call share if I'm using the recommended way of importing?</p>
+","611750","","611750","","2018-01-14 14:08:07","2018-01-14 15:35:25","Having trouble calling RxJS share using the recommended operator import","<rxjs><rxjs5><rxjs-lettable-operators>","3","0","","","","CC BY-SA 3.0"
+"48500387","1","48500473","","2018-01-29 11:38:35","","-4","349","<p>I'm getting lost with the new lettable operators. </p>
+
+<p>I succeeded trying to use <code>mergeMap</code> : </p>
+
+<pre><code>import { mergeMap } from 'rxjs/operators';
+</code></pre>
+
+<p>But I don't know how to import operators such as <code>finally</code> : </p>
+
+<pre><code>import { ? } from 'rxjs/?';
+</code></pre>
+
+<p>Where is this operator ? Is there a rule to find each of the ones you need ? </p>
+","","user4676340","","","","2018-01-29 11:44:03","RxJS, advice with lettable operators","<angular><typescript><rxjs><observable><rxjs-lettable-operators>","1","2","","","","CC BY-SA 3.0"
+"48775806","1","49058307","","2018-02-13 21:18:50","","2","1348","<p>I have some code I'm migrating to RxJS 5.5, which already worked.</p>
+
+<pre><code>public getMentor(id: number): Observable&lt;Employee&gt; {
+    const url = `${this.employeeUrl}/${id}/mentor`;
+    return this.http
+        .get(url, this.authService.getOptionsWithToken())
+        .retryWhen(errors =&gt; {
+            return errors
+                .mergeMap(error =&gt; (error.status === 404) ? Observable.throw(error) : Observable.of(error))
+                .take(this.maxRetries);
+        })
+        .map(response =&gt; response.json() as Employee)
+        .catch(ErrorHandlerService.handleError);
+}
+</code></pre>
+
+<p>In any case, if this request fails with 404, it's OK according to the business logic. Now, this would be a near equivalent in 5.5:</p>
+
+<pre><code>public getMentor(id: number): Observable&lt;Employee&gt; {
+  const url = `${this.employeeUrl}/${id}/mentor`;
+  return this.http.get&lt;Employee&gt;(url)
+    .pipe(
+      retryWhen(errors =&gt; {
+        console.log('errorInService', errors);
+        return errors.pipe(
+          mergeMap(error =&gt; (error.status === 404) ? _throw(error) : of(error)),
+          take(this.maxRetries)
+        )
+      }),
+      catchError(ErrorHandlerService.handleError)
+    );
+}
+</code></pre>
+
+<p>Here, the flow gets interrupted because inside retryWhen, errors is now a Subject and I cannot extract the status as before.</p>
+
+<pre><code>this.employeeService.getMentor(this.mentee.id).subscribe(
+    mentor =&gt; {
+      this.existingMentor = mentor;
+      this.modalAddConfirmation(addConfirmation, mentee, form);
+    },
+    e =&gt; {
+      console.log('errorInMentor', e);
+      if (e.status === 404) {
+        // console.log('No mentor');
+        this.employeeService.putMentor(mentee.id, this.mentor)
+          .subscribe(() =&gt; this.mentees.push(mentee));
+      } else {
+        return null;
+      }
+    }
+  );
+</code></pre>
+
+<p>In the original caller, ""e"" is now a string which says <code>Http failure response for http://localhost:8888/employees/1/mentor: 404 OK</code> instead of an object. Obviously, the <code>putMentor()</code> call never gets made. I'm just learning so it's most likely I haven't understood fully the new pipeable operators.</p>
+
+<h2>Update</h2>
+
+<p>At least this code is throwing an ErrorObservable, but on the caller end (<code>errorInMentor</code>) it's still a string:</p>
+
+<pre><code>public getMentor(id: number): Observable&lt;Employee&gt; {
+  const url = `${this.employeeUrl}/${id}/mentor`;
+  return this.http.get&lt;Employee&gt;(url)
+    .pipe(
+      retryWhen(errors =&gt; {
+        return errors.pipe(
+          mergeMap(error =&gt; {
+            console.log('error MergeMap', error);
+            return error.status === 404 ? _throw(error) : of(error);
+          }),
+          take(this.maxRetries)
+        )
+      }),
+      catchError(ErrorHandlerService.handleError)
+    );
+}
+</code></pre>
+","1509100","","1509100","","2018-02-13 22:21:38","2018-03-01 20:36:42","Handling retryWhen status code in RxJS 5.5","<rxjs5><rxjs-lettable-operators>","1","0","1","","","CC BY-SA 3.0"
+"48888460","1","48888653","","2018-02-20 15:16:41","","1","191","<p>Before lettable operators, the code looked like this: </p>
+
+<pre><code>get someData$(): Observable&lt;Data&gt; {
+  return this.dataService.higherOrderDataStream
+    .mergeAll()
+    .map(...);
+}
+</code></pre>
+
+<p>Refactoring to use <code>pipe</code>, I get a type error essentially saying <code>Observable&lt;Observable&lt;Data&gt;&gt;</code> is not assignable to type <code>Observable&lt;Data&gt;</code>:</p>
+
+<pre><code>get someData$(): Observable&lt;Data&gt; {
+  return this.dataService.higherOrderDataStream
+    .pipe(
+      mergeAll(),
+      map(...)
+    );
+}
+</code></pre>
+
+<p>But the following works just fine (I assume one shouldn't mix lettable and chained operators):</p>
+
+<pre><code>get someData$(): Observable&lt;Data&gt; {
+  return this.dataService.higherOrderDataStream
+    .mergeAll()
+    .pipe(
+      map(...)
+    );
+}
+</code></pre>
+
+<p>Is there a different <code>mergeAll</code> I should be using? I'm using the one from <code>rxjs/operators</code> where I was using <code>rxjs/add/operator/mergeAll</code> previously. I thought these two implementations would be equivalent. </p>
+
+<p><strong>Is this a bug or am I using the new <code>mergeAll</code> incorrectly?</strong></p>
+","5932590","","310726","","2018-03-15 15:39:01","2018-03-15 15:39:01","mergeAll not working the same as a lettable operator (rxjs 5.5+)?","<rxjs><rxjs5><rxjs-lettable-operators>","1","0","","","","CC BY-SA 3.0"
+"49125675","1","49125817","","2018-03-06 07:40:48","","0","104","<p>Im used to using the old rxjs syntax where all method calls are chained, and where i can centrally import all operators. </p>
+
+<p>In a new application, i now started using the ""lettable operators"" using the pipe method on the Obsrvable, but i dont succeed in importing those operators centrally. </p>
+
+<p>So, in a certain component i am using map and mergeMap, and import them like this:</p>
+
+<pre><code>import { map } from 'rxjs/operators/map';
+import { mergeMap } from 'rxjs/operators/mergeMap';
+</code></pre>
+
+<p>If i remove these imports from my component file and put them in my main.ts for example, compilation fails because those methods are not found ... This used to be simple before the lettable operators. What am i missing?</p>
+","1854793","","","","","2018-03-06 07:51:16","Centrally importing rxjs lettable operators","<rxjs><rxjs-lettable-operators>","1","0","","","","CC BY-SA 3.0"
+"49296906","1","49304241","","2018-03-15 10:21:54","","0","110","<p>Every time a new value is produced I need to compare it with all previous values and only if a condition is met it will be added to the stream.</p>
+
+<p>How can this be done with observables?</p>
+","799853","","","","","2018-03-15 16:09:20","rxjs - Iterate back in Observables","<rxjs><rxjs5><angular2-observables><rxjs-lettable-operators>","1","2","","","","CC BY-SA 3.0"
+"49526346","1","49528833","","2018-03-28 04:52:17","","0","442","<p>I'm composing multiple observables using an observable's <code>pipe</code> method and I'd like to emit a final composite value when all observables in the array emit.</p>
+
+<pre class=""lang-js prettyprint-override""><code>import { apiSvc } from '../lib/api-service'
+
+import { of as observableOf } from 'rxjs/observable/of'
+import { map } from 'rxjs/operators'
+
+const uris = [
+  '/api/items/1',
+  '/api/items/2',
+  '/api/items/3'
+]
+
+observableOf(uris).pipe(
+  // Map uris array to an array of observables.
+  map((uris) =&gt; calls.map(uri) =&gt; apiSvc.get(uri) /* returns observable*/),
+  // Perform magic and emit when all calls complete.
+  magic()
+)
+.subscribe((results) =&gt; {
+  console.log(results) // [{id: 1}, {id: 2}, {id: 3}]
+})
+</code></pre>
+
+<p>I was able to make this work with <code>forkJoin</code>:</p>
+
+<pre class=""lang-js prettyprint-override""><code>import { forkJoin } from 'rxjs/observable/forkJoin'
+
+observableOf(uris).pipe(
+  // Map uris array to an array of observables.
+  map((uris) =&gt; calls.map(uri) =&gt; apiSvc.get(uri)),
+)
+.subscribe((requests) =&gt; {
+  // Emits when all request observables emit.
+  forkJoin(requests).subscribe((results) =&gt; {
+    console.log(results) // [{id: 1}, {id: 2}, {id: 3}]
+  })
+})
+</code></pre>
+
+<p>...but I'm looking for a way to get it done in the <code>pipe</code> chain without having to nest <code>subscribe</code> calls.</p>
+
+<p>The <code>zip</code> operator is sort of in the ballpark but it doesn't appear to work on arrays of observables. Is there a lettable operator that works like <code>forkJoin</code> and can be used with <code>pipe</code>?</p>
+","1861779","","1861779","","2018-03-28 13:46:04","2018-03-28 13:46:04","RXJS 5 - Emit a single composite value from an array of observables when all sources emit","<rxjs><rxjs5><rxjs-lettable-operators>","1","1","","","","CC BY-SA 3.0"
+"51849873","1","","","2018-08-14 21:16:27","","1","1107","<p>I have 2 observables like this:</p>
+
+<pre><code>return this.loaded$.pipe(
+            switchMap((isLoaded: boolean) =&gt; {
+                if (!isLoaded) {
+                 return this.userId$;
+                }
+            }),
+            tap((userId: string) =&gt; {
+                this.store.dispatch(new MyPostsList(userId))
+            }),
+            filter((value: any) =&gt; value),
+            take(1)
+        )
+</code></pre>
+
+<p>I want to have access to <code>isLoaded</code> var from $loaded stream inside tap part how can I do it?
+Is it some better way to do this?</p>
+","6342729","","","","","2018-08-15 07:12:00","How to memorize previous value from stream RxJS","<rxjs><rxjs6><rxjs-lettable-operators>","1","1","","","","CC BY-SA 4.0"
+"52621932","1","52623825","","2018-10-03 07:30:09","","0","1132","<p>I would appreciate if someone could shed some light on this. I have been at it for days now. </p>
+
+<p>Here is two functions that lives in my auth service. The login function that retrieves a valid jwt and then the refresh function that fetches a refreshed jwt. </p>
+
+<p><strong>LOGIN</strong></p>
+
+<pre><code>  login(username: string, password: string): Observable&lt;any&gt; {
+    const headers = new HttpHeaders().set('Authorization', `Basic ${environment.WSO2_AUTH_BASIC}`);
+    const params = new HttpParams({
+    fromObject: {
+     grant_type: 'password',
+     scope: 'openid',
+     username: username,
+     password: password
+   }
+ });
+
+  return this.http.request&lt;Token&gt;('POST', environment.API_HOST + '/token', {
+    headers: headers,
+    body: params
+  }).pipe(map(this._mapTokenResponse));
+}
+</code></pre>
+
+<p><strong>REFRESH</strong></p>
+
+<pre><code>  private _refreshToken() {
+const headers = new HttpHeaders().set('Authorization', `Basic ${environment.WSO2_AUTH_BASIC}`);
+this.token = this.getToken();
+const params = new HttpParams({
+  fromObject: {
+    grant_type: 'refresh_token',
+    scope: 'openid',
+    refresh_token: this.token.refresh_token
+  }
+});
+return this.http.request&lt;Token&gt;('POST', environment.API_HOST + '/token', {
+  headers: headers,
+  params: params
+}).pipe(map(this._mapTokenResponse, this));
+}
+</code></pre>
+
+<p>I have created a separate arrow function that handles the mapping for both.</p>
+
+<pre><code>private _mapTokenResponse = (token: Token) =&gt; {
+// login successful if there's a jwt token in the response
+if (token &amp;&amp; token.access_token) {
+  // store user details and jwt token in local storage to keep user logged in between page refreshes
+  token.id_token_data = this.jwtHelper.decodeToken(token.id_token);
+  this._setSession(token);
+}
+return token;
+</code></pre>
+
+<p>}</p>
+
+<p>I want this so that I do not duplicate code. The login function works perfectly but the refresh token returns this error: </p>
+
+<pre><code>ERROR Error: ""Uncaught (in promise): TypeError: argument is not a function. Are you looking for `mapTo()`?
+</code></pre>
+
+<p>I have imported map from 'rxjs/operators'</p>
+","4337399","","","","","2018-10-03 09:24:48","Angular v6 pipe(map()) issue","<angular><rxjs><rxjs-lettable-operators>","1","6","","","","CC BY-SA 4.0"
+"53064231","1","53064627","","2018-10-30 12:22:59","","0","41","<p>I have a call to an HTTP service that return an observable (it's part of a third party library so I cannot change its inner code) and it is throwing an error on the subscribe for a use case that I would like to handle in the happy path.</p>
+
+<p>I have something like this:</p>
+
+<p><strong>My service class:</strong></p>
+
+<pre><code>class MyService {
+  getEntities(): Observable&lt;any&gt; {
+    return this.http.get('&lt;the url'&gt;)
+      .pipe(
+        catchError(err =&gt; {
+          // Handle the errors and returns a string corresponding to each message.
+          // Here I show an example with the status code 403
+          if (err.status === 403) {
+            return throwError('My error message for 403');
+          }
+
+          // This is what I want to do.
+          if (err.status === 409) {
+            // Somehow, make this to trigger the goodResponse in the consumer class.
+          }
+        })
+      );
+  }
+}
+</code></pre>
+
+<p><strong>My consumer:</strong></p>
+
+<pre><code>class MyComponent {
+  private myService: MyService;
+
+  constructor() {
+    this.myService = new MyService();
+  }
+
+  callTheAPI() {
+    this.myService.getEntities()
+      .subscribe(goodResponse =&gt; {
+        // Handle good response
+      }, error =&gt; {
+        // Handle error
+      });
+  }
+}
+</code></pre>
+
+<p>So, for the current code example, what I want to do is, for the case where the status code is 409, make the subscription to succeed.</p>
+","4848267","","","","","2018-10-30 12:46:06","Convert failing Observable into a good one","<typescript><rxjs><rxjs6><rxjs-pipeable-operators><rxjs-lettable-operators>","1","0","","","","CC BY-SA 4.0"
+"53837523","1","","","2018-12-18 16:40:53","","0","49","<p>I need help :) I tried to find the solution in other topics, but was not able to, so I am sorry beforehand if there is any. I am a newbie.<br>
+So, the problem. I have a bunch of div's. I need to add ""active"" class for each div, then remove it in 2 sec, one by one.<br>
+I have the solution, but my master says that ""from"" and then ""of"" are not good at all. Any ideas how it can be done in other way? Thank you in advance!    </p>
+
+<pre><code>const boxes = document.querySelectorAll('.box')
+const innerBoxes = Array.from(boxes);
+const clickOnDiv = fromEvent(innerBoxes, 'click')
+   .pipe(
+     map(event =&gt; {
+       let notActiveElements = [];
+       for ( let i=0; i &lt; innerBoxes.length; i++) {
+         if(innerBoxes[i] != event.target) {
+           notActiveElements.push(innerBoxes[i])
+         }
+       }
+       return notActiveElements
+     }),
+     concatMap(element =&gt; from(element)
+      .pipe(
+        concatMap(element =&gt; of(element)
+        .pipe(
+          tap(el =&gt; console.log(el)),
+          delay(2000)
+        )),
+        tap(item =&gt; {
+          item.classList.add('active')
+        }),
+        delay(2000),
+        tap(item =&gt; {
+          item.classList.remove('active')
+        })        
+      ))
+   )
+
+clickOnDiv.subscribe()
+</code></pre>
+","10807193","","10807193","","2018-12-18 17:02:37","2018-12-24 10:05:44","RxJS applying changes for elements one by one","<rxjs><observable><rxjs-lettable-operators>","1","3","","","","CC BY-SA 4.0"

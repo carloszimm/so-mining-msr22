@@ -1,0 +1,3579 @@
+Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCount,Body,OwnerUserId,OwnerDisplayName,LastEditorUserId,LastEditorDisplayName,LastEditDate,LastActivityDate,Title,Tags,AnswerCount,CommentCount,FavoriteCount,ClosedDate,CommunityOwnedDate,ContentLicense
+"40455824","1","","","2016-11-06 23:41:08","","8","6610","<p>I am trying to create a table view with multiple sections using RxSwift. Each section displays data representing a different type.</p>
+
+<p>I found the <a href=""https://github.com/RxSwiftCommunity/RxDataSources"" rel=""noreferrer""><code>RxSwiftDataSources</code></a> library and implemented the example from their documentation.</p>
+
+<p>Here is a quick runthrough of how that example is implemented:</p>
+
+<p>A custom data type <code>CustomData</code> is defined:</p>
+
+<pre><code>struct CustomData {
+  var anInt: Int
+  var aString: String
+  var aCGPoint: CGPoint
+}
+</code></pre>
+
+<p>Then, the representations for the section are added (note that <code>SectionModelType</code> is implemented here):</p>
+
+<pre><code>struct SectionOfCustomData {
+  var header: String    
+  var items: [Item]
+}
+extension SectionOfCustomData: SectionModelType {
+  typealias Item = CustomData
+
+   init(original: SectionOfCustomData, items: [Item]) {
+    self = original
+    self.items = items
+  } 
+}
+</code></pre>
+
+<p>Finally, some sample data is created and bound to the table view:</p>
+
+<pre><code>let sections: [SectionOfCustomData] = [
+  SectionOfCustomData(header: ""First section"", items: [CustomData(anInt: 0, aString: ""zero"", aCGPoint: CGPoint.zero), CustomData(anInt: 1, aString: ""one"", aCGPoint: CGPoint(x: 1, y: 1)) ]),
+  SectionOfCustomData(header: ""Second section"", items: [CustomData(anInt: 2, aString: ""two"", aCGPoint: CGPoint(x: 2, y: 2)), CustomData(anInt: 3, aString: ""three"", aCGPoint: CGPoint(x: 3, y: 3)) ])
+]
+</code></pre>
+
+<p>I now want to modify the example and only want to display <code>String</code>s rather than instances of <code>CustomData</code> in the second section, so somewhat like this:</p>
+
+<pre><code>let sections = [
+  SectionOfCustomData(header: ""First section"", items: [CustomData(anInt: 0, aString: ""zero"", aCGPoint: CGPoint.zero), CustomData(anInt: 1, aString: ""one"", aCGPoint: CGPoint(x: 1, y: 1)) ]),
+  SectionOfString(header: ""Second section"", items: [""a"", ""b"", ""c""])
+]
+</code></pre>
+
+<p>This will obviously not compile as <code>sections</code> now contains elements of different types <code>SectionOfCustomData</code> an <code>SectionOfString</code>. I tried to work around this by trying to declare sections as <code>[SectionModelType]</code> but this doesn't work, the compiler complains with:</p>
+
+<p><strong>Protocol '<code>SectionModelType</code>' can only be used as a generic constraint because it has Self or associated type requirements</strong></p>
+","1779113","","1779113","","2016-11-07 01:22:29","2017-05-11 02:34:06","How to bind table view with multiple sections that represent different data types using RxSwift and RxSwiftDataSources?","<ios><swift><rx-swift><rxdatasources>","1","1","1","","","CC BY-SA 3.0"
+"41060254","1","41099315","","2016-12-09 12:13:12","","4","2727","<p>Let's say I have a <code>UIButton</code> in a <code>UITableViewCell</code>.
+After dequeuing the cell from the <code>UITableView</code> I want to subscribe to the <code>UIButton.rx.tap</code>. The issue is that if my <code>UITableViewCell</code> is dequeued multiple times, the subscriptions would retain. Currently I solve this problem by allocating a <code>Disposable</code> property in my <code>UITableViewCell</code>, setting it when the subscription is create,  and calling <code>Disposable.dispose()</code> on <code>UITableViewCell.prepareForReuse()</code>, however as far as I understand implementing features in a way that requires you to call <code>Disposable.dispose()</code> implies that you are doing something wrong.</p>
+
+<p>Is there any better way to accomplish uniqueness of the subscription without reallocating <code>UIButton</code>?</p>
+","6407425","","","","","2016-12-12 10:58:17","Subscription to a UIButton.rx.tap located in UITableViewCell within UITableViewDataSource","<ios><uibutton><rx-swift><reactivex><rxdatasources>","2","0","3","","","CC BY-SA 3.0"
+"41634912","1","41638649","","2017-01-13 12:41:53","","0","5978","<p>I have a question: how to properly implement such a scenario in Rx-way with RxDataSources:</p>
+
+<p>We have a class with UICollectionView (or UITableView, in my case it's collection view), the results are not immediately present, they come asynchronously after some time.</p>
+
+<p>I have implemented my model with sections according to the tutorial here:
+<a href=""https://github.com/RxSwiftCommunity/RxDataSources"" rel=""nofollow noreferrer"">https://github.com/RxSwiftCommunity/RxDataSources</a></p>
+
+<p>But the data is created only once with <code>just</code> there:</p>
+
+<pre><code>let sections = [
+  SectionOfCustomData(header: ""First section"", items: [CustomData(anInt: 0, aString: ""zero"", aCGPoint: CGPoint.zero), CustomData(anInt: 1, aString: ""one"", aCGPoint: CGPoint(x: 1, y: 1)) ]),
+  SectionOfCustomData(header: ""Second section"", items: [CustomData(anInt: 2, aString: ""two"", aCGPoint: CGPoint(x: 2, y: 2)), CustomData(anInt: 3, aString: ""three"", aCGPoint: CGPoint(x: 3, y: 3)) ])
+]
+
+Observable.just(sections)
+  .bindTo(collectionView.rx.items(dataSource: dataSource))
+  .addDisposableTo(disposeBag)
+</code></pre>
+
+<p>What to do in case my items are available after some time and I want my collection view to be updated automatically?</p>
+
+<p>Thanks for any help.</p>
+","3990005","","","","","2017-01-13 15:58:54","RxSwift and UICollectionView, UITableView","<ios><swift><uicollectionview><rx-swift><rxdatasources>","1","0","2","","","CC BY-SA 3.0"
+"42588448","1","","","2017-03-03 21:08:07","","3","1042","<p>How to achieve self sizing collectionViewCells using RxDataSource?</p>
+
+<p>I've tried setting </p>
+
+<pre><code>flowLayout.estimatedItemSize = CGSize(width: 187, height: 102)
+</code></pre>
+
+<p>But then app crashes when <code>dataSourceObservable</code> changes.</p>
+
+<p>I've tried setting cell size inside </p>
+
+<pre><code>dataSource.configureCell = { [weak self] (dataSource, collectionView, indexPath, _) in 
+</code></pre>
+
+<p>Which is not a good idea, because cells overlap, and it is because I am not using </p>
+
+<pre><code>func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -&gt; CGSize
+</code></pre>
+
+<p>Now, is possible to layout cell sizes properly using only observables? That is not to call something like </p>
+
+<pre><code>dataSourceVar.value[indexPath].cellSize
+</code></pre>
+
+<p>Inside <code>collectionView sizeForItemAt</code>?</p>
+","5595519","","","","","2020-08-29 01:20:41","Self sizing collectionViewCells using RxDataSource","<rx-swift><rxdatasources>","1","0","","","","CC BY-SA 3.0"
+"42689091","1","","","2017-03-09 07:22:34","","0","1827","<p>I am trying to use RxSwift/RxDataSource with TableView but I am not able to assign configureCell with an existing function. Code below:</p>
+
+<pre><code>import UIKit
+import RxSwift
+import RxCocoa
+import RxDataSources
+
+class BaseTableViewController: UIViewController {
+    // datasources
+    let dataSource = RxTableViewSectionedReloadDataSource&lt;TableSectionModel&gt;()
+    let sections: Variable&lt;[TableSectionModel]&gt; = Variable&lt;[TableSectionModel]&gt;([])
+    let disposeBag: DisposeBag = DisposeBag()
+
+    // components
+    let tableView: UITableView = UITableView()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupUI()
+        setDataSource()
+    }
+
+    func setupUI() {
+        attachViews()
+    }
+
+    func setDataSource() {
+        tableView.delegate = nil
+        tableView.dataSource = nil
+        sections.asObservable()
+            .bindTo(tableView.rx.items(dataSource: dataSource))
+            .addDisposableTo(disposeBag)
+        dataSource.configureCell = cell
+        sectionHeader()
+    }
+
+    func cell(ds: TableViewSectionedDataSource&lt;TableSectionModel&gt;, tableView: UITableView, indexPath: IndexPath, item: TableSectionModel.Item) -&gt; UITableViewCell! {
+        return UITableViewCell()
+    }
+
+    func sectionHeader() {
+
+    }
+}
+</code></pre>
+
+<p>Xcode throws the following error:</p>
+
+<blockquote>
+  <p>/Users/.../BaseTableViewController.swift:39:36: Cannot assign value of type '(TableViewSectionedDataSource, UITableView, IndexPath, TableSectionModel.Item) -> UITableViewCell!' to type '(TableViewSectionedDataSource, UITableView, IndexPath, TableSectionModel.Item) -> UITableViewCell!'</p>
+</blockquote>
+
+<p>the error is thrown at line</p>
+
+<blockquote>
+  <p>dataSource.configureCell = cell</p>
+</blockquote>
+
+<p>Do you have any idea?</p>
+
+<p>Thanks</p>
+","2661859","","","","","2017-03-19 14:31:51","RxSwift DataSource configureCell not able to assign function","<ios><swift><uitableview><rx-swift><rxdatasources>","1","1","","","","CC BY-SA 3.0"
+"42793796","1","","","2017-03-14 18:27:54","","1","371","<p>I have created tableView with sections by RxDataSources.</p>
+
+<p>ViewController</p>
+
+<pre><code>viewModel.sectionsObservable
+        .bindTo(tableView.rx.items(dataSource: viewModel.dataSource))
+        .disposed(by: disposeBag)
+</code></pre>
+
+<p>sectionsObservable emits the event when a new element is added to the array.</p>
+
+<p>I would like to test if a proper element is on proper indexPath.</p>
+
+<pre><code>func testGettingElementForIndexPath() {
+    let element = Element()
+    viewModel.addElement(element)
+    let fetchedElement = viewModel.getElement(at: IndexPath(row: 0, section: 0))
+    XCTAssertEqual(element, fetchedElement)
+}
+</code></pre>
+
+<p>ViewModel</p>
+
+<pre><code>func getElement(at indexPath: IndexPath) -&gt; Element {
+    return self.dataSource.sectionModels[indexPath.section].items[indexPath.row]
+}
+</code></pre>
+
+<p>it works in the app, but tests fail. fatal error: Index out of range</p>
+
+<p>It's all because of that asynchronous. How to test this case?</p>
+
+<hr>
+
+<p>EDIT 1:
+ViewModel</p>
+
+<pre><code>let elementsVariable = Variable&lt;[TaskData]&gt;([])
+func addElement(_ element: Element) {
+    elementsVariable.value.append(element)
+}
+
+var sectionsObservable: Observable&lt;[Day]&gt; {
+    return elementsVariable.asObservable().map { (elements) -&gt; [MySection] in
+        ...
+    }
+}
+</code></pre>
+","2235274","","2235274","","2017-03-14 19:25:43","2017-03-14 21:26:36","RxDataSources testing","<testing><tdd><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 3.0"
+"42852876","1","42880047","","2017-03-17 08:45:24","","0","982","<p>I am new to reactive programming and I am experiencing difficulty in filtering and accessing object from a specific index. Below is my code snippet.</p>
+
+<pre><code>    private var contacts: Observable&lt;(AnyRealmCollection&lt;Contact&gt;, RealmChangeset?)&gt;!
+
+        override func viewDidLoad() {
+            super.viewDidLoad()
+
+            contacts = Observable.changeset(from: contactViewModel.getDeviceContacts())
+            let dataSource = RxCollectionViewRealmDataSource&lt;Contact&gt;(cellIdentifier: ""SendFeedContactCell"", cellType: ContactCollectionCell.self) {cell, ip, contact in
+                cell.configure(contact)
+            }
+
+            contacts
+                .bindTo(collectionView.rx.realmChanges(dataSource))
+                .addDisposableTo(disposeBag)
+
+            searchBar
+                .rx.text
+                .orEmpty
+                .subscribe(onNext: { [unowned self] query in
+                    // Filter query - doesn't work!
+                    // self.contacts.filter({ (observable) -&gt; Bool in
+                    // observable.0.filter(NSPredicate(format: ""name CONTAINS[c] '\(query)'""))
+                    // })
+                })
+                .addDisposableTo(disposeBag)  
+
+            collectionView.rx.itemSelected
+            .subscribe(onNext: { indexPath in
+                // TODO: How to access a specific object from the contacts object
+            })
+            .addDisposableTo(disposeBag)
+        }
+</code></pre>
+
+<ol>
+<li><p>I am receiving query in the search bar but filtering doesn't seems to work. </p></li>
+<li><p>I am getting IndexPath when an item is selected in the collection view but I am wondering how I can access a specific model properties based on the index path.</p></li>
+</ol>
+
+<p>I am using <a href=""https://github.com/RxSwiftCommunity/RxRealm"" rel=""nofollow noreferrer"">RxRealm</a> and <a href=""https://github.com/RxSwiftCommunity/RxRealmDataSources"" rel=""nofollow noreferrer"">RxRealmDataSources</a> as my data is stored in realm database in device.</p>
+","1053097","","","","","2017-03-18 21:23:31","Unable to filter objects with RxSwift/RxRealm","<swift><swift3><realm><rx-swift><rxdatasources>","1","0","1","","","CC BY-SA 3.0"
+"43335581","1","","","2017-04-11 02:03:47","","1","308","<p>The CollectionView cells' separators are not appearing when I populate the Collection View using RxSwift. I'm using RxDataSources instead of the class functions. I believe the function <code>drawSeparatorIfNeeded</code> isn't being called somewhere along the way, is there any workaround for this?</p>
+
+<p>Collection View preparation:</p>
+
+<pre><code>private func prepareCollectionView() {
+  styler.cellStyle = .card
+  styler.separatorLineHeight = 3.0
+  styler.separatorColor = UIColor(hex: ""#eeeeee"")
+  styler.shouldHideSeparators = false
+  collectionView?.backgroundColor = UIColor(hex: ""#eeeeee"")
+  collectionView?.register(MDCCollectionViewTextCell.self, forCellWithReuseIdentifier: ""eventCell"")
+
+  collectionView?.translatesAutoresizingMaskIntoConstraints = false
+
+  collectionView?.topAnchor.constraint(equalTo: navigationBar.bottomAnchor).isActive = true
+  collectionView?.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+  collectionView?.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+  collectionView?.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+
+  collectionView?.layoutIfNeeded()
+}
+</code></pre>
+
+<p>Cell configuration:</p>
+
+<pre><code>dataSource.configureCell = { _, collectionView, indexPath, model in
+  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ""eventCell"", for: indexPath) as! MDCCollectionViewTextCell
+  cell.textLabel?.text = model
+  cell.backgroundColor = .white
+  return cell
+}
+</code></pre>
+
+<p>Cell binding:</p>
+
+<pre><code>Observable.just(sections)
+  .bindTo(collectionView!.rx.items(dataSource: dataSource))
+  .addDisposableTo(disposeBag)
+</code></pre>
+
+<p>Inspecting the CollectionView in Reveal shows that the separator UIImageView has a height of 0, but when I use vanilla DataSource methods, it works as expected.</p>
+","3411592","","3411592","","2017-04-13 01:01:36","2017-04-13 01:01:36","CollectionView cell separators not appearing when using RxSwift","<ios><swift><rx-swift><material-components><rxdatasources>","0","4","","","","CC BY-SA 3.0"
+"43687326","1","","","2017-04-28 19:09:59","","3","476","<p>I think it's better if I explain what I'm trying to achieve because I think the error is on my misunderstanding on how Observables work.</p>
+
+<p>I have a UIViewController that contains a UITableView I'm also using RxSwift and RxDataSources, so I'm binding my tableView items like this:</p>
+
+<pre><code>vm.model
+.debug()
+.drive(tableView.rx.items(dataSource: dataSource))
+.disposed(by: disposeBag)
+</code></pre>
+
+<p>Where <strong>vm</strong> is a viewModel which contains:</p>
+
+<pre><code>self.model = self.network.provider.getMarkets()
+                .map { (markets: [Market]) -&gt; [Row] in
+                    var rows = [Row]()
+                    for market in markets {                        
+                        rows.append(.market(market: market))
+                    }
+                    return rows
+                }
+                .map { (rows: [Row]) -&gt; [Model] in
+                    return [Model(section: .market, items: rows)]
+                }
+                .shareReplay(1)
+                .asDriver(onErrorJustReturn: [])
+</code></pre>
+
+<p>Where model is:</p>
+
+<pre><code>var model: Driver&lt;[Model]&gt;
+</code></pre>
+
+<p>This all works great the first time, the tableview displays the items, but the print from the <strong>debug()</strong>:</p>
+
+<pre><code>2017-04-28 20:07:21.382: MarketAndLanguageSelectionViewController.swift:36 (viewDidLoad()) -&gt; subscribed
+2017-04-28 20:07:22.287: MarketAndLanguageSelectionViewController.swift:36 (viewDidLoad()) -&gt; Event next(*Multiple items*)
+2017-04-28 20:07:22.289: MarketAndLanguageSelectionViewController.swift:36 (viewDidLoad()) -&gt; Event completed
+2017-04-28 20:07:22.289: MarketAndLanguageSelectionViewController.swift:36 (viewDidLoad()) -&gt; isDisposed
+</code></pre>
+
+<p>The problem is I didn't want the datasource to dispose because I wan't to update it based on the user action. If the user clicks a tableViewCell I want to update the model. Any ideas on how can I achieve this?</p>
+
+<p>Sorry for such a big question.</p>
+","2694525","","","","","2017-04-29 00:51:21","Observable being disposed ahead of time","<swift><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 3.0"
+"45818676","1","","","2017-08-22 13:13:39","","0","71","<p>I have list of objects <code>T</code> and I want to calculate their sum (<code>T</code> objects)</p>
+
+<pre><code>var objects: Observable&lt;List&lt;T&gt;&gt;
+</code></pre>
+
+<p><code>T</code> object has a method which return <code>Int</code> value.
+The main idea to get each object and prepare array of values (<code>flatMap</code> function). The next step will be <code>reduce</code> func with <code>Int</code> values.</p>
+
+<pre><code>let sum = values.reduce(0) { $0 + $1 }
+</code></pre>
+
+<p>Q: How to get each <code>T</code> object?</p>
+","1278744","","","","","2017-08-22 13:39:00","RealmSwift obtain each T object","<ios><realm><rxdatasources>","1","1","","","","CC BY-SA 3.0"
+"45949001","1","","","2017-08-29 22:06:40","","4","1007","<p>I have an tableview where I populate some data from view model, I am using RxSwift and RxDataSources... I have next code</p>
+
+<pre><code>  enum TableViewEditingCommand {
+    case DeleteItem(IndexPath)
+  }
+
+struct SectionedTableViewState {
+    fileprivate var sections: [MySectionViewModel]
+
+    init(sections: [MySectionViewModel]) {
+        self.sections = sections
+    }
+
+    func execute(command: TableViewEditingCommand) -&gt; SectionedTableViewState {
+        switch command {
+
+        case .DeleteItem(let indexPath):
+
+            var sections = self.sections
+            var items = sections[indexPath.section].items
+
+            items.remove(at: indexPath.row)
+            sections[indexPath.section] = MySectionViewModel(original: sections[indexPath.section], items: items)
+            return SectionedTableViewState(sections: sections)
+        }
+    }
+}
+</code></pre>
+
+<p>my view controller has something like this</p>
+
+<pre><code>    class MyViewController : UIViewController { 
+       let dataSource = RxTableViewSectionedAnimatedDataSource&lt;MySectionViewModel&gt;()
+
+      override func viewDidLoad() {
+            super.viewDidLoad() 
+
+       viewModel.findElements()
+                .bindTo(tableView.rx.items(dataSource:dataSource))
+                .addDisposableTo(disposeBag)
+
+     dataSource.configureCell = { datasource, tableView, indexPath, item in
+         .... my configuration
+      }
+
+  dataSource.canEditRowAtIndexPath = { _ in true}
+
+  let deleteCommand = tableView.rx.itemDeleted.asObservable()
+            .map(TableViewEditingCommand.DeleteItem)
+
+  let initialState = SectionedTableViewState(sections:dataSource.sectionModels)
+
+Observable.of(deleteCommand)
+            .merge()
+            .scan(initialState) { (state: SectionedTableViewState, command: TableViewEditingCommand) -&gt; SectionedTableViewState in
+                return state.execute(command: command)
+            }
+            .startWith(initialState)
+            .map {
+                $0.sections
+            }
+            .shareReplay(1)
+            .bindTo(tableView.rx.items(dataSource: dataSource))
+            .addDisposableTo(disposeBag)
+
+
+}
+
+
+
+    }
+</code></pre>
+
+<p>seems like in this line</p>
+
+<pre><code>let initialState = SectionedTableViewState(sections:dataSource.sectionModels)
+</code></pre>
+
+<p>sections is an empty array, because I get an index out range exception and when I print array, it has not any elements. My question is how can I get sections from datasource?</p>
+
+<p>I've seen the example from this url: 
+ <a href=""https://github.com/RxSwiftCommunity/RxDataSources/blob/master/Example/Example3_TableViewEditing.swift"" rel=""nofollow noreferrer"">https://github.com/RxSwiftCommunity/RxDataSources/blob/master/Example/Example3_TableViewEditing.swift</a></p>
+
+<p>Thanks in advance.</p>
+","4249566","","4249566","","2017-08-30 16:55:04","2017-08-30 16:55:04","Can't delete cell from tableview using rxdatasources swift","<ios><swift><uitableview><reactive><rxdatasources>","0","0","","","","CC BY-SA 3.0"
+"46081460","1","","","2017-09-06 17:49:46","","1","2008","<p>I'm learning RxSwift, i want used RxDataSources with UICollectionView, but nothing is shown, please tell me where i was wrong, Thanks; 
+My code:</p>
+
+<p>---- Model ----</p>
+
+<pre><code>struct Traveler {
+    let name: String
+    let avater: UIImage?
+}
+
+struct Travelers {
+    var travelers: [Traveler]
+}
+
+extension Travelers: SectionModelType {
+    typealias Item = Traveler
+
+    var items: [Traveler] { return travelers }
+
+    init(original: Travelers, items: [Traveler]) {
+        self = original
+        travelers = items
+    }
+}
+</code></pre>
+
+<p>---- data -----</p>
+
+<pre><code>let items = Variable&lt;[Travelers]&gt;([
+            Travelers(travelers: [Traveler(name: ""Bob"", avater: UIImage(named: ""pic1""))])
+        ])
+</code></pre>
+
+<p>---- View -----</p>
+
+<pre><code>let disposeBag = DisposeBag()
+
+let dataSources = RxCollectionViewSectionedReloadDataSource&lt;Travelers&gt;()
+
+let viewModel = TravelerViewModel()
+
+lazy var travelerCollectionView: UICollectionView = {
+    let layout = UICollectionViewFlowLayout()
+    layout.minimumInteritemSpacing = 0
+    layout.minimumLineSpacing = 0
+    layout.scrollDirection = .horizontal
+    layout.itemSize = CGSize(width: 44, height: 44)
+
+    let travelerCollectionView = UICollectionView(frame: CGRect(x: 100, y: 100, width: 100, height: 100), collectionViewLayout: layout)
+    travelerCollectionView.backgroundColor = .red
+    travelerCollectionView.register(TravelerItemCell.self, forCellWithReuseIdentifier: TravelerItemCell.identifier)
+    return travelerCollectionView
+}()
+
+override init(frame: CGRect) {
+    super.init(frame: frame)
+    addSubview(travelerCollectionView)
+
+    viewModel.items.asObservable()
+        .bind(to: travelerCollectionView.rx.items(dataSource: dataSources))
+        .addDisposableTo(disposeBag)
+
+    dataSources.configureCell = { (_, collection, indexPath, traveler) in
+        let cell = collection.dequeueReusableCell(withReuseIdentifier: TravelerItemCell.identifier, for: indexPath) as! TravelerItemCell
+        cell.setAvaterImage(avater: traveler.avater)
+        return cell
+    }
+}
+</code></pre>
+
+<p>thanks, i want used UICollectionView show some people avater.</p>
+","7407671","","7407671","","2017-09-07 03:04:40","2017-09-07 03:04:40","RxDataSources with UICollection","<ios><rx-swift><rxdatasources>","0","6","1","","","CC BY-SA 3.0"
+"46086529","1","46091825","","2017-09-07 01:29:03","","2","1394","<pre><code>struct MyViewModel {
+    var items: Observable&lt;String&gt;
+    //....
+}
+
+// In view controller
+viewModel.items.bind(to: tableView.rx.items(cellIdentifier: ""Cell"", cellType: MyCell.self)) { index, model, cell in
+  //...
+}
+.disposed(by: disposeBag)
+</code></pre>
+
+<p>If I have a another cell called <code>EmptyCell</code>, and I want to display this cell if the items is empty. How could I achieve this.</p>
+","4429457","","","","","2017-09-07 08:44:25","RxDataSources - How to add a custom empty cell when there's no data","<rxdatasources>","1","0","2","","","CC BY-SA 3.0"
+"46130494","1","46172995","","2017-09-09 12:05:44","","1","3141","<p>I'm trying to bind(to:) a collectionView, but the tableView doesn't work either. I have a viewModel where is my Variable&lt;[]> and I want to subscribe when the value changes, with my tableView. </p>
+
+<pre><code>viewModel.theVariable
+        .asObservable()
+        .bind(to: tableView.rx.items(cellIdentifier: ""Cell"", cellType: UITableViewCell.self)){
+            (row, item, cell) in
+            cell.textLabel?.text = item
+        }
+        .addDisposableTo(disposeBag)
+</code></pre>
+
+<p>The XCode tells me <code>Type 'inout UITableView' does not conform to protocol 'ReactiveCompatible'</code> which should be since it's applicable to any UIView.</p>
+
+<p>I've tried Observable with it's just() and that approach seemed to work correctly. The thing is that I need to have a Variable which I set a value in the viewModel and in the View i need to observe this change. Not sure if Observable serves this method. </p>
+
+<p>The point is that this should work even with Variable? Is it a bug? Im using Swift 3.2</p>
+","3284364","","3284364","","2017-09-11 16:17:41","2018-06-01 11:27:33","Cannot set bind(to: UITableView) with RxSwift Variable asObservable()","<ios><swift><uitableview><rxdatasources>","2","5","0","","","CC BY-SA 3.0"
+"46482491","1","","","2017-09-29 05:48:49","","0","1197","<p>I have a very simple project, where I want to dynamically filter content in <code>UITableView</code> regarding pressed index in <code>UISegmentedControl</code>. I'm using MVVM with RxSwift, Realm and RxDataSources. So my problem, that if I want to update content in <code>UITableView</code> I need to create 'special' <code>DisposeBag</code>, only for that purposes, and on each selection in <code>UISegmentedControl</code> nil it and create again. Only in this case, if I'm understand right, subscription is re-newed, and <code>UITableView</code> displays new results from Realm. 
+    So is there any better way to do such operation? Without subscribing every time, when I switch tab in <code>UISegmentedControl</code>. Here's my code:</p>
+
+<pre><code>//ViewController
+class MyViewController : UIViewController {
+
+  //MARK: - Props
+  @IBOutlet weak var tableView: UITableView!
+  @IBOutlet weak var segmentedControl: UISegmentedControl!
+
+  let dataSource = RxTableViewSectionedReloadDataSource&lt;ItemsSection&gt;()
+  let disposeBag = DisposeBag()
+
+  var tableViewBag: DisposeBag!
+  var viewModel: MyViewModel = MyViewModel()
+
+  //MARK: - View lifecycle
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    self.setupRxTableView()
+  }
+
+  //MARK: - Setup observables
+  fileprivate func setupRxTableView() {
+    dataSource.configureCell = { ds, tv, ip, item in
+      let cell = tv.dequeueReusableCell(withIdentifier: ""ItemCell"") as! ItemTableViewCell
+      return cell
+    }
+
+    bindDataSource()
+
+    segmentedControl.rx.value.asDriver()
+      .drive(onNext: {[weak self] index in
+        guard let sSelf = self else { return }
+        switch index {
+        case 1:
+          sSelf.bindDataSource(filter: .active)
+        case 2:
+          sSelf.bindDataSource(filter: .groups)
+        default:
+          sSelf.bindDataSource()
+        }
+      }).disposed(by: disposeBag)
+  }
+
+  private func bindDataSource(filter: Filter = .all) {
+    tableViewBag = nil
+    tableViewBag = DisposeBag()
+    viewModel.populateApplying(filter: filter)
+      }).bind(to: self.tableView.rx.items(dataSource: dataSource))
+      .disposed(by: tableViewBag)
+  }
+}
+
+//ViewModel
+   class MyViewModel {
+      func populateApplying(filter: Filter) -&gt; Observable&lt;[ItemsSection]&gt; {
+       return Observable.create { [weak self] observable -&gt; Disposable in
+         guard let sSelf = self else { return Disposables.create() }
+         let realm = try! Realm()
+         var items = realm.objects(Item.self).sorted(byKeyPath: ""date"", ascending: false)
+         if let predicate = filter.makePredicate() { items = items.filter(predicate) }
+         let section = [ItemsSection(model: """", items: Array(items))]
+         observable.onNext(section)
+
+         sSelf.itemsToken = items.addNotificationBlock { changes  in
+           switch changes {
+             case .update(_, _, _, _):
+             let section = [ItemsSection(model: """", items: Array(items))]
+             observable.onNext(section)
+             default: break
+          }
+        }
+        return Disposables.create()
+       }
+     }
+   }
+</code></pre>
+","4376284","","","","","2017-09-29 06:05:58","Dynamically filter results with RxSwift and Realm","<ios><swift><realm><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 3.0"
+"47219629","1","","","2017-11-10 09:35:23","","1","2173","<p>I have a table view that I am trying to make reactive. I have it working using Swift.</p>
+
+<p>Following is the RxSwift code</p>
+
+<pre><code>viewModel.getDetailMessages().asObservable().bind(to: messageTableView.rx.items){ tableView, row, element in
+            let indexPath = IndexPath(row: row, section: 0)
+            print(""The size is"", InboxData.sharedInstance.inboxdata[messageIndexPath.row].messageDetail.count)
+            print(""The size is element"", element)
+            if !element.isSender{
+                let cell = tableView.dequeueReusableCell(withIdentifier: ""recieverCell"", for: indexPath) as! RecieverMessageTableViewCell
+                cell.message.text = element.messageText
+                cell.message.preferredMaxLayoutWidth = 287
+                cell.message.layer.cornerRadius = 8
+                cell.message.layer.masksToBounds = true
+                return cell
+            }else{
+                let cell = tableView.dequeueReusableCell(withIdentifier: ""senderCell"", for: indexPath) as! SenderMessageTableViewCell
+                cell.senderMessage.text = element.messageText
+                cell.senderMessage.layer.cornerRadius = 8
+                cell.senderMessage.preferredMaxLayoutWidth = 287
+                cell.senderMessage.layer.masksToBounds = true
+                return cell
+            }
+        }
+</code></pre>
+
+<p>Following is my view model</p>
+
+<pre><code>class MessagwViewModel{
+
+    func getDetailMessages() -&gt; Observable&lt;[Message]&gt; {
+        return Observable.just(InboxData.sharedInstance.inboxdata[messageIndexPath.row].messageDetail)
+    }
+
+}
+</code></pre>
+
+<p>And this is the message data class</p>
+
+<pre><code>class MessageData {
+
+    static let sharedInstance = MessageData()
+
+    var message1 = Message(profilePicture: ""Taylor Ward"", artistName: ""Taylor Ward"", messageText: ""Hi How are you?"", isSender: true)
+
+    var messages = [Message]()
+
+    private init() {
+        loadMessages()
+    }
+
+    func loadMessages() {
+        messages.removeAll()
+        messages.append(message1)
+
+    }
+
+}
+</code></pre>
+
+<p>On Click of a button I am trying to append data to the Message array as follows</p>
+
+<pre><code>sendButton.rx.tap.bind{ value in
+            InboxData.sharedInstance.inboxdata[messageIndexPath.row].messageDetail.append(Message(profilePicture: """", artistName: """", messageText: self.messageTextView.text, isSender: true))
+
+       self.messageTableView.reloadData()
+            self.messageTableView?.scrollToBottom()
+            print(""Button clicked"")
+        }
+</code></pre>
+
+<p>The count of the array increases every time I append a new element . But the table view does not reload even though the data source has the latest value</p>
+
+<p>Can anyone one point out what the problem is? Thank you.</p>
+","5443885","","","","","2017-11-13 02:57:07","Rx table view not being reloaded after the datasource gets updated","<ios><uitableview><rx-swift><rx-cocoa><rxdatasources>","1","0","","","","CC BY-SA 3.0"
+"47446091","1","47451374","","2017-11-23 01:01:45","","3","754","<p>Hey I'm trying to get an UICollectionView, hosted by an UICollectionViewController working with RxCocoa and RxDataSources.</p>
+
+<p>Everything works fine when I use an UIViewController, with an embedded UICollectionView.</p>
+
+<p>But when I try to connect via the same logic:</p>
+
+<pre><code>        self.vm.sections
+        .bind(to: self.collectionView!.rx.items(dataSource: self.vm.data))
+        .disposed(by: self.bag)
+</code></pre>
+
+<p>with an UICollectionView inside an UICollectionViewController, Xcode crashes completely. </p>
+
+<p>Is there something I'm missing about RxDataSources, that you cannot use them with UICollectionViewController?</p>
+","6831395","","","","","2018-02-22 10:34:27","Xcode crashes while adding RxDataSource to UICollectionView","<ios><swift><uicollectionview><rx-swift><rxdatasources>","3","1","1","","","CC BY-SA 3.0"
+"47852762","1","","","2017-12-17 06:29:45","","0","227","<p>I follow this <a href=""https://github.com/RxSwiftCommunity/RxDataSources/blob/master/Example/Example4_DifferentSectionAndItemTypes.swift"" rel=""nofollow noreferrer"">sample</a> and successfully created multi-section <code>tableView</code>, but how can I append items to one of this sections? I can recreate the section but I want to append items instead of reloading <code>tableView</code>.</p>
+","1225850","","","","","2018-01-30 12:20:16","Append items to MultipleSectionModel","<ios><swift><rx-swift><rxdatasources>","1","2","","","","CC BY-SA 3.0"
+"48579420","1","48580478","","2018-02-02 09:20:20","","0","406","<p>I'm trying to add an headerView to a collectionView using RxSwift.</p>
+
+<p>I get this error: </p>
+
+<blockquote>
+  <p>Cannot convert call result type '(<em>) -> Disposable' to expected type '(</em>) -> </p>
+</blockquote>
+
+<p>at this line:</p>
+
+<pre><code>obsHeader.asObservable().bind(to: collectionView.rx.items(dataSource: dataSource)).disposed(by: disposeBag)
+</code></pre>
+
+<p>I don't understand how to fix it. Any help?</p>
+
+<p>I post here the rest of the code:</p>
+
+<pre><code>struct SectionItemObject {
+    let collectionViewRecommendations: UICollectionView
+    let items: [SFCardViewModelListOfCardsProtocol]
+}
+
+struct SectionOfItems {
+    var items: [Item]
+}
+
+extension SectionOfItems: SectionModelType {
+
+    typealias Item = SectionItemObject
+
+    init(original: SectionOfItems, items: [Item]) {
+        self = original
+        self.items = items
+    }
+
+    init(items: [Item]?) {
+        self.items = items ?? [Item]()
+    }
+}
+</code></pre>
+
+<p>And this is what I write in the method I call to observe.</p>
+
+<pre><code>let dataSource = RxCollectionViewSectionedReloadDataSource&lt;SectionOfItems&gt;(configureCell: { (datasource, collectionview, indexPath, i) -&gt; UICollectionViewCell in
+        let cell = collectionview.dequeueReusableCell(withReuseIdentifier: ""CardView"", for: indexPath) as! CardView
+        //                self.setCell(card:card,cell:cell)
+        cell.lbTitle.text = ""TEST""
+        return cell
+    }, configureSupplementaryView: { (datasource, collectionview, kind, indexPath) -&gt; UICollectionReusableView in
+        let section = collectionview.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ""AddNewCardCollectionHeaderView"", for: indexPath) as! AddNewCardCollectionHeaderView
+        section.backgroundColor = UIColor.orange
+        section.collectionViewRecommendations = self.collectionViewRecommendations
+        return section
+    } )
+
+let item = SectionItemObject(collectionViewRecommendations: self.collectionViewRecommendations!, items: viewModelProtocol.searchedCards.value)
+let obsHeader = Variable(SectionOfItems(items: [item]))
+
+obsHeader.asObservable().bind(to: collectionView.rx.items(dataSource: dataSource)).disposed(by: disposeBag)
+</code></pre>
+","3797475","","3797475","","2018-02-02 10:05:39","2018-02-02 10:17:14","RxSwift Cannot convert call result type '(_) -> Disposable' to expected type '(_) ->","<uicollectionview><rx-swift><uicollectionreusableview><rx-cocoa><rxdatasources>","1","2","","","","CC BY-SA 3.0"
+"48582797","1","","","2018-02-02 12:33:34","","2","976","<p>I'm using RxSwift, I managed to create the dataSource and I retrieve cells correctly. Problem is with the section headerView. I have created a UICollectionReusableView class, attaching outlets from storyboard. </p>
+
+<p>The problem is that I retrieve the view with collectionview.dequeueReusableSupplementaryView, but awakeFromNib is never called! </p>
+
+<p>This is how I setup the collectionView</p>
+
+<pre><code>collectionView.register(UINib(nibName: ""CardView"", bundle: Bundle.main), forCellWithReuseIdentifier: ""cardView"")
+collectionView.register(AddNewCardCollectionHeaderView.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: ""AddNewCardCollectionHeaderView"")
+</code></pre>
+
+<p>this is my UICollectionReusableView class</p>
+
+<pre><code>class AddNewCardCollectionHeaderView: UICollectionReusableView {
+
+    @IBOutlet weak var collectionViewRecommendations: UICollectionView!
+    @IBOutlet weak var viewWrapperRecommendations: UIView!
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+
+    }
+
+}
+</code></pre>
+
+<p>And this is the dataSource</p>
+
+<pre><code>let dataSource = RxCollectionViewSectionedReloadDataSource&lt;SectionOfItems&gt;(configureCell: { (datasource, collectionview, indexPath, i) -&gt; UICollectionViewCell in
+            let cell = collectionview.dequeueReusableCell(withReuseIdentifier: ""cardView"", for: indexPath) as! CardView
+            let card = self.getCard(atRow: indexPath.row, isCardRecommendation: false)
+            self.setCell(card:card,cell:cell)
+            return cell
+        }, configureSupplementaryView: { (datasource, collectionview, kind, indexPath) -&gt; UICollectionReusableView in
+            let headerView = collectionview.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: ""AddNewCardCollectionHeaderView"", for: indexPath) as! AddNewCardCollectionHeaderView
+            return headerView
+        })
+</code></pre>
+
+<p>As awakeFromNib is not called, if I do for example headerView. viewWrapperRecommendations it will crash as nil, but I need to access to headerView outlets.</p>
+
+<p>But, instead, awakeFromNib of CardView (the cell class) is called and it works perfectly.</p>
+
+<p>Any help? Thanks!</p>
+","3797475","","","","","2021-05-01 22:29:39","awakefromnib not called for UICollectionReusableView when using RxSwift datasource","<ios><rx-swift><uicollectionreusableview><rx-cocoa><rxdatasources>","0","4","1","","","CC BY-SA 3.0"
+"50174591","1","50175064","","2018-05-04 12:07:46","","0","461","<p>I'm learn to use RxSwift and RxDataSource to separate business logic from View Controller (using MVVM).</p>
+
+<p>Suppose I want to create table view like in the Mail App in iOS, when user swipe left, there are <strong>delete button</strong> and <strong>More button</strong>.</p>
+
+<p>In the normal MVC, I have to implement delegate method <code>editActionsForRowAt</code>.</p>
+
+<p><code>public func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -&gt; [UITableViewRowAction]?</code></p>
+
+<pre><code>        var swipeActions = [UITableViewRowAction]()
+        let removeAction = UITableViewRowAction(style: .destructive, title: ""Delete"") { [weak self] (action, indexPath) in
+            guard let strongSelf = self else { return }
+            strongSelf.deleteBankAccountTrigger.onNext(indexPath)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+        swipeActions.append(removeAction)
+
+        if *cellIsNotDefault* {
+            let makeDefaultAction = UITableViewRowAction(style: .default, title: ""Make Default"") { [weak self] (action, indexPath) in
+                guard let strongSelf = self else { return }
+                strongSelf.makeBankAccountDefaultTrigger.onNext(indexPath)
+            }
+
+            makeDefaultAction.backgroundColor = UIColor.lightGray
+            swipeActions.append(makeDefaultAction)
+        }
+
+        return swipeActions
+</code></pre>
+
+<p>I don't know how to move logic <strong>cellIsNotDefault</strong> from the delegate to ViewModel. Because I think the logic to show/hide <code>SwipeAction</code> button should be in ViewModel.</p>
+
+<p>Any suggestion is welcome.</p>
+
+<p>Thank you.</p>
+
+<p>Update:</p>
+
+<p>I tried to use RxDataSources, but still no clue for custom swipe action. For delete action, I can use <code>tableView.rx.itemDeleted</code> method to subscribe to it. But if I want to subscribe to the custom Swipe action (like my Make Default action). How to do that?</p>
+","2601764","","1113632","","2018-05-18 12:25:10","2018-05-18 12:25:10","How to move logic to show UITableViewRowAction from delegate method to View Model (MVVM Architecture)","<ios><swift><mvvm><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 4.0"
+"50663817","1","50680888","","2018-06-03 06:24:50","","0","450","<p>Do I need to add as a pod?
+I need to create a sectioned tableView with RxCocoa UI binding. I have not been able to find the right documentation to implement it.
+thanks in advance</p>
+
+<p>this is my Podfile</p>
+
+<pre><code># Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'NetworkLayer-Rx' do
+  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for NetworkLayer-Rx
+  pod 'RxAlamofire'
+  pod 'RxSwift'
+  pod 'RxCocoa'
+
+  target 'NetworkLayer-RxTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end
+</code></pre>
+
+<p><a href=""https://i.stack.imgur.com/udjq7.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/udjq7.png"" alt=""enter image description here""></a></p>
+","","user4422315","","","","2018-06-04 12:40:37","How can I get RxDataSource to work","<observable><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 4.0"
+"50912058","1","50913509","","2018-06-18 14:44:38","","0","1247","<p>I am doing multiple requests for every section that I have in my collectionView.</p>
+
+<p>The idea was to join them together into an Observable&lt;[FeedSection]> so that I can bind it to the collectionView sections.</p>
+
+<p>Right now I am having an array of observables and I don't know how to transform it. Ideas?</p>
+
+<p>So i'm looking into smth like this: <code>[Observable&lt;FeedSection&gt;] -&gt; Observable&lt;[FeedSection]&gt;</code></p>
+
+<p>Code:</p>
+
+<pre><code>let feedObservable = [flickrProvider.rx.request(.kittens),
+                      flickrProvider.rx.request(.dogs),
+                      flickrProvider.rx.request(.publicFeed)].map { 
+                          $0.map(Feed.self).asObservable()
+}
+</code></pre>
+","1446139","","1446139","","2018-06-18 15:03:51","2018-06-18 16:07:16","Joining multiple requests into one. Array of observables into an observable of an array","<ios><swift><observable><rx-swift><rxdatasources>","1","2","","","","CC BY-SA 4.0"
+"51243265","1","","","2018-07-09 10:23:04","","1","307","<p>during working on application hardly relying on RxSwift I encountered some(I'd to think) basic problem. I'm using RxDataSources sublibrary to manage section and items in my TableView. Everywhere I see a examples, how to achieve one way binging(I have a model, then I bind it to the TableView to show it), but I need also second way of binding - I need to modify my model during interacting with cell and refresh cell after that. I want to achieve that though using of observables during building a SectionModel, but I don't have a any idea, how can I achieve that. Maybe some encountered similar problem and now have some solution for that? </p>
+","4463435","","","","","2018-07-12 13:24:51","RxDataSources and ability to mutate model","<ios><swift><uitableview><rx-swift><rxdatasources>","1","2","","","","CC BY-SA 4.0"
+"51284810","1","","","2018-07-11 11:52:00","","0","153","<p>Using RxDataSources I have a UITableView with a lot of sections and cells. When I search and replace the data with a new data source, my UI is blocked.</p>
+
+<p>I have tried throttle and debounce, but if I search at the 'right' moment, then the UI still gets blocked for 1-2 sec.</p>
+
+<p>Anyway I can solve this? </p>
+","962562","","","","","2018-07-11 21:53:50","BehaviorRelay/Variable slow RxDataSources if a lot of data in UITableview","<rxdatasources>","1","0","","","","CC BY-SA 4.0"
+"51620192","1","","","2018-07-31 18:51:26","","3","5568","<p>This is a tableView in RxSwift
+I am not able to configure the dataSource. There seems to be parameters missing for RxTableViewSectionedReloadDataSource, although this is strange as I follow the exact same code source of the <a href=""https://github.com/RxSwiftCommunity/RxDataSources"" rel=""nofollow noreferrer"">official docs</a></p>
+
+<p><a href=""https://i.stack.imgur.com/uO8Ko.png"" rel=""nofollow noreferrer"">Xcode error</a>
+Whenever I hit enter to autocomplete the closure. The closure remains blank.</p>
+
+<p><a href=""https://i.stack.imgur.com/MY8Z8.png"" rel=""nofollow noreferrer"">autocomplet not effectiv </a>
+I really don't know how to resolve this one</p>
+
+<pre><code>  let dataSource = RxTableViewSectionedReloadDataSource&lt;SectionModel&gt;() 
+
+
+
+dataSource?.configureCell = { (ds: RxTableViewSectionedReloadDataSource&lt;SectionOfCustomData&gt;, tv: UITableView, ip: IndexPath, item: Article) -&gt; NewsFeedCell in
+                let cell = tv.dequeueReusableCell(withIdentifier: ""Cell"", for: ip) as! NewsFeedCell
+                cell.configure(news: item)
+                return cell
+            }
+            dataSource?.titleForHeaderInSection = { ds, index in
+                return ds.sectionModels[index].header
+            }
+
+    let sections = [
+        SectionOfCustomData(header: ""First section"", items: self.articles),
+        SectionOfCustomData(header: ""Second section"", items: self.articles)
+        ]
+
+            guard let dtSource = dataSource else {
+                return
+            }
+            Observable.just(sections)
+                .bind(to: tableView.rx.items(dataSource: dtSource))
+                .disposed(by: bag)
+
+        }
+</code></pre>
+
+<p>SectionModel.swift</p>
+
+<pre><code>import Foundation
+import RxSwift
+import RxCocoa
+import RxDataSources
+
+struct SectionOfCustomData {
+    var header: String
+    var items: [Item]
+}
+extension SectionOfCustomData: SectionModelType {
+    typealias Item = Article
+
+    init(original: SectionOfCustomData, items: [Item]) {
+        self = original
+        self.items = items
+    }
+}
+</code></pre>
+","10162147","","1113632","","2018-08-02 14:18:27","2019-07-23 11:03:20","RxTableViewSectionedReloadDataSource","<swift><rx-swift><rxdatasources>","2","1","1","","","CC BY-SA 4.0"
+"52607372","1","","","2018-10-02 11:23:39","","1","2029","<p>I'm using <code>RxDataSources</code> to load and display a <code>UITableview</code>. I am trying to update the section header with the amount of items that it holds, however tough the cell and items update correctly, the title remains stale.</p>
+
+<p>This is my code for the <code>DataSource</code> object:</p>
+
+<pre><code>tableViewDataSource = RxTableViewSectionedAnimatedDataSource&lt;TableViewParticipationSection&gt;(
+           configureCell: { (_, tableView, _, item) in
+               return TableViewCellType.transformData(item).cell(inTableView: tableView)
+       }, titleForHeaderInSection: { dataSource, index in
+           let sectionModel = dataSource.sectionModels[index]
+           return ""\(sectionModel.items.count)""
+           })
+</code></pre>
+
+<p>The identity of the section header is just <code>{return 0}</code> since I only have a single section.</p>
+
+<p>Furthermore I have confirmed that if I use this code:</p>
+
+<pre><code>DispatchQueue.main.asyncAfter(deadline: .now()+3, execute: {
+               self?.contentView.tableView.reloadData()
+           })
+</code></pre>
+
+<p>It will actually update the section title, so it seems to be some problem with staleness but I can't seem to track it down.</p>
+
+<p>Does anyone have experience with dynamic titles using <code>RxDataSources</code></p>
+
+<p>Edit:
+After further experiments, the title will update, if I scroll around in the tableview, the title changes at some point.</p>
+","1818120","","1818120","","2018-10-02 11:32:59","2019-10-01 12:40:59","RxDataSources not updating section header title","<ios><swift><rx-swift><rxdatasources>","2","2","2","","","CC BY-SA 4.0"
+"52743367","1","52744090","","2018-10-10 15:08:27","","0","3407","<p>after binding some data to UITableView by this codes:</p>
+
+<pre><code>struct CustomData {
+    var anInt: Int
+    var aString: String
+    var aCGPoint: CGPoint
+}
+
+struct SectionOfCustomData {
+    var header: String
+    var items: [CustomData]
+}
+extension SectionOfCustomData: SectionModelType {
+
+    init(original: SectionOfCustomData, items: [CustomData]) {
+        self = original
+        self.items = items
+    }
+}
+
+
+class ViewController: UIViewController {
+
+    @IBOutlet weak var tableView: UITableView!
+
+    let disposeBag = DisposeBag()
+    var data: RxTableViewSectionedReloadDataSource&lt;SectionOfCustomData&gt;?
+
+
+override func viewDidLoad() {
+        super.viewDidLoad()
+
+        let x = status.asObservable()
+
+        tableView.register(UINib(nibName: ""TableViewCell"", bundle: nil), forCellReuseIdentifier: ""Cell"")
+        tableView.register(UINib(nibName: ""TableViewCellTwo"", bundle: nil), forCellReuseIdentifier: ""Cell2"")
+
+
+data = RxTableViewSectionedReloadDataSource&lt;SectionOfCustomData&gt;(configureCell: { dataSource, tableView, indexPath, item in
+
+            if indexPath.section &gt; 0 {
+
+                let cell = tableView.dequeueReusableCell(withIdentifier: ""Cell2"", for: indexPath) as! TableViewCellTwo
+                cell.age.text = ""\(item.anInt)""
+                return cell
+            }else {
+
+                let cell = tableView.dequeueReusableCell(withIdentifier: ""Cell"", for: indexPath) as! TableViewCell
+                cell.name.text = item.aString
+                cell.age.text = ""\(item.anInt)""
+                return cell
+            }
+        })
+
+sections = [
+            SectionOfCustomData(header: ""First section"", items: [CustomData(anInt: 0, aString: ""zero"", aCGPoint: CGPoint.zero), CustomData(anInt: 1, aString: ""one"", aCGPoint: CGPoint(x: 1, y: 1)) ]),
+            SectionOfCustomData(header: ""Second section"", items: [CustomData(anInt: 2, aString: ""two"", aCGPoint: CGPoint(x: 2, y: 2)), CustomData(anInt: 3, aString: ""three"", aCGPoint: CGPoint(x: 3, y: 3)) ])
+        ]
+
+Observable.just(sections)
+    .bind(to: tableView.rx.items(dataSource: data!))
+    .disposed(by: disposeBag)
+</code></pre>
+
+<p>after pushing button and calling a function, I changing data inside sections var:</p>
+
+<pre><code>@IBAction func change(_ sender: UIButton) {
+
+sections = [
+            SectionOfCustomData(header: ""third section"", items: [CustomData(anInt: 4, aString: ""four"", aCGPoint: CGPoint.zero), CustomData(anInt: 5, aString: ""five"", aCGPoint: CGPoint(x: 1, y: 1)) ]),
+            SectionOfCustomData(header: ""fourth section"", items: [CustomData(anInt: 6, aString: ""six"", aCGPoint: CGPoint(x: 2, y: 2)), CustomData(anInt: 7, aString: ""seven"", aCGPoint: CGPoint(x: 3, y: 3)) ])
+        ]
+</code></pre>
+
+<p>but after calling function UITableView data not changing, My question is why after binding section variable to UITableView and changing data inside of that(section), UITableView still showing that last data?</p>
+","8425034","","","","","2018-10-10 15:50:20","RxSwift, RxDataSources: How to bind dynamic data to UITableView by using RxDataSources?","<rx-swift><rxdatasources>","1","0","2","","","CC BY-SA 4.0"
+"53717518","1","53724978","","2018-12-11 04:47:56","","1","1835","<p>I use RxSwift to show list of Persons in my tableview, and my tableview has two sections, the first one is old searches and the second one is all Persons. now I don't know how should I filter Persons when users type a name on UISearchBar's textfield.</p>
+
+<p>This is my Person model:</p>
+
+<pre><code>struct PersonModel {
+    let name: String
+    let family:String
+    let isHistory:Bool
+}
+</code></pre>
+
+<p>This is my ContactsViewModel</p>
+
+<pre><code>struct SectionOfPersons {
+    var header: String
+    var items: [Item]
+}
+
+extension SectionOfPersons: SectionModelType {
+    typealias Item = PersonModel
+
+    init(original: SectionOfPersons, items: [SectionOfPersons.Item]) {
+        self = original
+        self.items = items
+    }
+}
+
+class ContactsViewModel {
+
+    let items = PublishSubject&lt;[SectionOfPersons]&gt;()
+
+    func fetchData(){
+
+        var subItems : [SectionOfPersons] = []
+
+        subItems.append( SectionOfPersons(header: ""History"", items: [
+            SectionOfPersons.Item(name:""Michelle"", family:""Obama"", isHistory:true ),
+            SectionOfPersons.Item(name:""Joanna"", family:""Gaines"", isHistory:true )
+        ]))
+        subItems.append( SectionOfPersons(header: ""All"", items: [
+            SectionOfPersons.Item(name:""Michelle"", family:""Obama"", isHistory:false ),
+            SectionOfPersons.Item(name:""James"", family:""Patterson"", isHistory:false ),
+            SectionOfPersons.Item(name:""Stephen"", family:""King"", isHistory:false ),
+            SectionOfPersons.Item(name:""Joanna"", family:""Gaines"", isHistory:false )
+        ]))
+
+        self.items.onNext( subItems )
+    }
+
+}
+</code></pre>
+
+<p>and this is my ContactsViewController:</p>
+
+<pre><code>class ContactsViewController: UIViewController {
+
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+
+    private lazy var dataSource = RxTableViewSectionedReloadDataSource&lt;SectionOfPersons&gt;(configureCell: configureCell, titleForHeaderInSection: titleForHeaderInSection)
+
+    private lazy var configureCell: RxTableViewSectionedReloadDataSource&lt;SectionOfPersons&gt;.ConfigureCell = { [weak self] (dataSource, tableView, indexPath, contact) in
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ""ContactTableViewCell"", for: indexPath) as? ContactTableViewCell else { return UITableViewCell() }
+        cell.contact = contact
+        return cell
+    }
+
+    private lazy var titleForHeaderInSection: RxTableViewSectionedReloadDataSource&lt;SectionOfPersons&gt;.TitleForHeaderInSection = { [weak self] (dataSource, indexPath) in
+        return dataSource.sectionModels[indexPath].header
+    }
+
+    private let viewModel = ContactsViewModel()
+    private let disposeBag = DisposeBag()
+
+    var showContacts = PublishSubject&lt;[SectionOfPersons]&gt;()
+    var allContacts = PublishSubject&lt;[SectionOfPersons]&gt;()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        bindViewModel()
+        viewModel.fetchData()
+    }
+
+    func bindViewModel(){
+
+        tableView.backgroundColor = .clear
+        tableView.register(UINib(nibName: ""ContactTableViewCell"", bundle: nil), forCellReuseIdentifier: ""ContactTableViewCell"")
+        tableView.rx.setDelegate(self).disposed(by: disposeBag)
+
+        viewModel.items.bind(to: allContacts).disposed(by: disposeBag)
+        viewModel.items.bind(to: showContacts).disposed(by: disposeBag)
+        showContacts.bind(to: tableView.rx.items(dataSource: dataSource)).disposed(by: disposeBag)
+
+        searchBar
+            .rx.text
+            .orEmpty
+            .debounce(0.5, scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .filter { !$0.isEmpty }
+            .subscribe(onNext: { [unowned self] query in
+
+                ////// if my datasource was simple string I cand do this
+                self.showContacts = self.allContacts.filter { $0.first?.hasPrefix(query) } // if datasource was simple array string, but what about complex custome object?!
+
+            })
+            .addDisposableTo(disposeBag)
+
+    }
+}
+</code></pre>
+
+<p>Thanks for your response.</p>
+","1713906","","","","","2018-12-11 13:25:02","UISearchBar in UITableView by Rxswift","<swift><uitableview><uisearchbar><rx-swift><rxdatasources>","1","0","1","","","CC BY-SA 4.0"
+"53729290","1","53758899","","2018-12-11 17:25:35","","0","124","<p>I have a data model like below,
+<a href=""https://i.stack.imgur.com/OpXgJ.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/OpXgJ.png"" alt=""View structure""></a> </p>
+
+<pre><code>[Car Brand] has [Types] has Year or specific model (string)
+</code></pre>
+
+<p>for example</p>
+
+<pre><code>BMW &gt; Z4 &gt; 2005
+BMW &gt; Z3 &gt; 1999
+BMW &gt; Z3 &gt; 2001
+Porshe &gt; Carrera &gt; 1999
+Audi &gt; TT &gt; 2002
+</code></pre>
+
+<p>The yearView backgroundColor has to be changed after selection. I added a tapGesture to the yearView and then tried to listen all the yearViews from Type Cell</p>
+
+<pre><code>var carForType = PublishSubject&lt;SelectedCar&gt;() // in class property
+let bv = yearContainer(frame: .zero, withOption: option)
+bv.tap.rx.event.asObservable().map({ _ -&gt; Selected in
+    return SelectedBet.init(car: nil, type: self.type, year: option)
+})
+    .bind(to: self.typeForCar)
+    .disposed(by: self.disposeBag)
+</code></pre>
+
+<p>And from the TableVC I'm trying to get all the selected cars</p>
+
+<pre><code>cell.selectedCars.debug().subscribe(onNext: {
+    var car = $0
+    pBet.brand = self.viewModel.brand
+    print(car)
+}).disposed(by: self.disposeBag)
+</code></pre>
+
+<p>But after scroll it double subscribes to the cells and overall I started to think that there should be a better way to do it. It would be great to opinions about how to simplify, I'm willing to change all the structure.</p>
+
+<p><em>Note: Project is using MVVM and RxDataSources extension.</em> </p>
+","2103088","","","","","2018-12-13 09:41:01","How to manage tree like data models bound to TableViewCell with RxSwift","<ios><swift><mvvm><swift4><rxdatasources>","1","0","","","","CC BY-SA 4.0"
+"54007149","1","54019267","","2019-01-02 13:21:43","","1","932","<p>I have a table view with RxDataSources on which cell items got a remove icon. when cells get dequeued and click on that remove icon, all the previous click events get triggered, thus duplicate tap.
+Item cell : </p>
+
+<pre><code> removeImageView.rx.tap().map { _ in indexPath } 
+            .bind(to: viewModel.onRemoveItem).disposed(by: cellDisposeBag)
+</code></pre>
+
+<p>Cell viewmodel:</p>
+
+<pre><code>let onRemoveItem = PublishSubject&lt;IndexPath&gt;()
+</code></pre>
+
+<p>View controller view model where the cell and ViewModel get bound:</p>
+
+<pre><code> let vm = ItemViewModel(with: item)
+            vm.onRemoveItem.bind(to: self.onRemoveItem).disposed(by: self.rx.disposeBag)
+
+            return SectionItem.item(viewModel: vm)
+</code></pre>
+
+<p>View Controller:</p>
+
+<pre><code>let dataSource = RxTableViewSectionedReloadDataSource&lt;SectionItem&gt;(configureCell: { dataSource, tableView, indexPath, item in
+    switch item {
+    case .item(let viewModel):
+        let cell = (tableView.dequeueReusableCell(withIdentifier: itemtIdentifier, for: indexPath) as? ItemCell)!
+        cell.bind(to: viewModel, at: indexPath)
+        return cell
+    }
+}, titleForHeaderInSection: { dataSource, index in
+    let section = dataSource[index]
+    return section.title
+}  )
+
+output?.items
+    .bind(to: tableView.rx.items(dataSource: dataSource))
+    .disposed(by: rx.disposeBag)
+
+output?.onRemoveCartIemTapped.distinctUntilChanged() 
+    .skip(1)
+    .distinctUntilChanged().drive(onNext: { [weak self] (indexPath) in
+    print(""onRemoveCartIemTapped"" + String(indexPath.item))
+}).disposed(by: rx.disposeBag)
+</code></pre>
+
+<p>Console debug:</p>
+
+<pre><code>onRemoveCartIemTapped0
+onRemoveCartIemTapped3
+onRemoveCartIemTapped1
+onRemoveCartIemTapped4
+</code></pre>
+","2187976","","5175709","","2019-05-10 15:49:30","2019-05-10 15:50:18","How to avoid duplicate tap on button on Tableview with RxDataSources","<ios><swift><uitableview><rx-swift><rxdatasources>","1","4","","","","CC BY-SA 4.0"
+"54424130","1","54472486","","2019-01-29 15:14:57","","3","781","<p>I am building an iOS app with RxSwift and RxDataSource using VIPER architecture. I want to change the content of the UICollectionView as the value of the presenter changes (as the user typed in some letters in the searchBar, the collectionView should show all users' profile that starts with the letters), but it doesn't work as I wanted it to.</p>
+
+<p>By trying <code>debug()</code> function, the value of <code>presenter.section</code> in ViewController (which holds the content of the CollectionView) is changed after I typed in some letters in the searchBar. However, the collectionView is not reflecting the change. 
+Here are the main parts of the code.</p>
+
+<p>code of ViewController</p>
+
+<pre><code>override func viewDidLoad() {
+
+    super.viewDidLoad()
+    self.view.backgroundColor = .white
+
+    self.presenter.section
+        .drive(self.searchedFriendsCollectionView.rx.items(dataSource: self.dataSource))
+        .disposed(by: self.disposeBag)
+
+    self.searchedFriendsCollectoinView.rx
+        .setDelegate(self)
+        .disposed(by: self.disposeBag)
+}
+</code></pre>
+
+<p>code of Presenter</p>
+
+<pre><code>init(view: SearchFriendsViewInterface, interactor: 
+SearchFriendsInteractorInterface, wireframe: 
+SearchFriendsWireframeInterface) {
+
+    self.view = view
+    self.interactor = interactor
+    self.wireframe = wireframe
+
+    let allUsers = self.interactor.allUsers().asObservable()
+
+    self.view.searchText
+        .debounce(0.5)
+        .filterNil()
+        .distinctUntilChanged()
+        .filterEmpty()
+        .asObservable()
+        .flatMap { text -&gt; Observable&lt;[SearchFriendsSection]&gt; in
+            // get all users starting with ""text""
+            allUsers.mapSections(query: text)
+        }
+        .bind(to: self.section)
+        .disposed(by: self.disposeBag)
+} 
+
+extension Observable where E == [User] {
+
+fileprivate func mapSections(query: String) -&gt; Observable&lt;[SearchFriendsSection]&gt; {
+
+    return self.map {
+            $0.filter { $0.userDisplayName.hasPrefix(query) || $0.username.hasPrefix(query) }
+        }
+        .map { users -&gt; [SearchFriendsSection] in
+
+            let items = users.map { user in
+                SearchFriendsItem(icon: user.profileImageURL, displayName: user.userDisplayName)
+            }
+            return [SearchFriendsSection(items: items)]
+        }
+    }
+}
+</code></pre>
+
+<p>How I defined <code>dataSource</code></p>
+
+<pre><code>override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+
+    self.searchedFriendsCollectoinView = UICollectionView(frame: .init(), collectionViewLayout: self.searchedFriendsCollectionViewFlowLayout)
+    let dataSource = RxCollectionViewSectionedReloadDataSource&lt;SearchFriendsSection&gt; (configureCell: {(_, collectionView, indexPath, item) -&gt; UICollectionViewCell in
+        collectionView.register(SearchFriendsCell.self, forCellWithReuseIdentifier: ""SearchFriendsCell"")
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ""SearchFriendsCell"", for: indexPath) as! SearchFriendsCell
+        cell.item = item
+        return cell
+    })
+    self.dataSource = dataSource
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+}
+</code></pre>
+
+<ul>
+<li>ViewController has the instance of Presenter, and the presenter has an instance called <code>section</code>. This <code>section</code> holds the list of the users whose username is starting with specific letters. </li>
+</ul>
+
+<p>Could you please help me? If I have left anything unclear, please let me know in the comment. </p>
+
+<p>Update: output of the <code>debug()</code></p>
+
+<pre><code>2019-02-01 10:22:27.610: values -&gt; subscribed
+2019-02-01 10:22:27.611: values -&gt; Event next([])
+--after typed in some letters in the searchBar--
+2019-02-01 10:22:41.494: values -&gt; Event 
+next([AppScreen.SearchFriendsSection(items: 
+[AppScreen.SearchFriendsItem(....), 
+AppScreen.SearchFriendsItem(....), 
+AppScreen.SearchFriendsItem(....)])])
+</code></pre>
+","10233761","","10233761","","2019-02-01 01:21:12","2019-02-01 03:29:23","How to reflect the new section to UICollectionView in RxDataSource?","<swift><uicollectionview><rx-swift><viper><rxdatasources>","3","8","","","","CC BY-SA 4.0"
+"54604265","1","","","2019-02-09 07:43:54","","1","1231","<p>I am using MVVM pattern with <a href=""https://github.com/ReactiveX/RxSwift"" rel=""nofollow noreferrer"">RxSwift</a>, <a href=""https://github.com/ReactiveX/RxSwift/tree/master/RxCocoa"" rel=""nofollow noreferrer"">RxCocoa</a>, <a href=""https://github.com/RxSwiftCommunity/RxDataSources"" rel=""nofollow noreferrer"">RxDataSources</a>.</p>
+
+<p><a href=""https://i.stack.imgur.com/3bJgP.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/3bJgP.png"" alt=""enter image description here""></a></p>
+
+<p>I have successfully populated the <code>UITableView</code> with array of <code>PaletteViewModel</code> present in <code>ListViewModel</code> by using <code>RxDataSource</code> but it's one way binding.</p>
+
+<p>I want to achieve what I have shown in the picture i.e. I want to bind the <code>UITextField</code> from <code>UITableViewCell</code> to the <code>Observable</code> which is present at some index in the array in <code>ListViewModel</code></p>
+
+<p>I want to do <code>2 way binding</code> with the <code>UITextField</code> and <code>answer</code> property of the <code>PaletteViewModel</code>. If the user changes the text in the textField it should change the value in the answer property present at particular index and vice versa.</p>
+
+<p>How Can I achieve something complex like this using <code>MVVM pattern</code> using <a href=""http://reactivex.io/"" rel=""nofollow noreferrer""><code>ReactiveX</code></a> frameworks? </p>
+
+<p>What if the <code>UITableViewCell</code> at some <code>IndexPath</code> is removed from the memory as it's not visible and the observable's value is changed will it result in crash as the <code>UITextField</code> at that <code>IndexPath</code> will return nil?</p>
+","5744323","","","","","2019-02-10 02:39:50","2 way binding in UITableView using RxSwift","<uitableview><rx-swift><2-way-object-databinding><rx-cocoa><rxdatasources>","1","4","","","","CC BY-SA 4.0"
+"54874765","1","","","2019-02-25 21:13:58","","-1","128","<p>I am developing port of application from android. In my application In one of screens I present to user collection of parameters grouped by sections. Every section is presented as page of tile items in spannable grid. User can scroll betwen sections horizontally like in pager while pages are not scrolled vertically. Additionally on top of screen user has clickable tabs showing all availible sections by title. On android I achieaved this by creating nested RecyclerViews (one lvl for sections, one for tiles), combined with DiffUtil for quick content updating. 
+I am completly new in iOS development but I want to create something similar. After little dive into basic components it sems like UICollectionView might be the rightest joice. In my app I am trying to use MVVM approach using RxSwift and RxDataSource. The last one has support for sectioned UICollectionView and I wonder if there is any possibility to create the whole view by using single UICollectionView. Sections would scroll horizontal and every section would contain grid elements? Or maybe can I nest one RxDataSource in other. Or maybe I cant use RxDataSource for this and i should try something else. To make clear what I am talk about i include <a href=""https://i.stack.imgur.com/LVGWQ.png"" rel=""nofollow noreferrer"">image</a></p>
+
+<p>I would be very gratefull for any advice because I could not find anything usefull by my hand.</p>
+","9535385","","1226963","","2019-02-25 23:29:24","2019-02-25 23:29:24","UIcollectionView - Creating horizontally scrolled pager filled with items grid","<ios><swift><uicollectionview><rxdatasources>","1","0","","","","CC BY-SA 4.0"
+"55356766","1","55357125","","2019-03-26 12:06:48","","0","412","<p>I know there are a lot of questions about this, I looked at all of them but it doesn't fix my problem. I also commented on one of them but the question doesn't seem to be active anymore so I don't expect an answer there.</p>
+
+<p>I'm trying to implement RxDataSources. See my code below:</p>
+
+<pre><code>struct ActiveOrdersSection: Equatable {
+    static func == (lhs: ActiveOrdersSection, rhs: ActiveOrdersSection) -&gt; Bool {
+        return true
+    }
+
+    var header: String
+    var orders: [Order]
+}
+
+extension ActiveOrdersSection: SectionModelType {
+    typealias Item = Order
+
+    var items: [Item] {
+        set {
+            orders = items
+        }
+        get {
+            return orders
+        }
+    }
+
+    init(original: ActiveOrdersSection, items: [Order]) {
+        self = original
+        self.items = items
+    }
+}
+</code></pre>
+
+<p>And the ViewController:</p>
+
+<pre><code>class MainViewController: UITableViewDelegate, UITableViewDataSource {
+
+    var db: DisposeBag?
+    var dataSource: RxTableViewSectionedReloadDataSource&lt;ActiveOrdersSection&gt;?
+    private func setupOrderRx(_ shopId: Int64) {
+        let dataSource = RxTableViewSectionedReloadDataSource&lt;ActiveOrdersSection&gt;(
+            configureCell: { ds, tv, ip, item in
+                let cell = tv.dequeueReusableCell(withIdentifier: ""Cell"", for: ip) as! UITableViewCell
+                cell.textLabel?.text = ""Item \(item.id)""
+                return cell
+            },
+
+            titleForHeaderInSection: { ds, ip in
+                return ds.sectionModels[ip].header
+            }
+        )
+
+        self.dataSource = dataSource
+        db = DisposeBag()
+        let ors = OrderRxService.listAsShop(shopId, status: .active)
+            .map { Observable.just($0.items) } // Convert from Observable&lt;CollectionResponse&lt;Order&gt;&gt; to Observable&lt;Order&gt;
+            .observeOn(MainScheduler.instance)
+            .bind(to: self.rxTableView.rx.items(dataSource: dataSource))
+    }
+
+}
+</code></pre>
+
+<p>I get <code>Generic parameter 'Self' could not be inferred</code> on <code>.bind(to: self.rxTableView.rx.items(dataSource: dataSource))</code>. I looked at the RxDataSources examples and seem to have it the same now, but I can't seem to fix this error.</p>
+
+<p>Any ideas?</p>
+","2399348","","","","","2019-03-26 12:25:06","RxDataSources `Generic parameter 'Self' could not be inferred`","<ios><swift><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 4.0"
+"55378613","1","55379752","","2019-03-27 13:38:15","","1","3435","<p>Currently for our API requests we use Rx. An example of how we use it is:</p>
+
+<pre><code>let orderRxService = OrderRxService.listAsShop(shopId, status: .active)
+    .repeatRequest(delay: 4)
+    .observeOn(MainScheduler.instance)
+    .subscribe( onNext: { [weak self] orders in
+        self?.orders = orders
+        self?.tableView.reloadData()
+    })
+    .disposed(by: disposeBag)
+</code></pre>
+
+<p>This gets all orders for given <code>shopId</code> with the status <code>.active</code>. On every update the local <code>orders</code> object is replaced and the tableView is reloaded.</p>
+
+<p>This reload the whole tableView, which we wanna avoid. I'm now looking into RxDataSources but can't really figure out what is the way to get this working.</p>
+
+<p>An <code>Order</code> object has another property <code>currentStatus</code>, which can be 3 different values.
+What we have is a tableView with 3 different sections, each section displaying all orders for a <code>currentStatus</code>.</p>
+
+<p>How should this be implemented in RxDataSources? Ideally would be to bind it to the service I showed earlier (<code>OrderRxService.....subscribe()..</code>).</p>
+
+<p>What I have now to setup the RxDataSources-types is:</p>
+
+<pre><code>extension Order: IdentifiableType, Equatable {
+    public typealias Identity = String
+
+    public var identity: String {
+        return String(id)
+    }
+
+    public static func == (lhs: Order, rhs: Order) -&gt; Bool {
+        return (lhs.timeCreated ?? 0) &gt; (rhs.timeCreated ?? 0)
+    }
+}
+
+struct OrdersSection {
+    var header: String
+    var orders: [Order]
+}
+
+extension OrdersSection: AnimatableSectionModelType {
+    typealias Item = Order
+    typealias Identity = String
+
+    var identity: String {
+        return header
+    }
+
+    var items: [Item] {
+        set {
+            orders = items
+        }
+        get {
+            return orders
+        }
+    }
+
+    init(original: OrdersSection, items: [Order]) {
+        self = original
+        self.items = items
+    }
+}
+</code></pre>
+
+<p>What I tried to make it work is:</p>
+
+<pre><code>// I tried to make our local orders a Variable (I don't like this between-step and would like this to be just [Order]).
+var orders: Variable&lt;[Order]&gt; = Variable([])
+
+
+fun viewDidLoad() {
+    super.viewDidLoad()
+
+    // Then I set the local orders-variable's value to the new value coming from our Rx service.
+    let orderRxDisposable: Disposable = OrderRxService.listAsShop(shopId, status: .active)
+        .repeatRequest(delay: 4)
+        .observeOn(MainScheduler.instance)
+        .map { $0.items }.subscribe( onNext: { [weak self] orders in
+            self?.orders.value = orders
+        })
+
+    // Here I setup the dataSource
+    let dataSource = RxTableViewSectionedAnimatedDataSource&lt;OrdersSection&gt;(
+        configureCell: { ds, tv, ip, item in
+            let cell = tv.dequeueReusableCell(withIdentifier: ""OrderCell"", for: ip) as! OrderCell
+            cell.addContent(item, tableView: tv, viewController: self, spotDelegate: self)
+            return cell
+        },
+
+        titleForHeaderInSection: { ds, ip in
+            return ds.sectionModels[ip].header
+        }
+    )
+
+    // Here I set up the three different sections.
+    self.orders.asObservable().observeOn(MainScheduler.instance)
+        .map { o in
+            o.filter { $0.currentStatus == .status_one }
+        }
+        .map { [OrdersSection(header: ""Status one"", orders: $0)] }
+        .bind(to: self.tableView.rx.items(dataSource: dataSource))
+
+    self.orders.asObservable().observeOn(MainScheduler.instance)
+        .map { o in
+            o.filter { $0.currentStatus == .status_two }
+        }
+        .map { [OrdersSection(header: ""Status two"", orders: $0)] }
+        .bind(to: self.tableView.rx.items(dataSource: dataSource))
+
+    self.orders.asObservable().observeOn(MainScheduler.instance)
+        .map { o in
+            o.filter { $0.currentStatus == .status_three }
+        }
+        .map { [OrdersSection(header: ""Status three"", orders: $0)] }
+        .bind(to: self.tableView.rx.items(dataSource: dataSource))
+
+}
+</code></pre>
+
+<p>There are probably different aspects that can be improved. For example the <code>Variable&lt;[Order]&gt;</code> I would like to be just <code>[Order]</code>.
+And instead of making this observable, could that be skipped altogether and create the three different sections by observing our OrderRxService?</p>
+
+<p>Would it be possible to have it something like:</p>
+
+<pre><code>OrderRxService.listAsshop(shopId, status: .active).observeOn(MainScheduler.instance)
+    // First section
+    .map { o in
+        o.filter { $0.status == .status_one }
+    }
+    .map { [OrdersSection(header: ""Status one"", orders: $0)] }
+    .bind(to: self.tableView.rx.items(dataSource: dataSource))
+    // Second section
+    .map { o in
+        o.filter { $0.status == .status_two }
+    }
+    .map { [OrdersSection(header: ""Status two"", orders: $0)] }
+    .bind(to: self.tableView.rx.items(dataSource: dataSource))
+    // Etc...
+</code></pre>
+
+<p>Thanks for any help!</p>
+","2399348","","2399348","","2019-03-27 14:26:44","2019-08-27 07:06:29","RxDataSources tableView with multiple sections from one API source","<ios><swift><rx-swift><rxdatasources>","1","0","3","","","CC BY-SA 4.0"
+"55531407","1","","","2019-04-05 08:38:17","","5","939","<p>i want know end of reloadTableView
+Then I want to scroll down to the bottom of the table view.</p>
+
+<p>Before I used <code>RxSwift</code>
+Just after <code>reloadData</code>
+It was possible using <code>setContentOffSet</code> or <code>ScrollToRow</code>.</p>
+
+<p>I tried it with the code I found.
+never called <code>endUpdates</code>.</p>
+
+<pre><code>var replyList : BehaviorRelay&lt;[Reply]&gt;!
+
+func bind(){
+
+    replyViewModel.replyList
+       .asDriver()
+       .drive(replyTableView.rx.items){ [weak self] (tableView,row,item) in
+           return self?.makeReplyCell(tableView: tableView, replyInfo: item) ?? UITableViewCell()
+
+                }
+       .disposed(by: disposeBag)
+
+    replyTableView.endUpdatesEvent
+        .asObservable()
+        .subscribe({ _ in
+            print(""Scroll To Bottom"")
+        })
+        .disposed(by: disposeBag)
+}
+
+import Foundation
+import RxCocoa
+import RxSwift
+
+extension UITableView {
+
+    /// Reactive wrapper for `UITableView.insertRows(at:with:)`
+    var insertRowsEvent: ControlEvent&lt;[IndexPath]&gt; {
+        let source = rx.methodInvoked(#selector(UITableView.insertRows(at:with:)))
+                .map { a in
+                    return a[0] as! [IndexPath]
+                }
+        return ControlEvent(events: source)
+    }
+
+    /// Reactive wrapper for `UITableView.endUpdates()`
+    var endUpdatesEvent: ControlEvent&lt;Bool&gt; {
+        let source = rx.methodInvoked(#selector(UITableView.endUpdates))
+                .map { _ in
+                    return true
+                }
+        return ControlEvent(events: source)
+    }
+
+    /// Reactive wrapper for when the `UITableView` inserted rows and ended its updates.
+    var insertedItems: ControlEvent&lt;[IndexPath]&gt; {
+        let insertEnded = Observable.combineLatest(
+                insertRowsEvent.asObservable(),
+                endUpdatesEvent.asObservable(),
+                resultSelector: { (insertedRows: $0, endUpdates: $1) }
+        )
+        let source = insertEnded.map { $0.insertedRows }
+        return ControlEvent(events: source)
+    }
+}
+</code></pre>
+","10753916","","","","","2019-04-05 08:38:17","RxSwift how to know end of TableView reload","<ios><swift><rx-swift><rxdatasources>","0","1","1","","","CC BY-SA 4.0"
+"55889255","1","55991682","","2019-04-28 10:18:12","","1","472","<p>I am a new Swifter, Here is the code of my new company.</p>
+
+<p>Use RxSwift，use RxDataSource, how to handle two table view association?</p>
+
+<p>The left tableView's cell clicked , the right tableView's data changed along.</p>
+
+<p>Organize the right table view's data via the variables of middle state.</p>
+
+<p>Bad code's smell。</p>
+
+<p>Here is the image</p>
+
+<p><a href=""https://i.stack.imgur.com/kXgus.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/kXgus.png"" alt=""one""></a></p>
+
+<p>Here is the code：</p>
+
+<pre><code>private let viewModel = CategoryViewModel()
+private var currentListData :[SubItems]?
+private var lastIndex : NSInteger = 0
+private var currentSelectIndexPath : IndexPath?
+private var currentIndex : NSInteger = 0
+
+private func boundTableViewData() {
+
+    var loadCount = 0
+    // data source of left table view
+    let dataSource = RxTableViewSectionedReloadDataSource&lt;CategoryLeftSection&gt;( configureCell: { ds, tv, ip, item in
+    let cell = tv.dequeueReusableCell(withIdentifier: ""Cell1"", for: ip) as! CategoryLeftCell
+    cell.model = item
+     if ip.row == 0, !cell.isSelected {
+          // in order to give the right table view a start show
+             tv.selectRow(at: ip, animated: false, scrollPosition: .top)
+             tv.delegate?.tableView!(tv, didSelectRowAt: ip)
+
+        }
+       return cell
+    })
+
+    vmOutput!.sections.asDriver().drive(leftMenuTableView.rx.items(dataSource: dataSource)).disposed(by: rx.disposeBag)
+
+   // organize the right table view's data via the variables of middle state.
+
+  // bad code's smell
+    let listData = leftMenuTableView.rx.itemSelected.distinctUntilChanged().flatMapLatest {
+        [weak self](indexPath) -&gt;  Observable&lt;[SubItems]&gt; in
+            guard let self = self else { return Observable.just([]) }
+            // ...
+            self.currentIndex = indexPath.row
+            if indexPath.row == self.viewModel.vmDatas.value.count - 1 {
+                // ...
+           // the self.currentSelectIndexPath was used, because when the left tableView's final cell got clicked, the  UI logic is different.
+                self.leftMenuTableView.selectRow(at: self.currentSelectIndexPath, animated: false, scrollPosition: .top)
+                return Observable.just((self.currentListData)!)
+            }
+            if let subItems = self.viewModel.vmDatas.value[indexPath.row].subnav {
+                var fisrtSubItem = SubItems()
+                fisrtSubItem.url = self.viewModel.vmDatas.value[indexPath.row].url
+                fisrtSubItem.name = self.viewModel.vmDatas.value[indexPath.row].banner
+                var reult:[SubItems] = subItems
+                reult.insert(fisrtSubItem, at: 0)
+                self.currentListData = reult
+              //  self.currentListData is used to capture the current data of the right table view.
+                self.currentSelectIndexPath = indexPath
+                return Observable.just(reult)
+            }
+            return Observable.just([])
+    }.share(replay: 1)
+
+    // data source of right table view    
+     let listDataSource =  RxTableViewSectionedReloadDataSource&lt;CategoryRightSection&gt;( configureCell: { [weak self]ds, tv, ip, item in
+            guard let self = self else { return UITableViewCell() }
+            if self.lastIndex != self.currentIndex {
+           // to compare the old and new selected index of the left table View ,give a new start to the right table view if changed
+                tv.scrollToRow(at: ip, at: .top, animated: false)
+                self.lastIndex = self.currentIndex
+            }
+            if ip.row == 0 {
+                let cell = CategoryListBannerCell()
+                cell.model = item
+                return cell
+            } else {
+                let cell = tv.dequeueReusableCell(withIdentifier: ""Cell2"", for: ip) as! CategoryListSectionCell
+                cell.model = item
+                return cell
+            }
+     })
+
+
+     listData.map{ [CategoryRightSection(items:$0)] }.bind(to: rightListTableView.rx.items(dataSource: listDataSource))
+            .disposed(by: rx.disposeBag)   
+ }     
+</code></pre>
+
+<p><code>private var lastIndex : NSInteger = 0</code>, used to compare the old and new selected index of the left table View ,let the right table view start , with <code>currentIndex</code>, if different</p>
+
+<p>the <code>self.currentSelectIndexPath</code> was used, because when the left tableView's final cell got clicked, the  UI logic is different.</p>
+
+<p><code>self.currentListData</code> is used to capture the current data of the right table view, when the left tableView clicked with different row.</p>
+
+<p><code>self.currentListData</code> is also used in the <code>UITableViewDelegate</code>.</p>
+
+<pre><code>// MARK:- UITableViewDelegate
+extension CategoryViewController : UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -&gt; CGFloat {
+        switch indexPath.row {
+        case 0 :
+            return (mScreenW - 120)/240 * 100;
+        default :
+            let subItems:SubItems = self.currentListData![indexPath.row]
+            if subItems.children.count &gt; 0{
+                let lines: NSInteger = (subItems.children.count - 1)/3 + 1
+                let buttonHeight = (mScreenW - 136 - 108)/3
+                let allButtonHeight = buttonHeight/44 * 63 * CGFloat(lines)
+                let other =  (lines - 1)*42 + 56
+                let height = allButtonHeight  + CGFloat(other) + 33
+                return height
+            }
+            return 250
+        }
+    }
+}
+</code></pre>
+
+<p>How to improve the code?</p>
+
+<p>How to eliminate the variables of middle state.</p>
+
+<p>The corresponding model is</p>
+
+<pre><code>class CategoryViewModel: NSObject {
+
+    let vmDatas = Variable&lt;[ParentItem]&gt;([])
+
+    func transform() -&gt; MCBoutiqueOutput {
+
+        let temp_sections = vmDatas.asObservable().map({ (sections) -&gt; [CategoryLeftSection] in
+            let count = sections.count
+            if count &gt; 0{
+                let items = sections[0..&lt;(count-1)]
+                return [CategoryLeftSection(items: Array(items))]
+            }
+            return []
+        }).asDriver(onErrorJustReturn: [])
+
+        let output = MCBoutiqueOutput(sections: temp_sections)
+        Observable.combineLatest(output.requestCommand, Provider.rx.cacheRequest(.baseUIData)).subscribe({  [weak self]  ( result: Event&lt;(Bool, Response)&gt;) in
+            guard let self = self else { return }
+            switch result{
+            case .next(let response):
+                let resultReal = response.1
+                // ...
+                if resultReal.statusCode == 200 || resultReal.statusCode == 230 {
+
+                    if resultReal.fetchJSONString(keys:[""code""]) == ""0"" {
+                        mUserDefaults.set(false, forKey: ""categoryVCShowTry"")
+                        self.vmDatas.value = ParentItem.mapModels(from:
+                            resultReal.fetchJSONString(keys:[""data"",""data""]))
+                    } 
+                }
+            default:
+                break
+            }
+        }).disposed(by: rx.disposeBag)
+        return output
+    }
+}
+</code></pre>
+","10332481","","10332481","","2019-05-05 11:51:35","2019-05-05 11:58:51","How to handle two table view association?","<swift><rx-swift><rxdatasources>","2","2","","","","CC BY-SA 4.0"
+"56056846","1","","","2019-05-09 09:55:35","","1","422","<p>I have one request for any of you. I want to create collectionview/tableview which will have user inputs in cells. Mixture of values from those inputs would represent state. I want to observe that state and if some conditions are met, I want to recreate all cells. I have created very simple app, where I demonstrate how i tried to implement it, but I’m getting reentrancy warning and I would love to find out your ideas/best practicies for this. Here is the repo you can checkout.</p>
+
+<p><a href=""https://github.com/beretis/CollectionViewTest"" rel=""nofollow noreferrer"">https://github.com/beretis/CollectionViewTest</a></p>
+
+<p>PS: Im using RxData sources, and I would love to know exactly what is causing this reentrancy (I have my idea)</p>
+","1762099","","","","","2019-05-14 11:45:20","RxSwift MVVM tableview/collectionview with user input cells representing state","<rx-swift><rx-cocoa><rxdatasources>","1","0","","","","CC BY-SA 4.0"
+"56808888","1","","","2019-06-28 14:40:00","","0","106","<p>I have an output that lives in my VM and based on some change I want my textfield that resides in my custom tableviewCell to change in some way. I am unsure about how to have my UItextfield that lives in the tableviewcell bind to my output. </p>
+","9398617","","9398617","","2019-06-29 21:23:26","2019-06-29 21:23:26","Trying to bind an output to my tableviewCell UI Element in RxSwift","<swift><uitableview><textfield><rx-swift><rxdatasources>","2","1","","","","CC BY-SA 4.0"
+"57650927","1","57653152","","2019-08-26 01:32:11","","1","985","<p>I am building a table view backed by RxDataSources. I want to enable editing for this table view, such that the user can delete items.</p>
+
+<p>I currently have this code:</p>
+
+<pre><code>var strings = [String]() {
+    didSet {
+        observable.accept(strings)
+    }
+}
+
+let observable = BehaviorRelay(value: [String]())
+let disposeBag = DisposeBag()
+
+override func viewDidLoad() {
+    tableView.dataSource = nil
+    let dataSource = RxTableViewSectionedAnimatedDataSource&lt;StringSection&gt;(configureCell:  {
+        (dataSource, collectionView, indexPath, string) -&gt; UITableViewCell in
+        let cell = collectionView.dequeueReusableCell(withIdentifier: ""cell"", for: indexPath)
+        cell.textLabel?.text = string
+        return cell
+    })
+
+    observable.asObservable()
+        .map {
+            [StringSection(items: $0)]
+        }
+        .bind(to: self.tableView.rx.items(dataSource: dataSource))
+        .disposed(by: disposeBag)
+
+    // X
+
+    strings = [""Item 1"", ""Item 2"", ""Item 3""]
+}
+</code></pre>
+
+<p>To make this editable, I added this in the place marked X:</p>
+
+<pre><code>tableView.rx.itemDeleted
+    .subscribe(onNext: { _ = self.strings.remove(at: $0.row) })
+    .disposed(by: disposeBag)
+navigationItem.rightBarButtonItem = editButtonItem
+</code></pre>
+
+<p>And also overrode this method:</p>
+
+<pre><code>override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -&gt; UITableViewCell.EditingStyle {
+    return .delete
+}
+</code></pre>
+
+<p>However, when I press the edit button, nothing changes for the table view cells. I see no red ""-"" button on the left. I cannot swipe the cell to the left to reveal the delete button either.</p>
+
+<p>What else do I need to do to enable editing?</p>
+","5133585","","","","","2019-08-26 07:01:53","How to allow editing of a table view backed by RxDataSources?","<ios><swift><uitableview><rx-swift><rxdatasources>","1","0","1","","","CC BY-SA 4.0"
+"58176871","1","58199394","","2019-10-01 00:57:17","","1","741","<p>I need to combine chat message in section when items send in one minutes.</p>
+
+<p>ViewModel</p>
+
+<p>.....</p>
+
+<pre><code>.scan([MessageSectionModel]()) { sectionModels, messageItem in
+        var models = sectionModels
+
+        if let lastSectionModel = sectionModels.last {
+            switch lastSectionModel {
+            case .incomingSection(var items):
+                if messageItem.0.isIncoming {
+                    items.append(messageItem.0)
+                    models[models.count-1] = .incomingSection(items: items)
+                } else {
+                    models.append(.outcomingSection(items: [messageItem.0]))
+                }
+
+            case .outcomingSection(var items):
+                if messageItem.0.isIncoming {
+                    models.append(.incomingSection(items: [messageItem.0]))
+                } else {
+                    items.append(messageItem.0)
+                    models[models.count-1] = .outcomingSection(items: items)
+                }
+            }
+            return models
+        }
+
+        if messageItem.0.isIncoming {
+            models.append(.incomingSection(items: [messageItem.0]))
+        } else {
+            models.append(.outcomingSection(items: [messageItem.0]))
+        }
+        return models
+    }
+</code></pre>
+
+<p>.....</p>
+
+<p>ViewController</p>
+
+<p>....</p>
+
+<pre><code>@IBOutlet private weak var messagesTableView: UITableView!
+
+private let disposeBag = DisposeBag()
+private var dataSource: RxTableViewSectionedAnimatedDataSource&lt;MessageSectionModel&gt;!
+
+private let messageHeaderReuseIdentifier = String(describing: MessageHeaderView.self)
+private let messageFooterReuseIdentifier = String(describing: MessageFooterView.self)
+
+dataSource = RxTableViewSectionedAnimatedDataSource&lt;MessageSectionModel&gt;(
+        animationConfiguration: .init(insertAnimation: .none, reloadAnimation: .none, deleteAnimation: .none),
+        configureCell: { dataSource, tableView, indexPath, item in
+
+            switch dataSource.sectionModels[indexPath.section] {
+            case .incomingSection:
+                guard let cell = tableView.dequeueReusableCell(
+                    withIdentifier: R.reuseIdentifier.incomingMessageTableViewCell,
+                    for: indexPath
+                ) else {
+                    return UITableViewCell()
+                }
+
+                let isFirst = indexPath.row == dataSource[indexPath.section].items.count - 1
+
+                cell.bind(
+                    messageText: item.text,
+                    isFirstInSection: isFirst
+                )
+
+                return cell
+            case .userSection:
+                guard let cell = tableView.dequeueReusableCell(
+                    withIdentifier: R.reuseIdentifier.outcomingMessageTableViewCell,
+                    for: indexPath
+                ) else {
+                     return UITableViewCell()
+                }
+
+                cell.bind(
+                    messageText: item.text,
+                    isFirstInSection: indexPath.row == dataSource[indexPath.section].items.count - 1
+                )
+
+                return cell
+            }
+    })
+</code></pre>
+
+<p>....</p>
+
+<p>Message items</p>
+
+<p>....</p>
+
+<pre><code> import Foundation
+ import RxDataSources
+
+ enum MessageSectionModel {
+    case incomingSection(items: [MessageSectionItem])
+    case outcomingSection(items: [MessageSectionItem])
+
+ var lastMessageDate: Date {
+    switch self {
+    case .incomingSection(let items):
+        return items.last?.sentDate ?? Date()
+    case .outcomingSection(let items):
+        return items.last?.sentDate ?? Date()
+    }
+   }
+ }
+
+struct MessageSectionItem {
+   let userId: String
+   let id: String = UUID().uuidString
+   let text: String
+   let sentDate: Date
+  let isIncoming: Bool
+}
+
+extension MessageSectionItem: IdentifiableType {
+   var identity : String {
+       return id
+  }
+}
+
+extension MessageSectionItem: Equatable {
+   static func == (lhs: MessageSectionItem, rhs: MessageSectionItem) -&gt; Bool {
+     return lhs.identity == rhs.identity
+   }
+  }
+
+extension MessageSectionModel: AnimatableSectionModelType {
+   init(original: MessageSectionModel, items: [MessageSectionItem]) {
+     switch original {
+    case .incomingSection(let items):
+        self = .incomingSection(items: items)
+    case .outcomingSection(let items):
+        self = .outcomingSection(items: items)
+    }
+ }
+
+typealias Item = MessageSectionItem
+
+var items: [MessageSectionItem] {
+    switch self {
+    case .incomingSection(let items):
+        return items.map { $0 }
+    case .outcomingSection(let items):
+        return items.map { $0 }
+    }
+}
+
+var identity: Date {
+    return lastMessageDate
+ }
+}
+</code></pre>
+
+<p>....</p>
+
+<p>My table view is rotated because i fetch messages is reverted. I understand it`s my mistake in scan, because when i comments this code, my cells sorted in correct way, but not combined in sections. </p>
+
+<pre><code>   if let lastSectionModel = sectionModels.last {
+         switch lastSectionModel {
+         case .incomingSection(var items):
+            if messageItem.0.isIncoming {
+                items.append(messageItem.0)
+                models[models.count-1] = .incomingSection(items: items)
+            } else {
+                models.append(.outcomingSection(items: [messageItem.0]))
+            }
+
+        case .outcomingSection(var items):
+            if messageItem.0.isIncoming {
+                models.append(.incomingSection(items: [messageItem.0]))
+            } else {
+                items.append(messageItem.0)
+                models[models.count-1] = .outcomingSection(items: items)
+            }
+        }
+        return models
+</code></pre>
+","10325152","","1839439","","2019-10-06 14:56:24","2019-10-06 14:56:24","How I can correctly combine items in section with RxDataSource swift?","<swift><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 4.0"
+"58329578","1","58335754","","2019-10-10 19:05:53","","1","1553","<p>Before Anyone makes it duplicate I have scene all the RxDatasource tags on SO and other sites also. But anyone didn't worked for me.</p>
+
+<p>So my question is totally related to <a href=""https://stackoverflow.com/questions/55378613/rxdatasources-tableview-with-multiple-sections-from-one-api-source"">this</a> one that I followed for my case also. But also I have no idea what's going on in here. And its been two weeks of struggling. I have checked gitHub code sample also but was unable to understand. 
+I have created an app using <code>RxSwift</code> and <code>Realm</code> on <em>MVVM</em> architecture pattern, things are working fine but now I need to create two sections in my view using <code>UICollectioView</code> for that I read about <code>RxdataSource</code> and tried to apply it but i didn't get at all whats it actually doing. I tried creating other projects for learning also those also didn't worked. Still I tried and make this code but it gives me error.</p>
+
+<p>What I did is from the link provided above is in the code below. I also do not know how to give my data source the data or lists from one array after spliting it. below is my whole code. </p>
+
+<p>I don't have idea what is this block doing.</p>
+
+<pre><code>//Changed
+struct SectionViewModel {
+    var header: String!
+    var items: [StudentModel]
+}
+
+extension SectionViewModel: SectionModelType {
+    typealias Item  = StudentModel
+    init(original: SectionViewModel, items: [StudentModel]) {
+        self = original
+        self.items = items
+    }
+}
+</code></pre>
+
+<p>then my CollectionView class is like </p>
+
+<pre><code>class StudentCV: UIViewController, UICollectionViewDelegateFlowLayout {
+
+    //MARK: - Outlets
+
+    @IBOutlet weak var studentsView: UICollectionView!
+
+    let studentCells = BehaviorRelay&lt;[StudentModel]&gt;(value: [])
+    var notificationToken: NotificationToken? = nil
+
+    private let disposeBag = DisposeBag()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        let flowLayout = UICollectionViewFlowLayout()
+        let size = CGSize(width: 105, height: 135)
+        flowLayout.itemSize = size
+        studentsView.setCollectionViewLayout(flowLayout, animated: true)
+        studentsView.rx.setDelegate(self).disposed(by: disposeBag)
+
+        setupBinding()
+    }
+
+    func studentLeft(value: Int, id: Int) {
+        SignalRService.sharedClass.chatHub.invoke(method: ""StudentLeft"", withArgs: [id, value]){ (result, error) in
+            if let e = error {
+                print(""Error: \(e)"")
+            } else {
+                print(""Done!"")
+                let vale = Database.singleton.updatePickupStatus(studentId: id, pickupValue: value)
+                TestDebug.debugInfo(fileName: """", message: ""STUDENT LEFTTT:: \(vale)"")
+                if let r = result {
+                    print(""Result: \(r)"")
+                }
+            }
+        }
+    }
+
+    deinit {
+        notificationToken?.invalidate()
+    }
+    func setupBinding() {
+        studentsView.register(UINib(nibName: ""StudentCVCell"", bundle: nil), forCellWithReuseIdentifier: ""studentCV"")
+
+        //Cell creation Changed here..............................
+
+           dataSource.configureCell = { (ds, cv, ip, item) in
+            let cell = cv.dequeueReusableCell(withReuseIdentifier: ""studentCV"", for: ip) as! StudentCVCell
+            cell.viewModel = item
+            return cell
+        }
+
+
+            studentCells
+                .asObservable()
+                .debug(""STudent View: "")
+                .map({ SectionViewModel(header: ""Pickups Arrived"", items: $0 ) })
+                .bind(to: studentsView.rx.items(dataSource: dataSource)) // now here it is giving me this error (Instance method 'items(dataSource:)' requires the types '[SectionViewModel]' and 'SectionViewModel' be equivalent)
+                .disposed(by: disposeBag)
+
+
+        // item selection with model details.
+        Observable
+        .zip(
+            studentsView
+            .rx
+            .itemSelected,
+            studentsView
+            .rx
+            .modelSelected(StudentModel.self))
+            .bind { [weak self] indexPath, model in
+
+                let cell = self?.studentsView.cellForItem(at: indexPath) as? StudentCVCell
+                if (model.pickupStatus == 2) {
+                    // updating view accordingly
+                }
+
+        }.disposed(by: disposeBag)
+    }
+</code></pre>
+
+<p>and ViewModels looks like this. from where I am populating.</p>
+
+<pre><code>class StudentCollectionViewViewModel {
+
+
+    //MARK: Outlets
+    let disposeBag = DisposeBag()
+    var notificationToken : NotificationToken? = nil
+    let studentCells = BehaviorRelay&lt;[StudentModel]&gt;(value: [])
+
+    var studentCell : Observable&lt;[StudentModel]&gt; {
+        return studentCells.asObservable()
+    }
+
+
+    deinit {
+        notificationToken?.invalidate()
+    }
+
+    func getStudentsData(id: Int) {
+
+        let studentsData = Database.singleton.fetchStudents(byCLassId: id)
+        self.notificationToken = studentsData.observe{[weak self] change in
+            TestDebug.debugInfo(fileName: """", message: ""Switch:::: change"")
+            switch change {
+            case .initial(let initial):
+                TestDebug.debugInfo(fileName: """", message: ""INIT: \(initial)"")
+                self!.studentCells.accept(Array(studentsData))
+            case .update(_, let deletions, let insertions, let modifications):
+                TestDebug.debugInfo(fileName: """", message: ""MODIF::: \(modifications)"")
+                self!.studentCells.accept(Array(studentsData))
+            case .error(let error):
+                print(error)
+            }
+        }
+
+
+    }
+
+}
+</code></pre>
+
+<p>I am populating data from DB but I need to make two lists , I also don't get where i have to send two lists of data to populate. plus when I tried to use it in my code to see how things works but it gives my following error.
+<strong><em>Instance method 'items(dataSource:)' requires the types '[SectionModel]' and '[StudentModel]' be equivalent</em></strong>.
+any advise or help will be appreciated. thanks in advance</p>
+","12139340","","12139340","","2019-10-13 12:13:36","2019-10-13 19:42:25","How to create multiple Sections in UICollectionView with multiple Headers using RxDatasource","<ios><swift><iphone><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 4.0"
+"58825713","1","58826305","","2019-11-12 19:49:44","","0","402","<p>I'm using RxDataSources and trying to make a ""toggle"" function for cell selection — i.e., to allow cells (in a single-selection tableView) to be selected and deselected by tapping. I'm using 
+<code>tableView.rx.itemSelected</code> to get the selection, and <code>self?.tableView.deselectRow(at: indexPath, animated: false)</code> to deselect the cell, if it is currently in the selected state. This seems to basically work, but I want to respond to the deselection. I was assuming that <code>self?.tableView.deselectRow(at: indexPath, animated: false)</code> would result in <code>tableView.rx.itemDeselected</code> being called, but that never happens. I'm obviously missing something. </p>
+
+<p>Any thoughts appreciated.</p>
+","4321521","","","","","2019-11-12 20:38:02","RxDataSources itemDeselected not getting called","<ios><swift><uitableview><rx-swift><rxdatasources>","1","0","1","","","CC BY-SA 4.0"
+"58937977","1","","","2019-11-19 15:50:51","","0","610","<p>I want to pass expandable tableView from default to Rx, but i found trouble that i can't use properly <strong>numberOfRownInSection</strong>. </p>
+
+<p>Now the logic is... when you struct has flag <strong>isExpandable = false</strong>, row count is <strong>0</strong> </p>
+
+<p>What i have is <strong>tableView</strong> with static data (struct will provide below). HeaderView as title and cells as expandable content. </p>
+
+<p><strong>Toggle func:</strong></p>
+
+<pre><code>func toggleCell(_ section: Int) {
+
+    var indexPaths = [IndexPath]()
+
+    for row in data[section].items.indices {
+        let indexPath = IndexPath(row: row, section: section)
+        indexPaths.append(indexPath)
+    }
+
+    let isExpanded = data[section].isExpanded
+    data[section].isExpanded = !isExpanded
+
+    if isExpanded {
+        categoriesTableView.deleteRows(at: indexPaths, with: .none)
+    } else {
+        categoriesTableView.insertRows(at: indexPaths, with: .none)
+    }
+
+}
+</code></pre>
+
+<p><strong>Default tableView delegate:</strong></p>
+
+<pre><code>    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -&gt; UITableViewCell {
+    let cell: HomeViewCell = tableView.dequeueReusableCell(forIndexPath: indexPath)
+    cell.categoryLabel.text = data[indexPath.section].items[indexPath.row].title ?? """"
+    return cell
+}
+
+func numberOfSections(in tableView: UITableView) -&gt; Int {
+    return data.count
+}
+
+func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -&gt; Int {
+    if !data[section].isExpanded {
+        return 0
+    }
+
+    return data[section].items.count
+}
+</code></pre>
+
+<p><strong>Struct</strong></p>
+
+<pre><code>var data: [CategoriesSectionData] = [CategoriesSectionData(header: ""Elektro"",            items: [CategoriesCellData(price: 12.99, title: ""Gärtner 1""),
+                                                                                                 CategoriesCellData(price: 15.30, title: ""Gärtner 2""),
+                                                                                                 CategoriesCellData(price: 25.99, title: ""Gärtner 3"")], isExpanded: false, icon: ""home_menu_1""),
+                                     CategoriesSectionData(header: ""Gartenpflege"",       items: [CategoriesCellData(price: 14.0, title: ""Gärtner 1"")], isExpanded: false, icon: ""home_menu_2""),
+                                     CategoriesSectionData(header: ""Sanitär"",            items: [], isExpanded: false, icon: ""home_menu_3""),
+                                     CategoriesSectionData(header: ""Hausmeisterdienste"", items: [], isExpanded: false, icon: ""home_menu_4""),
+                                     CategoriesSectionData(header: ""Meisterprüfung"",     items: [], isExpanded: false, icon: ""home_menu_3""),
+                                     CategoriesSectionData(header: ""Gartenpflege"",       items: [], isExpanded: false, icon: ""home_menu_2""),
+                                     CategoriesSectionData(header: ""Sanitär"",            items: [], isExpanded: false, icon: ""home_menu_1""),
+                                     CategoriesSectionData(header: ""Hausmeisterdienste"", items: [], isExpanded: false, icon: ""home_menu_4"")]
+</code></pre>
+
+<p><strong>To pass this to Rx i used following code</strong> but i have error when insert/delete rows because i don't want to clear my dataSource and can't set <strong>numberOfRownInSection</strong> to not display cells with expandable flag.</p>
+
+<pre><code>let dataSource = RxTableViewSectionedReloadDataSource&lt;CategoriesSectionData&gt;(
+        configureCell: { ds, tv, indexPath, item in
+
+            let cell: HomeViewCell = tv.dequeueReusableCell(forIndexPath: indexPath)
+            cell.categoryLabel.text = item.title ?? """"
+            return cell
+        },
+
+        titleForHeaderInSection: { ds, index in
+            return ds.sectionModels[index].header
+        }
+    )
+
+    self.dataSource = dataSource
+
+    Observable.just(data)
+        .bind(to: categoriesTableView.rx.items(dataSource: dataSource))
+        .disposed(by: disposeBag)
+
+    categoriesTableView.rx
+        .setDelegate(self)
+        .disposed(by: disposeBag)
+</code></pre>
+","9506836","","","","","2019-12-18 13:54:06","Swift 5 RxDataSource expandable cells","<swift><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 4.0"
+"59130233","1","59141653","","2019-12-01 21:39:27","","0","686","<p><strong>I am creating my tableview programmatically</strong></p>
+
+<pre><code>extension UITableView {
+static var tableView: UITableView {
+     let tableView = UITableView()
+     tableView.register(UITableViewCell.self, forCellReuseIdentifier: ""menuCell"")
+     tableView.translatesAutoresizingMaskIntoConstraints = false
+     return tableView
+    }
+}
+</code></pre>
+
+<p><strong>I am calling a binding function during viewdidload</strong></p>
+
+<pre><code>private func setUpBindings() {
+    guard let viewModel = self.viewModel else { return }
+
+    viewModel.menuItems
+        .bind(to: tableView.rx.items(cellIdentifier: ""menuCell"", cellType: UITableViewCell.self)) { [weak self] row, model, cell in
+            Logger.info(""Called"")
+            cell.selectionStyle = .none
+            cell.textLabel?.text = model.uppercased()
+            cell.textLabel?.textColor = self?.selectedRow == row ? .white : .darkGray
+            cell.backgroundColor = self?.selectedRow == row
+                ? ColorPreference.mainColor
+                : UIColor.clear
+        }
+        .disposed(by: self.disposeBag)
+        self.tableView.reloadData()
+}
+</code></pre>
+
+<p>The datasource for my tableview is from an observable in my viewmodel</p>
+
+<pre><code>let menuItems = Observable.just([
+    ""Recommended"",
+    ""Dashboard"",
+    ""Settings""
+])
+</code></pre>
+
+<p>The problem I'm having is that the bind function isn't being called for the <code>tableview</code>. There are clearly items in the observable that should be bound but every possible test I've done has never executed the body of the tableview binding.</p>
+
+<p>To confirm my theory, I tested this code within setupBindings() and the body of it was executed, printing out ""2019-12-01 16:36:18 | INFO | [""Recommended"", ""Dashboard"", ""Settings""]""</p>
+
+<pre><code>viewModel.menuItems
+        .bind(onNext: { items in
+            Logger.info(""\(items)"")
+        })
+        .disposed(by: self.disposeBag)
+</code></pre>
+
+<p>I've looked at the documentation for properly settings tableview's datasource and have done my fair share of research. <strong>I'm stumped and need help.</strong> </p>
+","6074750","","10584330","","2019-12-02 08:57:00","2019-12-02 15:06:16","Tableview data isn't being set while using RxSwift","<ios><swift><xcode><reactive><rxdatasources>","1","4","","","","CC BY-SA 4.0"
+"59190408","1","59197785","","2019-12-05 07:45:11","","-2","347","<p>where should I put UITableView Data Sources (I am using RxDataSources) when using MVVM-C architecture?</p>
+","12484280","","","","","2019-12-05 14:55:11","Table View Data Source in MVVM-C","<swift><mvvm><rx-swift><rxdatasources>","1","4","","2019-12-05 16:10:50","","CC BY-SA 4.0"
+"59715153","1","59716978","","2020-01-13 10:50:28","","0","1845","<p>I am having some issues with the <code>RxDataSources</code> cell reload animations for <code>RxSwift</code>. I have a simple table setup like so:</p>
+
+<pre><code>import UIKit
+import RxDataSources
+import RxCocoa
+import RxSwift
+import Fakery
+
+class ViewController1: UIViewController {
+
+
+    @IBOutlet weak var tableView: UITableView!
+    let bag = DisposeBag()
+
+
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupTableView()
+    }
+
+    private func setupTableView() {
+        tableView.register(UINib(nibName: ""TestTableViewCell"", bundle: nil), forCellReuseIdentifier: ""cell"")
+
+        let dataSource = RxTableViewSectionedAnimatedDataSource&lt;SectionOfTestData&gt;(
+            animationConfiguration: AnimationConfiguration(insertAnimation: .none, reloadAnimation: .none, deleteAnimation: .none),
+            configureCell: { dataSource, tableView, indexPath, element in
+                let cell = tableView.dequeueReusableCell(withIdentifier: ""cell"", for: indexPath) as! TestTableViewCell
+                cell.testData = element
+                return cell
+            })
+
+        someData
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: bag)
+    }
+
+    let someData = BehaviorRelay&lt;[SectionOfTestData]&gt;(value: [SectionOfTestData(items: [
+        TestData(color: .red, name: ""Henry""),
+        TestData(color: .blue, name: ""Josh"")
+    ])])
+
+    @IBAction func didTapUpdateButton(_ sender: Any) {
+        let colors: [UIColor] = [.blue, .purple, .orange, .red, .brown]
+
+
+        let items = someData.value.first!.items
+
+        // Add random data when button is tapped
+        someData.accept([SectionOfTestData(items: items + [TestData(color: colors.randomElement()!, name: Faker().name.firstName())])])
+    }
+
+}
+</code></pre>
+
+<p>The models:</p>
+
+<pre><code>struct TestData {
+    let color: UIColor
+    let name: String
+}
+
+extension TestData: IdentifiableType, Equatable {
+    typealias Identity = Int
+
+    var identity: Identity {
+           return Int.random(in: 0..&lt;20000)
+    }
+}
+
+struct SectionOfTestData {
+    var items: [Item]
+
+    var identity: Int {
+        return 0
+    }
+}
+
+extension SectionOfTestData: AnimatableSectionModelType {
+    typealias Identity = Int
+    typealias Item = TestData
+
+    // Implement default init
+    init(original: SectionOfTestData, items: [Item]) {
+        self = original
+        self.items = items
+    }
+}
+
+class TestTableViewCell: UITableViewCell {
+
+    @IBOutlet weak var colorView: UIView!
+    @IBOutlet weak var nameLabel: UILabel!
+
+    var testData: TestData! {
+        didSet {
+            colorView.backgroundColor = testData.color
+            nameLabel.text = testData.name
+        }
+    }
+
+}
+</code></pre>
+
+<p>When the button is tapped the <code>BehaviorRelay</code> is updated and the table seems to refresh however the ""animations"" are always the same. In the supplied code I have actually set all animation types to <code>.none</code> yet it is still performing an animation. If I try to change the animation type to another type such as <code>.bottom</code> again the animation is the same. What am I doing wrong here?</p>
+
+<p><a href=""https://i.stack.imgur.com/Zweji.gif"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/Zweji.gif"" alt=""enter image description here""></a></p>
+
+<p>Is this a <em>reload</em> animation or <em>insert</em> animation? I have no idea if the table reloads or inserts when the data is updated, I can't find any information in the documents. Any pointers on this would be greatly appreciated!</p>
+","4083744","","","","","2021-07-23 22:14:06","RxDataSources cell reload animations not working properly","<ios><swift><rx-swift><rxdatasources>","2","0","1","","","CC BY-SA 4.0"
+"59727464","1","59733505","","2020-01-14 04:19:10","","0","1038","<p>I am having an issue with cell animations using <code>RxSwift</code> on a <code>UICollectionView</code>, my simple setup is as follows:</p>
+
+<pre><code>collectionView.register(UINib(nibName: ""CustomCollectionCell"", bundle: nil), forCellWithReuseIdentifier: ""cell"")
+
+let dataSource = RxCollectionViewSectionedAnimatedDataSource&lt;SectionOfCustomDataAnimated&gt;(
+    animationConfiguration: AnimationConfiguration(insertAnimation: .bottom, reloadAnimation: .bottom, deleteAnimation: .bottom),
+    configureCell: { dataSource, cv, indexPath, element in
+        let cell = cv.dequeueReusableCell(withReuseIdentifier: ""cell"", for: indexPath) as! CustomCollectionCell
+        cell.colorView.backgroundColor = element.color
+        return cell
+    })
+</code></pre>
+
+<p>With the cell and data models like so:</p>
+
+<pre><code>struct CustomDataAnimated {
+    let id: Int
+    let color: UIColor
+}
+
+extension CustomDataAnimated: IdentifiableType, Equatable {
+    typealias Identity = Int
+
+    var identity: Identity {
+        return id
+    }
+}
+
+struct SectionOfCustomDataAnimated {
+    var items: [Item]
+
+    // Need to provide a unique id, only one section in our model
+    var identity: Int {
+        return 0
+    }
+}
+
+extension SectionOfCustomDataAnimated: AnimatableSectionModelType {
+    typealias Identity = Int
+    typealias Item = CustomDataAnimated
+
+    init(original: SectionOfCustomDataAnimated, items: [Item]) {
+        self = original
+        self.items = items
+    }
+}
+</code></pre>
+
+<p>I am using a <code>BehaviourRelay</code> that updates when the <code>update</code> button is pressed:</p>
+
+<pre><code> private let sections = BehaviorRelay&lt;[SectionOfCustomDataAnimated]&gt;(
+        value: [SectionOfCustomDataAnimated(items: [
+            CustomDataAnimated(id: 0, color: .red),
+            CustomDataAnimated(id: 1, color: .yellow)
+    ])])
+
+ @IBAction func didTapUpdate(_ sender: Any) {
+        let colors: [UIColor] = [.red, .blue, .green, .purple, .orange]
+        let originalColors = sections.value.first!.items
+        self.sections.accept([SectionOfCustomDataAnimated(items: originalColors + [CustomDataAnimated(id: originalColors.count ,color: colors.randomElement()!)])])
+    }
+</code></pre>
+
+<p><a href=""https://i.stack.imgur.com/K50UX.gif"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/K50UX.gif"" alt=""enter image description here""></a></p>
+
+<p>The problem is that the collection view <em>does</em> animate however it seems it <em>always</em> uses a fade style animation. Choosing a different option such as <code>.bottom</code> in the example above still results in the same fade animation. I have used similar logic on a table view before and there was no issue, I only seem to have the issue in collection views. How can I get the different style of animations to work?</p>
+","4083744","","","","","2020-01-14 12:09:08","RxDataSources collection view cell always uses fade for insert cell animation, can't change to a different animation","<ios><swift><uicollectionview><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 4.0"
+"60764306","1","60766279","","2020-03-19 20:06:32","","0","118","<p>Binding a sectioned table with <a href=""https://github.com/RxSwiftCommunity/RxDataSources"" rel=""nofollow noreferrer"">RxDataSources</a> using a <a href=""https://github.com/RxSwiftCommunity/RxDataSources/blob/master/Sources/RxDataSources/TableViewSectionedDataSource.swift"" rel=""nofollow noreferrer"">TableViewSectionedDataSource</a>, requires sections which conform to <a href=""https://github.com/RxSwiftCommunity/RxDataSources/blob/master/Sources/Differentiator/SectionModelType.swift"" rel=""nofollow noreferrer"">SectionModelType</a>.</p>
+
+<p>This <a href=""https://github.com/RxSwiftCommunity/RxDataSources/blob/master/Sources/Differentiator/SectionModelType.swift"" rel=""nofollow noreferrer"">SectionModelType</a> protocol has the following initializer as one of it's requirements: </p>
+
+<pre><code>    init(original: Self, items: [Item])
+</code></pre>
+
+<p>In addition, the same protocol enforces <code>var items: [Item] { get }</code>. We can now initialize the items array backing variable (in above mentioned <code>init</code>) with either from <code>original.items</code>, or <code>items</code> passed as init parameter. This is very confusing. The SectionModelType code has no comments. </p>
+
+<p><a href=""https://github.com/RxSwiftCommunity/RxDataSources#how"" rel=""nofollow noreferrer"">How</a> section of README which explains creation of sections for this very case, talks about creating typealias (for associated value), and the items array, but not a word about following implementation of <code>init</code> with <code>original: Self</code> :</p>
+
+<pre><code>init(original: SectionOfCustomData, items: [Item]) {
+    self = original
+    self.items = items
+}
+</code></pre>
+
+<p>While this can work in a struct, doing the same in a class shouts: </p>
+
+<blockquote>
+  <p>Cannot assign to value: 'self' is immutable</p>
+</blockquote>
+
+<p>Can anyone here explain what is happening here and why do we NEED to init with <code>Self</code></p>
+
+<p>Lastly, is there another (cleaner) way to reactively (in RXSwift / RxCocoa only) bind a sectioned table view to an observable datasource. 
+e.g. 
+* my cells, and sections have their own data model, which need to be mutable (hence classes)
+* there are multiple screens with this requirement for different entities, so i would be interesetd in achieving this with protocols instead, and slap the corresponding data model with the protocol ans have a common implementation for RXBinding</p>
+
+<p>Any pointers to either get clarity more on existing implementation, or achieving above points would be really helpful.
+P.S.: I am already working in a huge code base which uses Rx, so not using Rx, or moving to SwiftUI etc is not what I am looking for.</p>
+","219971","","219971","","2020-03-19 20:17:25","2020-03-19 23:02:03","Clarity on init with `Self` requirement of SectionModelType in RxDataSources","<swift><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 4.0"
+"61028715","1","","","2020-04-04 13:20:26","","1","982","<p>RxDatasource in RxSwift [RxTableViewSectionedAnimatedDataSource] Reload Animation don't update data source. What mistake I am doing? I am even unable to bind my action with button properly.</p>
+
+<p>TableDataSource and Table editing commands</p>
+
+<pre><code>struct TableDataSource {
+    var header: String
+    var items: [Item]
+    var SectionViewModel: SectionViewModel
+}
+
+extension TableDataSource: AnimatableSectionModelType {
+    var identity: String {
+        return header
+    }
+
+type alias Item = Data
+
+    init(original: TableDataSource, items: [Item]) {
+        self = original
+        self.items = items
+        self.sectionViewModel = original.sectionViewModel
+    }
+}
+
+enum TableViewEditingCommand {    
+    case deleteSingle(IndexPath)
+    case clearAll(IndexPath)
+    case readAll(IndexPath)
+}
+
+struct SectionedTableViewState {
+
+    var sections: [TableDataSource]
+
+    init(sections: [TableDataSource]) {
+        self.sections = sections
+    }
+
+    func execute(command: TableViewEditingCommand) -&gt; SectionedTableViewState {
+        var sections = self.sections
+        switch command {
+
+        // Delete single item from datasource
+        case .deleteSingle(let indexPath):
+            var items = sections[indexPath.section].items
+            items.remove(at: indexPath.row)
+            if items.count &lt;= 0 {
+                sections.remove(at: indexPath.section)
+            } else {
+                sections[indexPath.section] = TableDataSource(
+                    original: sections[indexPath.section],
+                    items: items) }
+
+        // Clear all item from datasource with isUnread = false
+        case .clearAll(let indexPath):
+            sections.remove(at: indexPath.section)
+
+        // Mark all item as read in datasource with isUnread = true
+        case .readAll(let indexPath):
+            var items = sections[indexPath.section].items
+            items = items.map { var unread = $0
+                if $0.isUnRead == true { unreadData.isUnRead = false }
+                return unreadData
+            }
+            sections.remove(at: indexPath.section)
+            if sections.count &gt; 0 {
+            let allReadItems = sections[indexPath.section].items + items
+                sections[indexPath.section] = TableDataSource(
+                    original: sections[indexPath.section],
+                    items: allReadItems)
+            }
+        }
+         return SectionedTableViewState(sections: sections)
+    }
+}
+</code></pre>
+
+<p>This is my controller and its extensions</p>
+
+<pre><code>
+class ViewController: UIViewController, Storyboardable {
+
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var titleText: UILabel!
+
+    var viewModel: ViewModel!
+    let disposeBag = DisposeBag()
+
+    let sectionHeight: CGFloat = 70
+    let dataSource = ViewController.dataSource()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        bindInitials()
+        bindDataSource()
+        bindDelete()
+    }
+
+    private func bindInitials() {
+        tableView.delegate = nil
+        tableView.rx.setDelegate(self)
+            .disposed(by: disposeBag)
+        registerNibs()
+    }
+
+    private func registerNibs() {
+        let headerNib = UINib.init(
+            nibName: TableViewSection.identifier,
+            bundle: nil)
+        tableView.register(
+            headerNib,
+            forHeaderFooterViewReuseIdentifier: TableViewSection.identifier)
+    }
+}
+
+extension ViewController: Bindable {
+
+    func bindViewModel() {
+        bindActions()
+    }
+
+    private func bindDataSource() {
+
+        bindDelete()
+
+
+        //        tableView.dataSource = nil
+        //        Observable.just(sections)
+        //            .bind(to: tableView.rx.items(dataSource: dataSource))
+        //            .disposed(by: disposeBag)
+    }
+
+    private func bindDelete() {
+        /// TODO: to check and update delete code to work properly to sink with clear all and mark all as read
+        guard let sections = self.viewModel?.getSections() else {
+            return
+        }
+        let deleteState = SectionedTableViewState(sections: sections)
+        let deleteCommand = tableView.rx.itemDeleted.asObservable()
+            .map(TableViewEditingCommand.deleteSingle)
+
+        tableView.dataSource = nil
+        Observable.of(deleteCommand)
+            .merge()
+            .scan(deleteState) {
+                (state: SectionedTableViewState,
+                command: TableViewEditingCommand) -&gt; SectionedTableViewState in
+                return state.execute(command: command) }
+            .startWith(deleteState) .map { $0.sections }
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
+    }
+
+    private func bindActions() {
+
+        guard let openDetailsObserver = self.viewModel?.input.openDetailsObserver,
+            let closeObserver = self.viewModel?.input.closeObserver else {
+                return
+        }
+        viewModel.output.titleTextDriver
+            .drive(titleText.rx.text)
+            .disposed(by: disposeBag)
+
+//        viewModel.input.dataSourceObserver
+//            .mapObserver({ (result) -&gt; [Data] in
+//                return result
+//            })
+//            .disposed(by: disposeBag)
+
+        /// Close button binding with closeObserver
+        closeButton.rx.tap
+            .bind(to: (closeObserver))
+            .disposed(by: disposeBag)
+
+        /// Tableview item selected binding with openDetailsObserver
+        tableView.rx.itemSelected
+            .map { indexPath in
+                return (self.dataSource[indexPath.section].items[indexPath.row])
+        }.subscribe(openDetailsObserver).disposed(by: disposeBag)
+    }
+}
+
+extension ViewController: UITableViewDelegate {
+
+    static func dataSource() -&gt; RxTableViewSectionedAnimatedDataSource&lt;TableDataSource&gt; {
+        return RxTableViewSectionedAnimatedDataSource(
+            animationConfiguration: AnimationConfiguration(insertAnimation: .fade,
+                                                           reloadAnimation: .fade,
+                                                           deleteAnimation: .fade),
+            configureCell: { (dataSource, table, idxPath, item) in
+                var cell = table.dequeueReusableCell(withIdentifier: TableViewCell.identifier) as? TableViewCell
+                let cellViewModel = TableCellViewModel(withItem: item)
+                cell?.setViewModel(to: cellViewModel)
+                return cell ?? UITableViewCell()
+        }, canEditRowAtIndexPath: { _, _ in return true })
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -&gt; UIView? {
+
+        guard var headerView = tableView.dequeueReusableHeaderFooterView(
+            withIdentifier: TableViewSection.identifier)
+            as? TableViewSection
+            else { return UITableViewHeaderFooterView() }
+        let viewModel = self.dataSource[section].sectionViewModel
+        headerView.setViewModel(to: viewModel)
+        headerView.dividerLine.isHidden = section == 0 ? true : false
+        headerView.section = section
+
+        let data = TableViewEditingCommand.clearAll(IndexPath(row: 0, section: section ?? 0))
+//        /// Section button binding with closeObserver
+//        headerView.sectionButton.rx.tap
+//            .map(verseNum -&gt; TableViewEditingCommand in (TableViewEditingCommand.deleteSingle))
+//            .disposed(by: disposeBag)
+
+        headerView.sectionButtonTappedClosure = { [weak self] (section, buttonType) in
+            if buttonType == ButtonType.clearAll {
+                self?.showClearAllConfirmationAlert(section: section, buttonType: buttonType)
+            } else {
+                self?.editAction(section: section, buttonType: buttonType)
+            }
+        }
+        return headerView
+    }
+
+    func editAction(section: Int, buttonType: ButtonType) {
+
+        var sections = self.dataSource.sectionModels
+        let updateSection = (sections.count == 1 ? 0 : section)
+
+        switch buttonType {
+        /// Clear all
+        case .clearAll:
+            sections.remove(at: updateSection)
+            let data = SectionedTableViewState(sections: sections)
+            self.tableView.dataSource = nil
+            Observable.of(data)
+                .startWith(data) .map { $0.sections }
+                .bind(to: tableView.rx.items(dataSource: dataSource))
+                .disposed(by: disposeBag)
+        /// Mark all as read
+        case .markAllAsRead:
+            if updateSection == 0 { sections = self.viewModel.getSections() }
+            var items = sections[updateSection].items
+            items = items.map { var unread = $0
+                if $0.isUnRead == true { unread.isUnRead = false }
+                return unread
+            }
+            sections.remove(at: updateSection)
+            let allReadItems = sections[updateSection].items + items
+            sections[updateSection] = TableDataSource(
+                original: sections[updateSection],
+                items: allReadItems)
+
+            let data = SectionedTableViewState(sections: sections)
+            self.tableView.dataSource = nil
+            Observable.of(data)
+                .startWith(data) .map { $0.sections }
+                .bind(to: tableView.rx.items(dataSource: dataSource))
+                .disposed(by: disposeBag)
+        }
+    }
+
+    func showClearAllConfirmationAlert(section: Int, buttonType: ButtonType) {
+
+        let alert = UIAlertController(title: ""Clear All"",
+                                      message: ""Are you sure, you want to clear all Items?"",
+                                      preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: ""OK"", style: .default, handler: { action in
+            switch action.style{
+            case .default:
+                self.editAction(section: section, buttonType: buttonType)
+            case .cancel: break
+            case .destructive: break
+            default:break
+            }}))
+        let cancel = UIAlertAction(title: ""Cancel"", style: .default, handler: { action in
+        })
+        alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -&gt; CGFloat {
+        return sectionHeight
+    }
+}
+
+</code></pre>
+
+<p>View model for controller</p>
+
+<pre><code>
+class ViewModel {
+
+    private enum Constants {
+        static let titleText = ""Test"".localized
+        static let testHistoryHeaderText = ""test"".localized
+        static let unreadHeaderText = ""Unread"".localized
+    }
+
+    struct Input {
+        let dataSourceObserver: AnyObserver&lt;[Data]&gt;
+        let openDetailsObserver: AnyObserver&lt;Data&gt;
+        let closeObserver: AnyObserver&lt;Void&gt;
+        let sectionButtonTappedObserver: AnyObserver&lt;IndexPath&gt;
+    }
+
+    struct Output {
+        let titleTextDriver: Driver&lt;String&gt;
+        let dataSourceDriver: Driver&lt;[Data]&gt;
+        let viewComplete: Observable&lt;DataCoordinator.Event&gt;
+    }
+
+    let input: Input
+    let output: Output
+
+    private let dataSourceSubject =  PublishSubject&lt;[Data]&gt;()
+    private let closeSubject = PublishSubject&lt;Void&gt;()
+    private let openDetailsSubject = BehaviorSubject&lt;Data&gt;(value:Data())
+    private let sectionButtonTappedSubject = PublishSubject&lt;IndexPath&gt;()
+    private let disposeBag = DisposeBag()
+
+    init(withRepository repository: Repository) {
+        input = Input(
+            dataSourceObserver: dataSourceSubject.asObserver(),
+            openDetailsObserver: openDetailsSubject.asObserver(),
+            closeObserver: closeSubject.asObserver(), sectionButtonTappedObserver: sectionButtonTappedSubject.asObserver()
+        )
+        let closeEventObservable = closeSubject.asObservable().map { _ in
+            return Coordinator.Event.goBack
+        }
+        let openDetailsEventObservable = openDetailsSubject.asObservable().map { _ in
+            return Coordinator.Event.goToDetails
+        }
+
+        let viewCompleteObservable = Observable.merge(closeEventObservable, openDetailsEventObservable)
+
+        let list = ViewModel.getData(repository: repository)
+
+        output = Output(
+            titleTextDriver: Observable.just(Constants.titleText).asDriver(onErrorJustReturn: Constants.titleText),
+            dataSourceDriver: Observable.just(list).asDriver(onErrorJustReturn: list),
+            viewComplete: viewCompleteObservable)
+
+
+    }
+
+
+    ///TODO: To be updated as per response after API integration
+    static func getData(repository: Repository) -&gt; [Data] {
+        return repository.getData()
+    }
+
+    func getSections() -&gt; [TableDataSource] {
+
+        let List = ViewModel.getData(repository: Repository())
+
+        let unread = list.filter { $0.isUnRead == true }
+        let read = list.filter { $0.isUnRead == false }
+
+        let headerText = String(format:Constants.unreadHeaderText, unread.count)
+
+        let sections = [TableDataSource(
+            header: headerText,
+            items: unread,
+            sectionViewModel: SectionViewModel(
+                withHeader: headerText,
+                buttonType: ButtonType.markAllAsRead.rawValue,
+                items: unread)),
+                        TableDataSource(
+                            header: Constants.historyHeaderText,
+                            items: read,
+                            SectionViewModel: SectionViewModel(
+                                withHeader: Constants.historyHeaderText,
+                                buttonType: ButtonType.clearAll.rawValue,
+                                items: read))]
+        return sections
+    }
+}
+
+</code></pre>
+","2343287","","4420967","","2020-04-04 14:13:53","2021-07-23 22:11:52","RxDatasource in RxSwift reload animation don't update data source","<swift><uitableview><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 4.0"
+"61936958","1","","","2020-05-21 14:36:25","","2","201","<p>I have a table view cell with a collection view. both bonded through rxdatasource, I am getting the leak using instruments when the view is loaded. Any thoughts on what could be the reason for this? Thanks.</p>
+
+<p>the leak</p>
+
+<p><img src=""https://user-images.githubusercontent.com/7117097/82472943-6527f980-9ab8-11ea-9d0a-4019b7566aa0.png"" alt=""image""></p>
+
+<p>HomeViewcontroller </p>
+
+<pre><code> let dataSource = RxTableViewSectionedReloadDataSource&lt;HomeSection&gt;(configureCell:  { [weak self] dataSource, tableView, indexPath, item in
+            guard let self = self else { return UITableViewCell() }
+
+            switch item {
+       ....
+            case .homeTrendingItem(let viewModel):
+                let cell = (tableView.dequeueReusableCell(withIdentifier: trendingIdentifier, for: indexPath) as? ModelProductsCell)!
+                cell.delegate = self
+                cell.bind(to: viewModel)
+                return cell
+
+            }
+        }, titleForHeaderInSection: { dataSource, index in
+            let section = dataSource[index]
+            return section.title
+        })
+
+        output.items
+            .bind(to: tableView.rx.items(dataSource: dataSource))
+            .disposed(by: rx.disposeBag)
+</code></pre>
+
+<blockquote>
+  <p>ModelProductsCell</p>
+</blockquote>
+
+<pre><code>
+func bind(to viewModel: ModelProductsViewModel) {
+       let input = ModelProductsViewModel.Input()
+       let output = viewModel.transform(input: input)
+
+       output.items
+       .bind(to: collectionView.rx.items(cellIdentifier: mainReuseIdentifier, cellType: ProductItemCell.self)) { collectionView, viewModel, cell in
+               cell.bind(to: viewModel)
+       }.disposed(by: cellDisposeBag)
+
+       collectionView.rx.modelSelected(ProductCellViewModel.self)
+           .bind {[weak self] vm in
+               self?.delegate?.didTapOnItem(p: vm.product)
+       }.disposed(by: cellDisposeBag)
+
+       viewModel.loading.asObservable().bind(to: isLoading).disposed(by: rx.disposeBag)
+
+       viewModel.loading.asDriver().drive(onNext: { [weak self] (isLoading) in
+           isLoading ? self?.activityIndicator.startAnimating() : self?.activityIndicator.stopAnimating()
+       }).disposed(by: cellDisposeBag)
+   }
+
+</code></pre>
+","2187976","","2187976","","2020-05-21 15:45:43","2020-05-21 15:45:43","leak in CollectionView using RxDataSources and RxSwift","<ios><swift><rx-swift><rxdatasources>","0","2","","","","CC BY-SA 4.0"
+"63776621","1","","","2020-09-07 11:21:07","","2","436","<p>I'm using <code>RxSwift</code> with <code>RxDataSources</code> framework to setup a tableview:</p>
+<pre><code>let dataSource = RxTableViewSectionedAnimatedDataSource&lt;AnimatableSectionModel&lt;String, String&gt;&gt;(configureCell: { _, tableView, indexPath, item -&gt; UITableViewCell in
+       let cell = tableView.dequeueReusableCellwithIdentifier: &quot;TestCell&quot;, for: indexPath)
+       cell.configure()
+       return cell
+})
+
+vm.cellViewModels
+     .map({ [AnimatableSectionModel(model: &quot;&quot;, items: $0)] })
+     .bind(to: _view.tableView.rx.items(dataSource: dataSource))
+     .disposed(by: bag)
+</code></pre>
+<p>I'm trying to get my <code>UISwipeActionsConfiguration</code> to work in <code>UITableViewDelegate</code>, and setting the delegate as:</p>
+<p><code>tableView.rx.setDelegate(self).disposed(by: bag)</code></p>
+<p>At the same time setting the delegate methods as:</p>
+<pre><code>extension UIViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -&gt; UISwipeActionsConfiguration? {
+        let action = UIContextualAction(style: .normal, title: nil) { action, view, completion in
+            
+        }
+
+        action.image = Images.shared.logo.resized(to: CGSize(width: 24, height: 24)).tintWithColor(.darkGray).withRenderingMode(.alwaysOriginal)
+        action.backgroundColor = .clear
+
+        let configuration = UISwipeActionsConfiguration(actions: [action])
+        configuration.performsFirstActionWithFullSwipe = false
+
+        return configuration
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -&gt; UIView? {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: 20))
+        headerView.backgroundColor = UIColor.red
+        return headerView
+    }
+}
+</code></pre>
+<p>The header is called and works as expected, meaning the delegate should be set correct.</p>
+<hr />
+<p>Doing it without RxSwift, works for swipe actions.</p>
+<p>Does anyone know how to get <code>trailingSwipeActionsConfigurationForRowAt</code> to work with RxDatasources, as I can only get <code>viewForHeaderInSection</code> to work?</p>
+","7766093","","","","","2020-09-07 11:21:07","RxSwift TableView with swipe actions","<ios><swift><uitableview><rx-swift><rxdatasources>","0","1","","","","CC BY-SA 4.0"
+"63874815","1","63876720","","2020-09-13 19:35:23","","1","134","<p>I'm using RxSwift and currently, I have a list of addresses that could be edited inline</p>
+<p>I.E: The user clicks on a button and the cell is transformed into editing mode essentially displaying a few UITextFields</p>
+<p>Now the problem is that when I bind the input of my TextField to my model the TableView gets reloaded and therefore keyboard dismisses, I've also tried RxAnimatableDataSource but no avail it still dismisses the keyboard on each keystroke.</p>
+<p>ViewModel:</p>
+<pre><code>class UpdateAddressViewModel: ViewModel, ViewModelType {
+    
+    struct Input {
+        let viewDidLoad: AnyObserver&lt;Void&gt;
+        let selectItemTrigger: AnyObserver&lt;Int&gt;
+        let editButtonTrigger: AnyObserver&lt;Int&gt;
+        let editTrigger: AnyObserver&lt;Int&gt;
+        let firstNameIndexed: AnyObserver&lt;(String, Int)&gt;
+        let lastNameIndexed: AnyObserver&lt;(String, Int)&gt;
+        let address1Indexed: AnyObserver&lt;(String, Int)&gt;
+        let address2Indexed: AnyObserver&lt;(String, Int)&gt;
+        let zipIndexed: AnyObserver&lt;(String, Int)&gt;
+        let cityIndexed: AnyObserver&lt;(String, Int)&gt;
+        let stateIndexed: AnyObserver&lt;(String, Int)&gt;
+        let phoneIndexed: AnyObserver&lt;(String, Int)&gt;
+    }
+    
+    struct Output {
+        let addresses: Driver&lt;[AddressViewModel]&gt;
+        let reloadAndScroll: Driver&lt;(Int, Bool)&gt;
+        let showMenu: Driver&lt;Int&gt;
+        let error: Driver&lt;Error&gt;
+    }
+    
+    private(set) var input: Input!
+    private(set) var output: Output!
+    
+    //Input
+    private let viewDidLoad = PublishSubject&lt;Void&gt;()
+    private let editButtonTrigger = PublishSubject&lt;Int&gt;()
+    private let editTrigger = PublishSubject&lt;Int&gt;()
+    private let firstNameIndexed = ReplaySubject&lt;(String, Int)&gt;.create(bufferSize: 1)
+    private let lastNameIndexed = ReplaySubject&lt;(String, Int)&gt;.create(bufferSize: 1)
+    private let address1Indexed = ReplaySubject&lt;(String, Int)&gt;.create(bufferSize: 1)
+    private let address2Indexed = ReplaySubject&lt;(String, Int)&gt;.create(bufferSize: 1)
+    private let zipIndexed = ReplaySubject&lt;(String, Int)&gt;.create(bufferSize: 1)
+    private let cityIndexed = ReplaySubject&lt;(String, Int)&gt;.create(bufferSize: 1)
+    private let stateIndexed = ReplaySubject&lt;(String, Int)&gt;.create(bufferSize: 1)
+    private let phoneIndexed = ReplaySubject&lt;(String, Int)&gt;.create(bufferSize: 1)
+    
+    //Output
+    private let addresses = BehaviorRelay&lt;[AddressViewModel]&gt;(value: [AddressViewModel()])
+    
+    override init() {
+        super.init()
+        
+        observeViewDidLoad()
+        
+        observeEditAddress()
+            .bind(to: addresses)
+            .disposed(by: disposeBag)
+        
+        firstNameIndexed
+            .withLatestFrom(addresses) { firstNameIndexed, viewModels -&gt; (String, Int, [AddressViewModel]) in
+                let (firstName, index) = firstNameIndexed
+                return (firstName, index, viewModels)
+            }
+            .map { firstName, index, viewModels in
+                var viewModels = viewModels
+                viewModels[index].address.firstName = firstName
+                return viewModels
+            }
+            .bind(to: addresses)
+            .disposed(by: disposeBag)
+        
+        input = Input(
+            viewDidLoad: viewDidLoad.asObserver(),
+            selectItemTrigger: selectItemTrigger.asObserver(),
+            editButtonTrigger: editButtonTrigger.asObserver(),
+            editTrigger: editTrigger.asObserver(),
+            firstNameIndexed: firstNameIndexed.asObserver(),
+            lastNameIndexed: lastNameIndexed.asObserver(),
+            address1Indexed: address1Indexed.asObserver(),
+            address2Indexed: address2Indexed.asObserver(),
+            zipIndexed: zipIndexed.asObserver(),
+            cityIndexed: cityIndexed.asObserver(),
+            stateIndexed: stateIndexed.asObserver(),
+            phoneIndexed: phoneIndexed.asObserver()
+        )
+        
+        output = Output(
+            addresses: addresses.asDriver(onErrorJustReturn: []),
+            reloadAndScroll: reloadAndScroll,
+            showMenu: editButtonTrigger.asDriverOnErrorJustComplete(),
+            error: errorTracker.asDriver()
+        )
+    }
+    
+    private func observeViewDidLoad() {
+         //Loading work here
+    }
+    
+    private func observeEditAddress() -&gt; Observable&lt;[AddressViewModel]&gt; {
+        editTrigger
+            .withLatestFrom(addresses) { index, viewModels in
+                return (index, viewModels)
+            }
+            .map { index, viewModels in
+                var viewModels = viewModels
+                
+                for currentIndex in viewModels.indices {
+                    viewModels[currentIndex].isSelected = currentIndex == index
+                    viewModels[currentIndex].isEditing = currentIndex == index
+                    
+                    if currentIndex == index {
+                        viewModels[currentIndex].copyAddress()
+                    }
+                }
+                
+                return viewModels
+            }
+    }
+}
+</code></pre>
+<p>And here's my ViewController binding of data source to tableview</p>
+<pre><code>viewModel
+    .output
+    .addresses
+    .drive(tableView.rx.items) { [weak self] tableView, row, viewModel in
+        guard let self = self else { return UITableViewCell() }
+        let indexPath = IndexPath(row: row, section: 0)
+        
+        if viewModel.address.rechargeId == nil &amp;&amp; viewModel.address.shopifyId == nil {
+            let cell: NewAddressCell = tableView.dequeueCell(for: indexPath)
+            
+            cell.configure(viewModel: viewModel)
+            
+            return cell
+        } else if viewModel.isEditing {
+            let cell: UpdateAddressCell = tableView.dequeueCell(for: indexPath)
+            
+            cell.configure(viewModel: viewModel)
+            
+            cell
+                .rx
+                .firstName
+                .map { ($0, row) }
+                .bind(to: self.viewModel.input.firstNameIndexed)
+                .disposed(by: cell.disposeBag)
+            
+            return cell
+        } else {
+            let cell: AddressCell = tableView.dequeueCell(for: indexPath)
+            
+            cell.configure(viewModel: viewModel)
+            
+            cell
+                .rx
+                .editButtonTapped
+                .map { _ in return row }
+                .bind(to: self.viewModel.input.editButtonTrigger)
+                .disposed(by: cell.disposeBag)
+            
+            return cell
+        }
+    }
+    .disposed(by: disposeBag)
+</code></pre>
+","9071240","","","user14219868","2020-09-13 19:39:16","2020-09-14 00:17:09","Preventing first responder to resign on tableview reload","<ios><swift><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 4.0"
+"65672226","1","","","2021-01-11 18:04:11","","0","11","<p>While changing identity for empty item (identifier == nil)</p>
+<pre><code>extension Item: IdentifiableType {
+    public var identity: Int64 {
+        identifier ?? Self.emptyId
+    }
+
+    public static var emptyId: Int64 = .random(in: 0..&lt;Int64.max)
+
+    public static func refreshEmptyItemId() {
+        Self.emptyId = .random(in: 0..&lt;Int64.max)
+    }
+}
+</code></pre>
+<p>so table view does not refreshes this item. Why?</p>
+<p>But If I do</p>
+<pre><code>extension Item: IdentifiableType {
+    public var identity: Int64 {
+        identifier ?? .random(in: 0..&lt;Int64.max)
+    }
+}
+</code></pre>
+<p>It then refreshes, but too often, so I prefere to change id only on button tap.</p>
+","4415642","","","","","2021-01-11 18:04:11","RxTableViewSectionedAnimatableDataSource does not call configureCell on item identity change","<tableview><rx-swift><rxdatasources>","0","1","","","","CC BY-SA 4.0"
+"65894545","1","65895262","","2021-01-26 01:04:41","","1","332","<p><strong>Problem</strong>: CollectionView header and footer are not shown before results are retrieved from network service. They are shown after items are retrieved from service.</p>
+<p><strong>Result I want:</strong>: Show CollectionView header and footer before items are retrieved from api call</p>
+<p><strong>What i've tried:</strong>
+Used different datasource with header and footer on initial viewDidLoad and set that datasource to nil when results loaded. Didn't work</p>
+<p><strong>My (not so elegant) solution:</strong>
+Add headerView and footerView subviews on viewDidLoad and replace them with collectionView when results come from service.</p>
+<pre><code>itemsLoading.drive(onNext: { loading in 
+ if loading {
+   view.addSubview(headerView)
+   view.addSubview(footerView) 
+} else {  
+  headerView.removeFromSuperview()
+  footerView.removeFromSuperView()
+  view.addSubview(collectionView)
+
+</code></pre>
+<p><strong>Is there more elegant solution to this problem ?</strong></p>
+<p><strong>My Code:</strong> Left only parts related to Rxswift/RxDataSources</p>
+<pre><code>struct Input { 
+
+let id: Driver&lt;String&gt;
+
+} 
+
+struct Output {
+
+let items: Driver&lt;[Item]&gt;
+
+}
+
+class ViewModel {
+
+    func transform(input: Input) -&gt; Output {
+
+        let items = networkService.getItems(id: input.id) // async operation
+ 
+        return Output(items: items)
+    }
+}
+</code></pre>
+<pre><code>class ViewController: UIViewController {
+
+    private let viewModel = ViewModel()
+    private let disposeBag = DisposeBag()
+    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        bindViewModel()
+    }
+
+    private func bindViewModel() {
+
+        let dataSource = ViewController.dataSource()
+        let id = .just(id)
+        let input = Input(id: id)
+        let output = viewModel.transform(input: input)
+
+        output.items.map { items in
+            items.map { item in
+                SectionModel(model: &quot;first Section&quot;, items: [item])
+            }
+        }
+        .drive(collectionView.rx.items(dataSource: dataSource))
+        .disposed(by: disposeBag)
+    }
+
+
+extension ViewController {
+
+    typealias DataSource = RxCollectionViewSectionedReloadDataSource
+    static func dataSource() -&gt; DataSource&lt;SectionModel&lt;String, Item&gt;&gt; {
+        .init(
+            configureCell: { _, collectionView, indexPath, _ in
+                let cell = collectionView.dequeueReusableCell(ofType: UICollectionViewCell.self, for: indexPath)
+                return cell
+            },
+            configureSupplementaryView: { _, collectionView, kind, indexPath in
+                switch kind {
+                    case UICollectionView.elementKindSectionHeader:
+                        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, kindType: SectionHeader.self, for: indexPath)
+                        return header
+
+                    case UICollectionView.elementKindSectionFooter:
+                        let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, kindType: SectionFooter.self, for: indexPath)
+                        return footer
+                    default:
+                        assert(false, &quot;Unexpected element kind&quot;)
+                }
+
+            })
+    }
+}
+</code></pre>
+","6740231","","","","","2021-01-26 02:49:34","RxDataSources headerView and footerView","<rx-swift><rxdatasources>","1","0","","","","CC BY-SA 4.0"
+"66367805","1","67175627","","2021-02-25 11:42:34","","0","210","<p>An overview of what I am trying to achieve I am trying to make a notifications tableview and each notification is group by its created date, so the tableview sections will be the number of created date, each section with the notifications created at this date in the section title.
+I have searched a lot but didn't get an absolute answer how to make with RxDataSource
+the array is dynamic get loaded with dates received through an API?</p>
+<pre><code>class T : UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -&gt; Int {
+        return array.count
+    }
+}
+</code></pre>
+<p>All what I have found is to set the sections static like so</p>
+<pre><code>       ViewModel.AllNotificationsObservable
+                .map({ [NotificationSectionViewModel(header: &quot;Yet&quot;, items: $0.filter{$0.createAt.toDate()!.toString(format: &quot;yyyy-MM-dd&quot;) == Date().toString(format: &quot;yyyy-MM-dd&quot;) }),
+                        NotificationSectionViewModel(header: &quot;Yesterday&quot;, items: $0)
+                ]
+                })
+                .bind(to: NotificationTableView.rx.items(dataSource: ViewModel.dataSource))
+                .disposed(by: notificationDisposeBag)
+
+</code></pre>
+<p>this is my struct</p>
+<pre><code>struct NotificationSectionViewModel {
+    var header: String
+    var items: [AllNotificationModel] 
+}
+extension NotificationSectionViewModel: SectionModelType {
+    typealias NotificationItem = AllNotificationModel
+    
+    init(original: NotificationSectionViewModel, items: [AllNotificationModel]) {
+        self = original
+        self.items = items
+    }
+}
+</code></pre>
+<p>and this the data model</p>
+<pre><code>class AllNotificationModel : Codable {
+    
+    let id, userID : Int
+    let title, body, createAt: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id, title, body
+        case userID = &quot;user_id&quot;
+        case createAt = &quot;create at&quot;
+    }
+}
+</code></pre>
+<p>what I am trying to achieve</p>
+<p><a href=""https://i.stack.imgur.com/u7gtk.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/u7gtk.png"" alt=""enter image description here"" /></a></p>
+<p>need header to be like this</p>
+<pre><code>“Today”: [
+        {
+            &quot;id&quot;: 2421,
+            &quot;user_id&quot;: 39,
+            &quot;title&quot;: &quot;todayNotification&quot;,
+            &quot;body&quot;: &quot;test&quot;,
+            &quot;create at&quot;: &quot;2021-02-26 17:33:44&quot;
+        },
+        {
+            &quot;id&quot;: 2349,
+            &quot;user_id&quot;: 39,
+            &quot;title&quot;: &quot;check&quot;,
+            &quot;body&quot;: &quot;test&quot;,
+            &quot;create at&quot;: &quot;2021-02-26 09:36:05&quot;
+        },
+        {
+            &quot;id&quot;: 2206,
+            &quot;user_id&quot;: 39,
+            &quot;title&quot;: &quot;New Deal&quot;,
+            &quot;body&quot;: &quot;new Deal 2&quot;,
+            &quot;create at&quot;: &quot;2021-02-26 13:43:16&quot;
+        } ]
+“Yesterday”: [
+        {
+            &quot;id&quot;: 2134,
+            &quot;user_id&quot;: 39,
+            &quot;title&quot;: &quot;Closed Deal&quot;,
+            &quot;body&quot;: “deal deal”,
+            &quot;create at&quot;: &quot;2021-02-25 13:21:30&quot;
+        } ]
+
+“2021-02-24”: [
+        {
+            &quot;id&quot;: 2134,
+            &quot;user_id&quot;: 39,
+            &quot;title&quot;: &quot;Closed Deal&quot;,
+            &quot;body&quot;: “deal”,
+            &quot;create at&quot;: &quot;2021-02-24 13:21:30&quot;
+        },
+        {
+            &quot;id&quot;: 2063,
+            &quot;user_id&quot;: 39,
+            &quot;title&quot;: &quot;New Deal&quot;,
+            &quot;body&quot;: &quot;new Deal&quot;,
+            &quot;create at&quot;: &quot;2021-02-24 13:21:16&quot;
+        }]
+</code></pre>
+","8397675","","8397675","","2021-02-27 06:55:18","2021-04-20 08:55:13","How to make Dynamic sections with RxDataSource?","<ios><swift><rx-swift><rxdatasources>","2","0","0","","","CC BY-SA 4.0"
+"67410853","1","67413407","","2021-05-06 01:52:23","","1","94","<p>Initially the app shows UIViewCollection with one section and then new sections appears after receiving the content. A user scrolls the collection and new sections add to the bottom of the collection.</p>
+<p>I use MVVM, so in my ViewModel I add a new section to the content array (model.content) and then notify the Publisher that binded to collectionView.rx.items(dataSource: self.dataSource).</p>
+<p>So every time I add the section the collection is flashing and all cells are reloading that makes horrible user experience everything flashing, flickering, pictures disappearing and appearing. Is there a way not to reload all the collection but only the difference. I thought it should work like this by default. Maybe the method of notifying the BehaviorSubject is wrong idea?</p>
+<p>I also tried to use the RxTableViewSectionedAnimatedDataSource but in this way everything disappearing and move the user to the very top of the collection view after every new section had beed added.</p>
+<p>Please any idea why would all collection should be reloaded if I just added one section to the bottom, how to prevent it?</p>
+<pre><code>typealias ContentDataSource = RxCollectionViewSectionedReloadDataSource&lt;ContentSection&gt;
+
+class ContentViewController: BaseViewController&lt;ContentViewModel&gt; {
+
+    func setupBindings() {
+         viewModel?.sectionItemsSubject
+                .bind(to: collectionView.rx.items(dataSource: self.dataSource))
+                .disposed(by: self.disposeBag)
+    }
+}
+
+
+class ContentViewModel: BaseViewModel&lt;ContentModel&gt; {
+
+    lazy var sectionItemsSubject = BehaviorSubject&lt;[ContentSection]&gt;(value: model.content)
+
+    func updateGeneratedSection(_ section: ContentSection) {
+        model.content.append(item)
+        sectionItemsSubject.onNext(self.model.content)
+    }
+}
+
+struct ContentModel {
+  
+    var content: [ContentSection] = []
+}
+</code></pre>
+<p><strong>EDITED</strong>:</p>
+<pre><code>struct ContentSection {
+    
+    var id: String
+    var items: [Item]
+    var order: Int
+}
+
+extension ContentSection: SectionModelType {
+    
+    typealias Item = ItemCellModel
+    
+    init(original: ContentSection, items: [ItemCellModel]) {
+        self = original
+        self.items = items
+    }
+}
+
+struct ItemCellModel {
+
+    let id: String
+    let img: String
+   
+    
+    init(id: String, img: String) {
+       self.id = id
+       self.img = img
+   }
+}
+</code></pre>
+","2831157","","2831157","","2021-05-06 18:32:18","2021-05-07 22:38:42","RxDataSources flashing and flickering on every change in the datasource content","<ios><swift><rx-swift><rxdatasources>","2","2","","","","CC BY-SA 4.0"
+"67913373","1","67927056","","2021-06-10 01:09:35","","1","37","<p>I have an issue where [unowned self] was changed to [weak self] within the dataSource function used for a CollectionView using RxDataSource due to a memory leak. I now received a crash from returning a blank collectionViewCell that doesn't have a reuseIdentifier. I understand that I need to return a cell with a reuseID.</p>
+<p>What changes are suggested to deal with this properly?</p>
+<p>Someone suggested making collectionView.dataSource = nil in viewDidLoad() would fix this...</p>
+<p>I was thinking instead of returning CanvasItemCollectionViewCell() in the 'guard' check,
+I return collectionView.dequeueReusableCell(for: indexPath, cellType: CanvasItemCollectionViewCell.self), but if self = self fails wouldn't that mean the collectionView is garbage?</p>
+<p>This is a difficult problem to debug because this crash doesn't happen consistently.</p>
+<p>Here are some screenshots to portray what I am looking at.</p>
+<h3><strong>RxDataSource code:</strong></h3>
+<pre><code>func dataSource()
+        -&gt; RxCollectionViewSectionedAnimatedDataSource&lt;CanvasSectionModel&gt; {
+        RxCollectionViewSectionedAnimatedDataSource&lt;CanvasSectionModel&gt;(
+            animationConfiguration: AnimationConfiguration(
+                insertAnimation: .fade,
+                reloadAnimation: .fade,
+                deleteAnimation: .fade
+            ),
+            configureCell: { [weak self] dataSource, collectionView, indexPath, _ in
+                guard let self = self else { return CanvasItemCollectionViewCell() }
+                
+                switch dataSource[indexPath] {
+                case let .CellModel(model):
+                    let cell = collectionView
+                        .dequeueReusableCell(
+                            for: indexPath,
+                            cellType: CanvasItemCollectionViewCell.self
+                        )
+
+                    cell.model = model
+
+                    cell.onDeleteHandler = { _ in
+                        self.presentDeleteConfirmation { deleteConfirmed in
+                            guard deleteConfirmed else { return }
+                            self.viewModel.inputs.deletePage(withProofID: model.id)
+                        }
+                    }
+
+                    return cell
+                }
+            }
+</code></pre>
+<h3><strong>Crash</strong>:</h3>
+<p><a href=""https://i.stack.imgur.com/bkD02.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/bkD02.png"" alt=""enter image description here"" /></a></p>
+","13724086","","13724086","","2021-06-10 18:54:07","2021-06-10 18:58:56","How do I properly return a CollectionViewCell with reuseIdentifier if weak self is nil in RxDataSource function?","<ios><uicollectionview><uicollectionviewcell><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 4.0"

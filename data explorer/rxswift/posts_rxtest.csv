@@ -1,0 +1,1308 @@
+Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCount,Body,OwnerUserId,OwnerDisplayName,LastEditorUserId,LastEditorDisplayName,LastEditDate,LastActivityDate,Title,Tags,AnswerCount,CommentCount,FavoriteCount,ClosedDate,CommunityOwnedDate,ContentLicense
+"50465639","1","50465640","","2018-05-22 10:39:24","","4","1857","<p>I am trying to run the following test from <strong>Chapter 16: Testing with RxTest</strong> of <strong><a href=""https://store.raywenderlich.com/products/rxswift"" rel=""nofollow noreferrer"">Raywenderlich RxSwift</a></strong> book:</p>
+
+<pre><code>import XCTest
+import RxSwift
+import RxTest
+@testable import Testing
+
+class TestingViewModel : XCTestCase {
+
+var viewModel: ViewModel!
+var scheduler: ConcurrentDispatchQueueScheduler!
+
+override func setUp() {
+super.setUp()
+
+viewModel = ViewModel()
+scheduler = ConcurrentDispatchQueueScheduler(qos: .default)
+}
+
+func testColorNameIsRayWenderlichGreenWhenHexStringIs006636() {
+
+// 1
+let colorNameObservable = viewModel.colorName.asObservable().subscribeOn(scheduler)
+
+// 2
+viewModel.hexString.value = ""#006636""
+
+// 3
+XCTAssertEqual(""rayWenderlichGreen"", try! colorNameObservable.toBlocking().first()!)
+ }
+}
+</code></pre>
+
+<p>But I get this error on the simulator:</p>
+
+<blockquote>
+  <p>Undefined symbols for architecture x86_64:
+    ""type metadata for RxCocoa.DriverSharingStrategy"", referenced from:
+        TestingTests.TestingViewModel.testColorNameIsRayWenderlichGreenWhenHexStringIs006636() -> () in TestingViewModel.o
+    ""protocol witness table for RxCocoa.DriverSharingStrategy : RxCocoa.SharingStrategyProtocol in RxCocoa"", referenced from:
+        TestingTests.TestingViewModel.testColorNameIsRayWenderlichGreenWhenHexStringIs006636() -> () in TestingViewModel.o
+    ""RxCocoa.SharedSequence.asObservable() -> RxSwift.Observable"", referenced from:
+        TestingTests.TestingViewModel.testColorNameIsRayWenderlichGreenWhenHexStringIs006636() -> () in TestingViewModel.o
+  ld: symbol(s) not found for architecture x86_64
+  clang: error: linker command failed with exit code 1 (use -v to see invocation)</p>
+</blockquote>
+
+<p>And This one on iPhone 6s:</p>
+
+<blockquote>
+  <p>Undefined symbols for architecture arm64:
+    ""type metadata for RxCocoa.DriverSharingStrategy"", referenced from:
+        TestingTests.TestingViewModel.testColorNameIsRayWenderlichGreenWhenHexStringIs006636() -> () in TestingViewModel.o
+    ""protocol witness table for RxCocoa.DriverSharingStrategy : RxCocoa.SharingStrategyProtocol in RxCocoa"", referenced from:
+        TestingTests.TestingViewModel.testColorNameIsRayWenderlichGreenWhenHexStringIs006636() -> () in TestingViewModel.o
+    ""RxCocoa.SharedSequence.asObservable() -> RxSwift.Observable"", referenced from:
+        TestingTests.TestingViewModel.testColorNameIsRayWenderlichGreenWhenHexStringIs006636() -> () in TestingViewModel.o
+  ld: symbol(s) not found for architecture arm64
+  clang: error: linker command failed with exit code 1 (use -v to see invocation)</p>
+</blockquote>
+
+<p><a href=""https://forums.raywenderlich.com/t/chapter-16-testing-with-rxtest/34926"" rel=""nofollow noreferrer"">Unfortunately, there is no support for this issue in Raywenderlich's forums.</a></p>
+","3409515","","1000551","","2018-05-23 19:13:50","2018-05-23 19:13:50","RxTest: Undefined symbols for architecture x86_64 and arm64","<ios><swift><rx-swift><rx-cocoa><rxtest>","1","0","","","","CC BY-SA 4.0"
+"52128465","1","","","2018-09-01 13:15:36","","1","1230","<p>I'm trying to understand how to correctly use <code>TestScheduler</code> from <code>RxTest 4.2</code> for <code>RxSwift 4.2</code>.</p>
+
+<p><strong>How do I correctly create TestScheduler and pass it events which would terminate the scheduler after all events are executed?</strong></p>
+
+<p>The code below goes into infinite loop upon starting the test scheduler. Because it keeps looping synchronously, I have no opportunity to stop the scheduler from the test</p>
+
+<pre><code>    var testScheduler: TestScheduler = TestScheduler(initialClock: 0)
+
+    let stateObserver = testScheduler.createObserver(Bool.self)
+    subject.outputRelay.bind(to: stateObserver).disposed(by: bag)
+
+    let events = [next(1,true), next(10,false)]
+    let hotObservable = testScheduler.createHotObservable(events)
+
+    //direct events to the given relay
+    hotObservable.bind(to: subject.inputRelay).disposed(by: bag)
+
+    testScheduler.start() //infinite loop
+
+//do not get called
+    XCTAssertEqual(stateObserver.events, [next(0, InterfaceState.started)])
+    testScheduler.stop()
+</code></pre>
+
+<p>I've narrowed the issued down to this method call within <code>TestScheduler</code>. It seems there's something wrong with the subscription disposal</p>
+
+<pre><code> func findNext() -&gt; VirtualSchedulerItem&lt;VirtualTime&gt;? {
+        while let front = _schedulerQueue.peek() {
+            if front.isDisposed {
+                //this never gets called
+                _schedulerQueue.remove(front)
+                continue
+            }
+
+            return front
+        }
+
+        return nil
+    }
+</code></pre>
+","967484","","","","","2018-09-03 09:40:31","iOS RxSwift - testing with RxTest and TestScheduler does not end / terminate test case","<swift><unit-testing><rx-swift><swift4.2><rxtest>","1","1","","","","CC BY-SA 4.0"
+"53468918","1","53470402","","2018-11-25 15:18:44","","3","1148","<p>I have mock interactor and router for unit tests on presenter
+presenter method: </p>
+
+<p><i> </p>
+
+<pre><code>private func presenterMethod(_ isOn: Bool) -&gt; Driver&lt;Bool&gt; {
+    return interactor.interactorMethod(isOn)
+        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+        .observeOn(MainScheduler.instance)
+        .do(onError: { [weak self] error in
+            self?.view.showError(error)
+        })
+        .asDriver(onErrorJustReturn: !isOn)
+}
+</code></pre>
+
+<p></i></p>
+
+<p>And test </p>
+
+<p><i></p>
+
+<pre><code>func testPresenterMethod() {
+    let trigger = self.scheduler.createHotObservable([
+        next(100, (false)),
+        next(200, (true)),
+        next(300, (false))
+        ]).asDriverOnErrorJustComplete()
+
+    let observer = scheduler.createObserver(Bool.self)
+    let input = createInput(presenterTrigger: trigger)
+    let output = presenter.transform(input)
+
+    scheduler.scheduleAt(0, action: {
+        output.presenterMethodOutput.asObservable()
+            .subscribe(observer)
+            .disposed(by: self.disposeBag)
+    })
+
+    scheduler.start()
+
+    let results = observer.events.map {
+        $0.value.element
+    }
+
+    XCTAssertEqual(results, [false, true, false])
+}
+</code></pre>
+
+<p></i></p>
+
+<p>And results are empty,</p>
+
+<p>This test work correctly only when I remove these lines from presenterMethod</p>
+
+<p><i></p>
+
+<pre><code>    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .background))
+    .observeOn(MainScheduler.instance)
+</code></pre>
+
+<p></i></p>
+
+<p>I tried with XCTestExpectation and fulfill in do(onNext:{}) block and get the same results, work only without subscribeOn background.
+Method work correct on device and simulator, presenterMethod is treggered on switch and emit correct events. How this test should be written to work with SubscribeOn background?  </p>
+","7339866","","","","","2018-11-25 20:02:07","RxSwift TestScheduler don't work if subscribeOn background","<ios><swift><rx-swift><reactivex><rxtest>","1","0","1","","","CC BY-SA 4.0"
+"54037818","1","","","2019-01-04 11:09:32","","0","743","<p>I'm having trouble testing a BehaviorRelay. The following minimal code binds an observable to a BehaviorRelay, but when testing, the tests won't end and are hung - the observable keeps emitting events, because it starts with <code>Observable.timer</code>. When getting rid of the <code>bindRx</code> method and testing the observable only, it works without a problem. But I'd like to test the class properly - does that make sense?</p>
+
+<p>How do I go about making this work?</p>
+
+<pre><code>import XCTest
+import RxSwift
+import RxCocoa
+
+struct TestObject: Codable {
+    var a: Int?
+    var b: Int?
+
+    private enum CodingKeys: String, CodingKey {
+        case a = ""test""
+        case b
+    }
+}
+
+extension TestObject: Equatable {
+    static func == (lhs: TestObject, rhs: TestObject) -&gt; Bool {
+        return lhs.a == rhs.a &amp;&amp; lhs.b == rhs.b
+    }
+}
+
+class TestObjectFetcher {
+    private let scheduler: SchedulerType
+    private let disposeBag = DisposeBag()
+    let testObject = BehaviorRelay&lt;TestObject?&gt;(value: nil)
+    var syncInterval = 30.0
+
+    init(scheduler: SchedulerType) {
+        self.scheduler = scheduler
+        self.bindRx()
+    }
+
+    var fetchTestObjectObservable: Observable&lt;TestObject?&gt; {
+        return Observable&lt;Int&gt;.timer(0, period: self.syncInterval, scheduler: self.scheduler)
+            .map { _ -&gt; TestObject? in
+                TestObject(a: 1, b: 2)
+            }
+    }
+
+    private func bindRx() {
+        self.fetchTestObjectObservable
+            .bind(to: self.testObject)
+            .disposed(by: self.disposeBag)
+    }
+}
+
+class TestObjectFetcherTests: XCTestCase {
+    let testScheduler = TestScheduler(initialClock: 0)
+    func testTestObjectFetcher() {
+
+        let testObjectFetcher = TestObjectFetcher(scheduler: testScheduler)
+
+        let events: [Recorded&lt;Event&lt;TestObject?&gt;&gt;] = [
+            Recorded.next(1, TestObject(a: 1, b: 2)),
+            Recorded.next(31, TestObject(a: 1, b: 2)),
+            Recorded.next(61, TestObject(a: 1, b: 2))
+        ]
+
+        let res = testScheduler.start(created: 0, subscribed: 0, disposed: 90) { () -&gt; Observable&lt;TestObject?&gt; in
+            return testObjectFetcher.testObject.asObservable()
+        }
+
+        XCTAssertEqual(res.events, events)
+    }
+}
+</code></pre>
+","414365","","","","","2019-01-05 22:56:42","Testing BehaviorSubject/Relay in RxSwift","<ios><swift><rx-swift><rxtest>","1","2","","","","CC BY-SA 4.0"
+"56425073","1","56506817","","2019-06-03 10:04:41","","1","397","<p>I'm trying to test the main functionality of my ViewModel. The important step is to test te loaded state completed. But for sure, for a better test it could be interesting to test al states.</p>
+
+<p>I was reading a lot of post and information about RxTest and RxBlocking but I'm not able to test this module. If someone can help me, it would be great!</p>
+
+<pre><code>struct Product: Equatable { }
+struct Promotion { }
+
+protocol ProductsRepository {
+    func fetchProducts() -&gt; Observable&lt;Products&gt;
+    func fetchPromotions()  -&gt; Observable&lt;[Promotion]&gt;
+}
+
+struct ProductCellViewModel: Equatable {
+    let product: Product
+}
+
+struct Products {
+    let products: [Product]
+}
+
+enum ProductsViewState: Equatable {
+    case loading
+    case empty
+    case error
+    case loaded ([ProductCellViewModel])
+}
+
+class ProductsViewModel {
+
+    var repository: ProductsRepository
+
+    let disposeBag = DisposeBag()
+    private var productCellViewModel: [ProductCellViewModel]
+    private var promotions: [Promotion]
+
+    // MARK: Input
+
+    init(repository: ProductsRepository) {
+        self.repository = repository
+        productCellViewModel = [ProductCellViewModel]()
+        promotions = [Promotion]()
+    }
+
+    func requestData(scheduler: SchedulerType) {
+        state.onNext(.loading)
+        resetCalculate()
+        repository.fetchProducts()
+            .observeOn(scheduler)
+            .flatMap({ (products) -&gt; Observable&lt;[ProductCellViewModel]&gt; in
+                return self.buildCellViewModels(data: products)
+            }).subscribe(onNext: { (cellViewModels) in
+                self.productCellViewModel = cellViewModels
+            }, onError: { (error) in
+                self.state.onNext(.error)
+            }, onCompleted: {
+                self.repository.fetchPromotions()
+                    .flatMap({ (promotions) -&gt; Observable&lt;[Promotion]&gt; in
+                        self.promotions = promotions
+                        return Observable.just(promotions)
+                    }).subscribe(onNext: { (_) in
+                        self.state.onNext(.loaded(self.productCellViewModel))
+                    }, onError: { (error) in
+                        self.state.onNext(.error)
+                    }).disposed(by: self.disposeBag)
+            }).disposed(by: disposeBag)
+    }
+
+    // MARK: Output
+
+    var state = PublishSubject&lt;ProductsViewState&gt;()
+
+    // MARK: ViewModel Map Methods
+
+    private func buildCellViewModels(data: Products) -&gt; Observable &lt;[ProductCellViewModel]&gt; {
+        var viewModels = [ProductCellViewModel]()
+        for product in data.products {
+            viewModels.append(ProductCellViewModel.init(product: product))
+        }
+        return Observable.just(viewModels)
+    }
+
+    func resetCalculate() {
+        productCellViewModel = [ProductCellViewModel]()
+    }
+}
+</code></pre>
+
+<p>The goal is to be able to test all of ProductsViewState after viewmodel.requestData() is being called</p>
+","2468765","","506441","","2019-06-08 13:33:56","2019-06-08 13:33:56","Test PublishSubject for ViewState","<mvvm><rx-swift><rxtest><rx-blocking>","1","11","","","","CC BY-SA 4.0"
+"56541855","1","56543768","","2019-06-11 10:38:21","","2","441","<p>I would like to perform a test in one of my ViewModels that contains a BehaviorRelay object called ""nearByCity"" that it is bind to BehaviorRelay called ""isNearBy"". That's how my view model looks like.</p>
+
+<pre><code>class SearchViewViewModel: NSObject {
+
+    //MARK:- Properties
+    //MARK: Constants
+    let disposeBag = DisposeBag()
+
+
+    //MARK: Vars
+    var nearByCity:BehaviorRelay&lt;String?&gt; = BehaviorRelay(value: nil)
+    var isNearBy = BehaviorRelay(value: true)        
+
+    //MARK:- Constructor
+    init() {
+
+        super.init()
+        setupBinders()
+
+    }
+
+}
+
+
+//MARK:- Private methods
+private extension SearchViewViewModel{
+
+    func setupBinders(){
+
+        nearByCity
+            .asObservable()
+            .distinctUntilChanged()
+            .map({$0 ?? """"})
+            .map({$0 == """"})
+            .bind(to: isNearBy)
+            .disposed(by: disposeBag)
+
+    }
+
+}
+</code></pre>
+
+<p>The test that i want to perform is to actually verify that when the string is accepted, the bool value also changes according to the function setupBinders().</p>
+
+<p>Any Idea?</p>
+
+<p>Thank you</p>
+","1824565","","1824565","","2019-06-12 07:03:54","2019-06-12 07:03:54","Testing ViewModel in RxSwift","<unit-testing><rx-swift><rxtest>","1","1","","","","CC BY-SA 4.0"
+"56747818","1","56757988","","2019-06-25 06:11:11","","1","927","<p>It's my first time using <strong>RxTest</strong> and I am struggling how to do the following approach:</p>
+
+<pre class=""lang-swift prettyprint-override""><code>protocol ViewModelType {
+    func transform(input: ViewModel.Input) -&gt; ViewModel.Output
+}
+
+struct ViewModel: ViewModelType {
+    private let isLoading = PublishSubject&lt;Bool&gt;()
+
+    struct Input {
+        let trigger: PublishSubject&lt;Void&gt;
+    }
+
+    struct Output {
+        let someAction: Observable&lt;Void&gt;
+        let isLoading: Observable&lt;Bool&gt;
+    }
+
+    func transform(input: Input) -&gt; Output {
+        let someAction = input
+            .trigger
+            .do(onNext: { _ in
+                self.isLoading.onNext(true)
+                //do some async task
+                self.isLoading.onNext(false)
+            })
+        return Output(someAction: someAction, isLoading: isLoading)
+    }
+}
+</code></pre>
+
+<p>I have created a Publish Subject inside the viewModel to notify the view when it should show the loader or not.</p>
+
+<p>Everything works fine, excepts I don't know how to test it with the RxTest framework.</p>
+
+<p>I was trying to use the scheduler and cold observables but couldn't manage to make it work.</p>
+
+<p>What I would like to have:</p>
+
+<ol>
+<li>With the scheduler send the .next(10, ()) to the trigger. </li>
+<li>Somehow record the events of the isLoading and assert equal that goes first true and then false. Like that: [.next(10, true), .next(20, false)].</li>
+</ol>
+
+<p>Maybe, the isLoading the way I did it, it's not testable. But seems it's going out through the Output I think maybe there is some way.</p>
+
+<p>Thank you so much, if something is unclear, please feel free to edit or guide me to a better question. Much appreciated.</p>
+","5288983","","5288983","","2019-06-25 15:34:28","2019-06-25 15:59:49","Trigger an event and wait for multiple events RxTest","<swift><rx-swift><rxtest>","1","0","1","","","CC BY-SA 4.0"
+"57370348","1","57429193","","2019-08-06 06:46:10","","1","78","<p>I have a property on my view model:</p>
+
+<pre class=""lang-swift prettyprint-override""><code>    let isValid: Driver&lt;Bool&gt;
+    let credentials: Driver&lt;(String, String)&gt;
+......
+        credentials = .combineLatest(bindings.username, bindings.password, resultSelector: { (username, password) -&gt; (String, String) in (username, password) })
+
+        isValid = credentials.map { username, password in username.count &gt; 0 &amp;&amp; password.count &gt; 7 }
+</code></pre>
+
+<p>I'd like to assert that the correct state is set on <code>isValid</code> when valid inputs are set.</p>
+
+<p>My test is passing below, however this doesn't feel like the correct way to test this scenario. </p>
+
+<p>Ideally I'd like to start with my strings as <code>""""</code> and then pass in values as if they had been typed so I can assert the default state is set and then changes.</p>
+
+<p>I also find these lines:</p>
+
+<pre><code>   .do(onNext: { state in
+            if state {
+                exp.fulfill()
+            }
+        })
+</code></pre>
+
+<p>a little ""hacky"".</p>
+
+<pre class=""lang-swift prettyprint-override""><code>   func test_is_valid_state_changes_when_inputs_correct_length() {
+
+        let username: Driver&lt;String&gt; = .of(""some_user_name"")
+        let password: Driver&lt;String&gt; = .of(""some_user_password"")
+
+        let bindings = LoginViewModel.Bindings(username: username, password: password, loginTap: .empty(), doneTap: .empty())
+        let sut = LoginViewModel(dependency: """", bindings: bindings)
+
+        let scheduler = TestScheduler(initialClock: 0)
+        let observer = scheduler.createObserver(Bool.self)
+
+        let exp = expectation(description: ""isValid Event"")
+
+        sut.isValid
+            .asObservable()
+            .do(onNext: { state in
+                if state {
+                    exp.fulfill()
+                }
+            })
+            .subscribe(observer)
+            .disposed(by: disposeBag)
+
+        scheduler.start()
+
+        waitForExpectations(timeout: 0.5) { error in
+            XCTAssertNil(error)
+            XCTAssertEqual(observer.events.count, 1)
+            XCTAssertTrue(observer.events[0].value.element!) // swiftlint:disable:this force_unwrapping
+        }
+    }
+</code></pre>
+","11709138","","","","","2019-08-09 11:33:40","How can I assert the output of an observable that uses latest from text inputs","<swift><reactive-programming><xctest><rx-swift><rxtest>","1","3","","","","CC BY-SA 4.0"
+"57776236","1","","","2019-09-03 17:22:22","","0","300","<p>I am trying to write test cases and trying to access a method which returns Single object. For this I want to use toBlocking but I am not able to access it and getting following error:    </p>
+
+<blockquote>
+  <p>Value of type 'Single&lt;[Property]>' (aka
+  'PrimitiveSequence>') has no member
+  'toBlocking'</p>
+</blockquote>
+
+<p>Following is my code</p>
+
+<pre><code> do {
+        let property = try viewModel.getPropertyList(city: ""1530"")
+            .toBlocking()
+            .single()
+        XCTAssertNotNil(property)
+    } catch {
+        XCTFail(""Get user settings failed"")
+    }
+</code></pre>
+
+<p>Already imported following frameworks:    </p>
+
+<pre><code>import RxCocoa   
+import RxSwift  
+import XCTest
+</code></pre>
+","9692737","","9692737","","2019-09-03 17:36:48","2019-09-05 09:14:34","Unable to access toBlocking() in xctest","<swift><rx-swift><rxtest>","1","0","","","","CC BY-SA 4.0"
+"59325425","1","63844842","","2019-12-13 15:23:53","","1","267","<p>Something consider me a long time. Lets say that we have written test class: </p>
+
+<pre><code>final class BearerTokenManagerTests: XCTestCase {
+
+    private var bearerTokenManager: BearerTokenManager!
+
+    private var bearerTokenProvider: BearerTokenProvider!
+    private var stubKeyValueStore: KeyValueStoreDummyStub!
+
+    private var scheduler: TestScheduler!
+    private var disposeBag: DisposeBag!
+
+    override func setUp() {
+        super.setUp()
+
+        stubKeyValueStore = KeyValueStoreDummyStub()
+        bearerTokenProvider = BearerTokenProvider(keyValueStore: stubKeyValueStore)
+
+        bearerTokenManager = BearerTokenManager(bearerTokenProvider: bearerTokenProvider)
+
+        scheduler = TestScheduler(initialClock: 0)
+        disposeBag = DisposeBag()
+    }
+
+    override func tearDown() {
+        stubKeyValueStore = nil
+        bearerTokenProvider = nil
+        bearerTokenManager = nil
+
+        scheduler = nil
+        disposeBag = nil
+
+        super.tearDown()
+    }
+
+    func test_bearerToken_observeChanges() {
+        let bearerToken = scheduler.createObserver(BearerTokenManagerType.BearerToken.self)
+
+        bearerTokenManager.bearerToken
+            .bind(to: bearerToken)
+            .disposed(by: disposeBag)
+
+        scheduler.start()
+
+        // every update should be saved in key value store
+
+        bearerTokenManager.update(bearerToken: ""123"")
+        XCTAssertEqual(stubKeyValueStore.string(forKey: ""BearerToken""), ""123"")
+
+        bearerTokenManager.update(bearerToken: ""456"")
+        XCTAssertEqual(stubKeyValueStore.string(forKey: ""BearerToken""), ""456"")
+
+        bearerTokenManager.update(bearerToken: ""789"")
+         XCTAssertEqual(stubKeyValueStore.string(forKey: ""BearerToken""), ""789"")
+
+        // every udpate should be emited
+
+        XCTAssertEqual(bearerToken.events, [
+            .next(0, nil), // by default (on start) token equal to nil
+
+            .next(0, ""123""),
+            .next(0, ""456""),
+            .next(0, ""789""),
+        ])
+    }
+}
+</code></pre>
+
+<p>Is <code>tearDown</code> calling for cleaning purposes necessary? </p>
+
+<p><strong>Why I thinking it could be not necessary:</strong></p>
+
+<ul>
+<li>Before every next test case <code>setUp</code> resets everything.</li>
+<li>When tests in <code>BearerTokenManagerTests</code> ends then everything should deallocates</li>
+</ul>
+
+<p><strong>Why I not sure</strong></p>
+
+<ul>
+<li>Assuming that „When tests in <code>BearerTokenManagerTests</code> ends then everything should deallocates” could be wrong</li>
+<li>I worried about <code>RxScheduler</code> side effects</li>
+<li>Something I don't know yet</li>
+</ul>
+
+<p>Could someone share their experience? Do you clean up stuff in <code>tearDown</code>? Is reseting properties in <code>setUp</code> enough? </p>
+","4219574","","4219574","","2019-12-13 15:46:10","2020-09-13 13:05:40","Is `tearDown` calling necessary?","<swift><xcode><xctestcase><rxtest>","1","1","1","","","CC BY-SA 4.0"
+"59467791","1","59468477","","2019-12-24 11:01:00","","0","651","<p>A ViewModel has an input (an observer) which is bound to <code>tap</code> event of <code>UIButton</code> in <code>UIViewController</code>. This observer is of type <code>AnyObserver&lt;Void&gt;</code>.</p>
+
+<p>In my unit test, this is what I'm expecting:</p>
+
+<pre><code>let correctValues: [Recorded&lt;Event&lt;Void&gt;&gt;] = Recorded.events(
+       .next(0, ()),
+       .completed(0)
+   )
+</code></pre>
+
+<p>My test observer definition is:</p>
+
+<pre><code>private var voidEventsObserver: TestableObserver&lt;Void&gt;!
+
+let scheduler = TestScheduler(initialClock: 0)
+voidEventsObserver = scheduler.createObserver(Void.self)
+</code></pre>
+
+<p>Assert statement:</p>
+
+<pre><code>XCTAssertEqual(voidEventsObserver.events, correctValues)
+</code></pre>
+
+<p>I'm getting following error:</p>
+
+<blockquote>
+  <p>Expression type '()' is ambiguous without more context</p>
+</blockquote>
+
+<p>In Rx, <code>Void</code> events are normal and to properly test ViewModel, one needs to compare them. e.g. <code>.next(0, ())</code>, <code>.completed(0)</code> etc. <code>Void</code> is not <code>Equatable</code> and it doesn't make sense to make it <code>Equatable</code>. However, I need to assert if the event is <code>.next</code> or <code>.error</code> or <code>.completed</code>. How do I assert that part?</p>
+","10384998","","","","","2019-12-24 11:56:05","RxTest - How to compare Event<Void> as Void is not Equatable","<swift><rx-swift><rxtest>","1","0","","","","CC BY-SA 4.0"
+"59813484","1","59816678","","2020-01-19 19:12:06","","1","980","<p>I have just started learning RxSwift and trying to build a sample application to practice these concepts. </p>
+
+<p>I have written a QuestionViewModel that loads list of questions from QuestionOps class. QuestionOps has a function getQuestions that returns Single&lt;[Question]>.</p>
+
+<p>Problem that I am facing is, how to mock the behavior of QuestionOps class while testing QuestionViewModel.</p>
+
+<pre><code>public class QuestionsListViewModel {
+
+    public var questionOps: QuestionOps!
+
+    private let disposeBag = DisposeBag()
+    private let items = BehaviorRelay&lt;[QuestionItemViewModel]&gt;(value: [])
+    public let loadNextPage = PublishSubject&lt;Void&gt;()
+    public var listItems: Driver&lt;[QuestionItemViewModel]&gt;
+    public init() {
+        listItems = items.asDriver(onErrorJustReturn: [])
+
+        loadNextPage
+            .flatMapFirst { self.questionOps.getQuestions() }
+            .map { $0.map { QuestionItemViewModel($0) } }
+            .bind(to: items)
+            .disposed(by: disposeBag)
+    }
+}
+</code></pre>
+
+<pre><code>public class QuestionOps {
+
+    public func getQuestions() -&gt; Single&lt;[Question]&gt; {
+
+        return Single.create { event -&gt; Disposable in
+
+            event(.success([]))
+            return Disposables.create()
+        }
+    }
+}
+</code></pre>
+
+<p>I have created this MockQuestionOps for test purpose:</p>
+
+<pre><code>public class MockQuestionOps : QuestionOps {
+
+    //MARK: -
+    //MARK: Responses
+    public var getQuestionsResponse: Single&lt;[Question]&gt;?
+
+    public func getQuestions() -&gt; Single&lt;[Question]&gt; {
+        self.getQuestionsResponse = Single.create { event -&gt; Disposable in
+
+            return Disposables.create()
+        }
+        return self.getQuestionsResponse!
+    }
+}
+</code></pre>
+
+<p>In my test case I am doing the following:</p>
+
+<pre><code>/// My idea here is to test in following maner:
+/// - at some point user initates loading
+/// - after some time got network response with status true
+func testLoadedDataIsDisplayedCorrectly() {
+
+    scheduler = TestScheduler(initialClock: 0)
+    let questionsLoadedObserver = scheduler.createObserver([QuestionItemViewModel].self)
+
+    let qOps = MockQuestionOps()
+    vm = QuestionsListViewModel()
+    vm.questionOps = qOps
+    vm.listItems
+        .drive(questionsLoadedObserver)
+        .disposed(by: disposebag)
+
+    // User initiates load questions
+    scheduler.createColdObservable([.next(2, ())])
+        .bind(to: vm.loadNextPage)
+        .disposed(by: disposebag)
+
+    // Simulating question ops behaviour of responding
+    // to get question request
+
+    /// HERE: -----------    
+    /// This is where I am stuck
+    /// How should I tell qOps to send particular response with delay
+
+    scheduler.start()
+
+    /// HERE: -----------
+    /// How can I test list is initialy empty
+    /// and after loading, data is correctly loaded
+}
+</code></pre>
+","4160530","","","","","2020-01-20 03:32:20","Mocking and Validating Results in RxSwift Unit Testing","<ios><rx-swift><rxtest>","1","0","1","","","CC BY-SA 4.0"
+"61178081","1","","","2020-04-12 20:58:06","","0","97","<pre><code>observable.subscribe(onNext: { _ in
+    somePrivateFunction()
+})
+</code></pre>
+
+<p>What is the RxSwift way to test that when <code>observable</code> receives an event the <code>somePrivateFunction</code> actually gets called or not? Since the subscription and the function are in the same class I can't mock it.</p>
+","3490203","","","","","2020-04-13 09:10:50","How to test a private function inside an RxSwift observer?","<ios><swift><rx-swift><quick-nimble><rxtest>","1","1","","","","CC BY-SA 4.0"
+"62016565","1","","","2020-05-26 07:16:08","","0","49","<p>I would like to emit two different signals for two different sources, but I get crash 
+<code>Thread 1: EXC_BAD_ACCESS (code=1, address=0x0)</code> in <code>RxSwift/Event.swift</code> in line 29: <code>return ""next(\(value))""</code> </p>
+
+<p>this is my simplified code:</p>
+
+<pre><code>        let scheduler = TestScheduler(initialClock: 0)
+
+        locationsFactory = TestableLocationsFactory()
+        locationsFactory.didReceiveRegion = scheduler.createColdObservable([
+        .next(100, regionEvents[0]),
+        .next(200, regionEvents[1])
+        ]).asObservable()
+
+        locationsFactory.location = scheduler.createColdObservable([
+        .next(120, locations[0]),
+        .next(220, locations[1])
+        ]).asObservable()
+
+        let result = scheduler.createObserver(LocationChange.self)
+        let dispatcher = BestAccuracyLocationsDispatcher(persistenceService: persistenceService, apiClient: api, locationManager: locationsFactory)
+
+        subscription = dispatcher.dispatcher.subscribe(result)
+        scheduler.start()
+
+        let events = result.events
+
+        XCTAssertEqual(events, [
+            .next(120, LocationChange(location: locations[0], trigger: .updateLocations)),
+            .next(220, LocationChange(location: locations[1], trigger: .updateLocations)),
+        ])
+</code></pre>
+
+<p>When I remove <code>locationsFactory.didReceiveRegion</code> or <code>locationsFactory.location</code> it works.</p>
+
+<p>Can I create two different scheduler's observables?</p>
+","2493555","","","","","2020-05-26 10:55:39","RxSwift TestScheduler for two sources","<swift><rx-swift><rxtest>","1","0","","","","CC BY-SA 4.0"
+"63016739","1","","","2020-07-21 14:26:10","","-1","77","<p>I'm trying to write some tests for my application, that uses rxSwift. In particular, I'd like to test, writing unit tests, a webview. I'm using RxWebKit to get observables over some properties like navigationCompleted or NavigationFailed and so on.
+For example: <code>webView.rx.didFailNavigation.asDriver()</code>. These observables are given as input to my viewModel.
+But i'm not sure how to write these tests to simulate, for example, a failed navigation and so an emission of this kind of observable.
+In the specific case, i want to simulate a <code>Driver&lt;(webView: WKWebView, navigation: WKNavigation, error: Error)&gt;</code> (that is the same type of the one associated to <code>webView.rx.didFailNavigation.asDriver()</code>).
+I understood that to simulate the emission i need to create a scheduler and call the <code>createHotObservable</code> method, but what have I to pass to <code>Recorderd.next(150, element)</code> as element in the specific case to simulate the fail of the webview?
+can someone give me a simple example?</p>
+","7089089","","7089089","","2020-07-21 15:48:59","2020-07-21 15:48:59","How to test a WKWebView using RxWebKit?","<ios><swift><rx-swift><rxtest>","1","0","","","","CC BY-SA 4.0"
+"63523616","1","63542696","","2020-08-21 13:14:39","","3","342","<p>I'm facing an issue of &quot;<code>Disallowed framework</code>&quot; when submitting to App Store. The issue is as follows</p>
+<p>&quot;<code>ITMS-90726: Disallowed frameworks - Your app submission contains usages of the restricted framework libswiftXCTest.dylib. Remove these, rebuild and resubmit.</code>&quot;</p>
+<p>Upon my research, I found that RxTest framework is still using restricted framework <code>libswiftXCTest.dylib</code></p>
+<p><strong>Xcode Version</strong> : 11.6</p>
+<p><strong>RxSwift Version</strong> : 5.1.1</p>
+<ol>
+<li>How do I solve this issue ?</li>
+<li>Has RxTest resolved this issue ?</li>
+</ol>
+","1927625","","12336305","","2020-08-22 08:41:57","2020-08-27 15:39:09","RxTest is still using libswiftXCTest.dylib","<ios><rx-swift><rxtest>","2","0","","","","CC BY-SA 4.0"
+"64088444","1","64088524","","2020-09-27 12:25:31","","0","118","<p>I have a strange issue in my testing code. I want to test a <code>BehaviourRelay</code> in my view model changes from status <code>.fetching</code> to <code>.saving</code>. I have the following test code:</p>
+<pre><code>class BankViewModelTests: XCTestCase {
+    
+    private var scheduler: TestScheduler!
+    private var bag: DisposeBag!
+    private var user: UserModel!
+    
+
+    override func setUpWithError() throws {
+        try! super.setUpWithError()
+        
+        let url = Bundle(for: type(of: self)).url(forResource: &quot;User&quot;, withExtension: &quot;json&quot;)!
+        let jsonData = try! Data(contentsOf: url)
+        let jsonDict = try! JSONSerialization.jsonObject(with: jsonData, options: .allowFragments) as! JSONDictionary
+        user = UserModel(jsonDict)!
+        
+        scheduler = TestScheduler(initialClock: 0)
+        bag = DisposeBag()
+    }
+
+    override func tearDownWithError() throws {
+        user = nil
+        scheduler = nil
+        bag = nil
+        try! super.tearDownWithError()
+    }
+    
+}
+
+extension BankViewModelTests {
+    func testSavingStatus() {
+        // Arrange
+        
+        let sut = BankViewModel(user: user)
+        
+        let status = scheduler.createObserver(BankViewModel.Status.self)
+        sut.status.bind(to: status).disposed(by: bag)
+        
+        // Action
+        
+        scheduler.createColdObservable([.next(10, ())]).bind(to: sut.tappedSubmit).disposed(by: bag)
+        
+        scheduler.start()
+        
+        // Assert
+        
+        XCTAssertEqual(status.events, [
+            .next(0, .fetching),
+            .next(10, .saving)
+        ])
+    }
+    
+}
+</code></pre>
+<p>My <code>Status</code> enum is like so:</p>
+<pre><code>enum Status: Equatable {
+    case fetching, fetchSuccess, saving, saveSuccess, failure(Error)
+
+    public static func == (lhs: Status, rhs: Status) -&gt; Bool {
+        switch (lhs, rhs) {
+        case (.fetching, .fetching),
+             (.fetchSuccess, .fetchSuccess),
+             (.saving, .saveSuccess),
+             (.failure, .failure):
+            return true
+        default: return false
+        }
+    }
+}
+</code></pre>
+<p>When I run the test I get the following message: <code>XCTAssertEqual failed: (&quot;[next(fetching) @ 0, next(saving) @ 10]&quot;) is not equal to (&quot;[next(fetching) @ 0, next(saving) @ 10]&quot;)</code></p>
+<p>Cleary these events are equivalent, so why is it failing?</p>
+","4083744","","4083744","","2020-09-27 12:40:42","2020-09-27 13:02:02","XCTAssertEqual fails when using createColdObservable for RxTest","<swift><rx-swift><xctest><rxtest>","1","0","","","","CC BY-SA 4.0"
+"65117691","1","","","2020-12-02 23:31:29","","0","27","<p>I am a complete beginner in writing unit tests and trying to figure out how to test a ViewModel that makes use of the Giphy API.</p>
+<p>This is my ViewModel:</p>
+<pre><code>
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.ViewModel
+import com.example.android.myproject.api.Gif
+import com.example.android.myproject.api.Result
+import com.example.android.myproject.repository.GifRepository
+import com.giphy.sdk.core.models.Media
+import com.giphy.sdk.core.models.enums.MediaType
+import com.giphy.sdk.ui.pagination.GPHContent
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.schedulers.Schedulers
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import java.util.concurrent.TimeUnit
+
+class GifViewModel @ViewModelInject constructor(
+    private val gifRepository: GifRepository
+) : ViewModel() {
+
+    private val isSearchingBehaviorSubject = BehaviorSubject.createDefault(false)
+    val isSearchingObservable: Observable&lt;Boolean&gt; =
+        isSearchingBehaviorSubject.observeOn(AndroidSchedulers.mainThread())
+
+    private val searchResultsBehaviorSubject = BehaviorSubject.create&lt;GPHContent&gt;()
+    val searchResultsObservable: Observable&lt;GPHContent&gt; =
+        searchResultsBehaviorSubject
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+
+    private lateinit var selectedGif: Media
+
+    val randomGifObservable: Observable&lt;Result&lt;Gif, String&gt;&gt; =
+        Observable.interval(0, 10, TimeUnit.SECONDS, Schedulers.io())
+            .flatMap&lt;Result&lt;Gif, String&gt;&gt; {
+                gifRepository.getRandomGif()
+                    .toObservable()
+                    .map { Result.Success(it) }
+            }
+            .onErrorReturn { Result.Failure(&quot;Error getting a random GIF.&quot;) }
+            .observeOn(AndroidSchedulers.mainThread())
+
+    fun searchStateChanged(isSearching: Boolean) {
+        isSearchingBehaviorSubject.onNext(isSearching)
+
+        // this is needed to &quot;reset&quot; the results from a previous search
+        if (isSearching)
+            searchResultsBehaviorSubject.onNext(GPHContent.trendingGifs)
+    }
+
+    fun gifSearchQueryChanged(searchQuery: String) {
+        val results = if (searchQuery.length &gt;= 2)
+            GPHContent.searchQuery(search = searchQuery, mediaType = MediaType.gif)
+        else
+            GPHContent.trendingGifs
+
+        searchResultsBehaviorSubject.onNext(results)
+    }
+
+    fun gifSelected(media: Media) {
+        selectedGif = media
+    }
+
+    fun selectedGif(): Media {
+        return selectedGif
+    }
+}
+</code></pre>
+<p>This is my Test:</p>
+<pre><code>
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.example.android.myproject.RxImmediateSchedulerRule
+import com.example.android.myproject.repository.GifRepository
+import com.example.android.myproject.ui.main.GifViewModel
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.Mockito.spy
+import org.mockito.MockitoAnnotations
+import org.mockito.junit.MockitoJUnitRunner
+
+@RunWith(MockitoJUnitRunner::class)
+class GifViewModelTest {
+
+    @Rule
+    @JvmField
+    var testSchedulerRule = RxImmediateSchedulerRule()
+
+    @Rule
+    @JvmField
+    val instantTaskExecutorRule = InstantTaskExecutorRule()
+
+    private lateinit var viewModel: GifViewModel
+
+    @Mock
+    private lateinit var gifRepository: GifRepository
+
+    @Before
+    fun setUp() {
+        MockitoAnnotations.initMocks(this)
+
+        viewModel = spy(GifViewModel(gifRepository))
+    }
+
+    @Test
+    fun `initial isSearching value is false`() {
+        val isSearching = viewModel.isSearchingObservable.blockingFirst()
+        assertFalse(isSearching)
+    }
+
+    @Test
+    fun `changing search state to true makes isSearching true`() {
+        viewModel.searchStateChanged(isSearching = true)
+
+        val isSearching = viewModel.isSearchingObservable.blockingSingle()
+
+        assertTrue(isSearching)
+    }
+}
+</code></pre>
+<p>This is RxImmediateSchedulerRule:</p>
+<pre><code>import io.reactivex.rxjava3.android.plugins.RxAndroidPlugins
+import io.reactivex.rxjava3.plugins.RxJavaPlugins
+import io.reactivex.rxjava3.schedulers.Schedulers
+import org.junit.rules.TestRule
+import org.junit.runner.Description
+import org.junit.runners.model.Statement
+
+class RxImmediateSchedulerRule : TestRule {
+    override fun apply(base: Statement, description: Description?): Statement {
+        return object : Statement() {
+            @Throws(Throwable::class)
+            override fun evaluate() {
+                RxJavaPlugins.setIoSchedulerHandler { Schedulers.trampoline() }
+                RxJavaPlugins.setComputationSchedulerHandler { Schedulers.trampoline() }
+                RxJavaPlugins.setNewThreadSchedulerHandler { Schedulers.trampoline() }
+                RxJavaPlugins.setSingleSchedulerHandler { Schedulers.trampoline() }
+                RxAndroidPlugins.setInitMainThreadSchedulerHandler { Schedulers.trampoline() }
+
+                try {
+                    base.evaluate()
+                } finally {
+                    RxJavaPlugins.reset()
+                    RxAndroidPlugins.reset()
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<p>The first test is passing. When I run the second test, I get this:</p>
+<pre><code>java.lang.ExceptionInInitializerError
+    at com.example.android.myproject.ui.main.GifViewModel.searchStateChanged(GifViewModel.kt:44)
+    at com.example.android.myproject.viewmodel.GifViewModelTest.changing search state to true makes isSearching true(GifViewModelTest.kt:49)
+    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+    at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    at java.lang.reflect.Method.invoke(Method.java:498)
+    at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+    at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+    at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+    at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+    at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+    at org.mockito.internal.runners.DefaultInternalRunner$1$1.evaluate(DefaultInternalRunner.java:46)
+    at org.junit.rules.TestWatcher$1.evaluate(TestWatcher.java:61)
+    at com.example.android.myproject.RxImmediateSchedulerRule$apply$1.evaluate(RxImmediateSchedulerRule.kt:22)
+    at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+    at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+    at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+    at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+    at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+    at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+    at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+    at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+    at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+    at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+    at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+    at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+    at org.mockito.internal.runners.DefaultInternalRunner$1.run(DefaultInternalRunner.java:77)
+    at org.mockito.internal.runners.DefaultInternalRunner.run(DefaultInternalRunner.java:83)
+    at org.mockito.internal.runners.StrictRunner.run(StrictRunner.java:39)
+    at org.mockito.junit.MockitoJUnitRunner.run(MockitoJUnitRunner.java:163)
+    at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+    at com.intellij.junit4.JUnit4IdeaTestRunner.startRunnerWithArgs(JUnit4IdeaTestRunner.java:68)
+    at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:33)
+    at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:230)
+    at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:58)
+Caused by: kotlin.UninitializedPropertyAccessException: lateinit property apiClient has not been initialized
+    at com.giphy.sdk.core.a.b()
+    at com.giphy.sdk.ui.pagination.GPHContent.&lt;init&gt;()
+    at com.giphy.sdk.ui.pagination.GPHContent.&lt;clinit&gt;()
+    at com.example.android.myproject.ui.main.GifViewModel.searchStateChanged(GifViewModel.kt:48)
+    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+    at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+    at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+    at java.lang.reflect.Method.invoke(Method.java:498)
+    at org.mockito.internal.creation.bytebuddy.MockMethodAdvice.tryInvoke(MockMethodAdvice.java:213)
+    at org.mockito.internal.creation.bytebuddy.MockMethodAdvice.access$400(MockMethodAdvice.java:35)
+    at org.mockito.internal.creation.bytebuddy.MockMethodAdvice$RealMethodCall.invoke(MockMethodAdvice.java:165)
+    at org.mockito.internal.invocation.InterceptedInvocation.callRealMethod(InterceptedInvocation.java:152)
+    at org.mockito.internal.stubbing.answers.CallsRealMethods.answer(CallsRealMethods.java:44)
+    at org.mockito.Answers.answer(Answers.java:100)
+    at org.mockito.internal.handler.MockHandlerImpl.handle(MockHandlerImpl.java:103)
+    at org.mockito.internal.handler.NullResultGuardian.handle(NullResultGuardian.java:29)
+    at org.mockito.internal.handler.InvocationNotifierHandler.handle(InvocationNotifierHandler.java:35)
+    at org.mockito.internal.creation.bytebuddy.MockMethodInterceptor.doIntercept(MockMethodInterceptor.java:61)
+    at org.mockito.internal.creation.bytebuddy.MockMethodAdvice.handle(MockMethodAdvice.java:106)
+    ... 35 more
+</code></pre>
+<p>apiClient is a property in GPHContent that is apparently uninitialized at the time of running the test, I'm not sure how to solve this. Is it not possible to test my viewmodel the way it currently is? What do I need to change to be able to run tests on it? I would appreciate any guidance or advice.</p>
+","11310485","","","","","2020-12-02 23:31:29","Testing ViewModel with Rx and GIPHY","<android><unit-testing><junit><giphy><rxtest>","0","0","","","","CC BY-SA 4.0"
+"65422344","1","","","2020-12-23 09:59:35","","0","17","<p>I had a demo project to fetch remote photos data and it will record photo on local database when user tapped favorite button.</p>
+<p>And sorry about my poor English...</p>
+<p>The question:
+When I try to use RxTest to expect <strong>ResultViewModel</strong>.<code>sectionOfCells</code>
+And the result sometimes will be 1 or 2 or 3. Like images:
+<a href=""https://i.stack.imgur.com/FYpwq.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/FYpwq.png"" alt=""enter image description here"" /></a><a href=""https://i.stack.imgur.com/imhBa.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/imhBa.png"" alt=""enter image description here"" /></a></p>
+<p>Why result count not be 4, because I gave 4 Recorded events to <code>trigger</code>.</p>
+<p>The project build run well and actions(viewWillAppear trigger to fetch, tapped favorite to save on DB) correctly on ResultViewController.</p>
+<p>The project can be download <a href=""https://github.com/Kinlive/DemoCleanArchitecture/tree/test/ResultViewModel"" rel=""nofollow noreferrer"">here</a>. branch at: <code>test/ResultViewModel</code></p>
+<p>Here is my ResultViewModel <em>transform(input:) -&gt; Output</em>:</p>
+<pre><code>  // at ResultViewModel.swift 
+  func transform(input: ResultInput) -&gt; ResultOutput {
+
+    let onSavedTriggerReload = PublishSubject&lt;Bool&gt;()
+
+    let reloadData: Observable&lt;Bool&gt; = Observable.of(
+        input.triggerFetch.asObservable().map { true },
+        onSavedTriggerReload.debug(&quot;\n\n======= On saved or remove trigger &gt;&gt; \n\n&quot;)
+      )
+      .merge()
+      .share()
+
+    let tappedShare = input.photoSelected.share()
+
+    let favor = reloadData
+      .flatMap { [weak self] _ in self?.fetchFavoriteCase() ?? .just([:]) }
+      .debug(&quot;\n\n======= favorites ====== &gt;&gt;\n\n&quot;)
+
+    let response = reloadData
+      .flatMap { [weak self] _ in self?.searchRemoteCase() ?? .empty() }
+      .debug(&quot;\n\n======= search remote ====== &gt;&gt; \n\n&quot;)
+      
+
+    let sectionOfCells = Observable.zip(response, favor)
+      .flatMapLatest { response, favor -&gt; Observable&lt;[PhotosResultCellViewModel]&gt; in
+        guard let query = self.passValues.resultQuery else { return .just([]) }
+
+        let viewModels = response.photo.map { photo -&gt; PhotosResultCellViewModel in
+          if let saved = favor[query.searchText] { // check had saved favorites photos
+            return PhotosResultCellViewModel(photo: photo, wasFavorite: saved.contains(photo))
+          } else {
+            return PhotosResultCellViewModel(photo: photo, wasFavorite: false)
+          }
+        }
+
+        return Observable.just(viewModels)
+      }
+      .enumerated()
+      .map { (index, cellViewModels) in [ResultCellSection(model: &quot;Section:\(index + 1)&quot;, items: cellViewModels)] }
+      .share()
+      //.debug(&quot;\n\n=======  On section reload &gt;&gt;\n\n &quot;)
+
+    let saved = tappedShare
+      .filter { $0.0 == false }
+      .withLatestFrom(sectionOfCells) { (elements, sections) -&gt; ((Bool, IndexPath), Photo) in
+        let (_, indexPath) = elements
+        let photo = sections[indexPath.section].items[indexPath.row].photo
+        return (elements, photo)
+      } // 數值正確
+      .flatMap { [weak self] (elements, photo) -&gt; Observable&lt;((Bool, IndexPath), Photo)&gt; in
+        let result = self?.saveFavoriteUseCase(of: photo)
+          .catchError({ error -&gt; Observable&lt;Photo&gt; in
+            return .error(error)
+          }) ?? .error(NSError(domain: &quot;Save favorite failed&quot;, code: -991, userInfo: nil))
+        // Notice: 如果是經由 API呼叫或其他task回傳的 Observable，務必直接將其作為回傳目標，後續再轉型。
+        // 若此處直接回傳 (elelments, photo) 則會丟失進行中的元素傳遞。
+        return result.map { photo in (elements, photo) }
+      }
+      .debug(&quot;=======  On saved with photo &gt;&gt;:\n\n&quot;)
+      .map { (elements, photo) in elements.1 }
+      .share()
+
+
+    let removed = tappedShare
+      .filter { $0.0 }
+      .withLatestFrom(sectionOfCells) { (elements, sections) -&gt; ((Bool, IndexPath), Photo) in
+        let (_, indexPath) = elements
+        let photo = sections[indexPath.section].items[indexPath.row].photo
+        return (elements, photo)
+      }
+      .flatMap { [weak self] (elements, photo) in
+        self?.useCase.removeFavoriteUseCase?
+          .rx_remove(favorite: photo)
+          .catchError({ error -&gt; Observable&lt;()&gt; in
+            return .error(error)
+          }) ?? .error(NSError(domain: &quot;Remove favorite failed&quot;, code: -992, userInfo: nil))
+      }
+      .debug(&quot;======= On favorite removed &gt;&gt; \n\n&quot;)
+      .share()
+
+    Observable.of(
+        saved.map { _ in true },
+        removed.map { _ in true }
+      )
+      .merge()
+      .bind(to: onSavedTriggerReload)
+      .disposed(by: bag)
+
+    return ResultOutput(
+      saved: saved,
+      sectionOfCells: sectionOfCells,
+      removed: removed
+    )
+  }
+</code></pre>
+<p>This is my test code:</p>
+<pre><code>   // at ResultViewModelTests.swift
+   func test_triggerToFetch_remotePhotos() throws {
+
+      testScheduler = TestScheduler(initialClock: 0)
+      // Arrange
+      let observer = testScheduler.createObserver([ResultCellSection].self)
+
+      let unuse_buttonTapped = PublishSubject&lt;(Bool, IndexPath)&gt;()
+
+      let trigger = testScheduler.createColdObservable([
+        .next(100, true),
+        .next(200, true),
+        .next(300, true),
+        .next(400, true)
+      ])
+      .asDriver(onErrorJustReturn: false)
+      .map { _ in }
+
+      let input = ResultInput(
+        triggerFetch: trigger,
+        photoSelected: unuse_buttonTapped
+      )
+
+      let output = viewModel.transform(input: input)
+
+      output.sectionOfCells
+        .subscribe(observer)
+        .disposed(by: bag)
+
+      // Actoin
+      testScheduler.start()
+
+      // Assert
+      let result = observer.events
+      XCTAssertEqual(result.count, 1)
+      XCTAssertEqual(result.first?.value.element?.first?.items.count, 5)
+   }
+</code></pre>
+<p>And I tried same thing with other method, it's ok.</p>
+<pre><code>  func test_triggerToFetch_remotePhotos_blocking() throws {
+
+    // Arrange
+
+    let buttonTapped = PublishSubject&lt;(Bool, IndexPath)&gt;()
+    let triggerReload = PublishSubject&lt;Void&gt;()
+
+    let input = ResultInput(
+      triggerFetch: triggerReload.asDriver(onErrorJustReturn: ()),
+      photoSelected: buttonTapped
+    )
+
+    let output = viewModel.transform(input: input)
+    let sectionCells = output.sectionOfCells.subscribeOn(concurrentScheduler)
+
+    // Actoin
+    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+      triggerReload.onNext(())
+    }
+
+      let blocking = try sectionCells.toBlocking().first()
+
+    // Assert
+    XCTAssertEqual(blocking?.count, 1)
+    XCTAssertEqual(blocking?.first?.items.count, 5)
+
+    /* 連續使用兩個 toBlocking() 會導致test 無法跑完，原因未知。
+    XCTAssertEqual(try sectionCells.toBlocking().first()?.count, 1)
+    XCTAssertEqual(try sectionCells.toBlocking().first()?.first?.items.count, 5)
+     */
+  }
+</code></pre>
+<p>Hope someone can help me... thanks !</p>
+","12549520","","","","","2020-12-23 09:59:35","RxTest, why the result not in expect count","<swift><rxtest>","0","0","","","","CC BY-SA 4.0"
+"67876525","1","","","2021-06-07 17:53:39","","1","32","<p>We have three states.How can we test(with unit tests) our class which generates random state every 5 seconds, and which can not generate the same state twice in a row? The code of our random generator class is below
+`
+final class StateRandomGenerator: RandomGeneratorProtocol {
+private var sourceObservable: Disposable?
+private(set) var previousValue: Int?
+var generatedValue: PublishSubject = PublishSubject()</p>
+<pre><code>init(_ interval: RxTimeInterval,_ scheduler: SchedulerType = MainScheduler.instance) {
+    sourceObservable = Observable&lt;Int&gt;
+        .interval(interval, scheduler: scheduler)
+        .flatMap { [unowned self] _ in self.generateRandom()}
+        .compactMap { state in
+            return state?.description
+        }
+        .subscribe(onNext: { [weak self] description in
+            self?.generatedValue.onNext(description)
+        })
+}
+func generateRandom() -&gt; Observable&lt;ConnectionState?&gt; {
+    return Observable.create { [weak self] observer  in
+        var randomNumber = Int.random(in: 0..&lt;ConnectionState.count)
+        guard let previousValue = self?.previousValue else {
+            let value = ConnectionState(rawValue: randomNumber)
+            self?.previousValue = randomNumber
+            observer.onNext(value)
+            return Disposables.create()
+        }
+        while randomNumber == previousValue {
+            randomNumber = Int.random(in: 0..&lt;ConnectionState.count)
+        }
+        self?.previousValue = randomNumber
+        let value = ConnectionState(rawValue: randomNumber)
+        observer.onNext(value)
+        
+        return Disposables.create()
+    }
+}
+enum ConnectionState: Int {
+case error
+case connecting
+case established
+
+var description: String {
+    switch self {
+    case .connecting:
+        return &quot;It is connecting&quot;
+    case .error:
+        return &quot;There is an error&quot;
+    case .established:
+        return &quot;Thе connection is established&quot;
+    }
+}
+</code></pre>
+<p>}
+`</p>
+","11503777","","11503777","","2021-06-07 18:00:54","2021-06-09 00:31:24","How can we test class which generates random states, and which can not generate same states twice?","<ios><unit-testing><rx-swift><xctestcase><rxtest>","1","0","","","","CC BY-SA 4.0"

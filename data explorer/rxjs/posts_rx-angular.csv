@@ -1,0 +1,15 @@
+Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCount,Body,OwnerUserId,OwnerDisplayName,LastEditorUserId,LastEditorDisplayName,LastEditDate,LastActivityDate,Title,Tags,AnswerCount,CommentCount,FavoriteCount,ClosedDate,CommunityOwnedDate,ContentLicense
+"67296273","1","","","2021-04-28 08:09:12","","0","23","<p>I can't seem to find a way to set the nested properties of my state.</p>
+<pre><code>// state
+{
+  name,
+  info: {
+    foo
+    email
+  }
+}
+</code></pre>
+<p>My state has multiple properties, info is an object with properties as well.
+I would like to add or update a property of info. I suppose I could do a <code>get('info')</code> and do <code>{...info ...newProp}</code> before setting info back to the state. But, that would cost a <code>get()</code> call.</p>
+<p>Is there a way to update info properties with a set ? <code>state.set('info.foo', 'bar')</code></p>
+","1021888","","2125010","","2021-04-28 08:31:28","2021-04-28 08:42:41","How to set nested property state with rx-angular","<angular><rxjs><rx-angular>","1","0","","","","CC BY-SA 4.0"

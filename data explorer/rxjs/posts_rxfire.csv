@@ -1,0 +1,615 @@
+Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCount,Body,OwnerUserId,OwnerDisplayName,LastEditorUserId,LastEditorDisplayName,LastEditDate,LastActivityDate,Title,Tags,AnswerCount,CommentCount,FavoriteCount,ClosedDate,CommunityOwnedDate,ContentLicense
+"53329908","1","53497072","","2018-11-16 00:50:06","","4","1760","<p>The goal is simple: to join two firestore queries utilizing <code>rxjs</code>, <code>rxfire</code>, and the <code>rnfirebase</code> react native library.</p>
+
+<p>I've read multiple tutorials <a href=""https://medium.com/google-developer-experts/performing-or-queries-in-firebase-cloud-firestore-for-javascript-with-rxjs-c361671b201e"" rel=""nofollow noreferrer"">1</a>, <a href=""https://angularfirebase.com/lessons/introduction-to-rxfire-rxjs-for-firebase/"" rel=""nofollow noreferrer"">2</a> on joining queries, but they all fail with different errors.</p>
+
+
+
+<pre class=""lang-js prettyprint-override""><code>//Simple test for collectionData
+import { collectionData } from 'rxfire/firestore';
+
+this.myQuery = this.props.docRef.collection(`messages`).where('read', 'array-contains', this.props.me.uid)
+collectionData(this.myQuery, 'id').subscribe(docs =&gt; console.log(docs))
+//Fails with error: this._next is not a function.
+</code></pre>
+
+<p>Alternatively, </p>
+
+<pre class=""lang-js prettyprint-override""><code>this.publicQuery = this.props.docRef.collection('messages').where('public', '==', true) 
+this.myQuery = this.props.docRef.collection(`messages`).where('read', 'array-contains', this.props.me.uid)
+const myQuery$ = new Rx.Subject();
+const publicQuery$ = new Rx.Subject();
+this.myQuery.onSnapshot((querySnapshot) =&gt; {
+    myQuery$.next(querySnapshot.docs.map(d =&gt; d.data()  ));
+});
+this.publicQuery.onSnapshot((querySnapshot) =&gt; {
+    publicQuery$.next(querySnapshot.docs.map(d =&gt; d.data()  ));
+});
+const orQuery$ = combineLatest(this.myQuery, this.publicQuery).switchMap((docs) =&gt; {
+    var [one, two] = docs;
+    var combined = one.concat(two);
+    return Rx.Observable.of(combined);
+})
+orQuery$.subscribe((result) =&gt; {
+    console.log('&gt;&gt;&gt;&gt; ', result)
+})
+//TypeError: undefined is not a function (near ...switchMap)
+</code></pre>
+
+<p>How can I successfully join two firestore queries (OR)?</p>
+","179736","","10207459","","2018-11-27 10:39:56","2018-11-27 15:52:21","How can I join two Firestore queries using rxfire and rxjs (OR query)","<firebase><rxjs><google-cloud-firestore><rxfire>","1","1","5","","","CC BY-SA 4.0"
+"54191235","1","54191793","","2019-01-15 00:42:38","","1","537","<p>Summary: essentially I need something like <code>from Users where usergroupIds in [1,3,5]</code>.</p>
+
+<p>Given <code>usergroupIds$</code> emit an array of group IDs <code>[1,3,5]</code></p>
+
+<p>I want to union all users by <code>userids</code> in <code>usergroupIds</code> and combine the userIds (distinct)</p>
+
+<p>Here is what I came up with:</p>
+
+<pre><code>usergroupIds$.subscribe(usergroupIds =&gt; {
+    const users$s = usergroupIds.map(gid =&gt; createUsersObservable(gid))
+    //  [users$ in group 1, users$ in group 3, users$ in group 5]
+    const users$ = combineLatest(...user$s).pipe(
+        distinct(user =&gt; user.id)
+    )
+})
+
+createUsersObservable = gid =&gt; 
+  collectionData(db.collection('users').where('groupId', '==', gid)) // rxFire firestore
+</code></pre>
+
+<p>Unsubscribe &amp; resubscribe <code>users$</code> every time on change seems wrong?</p>
+
+<p>Is it possible to express <code>users$</code> fully in RxJS without creating it in a subscription every time?</p>
+
+<p><strong>Update:</strong>
+With help from @FanCheung:</p>
+
+<pre><code>combinedUsers$ = userGroupIds$.pipe(
+        switchMap(userGroupIds =&gt; {
+            const users$s = userGroupIds.map(groupId =&gt;
+                createUsersObservable(groupId))
+            return combineLatest(...users$s)
+        })
+</code></pre>
+
+<p>However, since usersObservable emit an array of users at a time, The combinedUsers$ results in somthing like <code>[[userA, userB], [userB, userC], [userA, userD]]</code> which I don't mind to carry out the extra processing on subscribe:</p>
+
+<pre><code>combinedUsers$.subscribe(combinedUsers =&gt; {
+        const userMap = {}
+        for (const users of combinedUsers) 
+            users.forEach(user =&gt; (userMap[user.id] = user))
+        const uniqueUsers = Object.values(userMap)
+
+        // update UI to uniqueUsers
+    })
+</code></pre>
+
+<p>However, is there a way to use somehow flatten the results of <code>combinedUsers$</code>, and then carry out the <code>distinct</code> operator?</p>
+","35634","","35634","","2019-01-15 19:44:09","2019-01-16 02:34:46","Combine Observables into a single Observable from a dynamic array of Observable?","<firebase><rxjs><google-cloud-firestore><rxfire>","2","0","","","","CC BY-SA 4.0"
+"54270412","1","","","2019-01-19 19:01:31","","1","132","<p>I want to be able to respond to errors from a call to collectionData. I added a catchError but it never gets called.  In fact, the collectionData emits a result with no elements.</p>
+
+<pre><code>export const bundleEpic = action$ =&gt; action$.pipe(
+  ofType(BUNDLES_LOAD),
+  tap(action =&gt; console.log(`Received action: type=${action.type}`)),
+  switchMap(() =&gt; (
+    collectionData(bundlesRef, 'id')
+    .pipe(
+      tap(docs =&gt; console.log(`bundleEpic: size = ${docs.length}`)),
+      map(docs =&gt; publicBundlesLoadSuccess(docs)),
+      catchError(error =&gt; from(publicBundlesLoadFail(error))
+    )
+  ))
+)
+</code></pre>
+
+<p>What is the proper way to handle errors using collectionData?</p>
+","5422443","","7247920","","2019-01-19 19:07:30","2019-01-19 20:50:53","Trouble using catchError with RxFire firestore collectionData","<rxjs><redux-observable><rxfire>","1","1","1","","","CC BY-SA 4.0"
+"54278902","1","56435193","","2019-01-20 17:13:17","","2","5579","<p>I'm getting an error : storage/object-not-found when trying to upload a large image file in Google Cloud Storage using RxFire.</p>
+
+<p>They say the image is not found in the bucket but when I check, i see them!</p>
+
+<p>I tested with small images (100kb likely...) works great.</p>
+
+<p>But tried with > 500kb images, doesn't work...</p>
+
+<pre><code>upload$
+  .pipe(
+    switchMap((event: any) =&gt; {
+      const name = Math.random().toString(36).substring(5);
+      const blob = event.target.files[0];
+      const type = blob.type.replace('image/', '');
+      const ref = storage.ref(`uploads/test/${name}.${type}`);
+      return put(ref, blob);
+    }),
+    map(snapshot =&gt; snapshot),
+    filter(snapshot =&gt; snapshot.totalBytes === snapshot.bytesTransferred),
+    mergeMap(snapshot =&gt; getDownloadURL(snapshot.ref))
+  )
+  .subscribe(url =&gt; {
+    console.log('Results', url)
+  }, (error) =&gt; {
+    // ERROR HERE
+    console.log('error', error)
+  })
+</code></pre>
+
+<p>Expected result : Upload working with big images</p>
+
+<p>Actual results : Error</p>
+
+<pre><code>Uncaught t {code_: ""storage/object-not-found"", message_: ""Firebase . 
+Storage: Object 'uploads/test/7xpbilmb.jpeg' does not exist."", 
+serverResponse_: ""{↵  ""error"": {↵    ""code"": 404,↵    ""message"": 
+""Not Found.  Could not get object""↵  }↵}"", name_: ""FirebaseError""}
+</code></pre>
+","9726037","","1033581","","2019-07-05 16:17:36","2019-07-05 16:17:36","Error: storage/object-not-found when trying to upload large image file","<firebase><google-cloud-storage><firebase-storage><rxfire>","1","5","","","","CC BY-SA 4.0"
+"54601988","1","","","2019-02-09 00:25:27","","2","121","<p>I have some RxFire code that listens to a Firestore collection query (representing <em>channels</em>) and, for each of the results, listens to a Realtime Database ref for documents (representing <em>messages</em> in that channel).</p>
+
+<p>The problem I'm running into is that the Realtime Database documents are re-downloaded every time the Firestore query changes, even if they're for a path/reference that hasn't changed.</p>
+
+<p>Here's some pseudo-code:</p>
+
+<pre class=""lang-js prettyprint-override""><code>collection(channelsQuery).pipe(
+
+  // Emits full array of channels whenever the query changes
+  switchMap(channels =&gt; {
+
+    return combineLatest(
+      channels.map(channel =&gt;
+
+        // Emits the full set of messages for a given channel
+        list(getMessagesRef(channel)),
+      ),
+    );
+  })
+)
+</code></pre>
+
+<p>Imagine the following scenario:</p>
+
+<ul>
+<li>Query intially emits <strong>3</strong> Firestore channel documents</li>
+<li>Observables are created for corresponding Realtime Database refs for those 3 channels, which emit their message documents</li>
+<li>A new Firestore document is added that matches the original query, which now emits <strong>4</strong> channel documents</li>
+<li>The previous observables for Realtime Database are destroyed, and new ones are created for the now <strong>4</strong> channels, re-downloading and emitting all the data it already had for the previous <strong>3</strong>.</li>
+</ul>
+
+<p>Obviously this is not ideal as it causes a lot of redundant reads on the Realtime Database.  What's the best practice in this case?  Keep in mind that when a channel is removed, I would like to destroy the corresponding observable, which <code>switchMap</code> already does.</p>
+","11036172","","","","","2019-02-09 00:25:27","How to avoid redundantly downloading data when using switchMap and inner observables in RxFire?","<firebase><rxjs><rxfire>","0","0","","","","CC BY-SA 4.0"
+"56022761","1","","","2019-05-07 12:34:20","","1","645","<p>I'm creating a <code>StencilJS</code> app (no framework) with a Google Firestore backend, and I want to use the <code>RxFire</code> and <code>RxJS</code> libraries as much as possible to simplify data access code. How can I combine into a single observable stream data coming from two different collections that use a reference ID? </p>
+
+<p>There are several examples online that I've read through and tried, each one using a different combination of operators with a different level of nested complexity. <a href=""https://www.learnrxjs.io/"" rel=""nofollow noreferrer"">https://www.learnrxjs.io/</a> seems like a good resource, but it does not provide line-of-business examples that make sense to me. <a href=""https://stackoverflow.com/questions/47174075/firestore-how-to-get-the-collection-value-from-another-collection-document-id-is"">This question</a> is very similar, and maybe the only difference is some translation into using RxFire? Still looking at that. Just for comparison, in SQL this would be a <code>SELECT</code> statement with an <code>INNER JOIN</code> on the reference ID.</p>
+
+<p>Specifically, I have a collection for <code>Games</code>:</p>
+
+<pre><code>{ id: ""abc000001"", name: ""Billiards"" },
+{ id: ""abc000002"", name: ""Croquet"" },
+...
+</code></pre>
+
+<p>and a collection for <code>Game Sessions</code>:</p>
+
+<pre><code>{ id: ""xyz000001"", userId: ""usr000001"", gameId: ""abc000001"", duration: 30 },
+{ id: ""xyz000002"", userId: ""usr000001"", gameId: ""abc000001"", duration: 45 },
+{ id: ""xyz000003"", userId: ""usr000001"", gameId: ""abc000002"", duration: 55 },
+...
+</code></pre>
+
+<p>And I want to observe a merged collection of <code>Game Sessions</code> where <code>gameId</code> is essentially replace with <code>Game.name</code>.</p>
+
+<p>I current have a <code>game-sessions-service.ts</code> with a function to get sessions for a particular user:</p>
+
+<pre><code>import { collectionData } from 'rxfire/firestore';
+import { Observable } from 'rxjs';
+import { GameSession } from '../interfaces';
+
+observeUserGameSesssions(userId: string): Observable&lt;GameSession[]&gt; {
+
+    let collectionRef = this.db.collection('game-sessions');
+    let query = collectionRef.where('userId', '==', userId);
+
+    return collectionData(query, 'id);
+}
+</code></pre>
+
+<p>And I've tried variations of things with <code>pipe</code> and <code>mergeMap</code>, but I don't understand how to make them all fit together properly. I would like to establish an interface <code>GameSessionView</code> to represent the merged data:</p>
+
+<pre><code>export interface GameSessionView {
+    id: string,
+    userId: string,
+    gameName: string,
+    duration: number
+}
+</code></pre>
+
+<pre><code>
+observeUserGameSessionViews(userId: string): Observable&lt;GameSessionView&gt; {
+
+    this.observeUserGameSessions(userId)
+    .pipe(
+        mergeMap(sessions =&gt; {
+            // What do I do here? Iterate over sessions 
+            // and embed other observables for each document?
+        }
+    )
+}
+</code></pre>
+
+<p>Possibly, I'm just stuck in a normalized way of thinking, so I'm open to suggestions on better ways to manage the data. I just don't want too much duplication to keep synchronized.</p>
+","10778016","","10778016","","2019-05-08 18:20:28","2019-05-19 14:24:48","How to merge and observe two collections in Firestore based on reference ID in documents?","<javascript><rxjs><google-cloud-firestore><observable><rxfire>","1","3","","","","CC BY-SA 4.0"
+"56775791","1","","","2019-06-26 15:00:13","","0","299","<p>If I use the standard Sapper getting started routine:</p>
+
+<pre><code>npx degit ""sveltejs/sapper-template#rollup"" my-app
+npx degit ""sveltejs/sapper-template#webpack"" my-app
+cd my-app
+npm install
+npm run dev &amp; open http://localhost:3000
+</code></pre>
+
+<p>I have ""great success"".  In my Svelte app, I'm using rxfire to query my DB, so have a RxJS BehviourSubject that contains the initial value, and which gets updated once the DB information is loaded.  This works great in Svelte, but the Sapper SSR version chokes.</p>
+
+<p>If I change the sample Sapper app as follows:</p>
+
+<pre class=""lang-html prettyprint-override""><code>&lt;script&gt;
+ import { BehaviorSubject } from 'rxjs';
+
+ let title$ = new BehaviorSubject('Great success!');
+ title$.set = title$.next;
+&lt;/script&gt;
+
+&lt;!-- ... --&gt;
+
+&lt;h1&gt;{ $title$ }&lt;/h1&gt;
+</code></pre>
+
+<p>I get this:</p>
+
+<pre><code>500
+
+store.subscribe(...) is not a function
+
+TypeError: store.subscribe(...) is not a function
+    at get_store_value (/Users/eveland/Documents/Epiphero/Site/apps/test/__sapper__/dev/server/server.js:255:36)
+    at create_ssr_component (/Users/eveland/Documents/Epiphero/Site/apps/test/__sapper__/dev/server/server.js:269:103)
+    at Object.$$render (/Users/eveland/Documents/Epiphero/Site/apps/test/__sapper__/dev/server/server.js:231:22)
+    at Object.default (/Users/eveland/Documents/Epiphero/Site/apps/test/__sapper__/dev/server/server.js:564:204)
+    at create_ssr_component (/Users/eveland/Documents/Epiphero/Site/apps/test/__sapper__/dev/server/server.js:406:38)
+    at Object.$$render (/Users/eveland/Documents/Epiphero/Site/apps/test/__sapper__/dev/server/server.js:231:22)
+    at create_ssr_component (/Users/eveland/Documents/Epiphero/Site/apps/test/__sapper__/dev/server/server.js:562:41)
+    at $$render (/Users/eveland/Documents/Epiphero/Site/apps/test/__sapper__/dev/server/server.js:231:22)
+    at Object.render (/Users/eveland/Documents/Epiphero/Site/apps/test/__sapper__/dev/server/server.js:239:26)
+    at handle_page (/Users/eveland/Documents/Epiphero/Site/apps/test/__sapper__/dev/server/server.js:2936:36)
+</code></pre>
+
+<p>as the initial render before Svelte takes over and renders the page correctly.</p>
+
+<p>Why can't I use the BehviorSubject in Sapper?</p>
+","5061277","","","","","2019-06-26 15:00:13","How to use RxJS BehaviorSubject with Sapper SSR?","<rxjs><svelte><sapper><rxfire>","0","2","","","","CC BY-SA 4.0"
+"58499175","1","58499470","","2019-10-22 07:33:15","","1","67","<p>I'm new to RxJs. Is it possible to solve this type of pivot table problem.</p>
+
+<p>Suppose I have a stream with any number of items.  </p>
+
+<ul>
+<li><p>Each item is a number between 0 and 999.</p></li>
+<li><p>I'd like to make a table from this stream. A table with 10 columns.   </p></li>
+<li>The column number for an item is equal to the item divided by 10. So number 654 will go to column 6. </li>
+</ul>
+
+<p>Because we have a random number of items and because the numbers arrive in a random order, the columns will have different heights.</p>
+
+<p>How can I operarate on the stream to generate the rows of the table one by one to show the table?</p>
+
+<p><strong>Update</strong></p>
+
+<p>With the Fan Cheung solution (described below) it was easy to generate the columns with RxJs. But would it also be possible to subsequently generate the rows (the rows array) with RxJs to be able to render the table as shown below?</p>
+
+<p><a href=""https://i.stack.imgur.com/F0yiD.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/F0yiD.png"" alt=""Pivot table result""></a></p>
+
+<p>The colums have different heights.</p>
+","675006","","675006","","2019-10-23 11:05:45","2019-10-23 11:05:45","RxJs Is it possible to solve this kind of pivot table problem","<google-cloud-firestore><rxjs><rxfire>","1","0","","","","CC BY-SA 4.0"
+"58810550","1","58816476","","2019-11-12 00:54:13","","1","326","<p>I use a derived store in the code below. It feels like a strange construct because I only use the derived construct for the dynamic $session dependency and to get the normData. But not with $norm. I use $norm only once to kick off the derived store.</p>
+
+<p>Nevertheless it seem to work fine. But I have to renew the subscription if the $session changes. Is it possible to update the RxFire / RxJs subscription without unsubscribing first?</p>
+
+<pre><code>let normDocRef = null;
+let normData = null;
+let normSubscription = null;
+
+const norm = derived(
+  session,
+  $session =&gt; {
+    normDocRef = db.doc(`uploads/${$session.a_id}_${$session.year}`);
+
+    // renew the subscription if $session changes   
+    if (normSubscription) 
+      normSubscription.unsubscribe();
+
+    normSubscription = doc(normDocRef).subscribe(snapshot =&gt; {
+      if (snapshot.exists) {
+        normData = snapshot.data();
+      } else {
+        normData = null;
+      };
+    });
+  },
+);
+
+$norm;   // kick off the derived store to monitor $session
+
+// show the data and updates
+$: console.log(normData); 
+
+onDestroy(() =&gt; {
+  if (normSubscription) normSubscription.unsubscribe();
+}); 
+</code></pre>
+
+<p><strong>Update</strong>: I can use the set and return options of the derived store to change $norm in a real $norm Svelte store. Code below in my own answer.</p>
+
+<p>But the real question is: Can I update a subscription. Change the subscription without the unsubscribe?</p>
+","675006","","675006","","2019-11-12 12:41:18","2020-02-23 15:36:49","Subscribe to a doc using Svelte / RxJs / RxFire. How can I update the subscription","<rxjs><svelte><derived><rxfire>","2","2","1","","","CC BY-SA 4.0"
+"60905731","1","60906330","","2020-03-28 19:14:53","","0","67","<p>I'm using RXFire and RXJS.</p>
+
+<pre><code>collectionData(firebase.firestore.collection('collectionname')).subscribe(x=&gt;console.log(x)
+</code></pre>
+
+<p>returns</p>
+
+<pre><code>// [{document1}, {document2}]
+</code></pre>
+
+<p>What i'd like is an observable that returns</p>
+
+<pre><code>// {document1}
+// {document2}
+</code></pre>
+
+<p>I've tried using a combination of from() and toArray() (i.e. converting the observable to a plain array and back to an observable that emits each document one by one) but toArray() only creates an observable that emits an array, not an actual array. I need an operation thats the OPPOSITE of toArray(). Take an observable that emits an array and turn it into an observable that emits each value individually.</p>
+
+<p>How do I do that?</p>
+
+<hr>
+
+<p>Edit:</p>
+
+<p>I also tried doing something like</p>
+
+<pre><code>const newObs = oldObs.subscribe(x =&gt; from(x))
+</code></pre>
+
+<p>but that store the subscriber, not the new observable. =(</p>
+","12728118","","12728118","","2020-03-28 19:39:12","2020-03-28 20:04:26","How do I convert an observable that emits an array into an observable that emits each value of the array individually?","<arrays><rxjs><observable><rxfire>","1","0","","","","CC BY-SA 4.0"
+"60908323","1","60910924","","2020-03-28 23:31:16","","0","75","<p>Kind of a niche question, but I know what the issue is so hopefully someone here can help me out. This is an Observable/RXFire issue, not an xstate issue.</p>
+
+<p>I have this machine that invokes an observable:</p>
+
+<pre><code>export const tribeMachine = Machine(
+  {
+    id: ""council"",
+    initial: ""init"",
+    context: {},
+    states: {
+      init: {
+        invoke: {
+          id: ""gettribes"",
+          src: () =&gt;
+            collectionData(database.collection(""tribes"")).pipe(
+              concatAll(),
+              map(x =&gt; ({ type: ""STORE"", x }))
+            ),
+          onDone: ""loaded""
+        },
+        on: {
+          STORE: {
+            actions: ""storetribes""
+          },
+          CANCEL: ""loaded""
+        }
+      },
+      loaded: {
+        entry: () =&gt; console.log(""loaded"")
+      },
+      error: {
+        entry: () =&gt; console.log(""error"")
+      }
+    }
+  },
+  {
+    actions: {
+      storetribes: (context, event) =&gt; console.log(""hello"")
+    }
+  }
+);
+</code></pre>
+
+<p>The way it's supposed to work is that the machine invokes the observable on load, and then once the obs is done emitting its values and calls complete(), invoke.onDone is called and the machine transitions to the 'loaded' state.</p>
+
+<p>When I use a normal observable that i created with a complete() call, or when i add take(#) to the end of my .pipe(), the transition works.</p>
+
+<p>But for some reason the observable that comes from collectionData() from RXFire doesn't send out a 'complete' signal... and the machine just sits there.</p>
+
+<p>I've tried adding a empty() to the end and concat()-ing the observables to add a complete signal to the end of the pipe... but then I found out that empty() is deprecated and it didn't seem to work anyway.</p>
+
+<p>Been banging my head against the wall for awhile. any help is appreciated.</p>
+
+<hr>
+
+<p>Edit: </p>
+
+<p>Solution:</p>
+
+<p>I misunderstood the purpose of collectionData(). It is a listener, so it's not supposed to complete. I was putting a square peg in round hole. The solution is to refactor the xstate machine so I don't need to call onDone at all.</p>
+
+<p>Thank you for the answers nonetheless. </p>
+
+<hr>
+
+<p>EDIT2: GOT IT TO WORK.</p>
+
+<p>take(1) can be called BEFORE concatAll(). I thought if you called it first it would end the stream, but it doesn't. The rest of the operators in the pipe still apply. So i take(1) to get the single array, use concatAll() to flatten the array into a stream of individual objects, then map that data to a new object which triggers the STORE action. the store action then sets the data to the context of the machine. </p>
+
+<pre><code>export const tribeMachine = Machine({
+    id: 'council',
+    initial: 'init',
+    context: {
+        tribes: {},
+        markers: []
+    },
+    states: {
+        init: {
+            invoke: {
+                id: 'gettribes',
+                src: () =&gt; collectionData(database.collection('tribes')).pipe(
+                    take(1),
+                    concatAll(),
+                    map(value =&gt; ({ type: 'TRIBESTORE', value })),
+                ),
+                onDone: 'loaded'
+            },
+            on: {
+                TRIBESTORE: {
+                    actions: ['storetribes', 'logtribes']
+                },
+                CANCEL: 'loaded'
+            }
+        },
+        loaded: {
+        },
+        error: {
+        }
+    }
+},
+    {
+        actions: {
+            storetribes: assign((context, event) =&gt; {
+                return {
+                    tribes: {
+                        ...context.tribes,
+                        [event.value.id]: event.value
+                     },
+                     markers: [
+                         ...context.markers,
+                         {
+                             lat: event.value.lat,
+                             lng: event.value.lng,
+                             title: event.value.tribeName
+                         }
+                        ]
+                     }
+            })
+        }
+    }
+)
+</code></pre>
+
+<p>Thanks for everyone's help!</p>
+","12728118","","12728118","","2020-03-29 17:04:23","2020-03-29 17:04:23","How do I force an observeable to complete?","<firebase><rxjs><xstate><rxfire>","1","1","","","","CC BY-SA 4.0"
+"63857049","1","63875497","","2020-09-12 05:13:58","","0","99","<p>I'm trying to create an epic that fetches data from firestore using rxfire. On every emission of a value, an action needs to be dispatched. My codes looks like this:</p>
+<pre class=""lang-typescript prettyprint-override""><code>const fetchMenu = (action$, _state$) =&gt; {
+  return action$.pipe(
+    ofType(Types.FETCH_MENU_REQUESTED),
+    flatMap((async ({ resID }) =&gt; {
+      const firestore = firebase.firestore();
+      const menuRef = firestore.collection('menus').where('resID', '==', resID);
+      return collectionData(menuRef, 'id')
+      .pipe(
+        map(val =&gt; {
+          return Creators.fetchMenuSuccess(val);
+        })
+      )
+    }
+    )),
+  );
+};
+</code></pre>
+<p>However, I'm getting the error <code>Actions must be plain objects. Use custom middleware for async actions.</code></p>
+<p>As far as I understand, the <code>pipe</code> operator is wrapping my value in an observable and that's why I'm getting the error, but I'm not sure what to do so that it only returns the action. I'm still a bit new to rxjs so any help would be very appreciated.</p>
+","8371765","","556629","","2020-09-12 22:04:40","2020-09-13 20:54:11","Error in epic with redux-observable and rxjs","<firebase><react-redux><rxjs><redux-observable><rxfire>","1","0","","","","CC BY-SA 4.0"
+"63936216","1","63936863","","2020-09-17 10:34:52","","1","128","<p>This js reduce works fine to handle the query result:</p>
+<pre><code>function toc(current) {
+  return {....};
+};
+function getToc(data) {
+  return = data.reduce((a, c) =&gt; Object.assign(a, {[c.id]: toc(c)}), {});
+};
+
+const query = db.collection(normCollection)
+.where('a_id', '==', a_id )
+.where('year', '==', year) 
+.orderBy(&quot;id&quot;);
+subscriptionNorm = collectionData(query, &quot;id&quot;)
+.subscribe(data =&gt; console.log(getToc(data)));
+</code></pre>
+<p>But when I use RxJs reduce, it stops working. It has something to do with the stream end, but ... But I do not understand how RxFire / RxJs handles a streamed firestore query result:</p>
+<pre><code>...
+subscriptionNorm = collectionData(query, &quot;id&quot;)
+.pipe(reduce((a, c) =&gt; Object.assign(a, {[c.id]: toc(c)}), {}))
+.subscribe(data =&gt; console.log(data));
+</code></pre>
+<p>Update this works fine, but ...:</p>
+<pre><code>...
+subscriptionNorm = collectionData(query, &quot;id&quot;)
+.pipe(
+  map(v =&gt; v.reduce((a, c) =&gt; 
+    Object.assign(a, {[c.id]: toc(c)}), {})
+  ),
+)
+.subscribe(data =&gt; console.log(data));
+</code></pre>
+","675006","","209103","","2020-09-17 13:59:40","2020-09-17 13:59:40","How does RxFire handels firestore queries","<javascript><google-cloud-firestore><rxjs><rxfire>","1","0","","","","CC BY-SA 4.0"
+"66152331","1","66226770","","2021-02-11 09:52:42","","0","45","<p>In my React app, I want to check whether a background firebase function has created the document in Firestore before updating my UI. So I use the docData function from RxFire to subscribe to changes in the specific, &quot;about-to-be-created-from-a-background-function&quot; doc:</p>
+<pre><code>const davidDocRef = db.doc('users/david');
+
+// meantime, a firebase function creates &quot;users/david&quot; doc in the background 
+// I am observing for changes to the firestore doc in my React Component:
+
+useEffect(() =&gt; {
+docData(davidDocRef,'uid').subscribe(userData =&gt; setUserId(userData.uid));
+...
+
+// I then check that orgId is not null by assuming that I will get back a doc.id after it has been created it in Firestore
+</code></pre>
+<p>The problem is that userData.uid always returns &quot;david&quot; regardless of the doc being created in Firestore. What am I doing wrong? It seems like it's returning the uid from the path I've set in the reference instead of an actual document path that has been (or should have been) created in firestore. When I change the reference to look for &quot;users/foo&quot; then userData.uid still returns &quot;foo&quot; instead of undefined or throughing an error.</p>
+<p>In this case I can instead look for userData.name. This actually works as I get &quot;undefined&quot; if the document has not been stored in Firestore or &quot;David&quot; if it has, but I would expect the example above to work in a similar manner.</p>
+","8389513","","8389513","","2021-02-12 14:50:15","2021-02-16 14:56:36","How to check that a document has been created in Firestore with RxFire","<javascript><google-cloud-firestore><rxfire>","1","2","","","","CC BY-SA 4.0"
+"66197552","1","","","2021-02-14 16:34:59","","0","249","<p>I am getting this error when running <code>npm run dev</code></p>
+<pre><code>registerFunctions(firebase$1, fetch.bind(self));
+                              ^
+ReferenceError: fetch is not defined
+</code></pre>
+<p>I figured <strong>rxfire</strong> doesn't import fetch, so I add this line to <strong>src/server.ts</strong></p>
+<pre class=""lang-js prettyprint-override""><code>global['fetch'] = require('node-fetch');
+</code></pre>
+<p>And the error is still there, any suggestions?  I would think I would not have to add this at all.</p>
+<p>I am just using <strong>rxfire</strong> in a <strong>src/firebase.ts</strong> file like so:</p>
+<pre class=""lang-js prettyprint-override""><code>import firebase from &quot;firebase/app&quot;;
+import &quot;firebase/auth&quot;;
+import &quot;firebase/firestore&quot;;
+import &quot;firebase/functions&quot;; 
+import * as config from &quot;./config.json&quot;;
+
+firebase.initializeApp(config);
+
+export const auth = firebase.auth();
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+export const db = firebase.firestore();
+export const functions = firebase.functions();
+</code></pre>
+<p>Thanks,<br />
+J</p>
+","271450","","271450","","2021-02-14 22:01:10","2021-08-27 11:17:48","sapper with firebase - fetch not defined","<firebase><svelte><svelte-3><sapper><rxfire>","2","2","","","","CC BY-SA 4.0"
+"68506314","1","68507679","","2021-07-24 01:23:38","","1","33","<p>I  am using rxfire to combine data from firestore in componentdidmount:</p>
+<pre><code>store$.pipe(
+      withLatestFrom(items$),  
+      map(([store, items]) =&gt; ({ items, ...store })),    
+    ).pipe(   
+      withLatestFrom(categories$),       
+      map(([store, categories]) =&gt; ({ categories, ...store })),
+    ).subscribe(store =&gt; {      
+      this.setState({ store: store, isLoading: false });
+    })   
+</code></pre>
+<p>The problem with this code is not firing and the screen stuck with the loading component. If I load the screen a second time it works. Am I doing something wrong? How can I fix it</p>
+","7598406","","209103","","2021-07-24 05:21:39","2021-07-24 06:48:59","rxfire subscription not firing in componentdidmount","<javascript><firebase><react-native><rxjs><rxfire>","1","0","","","","CC BY-SA 4.0"

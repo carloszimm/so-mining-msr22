@@ -1,0 +1,37 @@
+Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCount,Body,OwnerUserId,OwnerDisplayName,LastEditorUserId,LastEditorDisplayName,LastEditDate,LastActivityDate,Title,Tags,AnswerCount,CommentCount,FavoriteCount,ClosedDate,CommunityOwnedDate,ContentLicense
+"37750453","1","37751421","","2016-06-10 14:12:28","","1","571","<p>I coose <a href=""https://github.com/FuckBoilerplate/RxPaparazzo"" rel=""nofollow noreferrer"">RxPparazzo</a> to manage the images in my app, but I'm still having the same problem. I don't know why when I select more than one image from gallery, the lib retrieves always the same image per image that it should have been added.</p>
+
+<pre><code>/**
+ * Pick some images from gallery using RxPaparazzo lib.
+ */
+private void takePhotosFromGallery() {
+    RxPaparazzo.takeImages(this)
+            .usingGallery()
+            .subscribe(response -&gt; {
+                if (response.resultCode() != Activity.RESULT_OK) {
+                    response.targetUI().showUserCanceled();
+                    return;
+                }
+                response.targetUI().loadImages(response.data());
+            });
+}
+</code></pre>
+
+<p><a href=""https://i.stack.imgur.com/9v6qs.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/9v6qs.png"" alt=""Same image""></a></p>
+
+<p><a href=""https://i.stack.imgur.com/2nqPe.gif"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/2nqPe.gif"" alt=""Video""></a></p>
+
+<p><strong>UPDATED</strong> </p>
+
+<p>Fixed in version <a href=""https://github.com/FuckBoilerplate/RxPaparazzo/releases/tag/0.1.3"" rel=""nofollow noreferrer"">0.1.3</a></p>
+
+<p><em>The lib duplicate images</em> ?</p>
+
+<p><a href=""https://i.stack.imgur.com/SmQdH.gif"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/SmQdH.gif"" alt=""duplicate images""></a></p>
+
+<p><strong>UPDATED</strong></p>
+
+<p>Here the explanation why RxPaparazzo create new images.</p>
+
+<p><a href=""https://github.com/FuckBoilerplate/RxPaparazzo/issues/6"" rel=""nofollow noreferrer"">remove images after retrieving them</a></p>
+","888197","","888197","","2016-06-10 16:49:09","2016-06-10 16:49:09","RxPparazzo retrieves the same images when I select more than one image","<android><rx-java><rxpaparazzo>","1","0","1","","","CC BY-SA 3.0"

@@ -6,11 +6,11 @@ import (
 	"log"
 	"path/filepath"
 
-	"github.com/carloszimm/stack-mining/config"
-	csvUtils "github.com/carloszimm/stack-mining/csv"
-	"github.com/carloszimm/stack-mining/lda"
-	"github.com/carloszimm/stack-mining/processing"
-	"github.com/carloszimm/stack-mining/util"
+	config "github.com/carloszimm/stack-mining/configs"
+	csvUtils "github.com/carloszimm/stack-mining/internal/csv"
+	"github.com/carloszimm/stack-mining/internal/lda"
+	"github.com/carloszimm/stack-mining/internal/processing"
+	"github.com/carloszimm/stack-mining/internal/util"
 )
 
 var configs []config.Config

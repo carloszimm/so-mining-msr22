@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"sort"
 
-	"github.com/carloszimm/stack-mining/types"
-	"github.com/carloszimm/stack-mining/util"
+	"github.com/carloszimm/stack-mining/internal/types"
+	"github.com/carloszimm/stack-mining/internal/util"
 	"github.com/gocarina/gocsv"
 )
 

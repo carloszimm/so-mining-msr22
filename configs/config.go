@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"log"
 	"os"
+	"path/filepath"
 
-	"github.com/carloszimm/stack-mining/util"
+	"github.com/carloszimm/stack-mining/internal/util"
 	"github.com/go-playground/validator/v10"
 )
 
@@ -22,7 +23,7 @@ type Config struct {
 }
 
 func ReadConfig() []Config {
-	dat, err := os.ReadFile("config.json")
+	dat, err := os.ReadFile(filepath.Join("configs", "config.json"))
 	util.CheckError(err)
 
 	var configs []Config

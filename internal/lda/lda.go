@@ -1,8 +1,8 @@
 package lda
 
 import (
-	"github.com/carloszimm/stack-mining/types"
-	"github.com/carloszimm/stack-mining/util"
+	"github.com/carloszimm/stack-mining/internal/types"
+	"github.com/carloszimm/stack-mining/internal/util"
 	"github.com/james-bowman/nlp"
 )
 

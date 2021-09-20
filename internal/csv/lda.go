@@ -8,9 +8,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/carloszimm/stack-mining/config"
-	"github.com/carloszimm/stack-mining/types"
-	"github.com/carloszimm/stack-mining/util"
+	config "github.com/carloszimm/stack-mining/configs"
+	"github.com/carloszimm/stack-mining/internal/types"
+	"github.com/carloszimm/stack-mining/internal/util"
 )
 
 func WriteFolder(folderPath string) {

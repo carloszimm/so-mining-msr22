@@ -1,13 +1,14 @@
 package processing
 
 import (
+	"path/filepath"
 	"regexp"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/bbalet/stopwords"
-	"github.com/carloszimm/stack-mining/types"
-	"github.com/carloszimm/stack-mining/util"
+	"github.com/carloszimm/stack-mining/internal/types"
+	"github.com/carloszimm/stack-mining/internal/util"
 	"github.com/kljensen/snowball"
 )
 
@@ -17,7 +18,7 @@ var (
 )
 
 func init() {
-	stopwords.LoadStopWordsFromFile("stopwords.txt", "en", "\n")
+	stopwords.LoadStopWordsFromFile(filepath.Join("assets", "stopwords.txt"), "en", "\n")
 }
 
 func SetupPipeline(posts []*types.Post, field string) <-chan string {

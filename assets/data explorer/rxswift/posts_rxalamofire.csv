@@ -43,7 +43,7 @@ Here's the rough code:</p>
 
 <p><strong>How to ensure the downloads are done one by one instead of simultaneously?</strong></p>
 ","375209","","375209","","2016-11-14 07:45:27","2016-11-15 15:47:40","Limiting simultaneous downloads using RxAlamofire","<alamofire><rx-swift><rxalamofire>","1","2","","","","CC BY-SA 3.0"
-"40894016","1","","","2016-11-30 16:57:57","","3","679","<p>I have an array of images.</p>
+"40894016","1","","","2016-11-30 16:57:57","","3","681","<p>I have an array of images.</p>
 
 <pre><code>let images:[UIImage]
 </code></pre>
@@ -54,7 +54,7 @@ Here's the rough code:</p>
 
 <p>P.S. I did not find examples of uploading multipart data to the server using RxAlamofire</p>
 ","5485334","","","","","2016-11-30 16:57:57","Uploading file with parameters using RxAlamofire","<ios><swift><rx-swift><rxalamofire>","0","1","","","","CC BY-SA 3.0"
-"41174527","1","","","2016-12-15 22:41:23","","0","513","<p>I am trying to use RxAlamofire with <code>retry()</code> but I can't make it work. I tried to add <code>retry()</code> block to different positions but it doesn't make any difference. </p>
+"41174527","1","","","2016-12-15 22:41:23","","0","514","<p>I am trying to use RxAlamofire with <code>retry()</code> but I can't make it work. I tried to add <code>retry()</code> block to different positions but it doesn't make any difference. </p>
 
 <p>If I add <code>retry(3)</code> to end of  <code>apiClient.get(type: .posts).retry(3)</code> it seems to work. Is there a way to add retry logic to <code>ApiClient</code> class? Thanks.</p>
 
@@ -91,7 +91,7 @@ Here's the rough code:</p>
         }).addDisposableTo(disposablebag)
 </code></pre>
 ","4170419","","","","","2016-12-15 22:41:23","RxAlamofire retry doesnt work","<swift><rx-swift><rxalamofire>","0","4","","","","CC BY-SA 3.0"
-"41360676","1","","","2016-12-28 11:02:58","","2","2290","<p><em>How to send Multipart data with RxAlamofire</em></p>
+"41360676","1","","","2016-12-28 11:02:58","","2","2292","<p><em>How to send Multipart data with RxAlamofire</em></p>
 
 <blockquote>
   <p>For instance in <a href=""https://github.com/Alamofire/"" rel=""nofollow noreferrer"">Alamofire</a></p>
@@ -112,7 +112,7 @@ Alamofire.upload(multipartFormData: { formData in
 <li><strong>Or An way of wrapping this function in an Observable?</strong></li>
 </ol>
 ","3600738","","3600738","","2017-01-19 11:09:29","2017-01-19 19:30:48","RxAlamofire post multipart data","<swift3><alamofire><reactive-programming><rx-swift><rxalamofire>","1","0","","","","CC BY-SA 3.0"
-"42271750","1","49315858","","2017-02-16 10:49:56","","1","688","<p>I'm trying to implement an alamofire call with max retries. Code is below:</p>
+"42271750","1","49315858","","2017-02-16 10:49:56","","1","690","<p>I'm trying to implement an alamofire call with max retries. Code is below:</p>
 
 <pre><code>RxAlamofire.request(.post, URL, parameters: parameters, encoding: JSONEncoding.default)
     .observeOn(MainScheduler.instance)
@@ -248,7 +248,7 @@ return Mapper&lt;SomeObject&gt;().map(JSONObject: json)
     public func request(urlRequest: URLRequestConvertible) -&gt; RxSwift.Observable&lt;Alamofire.DataRequest&gt;
 </code></pre>
 ","5532616","","472495","","2018-10-10 12:28:31","2018-10-10 12:28:31","RxAlamofire cannot use with URLRequest","<ios><alamofire><urlrequest><rxalamofire>","0","0","","","","CC BY-SA 4.0"
-"44317905","1","44318736","","2017-06-01 22:13:02","","0","1017","<p>This is my non-reactive code that works just fine.</p>
+"44317905","1","44318736","","2017-06-01 22:13:02","","0","1020","<p>This is my non-reactive code that works just fine.</p>
 
 <p>func getLatestHtml2 () {</p>
 
@@ -310,7 +310,7 @@ return Mapper&lt;SomeObject&gt;().map(JSONObject: json)
 
 <p>I cam calling it as .getLatestHTMLX(). Thanks !</p>
 ","6052993","","","","","2017-06-01 23:48:34","RXAlamofire not returning data ( error or not)","<swift><reactive-programming><rx-swift><frp><rxalamofire>","1","0","","","","CC BY-SA 3.0"
-"45551049","1","46508277","","2017-08-07 15:53:28","","0","145","<p>When I try to compile the code below, I get an error: </p>
+"45551049","1","46508277","","2017-08-07 15:53:28","","0","146","<p>When I try to compile the code below, I get an error: </p>
 
 <blockquote>
   <p>Ambiguous reference to member 'json(<em>:</em>:parameters:encoding:headers:)'</p>
@@ -399,7 +399,7 @@ _ = SessionManager(configuration: configuration)
 }
 </code></pre>
 ","8169327","","","","","2017-09-24 17:27:42","How to refresh Api authorization token using Alamofire & rxSwift?","<ios><swift><alamofire><rx-swift><rxalamofire>","0","0","1","","","CC BY-SA 3.0"
-"47746033","1","","","2017-12-11 03:29:06","","3","1212","<p>I want to cancel the previous request using RxAlamofire.<br>
+"47746033","1","","","2017-12-11 03:29:06","","3","1220","<p>I want to cancel the previous request using RxAlamofire.<br>
 But I don't know where to call the cancel function.<br>
 I have a searchBar, and I call the API in function ""textdidchange"".<br>
 So, I want to cancel the previous request and call the API with new parameters.<br> 
@@ -458,7 +458,7 @@ Thanks.<br></p>
 
 <p>Can you suggest something? Do I miss something in RxAlamofire download api?</p>
 ","3077831","","","","","2017-12-29 10:24:21","RxAlamofire - event on download completed missing","<ios><swift><alamofire><rx-swift><rxalamofire>","1","0","1","","","CC BY-SA 3.0"
-"48187689","1","48198724","","2018-01-10 12:39:50","","0","1050","<p>I am using Moya with RxSwift and I am trying to set the request timeout for the network call (API Calls) using below code as suggested :</p>
+"48187689","1","48198724","","2018-01-10 12:39:50","","0","1051","<p>I am using Moya with RxSwift and I am trying to set the request timeout for the network call (API Calls) using below code as suggested :</p>
 
 <p>which is including the custom Alamofire Manager when declaring your Provider</p>
 
@@ -469,7 +469,7 @@ Thanks.<br></p>
 
 <p>but I am getting an error saying : Use of unresolved identifier 'networkActivityClosure'</p>
 ","2967827","","","","","2018-01-11 01:48:56","Set request timeout on RXMoyaProvider","<alamofire><rx-swift><moya><rxalamofire>","1","0","","","","CC BY-SA 3.0"
-"49002619","1","","","2018-02-27 06:39:48","","0","940","<p>How to get response of a nested api call using RxSwift and alamofire? Here i get a response from an alamofire api cal and with that result i need to call another api call. I want to get the second api call response. Can anyone suggest me a solution to solve this. please.</p>
+"49002619","1","","","2018-02-27 06:39:48","","0","942","<p>How to get response of a nested api call using RxSwift and alamofire? Here i get a response from an alamofire api cal and with that result i need to call another api call. I want to get the second api call response. Can anyone suggest me a solution to solve this. please.</p>
 
 <pre><code>func origin() -&gt; Observable&lt;String&gt; {
 return Alamofire.request(""httpbin.org/get"").rx.responseJSON() 
@@ -498,7 +498,7 @@ return Alamofire...........
 .disposed(by: disposeBag)
 </code></pre>
 ","9395472","","9395472","","2018-02-27 07:16:10","2018-02-27 08:34:22","How to get response of a nested api call using RxSwift and alamofire?","<alamofire><rx-swift><rxalamofire>","1","4","","","","CC BY-SA 3.0"
-"49271118","1","49273193","","2018-03-14 06:33:24","","0","1299","<p>Below is the example code of RxAlamofire network request. My problem is that I want to cancel this request whenever the View Controller is dismissed.</p>
+"49271118","1","49273193","","2018-03-14 06:33:24","","0","1301","<p>Below is the example code of RxAlamofire network request. My problem is that I want to cancel this request whenever the View Controller is dismissed.</p>
 
 <p>I tried to assign this request to a global variable but <code>requestJSON</code> method returns <code>Observable&lt;(HTTPURLResponse, Any)&gt;</code> type.</p>
 
@@ -520,7 +520,7 @@ return Alamofire...........
             .disposed(by: disposeBag)
 </code></pre>
 ","5393286","","","","","2018-03-14 16:45:45","RxAlamofire cancel network request","<ios><swift><rx-swift><rx-cocoa><rxalamofire>","2","0","","","","CC BY-SA 3.0"
-"49895644","1","","","2018-04-18 09:10:24","","1","1306","<p>I'm trying to write an API layer using RxSwift and RxAlamofire. 
+"49895644","1","","","2018-04-18 09:10:24","","1","1307","<p>I'm trying to write an API layer using RxSwift and RxAlamofire. 
 Here is the code for API request.</p>
 
 <pre><code>public func _request(_ method: Alamofire.HTTPMethod, url: URLConvertible, parameters: [String : Any]? , encoding: ParameterEncoding, headers: [String : String]?, isSecondTryAfterAuth: Bool = false) -&gt; RxSwift.Observable&lt;(HTTPURLResponse, Any)&gt;
@@ -535,7 +535,7 @@ Here is the code for API request.</p>
 
 <p>I got an error in .map function ""Closure tuple parameter '(HTTPURLResponse, Any)' does not support destructuring"". Any idea about how to solve this?<a href=""https://i.stack.imgur.com/KpWt0.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/KpWt0.png"" alt=""enter image description here""></a></p>
 ","5662641","","","","","2018-04-18 21:04:46","Error in closure tuple parameter","<ios><swift><alamofire><rx-swift><rxalamofire>","2","0","","","","CC BY-SA 3.0"
-"49939309","1","","","2018-04-20 10:15:45","","5","1479","<p>I need the response body when an error occurs in an RxAlamofire call. I've seen <a href=""https://github.com/RxSwiftCommunity/RxAlamofire/issues/29"" rel=""noreferrer"">this hack</a> but I wonder if there's a cleaner way.</p>
+"49939309","1","","","2018-04-20 10:15:45","","5","1481","<p>I need the response body when an error occurs in an RxAlamofire call. I've seen <a href=""https://github.com/RxSwiftCommunity/RxAlamofire/issues/29"" rel=""noreferrer"">this hack</a> but I wonder if there's a cleaner way.</p>
 
 <p>Inspired by it, I created this <a href=""https://github.com/fmaylinch/RxAlamofire"" rel=""noreferrer"">RxAlamofire fork</a> with a similar hack. With it, errors will usually be an instance of <code>DataResponseError</code> so you can do this:</p>
 
@@ -560,7 +560,7 @@ Here is the code for API request.</p>
 )
 </code></pre>
 ","1121497","","","","","2018-05-01 12:35:51","RxAlamofire - how to get the response on error?","<rxalamofire>","1","0","","","","CC BY-SA 3.0"
-"50015805","1","","","2018-04-25 06:52:26","","0","563","<p>I am trying to use RxAlamofire for Reactive requests. There is a method for creating <code>POST</code> request with -</p>
+"50015805","1","","","2018-04-25 06:52:26","","0","564","<p>I am trying to use RxAlamofire for Reactive requests. There is a method for creating <code>POST</code> request with -</p>
 
 <pre><code>public func request(_ method: Alamofire.HTTPMethod,
     _ url: URLConvertible,
@@ -588,7 +588,7 @@ Here is the code for API request.</p>
 <p>As now the type of students is <code>[[String : Any]]</code>
 So does Alamofire or RxAlamofire have any handy method for creating requests with JSON Array as parameter? Or do we have to take a harder way?</p>
 ","3683405","","3683405","","2018-04-26 12:29:46","2018-04-26 12:29:46","How to Post request in RxAlamofire with Array as parameters instead of Dictionary?","<swift><rx-swift><rxalamofire>","1","0","","","","CC BY-SA 3.0"
-"51942679","1","","","2018-08-21 06:19:02","","0","2538","<p>I would like to post binary data through RxAlamofire, Alamofire or even without any library but after some days of research and tries, I'm not able to do it.</p>
+"51942679","1","","","2018-08-21 06:19:02","","0","2551","<p>I would like to post binary data through RxAlamofire, Alamofire or even without any library but after some days of research and tries, I'm not able to do it.</p>
 
 <p>Here you can find the POSTMAN example of the request that I am trying to reproduce is:</p>
 
@@ -720,7 +720,7 @@ So does Alamofire or RxAlamofire have any handy method for creating requests wit
     }
 </code></pre>
 ","4669063","","4669063","","2018-08-21 07:06:01","2018-08-21 07:06:01","POST binary data using swift","<swift><alamofire><rx-swift><rxalamofire>","1","2","","","","CC BY-SA 4.0"
-"52311965","1","52313806","","2018-09-13 10:39:25","","3","3652","<p>I'm trying to periodically (every 10 seconds) call an API that returns a Json object of model :</p>
+"52311965","1","52313806","","2018-09-13 10:39:25","","3","3679","<p>I'm trying to periodically (every 10 seconds) call an API that returns a Json object of model :</p>
 
 <pre><code>struct MyModel { 
    var messagesCount: Int?
@@ -733,7 +733,7 @@ I tried the Timer solution but i find it a little bit messy and i want a cleaner
 
 <p>Any help is highly appreciated as i'm new to Rx. </p>
 ","10285869","","","","","2018-09-15 09:35:37","Periodically call an API with RxSwift","<ios><swift><rx-swift><rxalamofire>","2","5","2","","","CC BY-SA 4.0"
-"52656378","1","52656720","","2018-10-04 23:23:13","","0","982","<p>So I have been researching RxSwift for a couple days, and am trying to create a simple app with it. I have bound the searchController of my table to the results, which feed into the <code>cellForRowAt</code> function. How do I bind the alamofire response to each cell?
+"52656378","1","52656720","","2018-10-04 23:23:13","","0","988","<p>So I have been researching RxSwift for a couple days, and am trying to create a simple app with it. I have bound the searchController of my table to the results, which feed into the <code>cellForRowAt</code> function. How do I bind the alamofire response to each cell?
 Which of these do I need to do?</p>
 
 <ul>
@@ -870,7 +870,7 @@ searchController.searchBar.rx.text.orEmpty.filter { text in
     }
 </code></pre>
 ","","user8319594","","user8319594","2018-12-18 07:42:11","2018-12-18 07:42:11","Upload multiple data, image and user data by using Alamofire doesn't work","<ios><swift><alamofire><alamofireimage><rxalamofire>","0","5","","","","CC BY-SA 4.0"
-"55128301","1","","","2019-03-12 18:20:44","","0","749","<p>I am trying to user ObjectMapper to consume JSON response. So far my response looks like this:</p>
+"55128301","1","","","2019-03-12 18:20:44","","0","751","<p>I am trying to user ObjectMapper to consume JSON response. So far my response looks like this:</p>
 
 <pre><code>{
   ""paramsStructure"": [
@@ -1030,7 +1030,7 @@ private func request2(credentials: Credentials) -&gt; Observable&lt;String&gt; {
 ","11216994","","11216994","","2019-03-17 17:31:04","2019-03-18 12:25:15","RxAlamofire request is not fired for the second time i call the function","<swift><networking><rx-swift><reactive><rxalamofire>","1","0","","","","CC BY-SA 4.0"
 "55308791","1","55308954","","2019-03-22 22:53:44","","0","48","<p>I am <code>web scrapping</code> a specific website to which the user has to be logged in. It is simple to logout the user, but after the logout the site requires the user to <code>""close the browser""</code>. If the user only closes the tab and then re-enters the site, they are taken back to the signed in account. Is there a way to somehow simulate closing the browser in Swift or possibly RxAlamofire?</p>
 ","11216994","","","","","2019-03-22 23:23:59","Is there a way to quit browser session in Swift or RxAlamofire?","<swift><web-scraping><rxalamofire>","1","0","","","","CC BY-SA 4.0"
-"56171030","1","56173973","","2019-05-16 14:36:22","","0","169","<p>Following is method provided by <strong>RxAlamofire</strong> for making requestJSON request there is no method to pass parameters [String : String]</p>
+"56171030","1","56173973","","2019-05-16 14:36:22","","0","170","<p>Following is method provided by <strong>RxAlamofire</strong> for making requestJSON request there is no method to pass parameters [String : String]</p>
 
 <pre><code>RxAlamofire.requestJSON(.get, url)
         .subscribe(onNext: { [weak self] (r, json) in
@@ -1048,7 +1048,7 @@ private func request2(credentials: Credentials) -&gt; Observable&lt;String&gt; {
 
 <p>How to pass parameters to <strong>RxAlamofire</strong> requestJSON method</p>
 ","4153589","","","","","2019-05-16 17:43:46","RxAlmofire pass parameters to requestJSON [:]","<ios><swift4><rx-swift><reactive><rxalamofire>","1","2","","","","CC BY-SA 4.0"
-"56227364","1","","","2019-05-20 19:55:31","","1","243","<p>I want to make a post call using <strong>RxAlamofire</strong> it provides <strong>function</strong> <strong>requestJson</strong> which requires <strong>two parameters</strong> <strong>type get or post and url</strong> but there is <strong>no parameter to pass post json body</strong> how to do that following is my code</p>
+"56227364","1","","","2019-05-20 19:55:31","","1","245","<p>I want to make a post call using <strong>RxAlamofire</strong> it provides <strong>function</strong> <strong>requestJson</strong> which requires <strong>two parameters</strong> <strong>type get or post and url</strong> but there is <strong>no parameter to pass post json body</strong> how to do that following is my code</p>
 
 <pre><code> var components = URLComponents(string: url)!
     components.setQueryItems(with: param)
@@ -1070,7 +1070,7 @@ private func request2(credentials: Credentials) -&gt; Observable&lt;String&gt; {
         .disposed(by: disposeBag)
 </code></pre>
 ","4153589","","","","","2019-05-31 15:55:35","How to make Post call using RxAlamofire pass json in post body","<ios><swift><swift4><rx-swift><rxalamofire>","1","0","","","","CC BY-SA 4.0"
-"56232506","1","56312094","","2019-05-21 06:43:24","","0","1544","<p>I want to make post call using RxAlamofire not able to find any method to do so</p>
+"56232506","1","56312094","","2019-05-21 06:43:24","","0","1551","<p>I want to make post call using RxAlamofire not able to find any method to do so</p>
 
 <p>tried using requestJSON method but there is no paramter to pass post json in</p>
 
@@ -1079,7 +1079,7 @@ private func request2(credentials: Credentials) -&gt; Observable&lt;String&gt; {
 
 <p>how to make post call and pass json data to post call in RxAlamofire</p>
 ","5450254","","","","","2021-05-21 20:13:28","RxAlamofire make post call with json body","<swift><swift4><rx-swift><rxalamofire>","3","3","","","","CC BY-SA 4.0"
-"56235031","1","","","2019-05-21 09:15:29","","0","1053","<p>how to covert URLRequest to Alamofire URLConvertible I am getting error while trying to convert following is my code</p>
+"56235031","1","","","2019-05-21 09:15:29","","0","1065","<p>how to covert URLRequest to Alamofire URLConvertible I am getting error while trying to convert following is my code</p>
 
 <pre><code>var request = URLRequest(url: URL(string: ""some url"")!)
 request.httpBody = json
@@ -1144,7 +1144,7 @@ RxAlamofire.request(.post, request as! URLConvertible, parameters: param, encodi
     }
 </code></pre>
 ","11748407","","11748407","","2019-07-06 18:16:56","2019-07-06 20:36:33","Why use the responseWith method?","<swift><rxalamofire>","1","1","0","","","CC BY-SA 4.0"
-"57544950","1","57603726","","2019-08-18 13:17:26","","1","447","<pre><code>func showImageForUrl(url: String) -&gt; Observable&lt;Async&lt;Any&gt;&gt; {
+"57544950","1","57603726","","2019-08-18 13:17:26","","1","451","<pre><code>func showImageForUrl(url: String) -&gt; Observable&lt;Async&lt;Any&gt;&gt; {
     let result = RxAlamofire
         .requestJSON(.get,
                      url,
@@ -1160,7 +1160,7 @@ RxAlamofire.request(.post, request as! URLConvertible, parameters: param, encodi
 
 <p>I'm trying this but the end result is an error.<a href=""https://i.stack.imgur.com/ET8U3.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/ET8U3.png"" alt=""enter image description here""></a></p>
 ","1898829","","","","","2019-08-22 07:03:20","How to download image using RxAlamofire","<swift><rx-swift><rxalamofire>","1","0","","","","CC BY-SA 4.0"
-"58294464","1","","","2019-10-08 21:44:30","","0","180","<p>I'm trying to figure out where data in an API call is coming from. Specifically, I want to know where <code>req.user</code> is coming from as from what I can tell there's no paramters being passed into the API call.</p>
+"58294464","1","","","2019-10-08 21:44:30","","0","184","<p>I'm trying to figure out where data in an API call is coming from. Specifically, I want to know where <code>req.user</code> is coming from as from what I can tell there's no paramters being passed into the API call.</p>
 
 <p>Here's the server-side code (in JS):</p>
 
@@ -1244,7 +1244,7 @@ pod ""RxSwift""
 end
 </code></pre>
 ","11303300","","213269","","2021-01-03 18:23:48","2021-01-03 18:23:48","Swift compile error - Could not build Objective-C module 'RxAlamofire'","<ios><swift><xcode><cocoapods><rxalamofire>","0","0","","","","CC BY-SA 4.0"
-"59680603","1","59683293","","2020-01-10 11:15:50","","1","261","<p>Following is my code to do RxAlamofire requests</p>
+"59680603","1","59683293","","2020-01-10 11:15:50","","1","264","<p>Following is my code to do RxAlamofire requests</p>
 
 <pre><code> RxAlamofire.request(request as URLRequestConvertible).validate(statusCode: 200..&lt;300).responseJSON().asObservable()
         .subscribe(onNext: { [weak self] (response) in
@@ -1267,7 +1267,7 @@ end
 
 <p><strong>How can I do this?</strong></p>
 ","4153589","","","","","2020-01-10 14:04:41","RxAlamofire extension to hanlde error at one place","<ios><swift><alamofire><rx-swift><rxalamofire>","1","2","","","","CC BY-SA 4.0"
-"60228021","1","60228236","","2020-02-14 14:13:18","","0","2170","<p>I am trying to create function which return Observable&lt;(HTTPURLResponse, Any)> using RxAlamofire:</p>
+"60228021","1","60228236","","2020-02-14 14:13:18","","0","2208","<p>I am trying to create function which return Observable&lt;(HTTPURLResponse, Any)> using RxAlamofire:</p>
 
 <pre><code>func getResponse(credentialData: Credentials, ulr: String)-&gt;Observable&lt;(HTTPURLResponse, Any)&gt;{
         let credentialData = ""\(credentialData.username):\(credentialData.password)"".data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))!
@@ -1330,7 +1330,7 @@ end
 
 <p>How can I fix it?</p>
 ","12738240","","4577897","","2020-02-14 16:13:38","2020-02-14 16:13:38","Created observable doesn't emit anything","<swift><rx-swift><rxalamofire>","1","1","","","","CC BY-SA 4.0"
-"63711698","1","","","2020-09-02 18:37:59","","1","64","<p>I'm trying to remove my dependency on RxAlamofire.</p>
+"63711698","1","","","2020-09-02 18:37:59","","1","65","<p>I'm trying to remove my dependency on RxAlamofire.</p>
 <p>I currently have this function:</p>
 <pre><code>  func requestData(_ urlRequest: URLRequestConvertible) -&gt; Observable&lt;(HTTPURLResponse, Data)&gt; {
 
@@ -1380,7 +1380,7 @@ If request is not in progress I need to make the request if some specific time h
 <p>How could I achieve something like this using Alamofire ?
 I am using 'Alamofire', '5.2.2' and 'RxAlamofire', '5.6.2' .</p>
 ","7073962","","","","","2020-12-08 13:15:05","How to check if same DataRequest is already in progress using RxAlamofire or Alamofire 5 and up?","<swift><alamofire><rx-swift><rxalamofire>","1","1","","2020-12-10 17:21:38","","CC BY-SA 4.0"
-"66740046","1","66741657","","2021-03-22 03:41:59","","0","561","<p>I'm updating my code with RxAlamofire. I updated RxAlmofire with lastest version. How can i update this code <code>config.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders</code> in</p>
+"66740046","1","66741657","","2021-03-22 03:41:59","","0","582","<p>I'm updating my code with RxAlamofire. I updated RxAlmofire with lastest version. How can i update this code <code>config.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders</code> in</p>
 <pre><code>let config = URLSessionConfiguration.default
     config.httpAdditionalHeaders = SessionManager.defaultHTTPHeaders
 </code></pre>

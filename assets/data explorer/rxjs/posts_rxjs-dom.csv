@@ -51,7 +51,7 @@ var subscription = source.subscribe(
     });
 </code></pre>
 ","931036","","","","","2016-11-07 12:00:38","How to test RxJS events","<javascript><rxjs><rxjs5><rxjs-dom>","1","0","","","","CC BY-SA 3.0"
-"40489540","1","","","2016-11-08 14:32:38","","1","871","<p>I have a ReactJS &amp; Redux application, and using RxJS for async AJAX with cancellation and error handling. The middleware (for Redux) I am using to connect Redux and RxJS is redux-observable.</p>
+"40489540","1","","","2016-11-08 14:32:38","","1","872","<p>I have a ReactJS &amp; Redux application, and using RxJS for async AJAX with cancellation and error handling. The middleware (for Redux) I am using to connect Redux and RxJS is redux-observable.</p>
 
 <p>I am having a request to the server which also handles errors and cancellation, this is the epic:</p>
 
@@ -81,7 +81,7 @@ export default RecipesEpic
 
 <p>Thank you!</p>
 ","6203305","","","","","2016-11-13 06:56:32","ReactJS Redux RxJS AJAX loading indicator","<ajax><reactjs><redux><rxjs><rxjs-dom>","1","0","0","","","CC BY-SA 3.0"
-"41025242","1","41025494","","2016-12-07 18:57:51","","0","734","<p>I`m trying to test the catch function of a rxjs observer but catch never run.</p>
+"41025242","1","41025494","","2016-12-07 18:57:51","","0","735","<p>I`m trying to test the catch function of a rxjs observer but catch never run.</p>
 
 <p>test.js</p>
 
@@ -110,7 +110,7 @@ export default RecipesEpic
 }
 </code></pre>
 ","3626118","","","","","2016-12-07 19:13:26","Stub catch on redux-observable epic","<rxjs><sinon><rxjs5><redux-observable><rxjs-dom>","1","0","","","","CC BY-SA 3.0"
-"41121614","1","41121704","","2016-12-13 12:52:25","","0","660","<p>I am trying to find the cleanest solution to use <code>filter()</code> operator in order to filter my observables.</p>
+"41121614","1","41121704","","2016-12-13 12:52:25","","0","661","<p>I am trying to find the cleanest solution to use <code>filter()</code> operator in order to filter my observables.</p>
 
 <p>Here I am replicating the service call to get a <code>femaleList</code> separately </p>
 
@@ -150,7 +150,7 @@ export default RecipesEpic
 
 <p>Thanks in advance</p>
 ","4728339","","310726","","2016-12-13 13:13:59","2018-04-26 08:56:52","RxJS filter() operator","<angular><rxjs><angular2-services><rxjs5><rxjs-dom>","3","0","1","","","CC BY-SA 3.0"
-"41520909","1","41521028","","2017-01-07 11:25:00","","6","1297","<p>I know a little bit of BaconJS, but now I'm trying to learn RxJS by creating a ""User is typing..."" indicator. It's pretty simple, it can be explained in two simple rules:</p>
+"41520909","1","41521028","","2017-01-07 11:25:00","","6","1304","<p>I know a little bit of BaconJS, but now I'm trying to learn RxJS by creating a ""User is typing..."" indicator. It's pretty simple, it can be explained in two simple rules:</p>
 
 <ol>
 <li>When the user is typing, the indicator should be immediately visible.</li>
@@ -363,7 +363,7 @@ Rx.DOM.mousedown(resizerEl)
 
 <p>Please help with this error.</p>
 ","2896495","","","","","2017-05-22 20:11:14","RxJS-DOM - Cannot read property 'AbstractObserver' of undefined","<rxjs5><rxjs-dom>","1","0","","","","CC BY-SA 3.0"
-"44320557","1","","","2017-06-02 04:00:57","","2","341","<p>I'm using <code>rx.DOM.ajax</code> <a href=""https://github.com/Reactive-Extensions/RxJS-DOM/blob/master/doc/operators/ajax.md"" rel=""nofollow noreferrer"">https://github.com/Reactive-Extensions/RxJS-DOM/blob/master/doc/operators/ajax.md</a></p>
+"44320557","1","","","2017-06-02 04:00:57","","2","342","<p>I'm using <code>rx.DOM.ajax</code> <a href=""https://github.com/Reactive-Extensions/RxJS-DOM/blob/master/doc/operators/ajax.md"" rel=""nofollow noreferrer"">https://github.com/Reactive-Extensions/RxJS-DOM/blob/master/doc/operators/ajax.md</a></p>
 
 <p>I'm trying to get some data from a url using POST but it doesn't return anything.</p>
 
@@ -380,7 +380,7 @@ Rx.DOM.mousedown(resizerEl)
 
 <p>If I <code>print_r($_POST)</code> there's nothing in it. I'm expecting the server to receive a <code>$_POST</code>.</p>
 ","6554121","","","","","2017-06-02 04:25:12","rxjs-dom how to pass data into POST","<javascript><php><ajax><rxjs><rxjs-dom>","1","3","","","","CC BY-SA 3.0"
-"44994242","1","","","2017-07-09 07:53:36","","2","295","<p>Redux-Observable has a dependency on RxJS.</p>
+"44994242","1","","","2017-07-09 07:53:36","","2","296","<p>Redux-Observable has a dependency on RxJS.</p>
 
 <p>I need to use the filereader function from RxJS-DOM.</p>
 
@@ -447,13 +447,13 @@ I didn't return an Observable from <code>flatMap</code>. RxJS operators <strong>
 
 <p>I also made <a href=""https://codepen.io/stelioschar/pen/zdqmRM"" rel=""nofollow noreferrer"">this test</a> where I implemented a simple RxJS process without the redux-observable implementation. This example contains the case where multiple redux actions-creators are being called. </p>
 ","1055160","","1033581","","2018-05-03 02:32:32","2018-05-03 02:32:32","RxJS - ajax.delete keeps retrying until the observable fails while DELETE request was 200 OK","<redux><rxjs><rxjs5><redux-observable><rxjs-dom>","0","3","0","","","CC BY-SA 4.0"
-"45495188","1","45520322","","2017-08-03 21:58:06","","18","18993","<p>What is the best way to handle multiple events on the same DOM node in rxjs 5.1?</p>
+"45495188","1","45520322","","2017-08-03 21:58:06","","18","19065","<p>What is the best way to handle multiple events on the same DOM node in rxjs 5.1?</p>
 
 <p><code>fromEvent($element, 'event_name')</code> but I can specify only one event at a time.</p>
 
 <p>I want handle <code>scroll wheel touchmove touchend</code> events.</p>
 ","3130446","","","","","2021-05-25 07:11:10","Rxjs, fromEvent to handle multiple events","<angular><rxjs5><rxjs-dom>","4","0","5","","","CC BY-SA 3.0"
-"45778994","1","","","2017-08-20 06:06:09","","2","3679","<p>Not sure is there any way to set default request headers in rxjs like we do with <a href=""https://github.com/mzabriskie/axios"" rel=""nofollow noreferrer"">axios js</a> as- </p>
+"45778994","1","","","2017-08-20 06:06:09","","2","3687","<p>Not sure is there any way to set default request headers in rxjs like we do with <a href=""https://github.com/mzabriskie/axios"" rel=""nofollow noreferrer"">axios js</a> as- </p>
 
 
 
@@ -505,7 +505,7 @@ The problem is that I am unable to access the token in second map method. <br>So
 <p>Please give me idea to solve this issue.<br>
 Kind Regards</p>
 ","7943893","","","","","2017-09-15 12:15:08","RxJS: Transfer values in stream","<angular><rxjs><reactive-programming><angular2-observables><rxjs-dom>","1","0","","","","CC BY-SA 3.0"
-"47220718","1","47221055","","2017-11-10 10:31:21","","0","131","<p>i want to return token from localStorage and catch error. </p>
+"47220718","1","47221055","","2017-11-10 10:31:21","","0","133","<p>i want to return token from localStorage and catch error. </p>
 
 <pre><code>Observable.of(JSON.parse(localStorage.getItem('currentUser')).token)
 .catch((er) =&gt; Observable.of(console.log(er))
@@ -644,7 +644,7 @@ console.log(finalURL);
 
 <p>Everything is working fine videos are getting fetched but part of the DOM continuously getting refreshed. I tried to do unsubscribe at all the component lifecycle hooks. But If I unsubscribe I won't fetch any results only. Is there any other work-around or am I missing some thing here! </p>
 ","8270735","","","","","2018-01-29 10:51:06","Part of the DOM continuously getting refreshed in Angular 5. While trying to fetch videos from YouTube API","<youtube-api><angular5><youtube-data-api><rxjs-dom>","1","0","","","","CC BY-SA 3.0"
-"49542770","1","49543849","","2018-03-28 19:34:51","","7","6511","<p>I have a need/desire to use more than six parameters in a forkJoin. Currently, based on the answer to another <a href=""https://stackoverflow.com/questions/46350396/observable-forkjoin-wrong-return-type-when-more-than-6-arguments"">related question</a> it doesn't appear possible to send more than 6 parameters to forkJoin.</p>
+"49542770","1","49543849","","2018-03-28 19:34:51","","7","6548","<p>I have a need/desire to use more than six parameters in a forkJoin. Currently, based on the answer to another <a href=""https://stackoverflow.com/questions/46350396/observable-forkjoin-wrong-return-type-when-more-than-6-arguments"">related question</a> it doesn't appear possible to send more than 6 parameters to forkJoin.</p>
 
 <p>However, based on the offical documentation, it says ""forkJoin is an operator that takes any number of Observables which can be passed either as an array or directly as arguments.""</p>
 
@@ -684,7 +684,7 @@ console.log(finalURL);
 
 <p>I've tried creating an Array of type Observable and using array.forEach() inside the forkJoin but it complains about returning type void. That seemed like a janky way of doing it anyhow. </p>
 ","9409896","","","","","2019-12-17 16:10:45","Work around for more than 6 forkJoin parameters?","<angular><typescript><rxjs><angular2-observables><rxjs-dom>","5","2","","","","CC BY-SA 3.0"
-"50268476","1","50324698","","2018-05-10 08:16:35","","2","955","<p>I have a simple websocket server built following <a href=""https://medium.com/dailyjs/real-time-apps-with-typescript-integrating-web-sockets-node-angular-e2b57cbd1ec1?t=1&amp;cn=ZmxleGlibGVfcmVjcw%3D%3D&amp;refsrc=email&amp;iid=9b197a27b4a14948b1d2fd4ad999e0a1&amp;uid=39235406&amp;nid=244%20276893704"" rel=""nofollow noreferrer"">this example</a></p>
+"50268476","1","50324698","","2018-05-10 08:16:35","","2","958","<p>I have a simple websocket server built following <a href=""https://medium.com/dailyjs/real-time-apps-with-typescript-integrating-web-sockets-node-angular-e2b57cbd1ec1?t=1&amp;cn=ZmxleGlibGVfcmVjcw%3D%3D&amp;refsrc=email&amp;iid=9b197a27b4a14948b1d2fd4ad999e0a1&amp;uid=39235406&amp;nid=244%20276893704"" rel=""nofollow noreferrer"">this example</a></p>
 
 <pre><code>import { createServer, Server } from 'http';
 import * as express from 'express';
@@ -764,7 +764,7 @@ webSocket('http://localhost:8081')
 
 <p>I am sure I am making a very basic mistake, but I have currently no clue on where.</p>
 ","5699993","","","","","2018-05-14 07:02:46","RxJs webSocket not able to connect to a websocket server implemented with socket.io","<websocket><socket.io><rxjs><rxjs-dom>","1","0","","","","CC BY-SA 4.0"
-"50310637","1","50322466","","2018-05-12 21:01:35","","0","662","<p>i have an issue when user click very fast on two buttons that update in firebase database same object and the same property. the issue that only one of the request save and the rest override. its happen in case user clicked on both button on the same second.</p>
+"50310637","1","50322466","","2018-05-12 21:01:35","","0","665","<p>i have an issue when user click very fast on two buttons that update in firebase database same object and the same property. the issue that only one of the request save and the rest override. its happen in case user clicked on both button on the same second.</p>
 
 <p>my question is if there a way to execute the click streams with minimum delay between them. i want that there will be minimum of 2 seconds between every execution. thanks for the help.</p>
 

@@ -1,5 +1,5 @@
 Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCount,Body,OwnerUserId,OwnerDisplayName,LastEditorUserId,LastEditorDisplayName,LastEditDate,LastActivityDate,Title,Tags,AnswerCount,CommentCount,FavoriteCount,ClosedDate,CommunityOwnedDate,ContentLicense
-"40455824","1","","","2016-11-06 23:41:08","","8","6610","<p>I am trying to create a table view with multiple sections using RxSwift. Each section displays data representing a different type.</p>
+"40455824","1","","","2016-11-06 23:41:08","","8","6626","<p>I am trying to create a table view with multiple sections using RxSwift. Each section displays data representing a different type.</p>
 
 <p>I found the <a href=""https://github.com/RxSwiftCommunity/RxDataSources"" rel=""noreferrer""><code>RxSwiftDataSources</code></a> library and implemented the example from their documentation.</p>
 
@@ -50,12 +50,12 @@ extension SectionOfCustomData: SectionModelType {
 
 <p><strong>Protocol '<code>SectionModelType</code>' can only be used as a generic constraint because it has Self or associated type requirements</strong></p>
 ","1779113","","1779113","","2016-11-07 01:22:29","2017-05-11 02:34:06","How to bind table view with multiple sections that represent different data types using RxSwift and RxSwiftDataSources?","<ios><swift><rx-swift><rxdatasources>","1","1","1","","","CC BY-SA 3.0"
-"41060254","1","41099315","","2016-12-09 12:13:12","","4","2727","<p>Let's say I have a <code>UIButton</code> in a <code>UITableViewCell</code>.
+"41060254","1","41099315","","2016-12-09 12:13:12","","4","2729","<p>Let's say I have a <code>UIButton</code> in a <code>UITableViewCell</code>.
 After dequeuing the cell from the <code>UITableView</code> I want to subscribe to the <code>UIButton.rx.tap</code>. The issue is that if my <code>UITableViewCell</code> is dequeued multiple times, the subscriptions would retain. Currently I solve this problem by allocating a <code>Disposable</code> property in my <code>UITableViewCell</code>, setting it when the subscription is create,  and calling <code>Disposable.dispose()</code> on <code>UITableViewCell.prepareForReuse()</code>, however as far as I understand implementing features in a way that requires you to call <code>Disposable.dispose()</code> implies that you are doing something wrong.</p>
 
 <p>Is there any better way to accomplish uniqueness of the subscription without reallocating <code>UIButton</code>?</p>
 ","6407425","","","","","2016-12-12 10:58:17","Subscription to a UIButton.rx.tap located in UITableViewCell within UITableViewDataSource","<ios><uibutton><rx-swift><reactivex><rxdatasources>","2","0","3","","","CC BY-SA 3.0"
-"41634912","1","41638649","","2017-01-13 12:41:53","","0","5978","<p>I have a question: how to properly implement such a scenario in Rx-way with RxDataSources:</p>
+"41634912","1","41638649","","2017-01-13 12:41:53","","0","5984","<p>I have a question: how to properly implement such a scenario in Rx-way with RxDataSources:</p>
 
 <p>We have a class with UICollectionView (or UITableView, in my case it's collection view), the results are not immediately present, they come asynchronously after some time.</p>
 
@@ -78,7 +78,7 @@ Observable.just(sections)
 
 <p>Thanks for any help.</p>
 ","3990005","","","","","2017-01-13 15:58:54","RxSwift and UICollectionView, UITableView","<ios><swift><uicollectionview><rx-swift><rxdatasources>","1","0","2","","","CC BY-SA 3.0"
-"42588448","1","","","2017-03-03 21:08:07","","3","1042","<p>How to achieve self sizing collectionViewCells using RxDataSource?</p>
+"42588448","1","","","2017-03-03 21:08:07","","3","1054","<p>How to achieve self sizing collectionViewCells using RxDataSource?</p>
 
 <p>I've tried setting </p>
 
@@ -104,7 +104,7 @@ Observable.just(sections)
 
 <p>Inside <code>collectionView sizeForItemAt</code>?</p>
 ","5595519","","","","","2020-08-29 01:20:41","Self sizing collectionViewCells using RxDataSource","<rx-swift><rxdatasources>","1","0","","","","CC BY-SA 3.0"
-"42689091","1","","","2017-03-09 07:22:34","","0","1827","<p>I am trying to use RxSwift/RxDataSource with TableView but I am not able to assign configureCell with an existing function. Code below:</p>
+"42689091","1","","","2017-03-09 07:22:34","","0","1830","<p>I am trying to use RxSwift/RxDataSource with TableView but I am not able to assign configureCell with an existing function. Code below:</p>
 
 <pre><code>import UIKit
 import RxSwift
@@ -166,7 +166,7 @@ class BaseTableViewController: UIViewController {
 
 <p>Thanks</p>
 ","2661859","","","","","2017-03-19 14:31:51","RxSwift DataSource configureCell not able to assign function","<ios><swift><uitableview><rx-swift><rxdatasources>","1","1","","","","CC BY-SA 3.0"
-"42793796","1","","","2017-03-14 18:27:54","","1","371","<p>I have created tableView with sections by RxDataSources.</p>
+"42793796","1","","","2017-03-14 18:27:54","","1","374","<p>I have created tableView with sections by RxDataSources.</p>
 
 <p>ViewController</p>
 
@@ -215,7 +215,7 @@ var sectionsObservable: Observable&lt;[Day]&gt; {
 }
 </code></pre>
 ","2235274","","2235274","","2017-03-14 19:25:43","2017-03-14 21:26:36","RxDataSources testing","<testing><tdd><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 3.0"
-"42852876","1","42880047","","2017-03-17 08:45:24","","0","982","<p>I am new to reactive programming and I am experiencing difficulty in filtering and accessing object from a specific index. Below is my code snippet.</p>
+"42852876","1","42880047","","2017-03-17 08:45:24","","0","984","<p>I am new to reactive programming and I am experiencing difficulty in filtering and accessing object from a specific index. Below is my code snippet.</p>
 
 <pre><code>    private var contacts: Observable&lt;(AnyRealmCollection&lt;Contact&gt;, RealmChangeset?)&gt;!
 
@@ -356,7 +356,7 @@ The main idea to get each object and prepare array of values (<code>flatMap</cod
 
 <p>Q: How to get each <code>T</code> object?</p>
 ","1278744","","","","","2017-08-22 13:39:00","RealmSwift obtain each T object","<ios><realm><rxdatasources>","1","1","","","","CC BY-SA 3.0"
-"45949001","1","","","2017-08-29 22:06:40","","4","1007","<p>I have an tableview where I populate some data from view model, I am using RxSwift and RxDataSources... I have next code</p>
+"45949001","1","","","2017-08-29 22:06:40","","4","1008","<p>I have an tableview where I populate some data from view model, I am using RxSwift and RxDataSources... I have next code</p>
 
 <pre><code>  enum TableViewEditingCommand {
     case DeleteItem(IndexPath)
@@ -441,7 +441,7 @@ Observable.of(deleteCommand)
 
 <p>Thanks in advance.</p>
 ","4249566","","4249566","","2017-08-30 16:55:04","2017-08-30 16:55:04","Can't delete cell from tableview using rxdatasources swift","<ios><swift><uitableview><reactive><rxdatasources>","0","0","","","","CC BY-SA 3.0"
-"46081460","1","","","2017-09-06 17:49:46","","1","2008","<p>I'm learning RxSwift, i want used RxDataSources with UICollectionView, but nothing is shown, please tell me where i was wrong, Thanks; 
+"46081460","1","","","2017-09-06 17:49:46","","1","2011","<p>I'm learning RxSwift, i want used RxDataSources with UICollectionView, but nothing is shown, please tell me where i was wrong, Thanks; 
 My code:</p>
 
 <p>---- Model ----</p>
@@ -513,7 +513,7 @@ override init(frame: CGRect) {
 
 <p>thanks, i want used UICollectionView show some people avater.</p>
 ","7407671","","7407671","","2017-09-07 03:04:40","2017-09-07 03:04:40","RxDataSources with UICollection","<ios><rx-swift><rxdatasources>","0","6","1","","","CC BY-SA 3.0"
-"46086529","1","46091825","","2017-09-07 01:29:03","","2","1394","<pre><code>struct MyViewModel {
+"46086529","1","46091825","","2017-09-07 01:29:03","","2","1397","<pre><code>struct MyViewModel {
     var items: Observable&lt;String&gt;
     //....
 }
@@ -527,7 +527,7 @@ viewModel.items.bind(to: tableView.rx.items(cellIdentifier: ""Cell"", cellType: 
 
 <p>If I have a another cell called <code>EmptyCell</code>, and I want to display this cell if the items is empty. How could I achieve this.</p>
 ","4429457","","","","","2017-09-07 08:44:25","RxDataSources - How to add a custom empty cell when there's no data","<rxdatasources>","1","0","2","","","CC BY-SA 3.0"
-"46130494","1","46172995","","2017-09-09 12:05:44","","1","3141","<p>I'm trying to bind(to:) a collectionView, but the tableView doesn't work either. I have a viewModel where is my Variable&lt;[]> and I want to subscribe when the value changes, with my tableView. </p>
+"46130494","1","46172995","","2017-09-09 12:05:44","","1","3148","<p>I'm trying to bind(to:) a collectionView, but the tableView doesn't work either. I have a viewModel where is my Variable&lt;[]> and I want to subscribe when the value changes, with my tableView. </p>
 
 <pre><code>viewModel.theVariable
         .asObservable()
@@ -544,7 +544,7 @@ viewModel.items.bind(to: tableView.rx.items(cellIdentifier: ""Cell"", cellType: 
 
 <p>The point is that this should work even with Variable? Is it a bug? Im using Swift 3.2</p>
 ","3284364","","3284364","","2017-09-11 16:17:41","2018-06-01 11:27:33","Cannot set bind(to: UITableView) with RxSwift Variable asObservable()","<ios><swift><uitableview><rxdatasources>","2","5","0","","","CC BY-SA 3.0"
-"46482491","1","","","2017-09-29 05:48:49","","0","1197","<p>I have a very simple project, where I want to dynamically filter content in <code>UITableView</code> regarding pressed index in <code>UISegmentedControl</code>. I'm using MVVM with RxSwift, Realm and RxDataSources. So my problem, that if I want to update content in <code>UITableView</code> I need to create 'special' <code>DisposeBag</code>, only for that purposes, and on each selection in <code>UISegmentedControl</code> nil it and create again. Only in this case, if I'm understand right, subscription is re-newed, and <code>UITableView</code> displays new results from Realm. 
+"46482491","1","","","2017-09-29 05:48:49","","0","1200","<p>I have a very simple project, where I want to dynamically filter content in <code>UITableView</code> regarding pressed index in <code>UISegmentedControl</code>. I'm using MVVM with RxSwift, Realm and RxDataSources. So my problem, that if I want to update content in <code>UITableView</code> I need to create 'special' <code>DisposeBag</code>, only for that purposes, and on each selection in <code>UISegmentedControl</code> nil it and create again. Only in this case, if I'm understand right, subscription is re-newed, and <code>UITableView</code> displays new results from Realm. 
     So is there any better way to do such operation? Without subscribing every time, when I switch tab in <code>UISegmentedControl</code>. Here's my code:</p>
 
 <pre><code>//ViewController
@@ -623,7 +623,7 @@ class MyViewController : UIViewController {
    }
 </code></pre>
 ","4376284","","","","","2017-09-29 06:05:58","Dynamically filter results with RxSwift and Realm","<ios><swift><realm><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 3.0"
-"47219629","1","","","2017-11-10 09:35:23","","1","2173","<p>I have a table view that I am trying to make reactive. I have it working using Swift.</p>
+"47219629","1","","","2017-11-10 09:35:23","","1","2174","<p>I have a table view that I am trying to make reactive. I have it working using Swift.</p>
 
 <p>Following is the RxSwift code</p>
 
@@ -698,7 +698,7 @@ class MyViewController : UIViewController {
 
 <p>Can anyone one point out what the problem is? Thank you.</p>
 ","5443885","","","","","2017-11-13 02:57:07","Rx table view not being reloaded after the datasource gets updated","<ios><uitableview><rx-swift><rx-cocoa><rxdatasources>","1","0","","","","CC BY-SA 3.0"
-"47446091","1","47451374","","2017-11-23 01:01:45","","3","754","<p>Hey I'm trying to get an UICollectionView, hosted by an UICollectionViewController working with RxCocoa and RxDataSources.</p>
+"47446091","1","47451374","","2017-11-23 01:01:45","","3","756","<p>Hey I'm trying to get an UICollectionView, hosted by an UICollectionViewController working with RxCocoa and RxDataSources.</p>
 
 <p>Everything works fine when I use an UIViewController, with an embedded UICollectionView.</p>
 
@@ -713,9 +713,9 @@ class MyViewController : UIViewController {
 
 <p>Is there something I'm missing about RxDataSources, that you cannot use them with UICollectionViewController?</p>
 ","6831395","","","","","2018-02-22 10:34:27","Xcode crashes while adding RxDataSource to UICollectionView","<ios><swift><uicollectionview><rx-swift><rxdatasources>","3","1","1","","","CC BY-SA 3.0"
-"47852762","1","","","2017-12-17 06:29:45","","0","227","<p>I follow this <a href=""https://github.com/RxSwiftCommunity/RxDataSources/blob/master/Example/Example4_DifferentSectionAndItemTypes.swift"" rel=""nofollow noreferrer"">sample</a> and successfully created multi-section <code>tableView</code>, but how can I append items to one of this sections? I can recreate the section but I want to append items instead of reloading <code>tableView</code>.</p>
+"47852762","1","","","2017-12-17 06:29:45","","0","228","<p>I follow this <a href=""https://github.com/RxSwiftCommunity/RxDataSources/blob/master/Example/Example4_DifferentSectionAndItemTypes.swift"" rel=""nofollow noreferrer"">sample</a> and successfully created multi-section <code>tableView</code>, but how can I append items to one of this sections? I can recreate the section but I want to append items instead of reloading <code>tableView</code>.</p>
 ","1225850","","","","","2018-01-30 12:20:16","Append items to MultipleSectionModel","<ios><swift><rx-swift><rxdatasources>","1","2","","","","CC BY-SA 3.0"
-"48579420","1","48580478","","2018-02-02 09:20:20","","0","406","<p>I'm trying to add an headerView to a collectionView using RxSwift.</p>
+"48579420","1","48580478","","2018-02-02 09:20:20","","0","407","<p>I'm trying to add an headerView to a collectionView using RxSwift.</p>
 
 <p>I get this error: </p>
 
@@ -776,7 +776,7 @@ let obsHeader = Variable(SectionOfItems(items: [item]))
 obsHeader.asObservable().bind(to: collectionView.rx.items(dataSource: dataSource)).disposed(by: disposeBag)
 </code></pre>
 ","3797475","","3797475","","2018-02-02 10:05:39","2018-02-02 10:17:14","RxSwift Cannot convert call result type '(_) -> Disposable' to expected type '(_) ->","<uicollectionview><rx-swift><uicollectionreusableview><rx-cocoa><rxdatasources>","1","2","","","","CC BY-SA 3.0"
-"48582797","1","","","2018-02-02 12:33:34","","2","976","<p>I'm using RxSwift, I managed to create the dataSource and I retrieve cells correctly. Problem is with the section headerView. I have created a UICollectionReusableView class, attaching outlets from storyboard. </p>
+"48582797","1","","","2018-02-02 12:33:34","","2","979","<p>I'm using RxSwift, I managed to create the dataSource and I retrieve cells correctly. Problem is with the section headerView. I have created a UICollectionReusableView class, attaching outlets from storyboard. </p>
 
 <p>The problem is that I retrieve the view with collectionview.dequeueReusableSupplementaryView, but awakeFromNib is never called! </p>
 
@@ -820,7 +820,7 @@ collectionView.register(AddNewCardCollectionHeaderView.self, forSupplementaryVie
 
 <p>Any help? Thanks!</p>
 ","3797475","","","","","2021-05-01 22:29:39","awakefromnib not called for UICollectionReusableView when using RxSwift datasource","<ios><rx-swift><uicollectionreusableview><rx-cocoa><rxdatasources>","0","4","1","","","CC BY-SA 3.0"
-"50174591","1","50175064","","2018-05-04 12:07:46","","0","461","<p>I'm learn to use RxSwift and RxDataSource to separate business logic from View Controller (using MVVM).</p>
+"50174591","1","50175064","","2018-05-04 12:07:46","","0","463","<p>I'm learn to use RxSwift and RxDataSource to separate business logic from View Controller (using MVVM).</p>
 
 <p>Suppose I want to create table view like in the Mail App in iOS, when user swipe left, there are <strong>delete button</strong> and <strong>More button</strong>.</p>
 
@@ -887,7 +887,7 @@ end
 
 <p><a href=""https://i.stack.imgur.com/udjq7.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/udjq7.png"" alt=""enter image description here""></a></p>
 ","","user4422315","","","","2018-06-04 12:40:37","How can I get RxDataSource to work","<observable><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 4.0"
-"50912058","1","50913509","","2018-06-18 14:44:38","","0","1247","<p>I am doing multiple requests for every section that I have in my collectionView.</p>
+"50912058","1","50913509","","2018-06-18 14:44:38","","0","1254","<p>I am doing multiple requests for every section that I have in my collectionView.</p>
 
 <p>The idea was to join them together into an Observable&lt;[FeedSection]> so that I can bind it to the collectionView sections.</p>
 
@@ -912,7 +912,7 @@ end
 
 <p>Anyway I can solve this? </p>
 ","962562","","","","","2018-07-11 21:53:50","BehaviorRelay/Variable slow RxDataSources if a lot of data in UITableview","<rxdatasources>","1","0","","","","CC BY-SA 4.0"
-"51620192","1","","","2018-07-31 18:51:26","","3","5568","<p>This is a tableView in RxSwift
+"51620192","1","","","2018-07-31 18:51:26","","3","5604","<p>This is a tableView in RxSwift
 I am not able to configure the dataSource. There seems to be parameters missing for RxTableViewSectionedReloadDataSource, although this is strange as I follow the exact same code source of the <a href=""https://github.com/RxSwiftCommunity/RxDataSources"" rel=""nofollow noreferrer"">official docs</a></p>
 
 <p><a href=""https://i.stack.imgur.com/uO8Ko.png"" rel=""nofollow noreferrer"">Xcode error</a>
@@ -970,7 +970,7 @@ extension SectionOfCustomData: SectionModelType {
 }
 </code></pre>
 ","10162147","","1113632","","2018-08-02 14:18:27","2019-07-23 11:03:20","RxTableViewSectionedReloadDataSource","<swift><rx-swift><rxdatasources>","2","1","1","","","CC BY-SA 4.0"
-"52607372","1","","","2018-10-02 11:23:39","","1","2029","<p>I'm using <code>RxDataSources</code> to load and display a <code>UITableview</code>. I am trying to update the section header with the amount of items that it holds, however tough the cell and items update correctly, the title remains stale.</p>
+"52607372","1","","","2018-10-02 11:23:39","","1","2052","<p>I'm using <code>RxDataSources</code> to load and display a <code>UITableview</code>. I am trying to update the section header with the amount of items that it holds, however tough the cell and items update correctly, the title remains stale.</p>
 
 <p>This is my code for the <code>DataSource</code> object:</p>
 
@@ -999,7 +999,7 @@ extension SectionOfCustomData: SectionModelType {
 <p>Edit:
 After further experiments, the title will update, if I scroll around in the tableview, the title changes at some point.</p>
 ","1818120","","1818120","","2018-10-02 11:32:59","2019-10-01 12:40:59","RxDataSources not updating section header title","<ios><swift><rx-swift><rxdatasources>","2","2","2","","","CC BY-SA 4.0"
-"52743367","1","52744090","","2018-10-10 15:08:27","","0","3407","<p>after binding some data to UITableView by this codes:</p>
+"52743367","1","52744090","","2018-10-10 15:08:27","","0","3420","<p>after binding some data to UITableView by this codes:</p>
 
 <pre><code>struct CustomData {
     var anInt: Int
@@ -1075,7 +1075,7 @@ sections = [
 
 <p>but after calling function UITableView data not changing, My question is why after binding section variable to UITableView and changing data inside of that(section), UITableView still showing that last data?</p>
 ","8425034","","","","","2018-10-10 15:50:20","RxSwift, RxDataSources: How to bind dynamic data to UITableView by using RxDataSources?","<rx-swift><rxdatasources>","1","0","2","","","CC BY-SA 4.0"
-"53717518","1","53724978","","2018-12-11 04:47:56","","1","1835","<p>I use RxSwift to show list of Persons in my tableview, and my tableview has two sections, the first one is old searches and the second one is all Persons. now I don't know how should I filter Persons when users type a name on UISearchBar's textfield.</p>
+"53717518","1","53724978","","2018-12-11 04:47:56","","1","1845","<p>I use RxSwift to show list of Persons in my tableview, and my tableview has two sections, the first one is old searches and the second one is all Persons. now I don't know how should I filter Persons when users type a name on UISearchBar's textfield.</p>
 
 <p>This is my Person model:</p>
 
@@ -1189,7 +1189,7 @@ class ContactsViewModel {
 
 <p>Thanks for your response.</p>
 ","1713906","","","","","2018-12-11 13:25:02","UISearchBar in UITableView by Rxswift","<swift><uitableview><uisearchbar><rx-swift><rxdatasources>","1","0","1","","","CC BY-SA 4.0"
-"53729290","1","53758899","","2018-12-11 17:25:35","","0","124","<p>I have a data model like below,
+"53729290","1","53758899","","2018-12-11 17:25:35","","0","125","<p>I have a data model like below,
 <a href=""https://i.stack.imgur.com/OpXgJ.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/OpXgJ.png"" alt=""View structure""></a> </p>
 
 <pre><code>[Car Brand] has [Types] has Year or specific model (string)
@@ -1228,7 +1228,7 @@ bv.tap.rx.event.asObservable().map({ _ -&gt; Selected in
 
 <p><em>Note: Project is using MVVM and RxDataSources extension.</em> </p>
 ","2103088","","","","","2018-12-13 09:41:01","How to manage tree like data models bound to TableViewCell with RxSwift","<ios><swift><mvvm><swift4><rxdatasources>","1","0","","","","CC BY-SA 4.0"
-"54007149","1","54019267","","2019-01-02 13:21:43","","1","932","<p>I have a table view with RxDataSources on which cell items got a remove icon. when cells get dequeued and click on that remove icon, all the previous click events get triggered, thus duplicate tap.
+"54007149","1","54019267","","2019-01-02 13:21:43","","1","938","<p>I have a table view with RxDataSources on which cell items got a remove icon. when cells get dequeued and click on that remove icon, all the previous click events get triggered, thus duplicate tap.
 Item cell : </p>
 
 <pre><code> removeImageView.rx.tap().map { _ in indexPath } 
@@ -1281,7 +1281,7 @@ onRemoveCartIemTapped1
 onRemoveCartIemTapped4
 </code></pre>
 ","2187976","","5175709","","2019-05-10 15:49:30","2019-05-10 15:50:18","How to avoid duplicate tap on button on Tableview with RxDataSources","<ios><swift><uitableview><rx-swift><rxdatasources>","1","4","","","","CC BY-SA 4.0"
-"54424130","1","54472486","","2019-01-29 15:14:57","","3","781","<p>I am building an iOS app with RxSwift and RxDataSource using VIPER architecture. I want to change the content of the UICollectionView as the value of the presenter changes (as the user typed in some letters in the searchBar, the collectionView should show all users' profile that starts with the letters), but it doesn't work as I wanted it to.</p>
+"54424130","1","54472486","","2019-01-29 15:14:57","","3","785","<p>I am building an iOS app with RxSwift and RxDataSource using VIPER architecture. I want to change the content of the UICollectionView as the value of the presenter changes (as the user typed in some letters in the searchBar, the collectionView should show all users' profile that starts with the letters), but it doesn't work as I wanted it to.</p>
 
 <p>By trying <code>debug()</code> function, the value of <code>presenter.section</code> in ViewController (which holds the content of the CollectionView) is changed after I typed in some letters in the searchBar. However, the collectionView is not reflecting the change. 
 Here are the main parts of the code.</p>
@@ -1381,7 +1381,7 @@ AppScreen.SearchFriendsItem(....),
 AppScreen.SearchFriendsItem(....)])])
 </code></pre>
 ","10233761","","10233761","","2019-02-01 01:21:12","2019-02-01 03:29:23","How to reflect the new section to UICollectionView in RxDataSource?","<swift><uicollectionview><rx-swift><viper><rxdatasources>","3","8","","","","CC BY-SA 4.0"
-"54604265","1","","","2019-02-09 07:43:54","","1","1231","<p>I am using MVVM pattern with <a href=""https://github.com/ReactiveX/RxSwift"" rel=""nofollow noreferrer"">RxSwift</a>, <a href=""https://github.com/ReactiveX/RxSwift/tree/master/RxCocoa"" rel=""nofollow noreferrer"">RxCocoa</a>, <a href=""https://github.com/RxSwiftCommunity/RxDataSources"" rel=""nofollow noreferrer"">RxDataSources</a>.</p>
+"54604265","1","","","2019-02-09 07:43:54","","1","1237","<p>I am using MVVM pattern with <a href=""https://github.com/ReactiveX/RxSwift"" rel=""nofollow noreferrer"">RxSwift</a>, <a href=""https://github.com/ReactiveX/RxSwift/tree/master/RxCocoa"" rel=""nofollow noreferrer"">RxCocoa</a>, <a href=""https://github.com/RxSwiftCommunity/RxDataSources"" rel=""nofollow noreferrer"">RxDataSources</a>.</p>
 
 <p><a href=""https://i.stack.imgur.com/3bJgP.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/3bJgP.png"" alt=""enter image description here""></a></p>
 
@@ -1395,12 +1395,12 @@ AppScreen.SearchFriendsItem(....)])])
 
 <p>What if the <code>UITableViewCell</code> at some <code>IndexPath</code> is removed from the memory as it's not visible and the observable's value is changed will it result in crash as the <code>UITextField</code> at that <code>IndexPath</code> will return nil?</p>
 ","5744323","","","","","2019-02-10 02:39:50","2 way binding in UITableView using RxSwift","<uitableview><rx-swift><2-way-object-databinding><rx-cocoa><rxdatasources>","1","4","","","","CC BY-SA 4.0"
-"54874765","1","","","2019-02-25 21:13:58","","-1","128","<p>I am developing port of application from android. In my application In one of screens I present to user collection of parameters grouped by sections. Every section is presented as page of tile items in spannable grid. User can scroll betwen sections horizontally like in pager while pages are not scrolled vertically. Additionally on top of screen user has clickable tabs showing all availible sections by title. On android I achieaved this by creating nested RecyclerViews (one lvl for sections, one for tiles), combined with DiffUtil for quick content updating. 
+"54874765","1","","","2019-02-25 21:13:58","","-1","129","<p>I am developing port of application from android. In my application In one of screens I present to user collection of parameters grouped by sections. Every section is presented as page of tile items in spannable grid. User can scroll betwen sections horizontally like in pager while pages are not scrolled vertically. Additionally on top of screen user has clickable tabs showing all availible sections by title. On android I achieaved this by creating nested RecyclerViews (one lvl for sections, one for tiles), combined with DiffUtil for quick content updating. 
 I am completly new in iOS development but I want to create something similar. After little dive into basic components it sems like UICollectionView might be the rightest joice. In my app I am trying to use MVVM approach using RxSwift and RxDataSource. The last one has support for sectioned UICollectionView and I wonder if there is any possibility to create the whole view by using single UICollectionView. Sections would scroll horizontal and every section would contain grid elements? Or maybe can I nest one RxDataSource in other. Or maybe I cant use RxDataSource for this and i should try something else. To make clear what I am talk about i include <a href=""https://i.stack.imgur.com/LVGWQ.png"" rel=""nofollow noreferrer"">image</a></p>
 
 <p>I would be very gratefull for any advice because I could not find anything usefull by my hand.</p>
 ","9535385","","1226963","","2019-02-25 23:29:24","2019-02-25 23:29:24","UIcollectionView - Creating horizontally scrolled pager filled with items grid","<ios><swift><uicollectionview><rxdatasources>","1","0","","","","CC BY-SA 4.0"
-"55356766","1","55357125","","2019-03-26 12:06:48","","0","412","<p>I know there are a lot of questions about this, I looked at all of them but it doesn't fix my problem. I also commented on one of them but the question doesn't seem to be active anymore so I don't expect an answer there.</p>
+"55356766","1","55357125","","2019-03-26 12:06:48","","0","413","<p>I know there are a lot of questions about this, I looked at all of them but it doesn't fix my problem. I also commented on one of them but the question doesn't seem to be active anymore so I don't expect an answer there.</p>
 
 <p>I'm trying to implement RxDataSources. See my code below:</p>
 
@@ -1466,7 +1466,7 @@ extension ActiveOrdersSection: SectionModelType {
 
 <p>Any ideas?</p>
 ","2399348","","","","","2019-03-26 12:25:06","RxDataSources `Generic parameter 'Self' could not be inferred`","<ios><swift><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 4.0"
-"55378613","1","55379752","","2019-03-27 13:38:15","","1","3435","<p>Currently for our API requests we use Rx. An example of how we use it is:</p>
+"55378613","1","55379752","","2019-03-27 13:38:15","","1","3472","<p>Currently for our API requests we use Rx. An example of how we use it is:</p>
 
 <pre><code>let orderRxService = OrderRxService.listAsShop(shopId, status: .active)
     .repeatRequest(delay: 4)
@@ -1608,7 +1608,7 @@ And instead of making this observable, could that be skipped altogether and crea
 
 <p>Thanks for any help!</p>
 ","2399348","","2399348","","2019-03-27 14:26:44","2019-08-27 07:06:29","RxDataSources tableView with multiple sections from one API source","<ios><swift><rx-swift><rxdatasources>","1","0","3","","","CC BY-SA 4.0"
-"55531407","1","","","2019-04-05 08:38:17","","5","939","<p>i want know end of reloadTableView
+"55531407","1","","","2019-04-05 08:38:17","","5","943","<p>i want know end of reloadTableView
 Then I want to scroll down to the bottom of the table view.</p>
 
 <p>Before I used <code>RxSwift</code>
@@ -1675,7 +1675,7 @@ extension UITableView {
 }
 </code></pre>
 ","10753916","","","","","2019-04-05 08:38:17","RxSwift how to know end of TableView reload","<ios><swift><rx-swift><rxdatasources>","0","1","1","","","CC BY-SA 4.0"
-"55889255","1","55991682","","2019-04-28 10:18:12","","1","472","<p>I am a new Swifter, Here is the code of my new company.</p>
+"55889255","1","55991682","","2019-04-28 10:18:12","","1","476","<p>I am a new Swifter, Here is the code of my new company.</p>
 
 <p>Use RxSwift，use RxDataSource, how to handle two table view association?</p>
 
@@ -1843,7 +1843,7 @@ extension CategoryViewController : UITableViewDelegate {
 }
 </code></pre>
 ","10332481","","10332481","","2019-05-05 11:51:35","2019-05-05 11:58:51","How to handle two table view association?","<swift><rx-swift><rxdatasources>","2","2","","","","CC BY-SA 4.0"
-"56056846","1","","","2019-05-09 09:55:35","","1","422","<p>I have one request for any of you. I want to create collectionview/tableview which will have user inputs in cells. Mixture of values from those inputs would represent state. I want to observe that state and if some conditions are met, I want to recreate all cells. I have created very simple app, where I demonstrate how i tried to implement it, but I’m getting reentrancy warning and I would love to find out your ideas/best practicies for this. Here is the repo you can checkout.</p>
+"56056846","1","","","2019-05-09 09:55:35","","1","424","<p>I have one request for any of you. I want to create collectionview/tableview which will have user inputs in cells. Mixture of values from those inputs would represent state. I want to observe that state and if some conditions are met, I want to recreate all cells. I have created very simple app, where I demonstrate how i tried to implement it, but I’m getting reentrancy warning and I would love to find out your ideas/best practicies for this. Here is the repo you can checkout.</p>
 
 <p><a href=""https://github.com/beretis/CollectionViewTest"" rel=""nofollow noreferrer"">https://github.com/beretis/CollectionViewTest</a></p>
 
@@ -1851,7 +1851,7 @@ extension CategoryViewController : UITableViewDelegate {
 ","1762099","","","","","2019-05-14 11:45:20","RxSwift MVVM tableview/collectionview with user input cells representing state","<rx-swift><rx-cocoa><rxdatasources>","1","0","","","","CC BY-SA 4.0"
 "56808888","1","","","2019-06-28 14:40:00","","0","106","<p>I have an output that lives in my VM and based on some change I want my textfield that resides in my custom tableviewCell to change in some way. I am unsure about how to have my UItextfield that lives in the tableviewcell bind to my output. </p>
 ","9398617","","9398617","","2019-06-29 21:23:26","2019-06-29 21:23:26","Trying to bind an output to my tableviewCell UI Element in RxSwift","<swift><uitableview><textfield><rx-swift><rxdatasources>","2","1","","","","CC BY-SA 4.0"
-"57650927","1","57653152","","2019-08-26 01:32:11","","1","985","<p>I am building a table view backed by RxDataSources. I want to enable editing for this table view, such that the user can delete items.</p>
+"57650927","1","57653152","","2019-08-26 01:32:11","","1","995","<p>I am building a table view backed by RxDataSources. I want to enable editing for this table view, such that the user can delete items.</p>
 
 <p>I currently have this code:</p>
 
@@ -1905,7 +1905,7 @@ navigationItem.rightBarButtonItem = editButtonItem
 
 <p>What else do I need to do to enable editing?</p>
 ","5133585","","","","","2019-08-26 07:01:53","How to allow editing of a table view backed by RxDataSources?","<ios><swift><uitableview><rx-swift><rxdatasources>","1","0","1","","","CC BY-SA 4.0"
-"58176871","1","58199394","","2019-10-01 00:57:17","","1","741","<p>I need to combine chat message in section when items send in one minutes.</p>
+"58176871","1","58199394","","2019-10-01 00:57:17","","1","747","<p>I need to combine chat message in section when items send in one minutes.</p>
 
 <p>ViewModel</p>
 
@@ -2092,7 +2092,7 @@ var identity: Date {
         return models
 </code></pre>
 ","10325152","","1839439","","2019-10-06 14:56:24","2019-10-06 14:56:24","How I can correctly combine items in section with RxDataSource swift?","<swift><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 4.0"
-"58329578","1","58335754","","2019-10-10 19:05:53","","1","1553","<p>Before Anyone makes it duplicate I have scene all the RxDatasource tags on SO and other sites also. But anyone didn't worked for me.</p>
+"58329578","1","58335754","","2019-10-10 19:05:53","","1","1565","<p>Before Anyone makes it duplicate I have scene all the RxDatasource tags on SO and other sites also. But anyone didn't worked for me.</p>
 
 <p>So my question is totally related to <a href=""https://stackoverflow.com/questions/55378613/rxdatasources-tableview-with-multiple-sections-from-one-api-source"">this</a> one that I followed for my case also. But also I have no idea what's going on in here. And its been two weeks of struggling. I have checked gitHub code sample also but was unable to understand. 
 I have created an app using <code>RxSwift</code> and <code>Realm</code> on <em>MVVM</em> architecture pattern, things are working fine but now I need to create two sections in my view using <code>UICollectioView</code> for that I read about <code>RxdataSource</code> and tried to apply it but i didn't get at all whats it actually doing. I tried creating other projects for learning also those also didn't worked. Still I tried and make this code but it gives me error.</p>
@@ -2245,12 +2245,12 @@ extension SectionViewModel: SectionModelType {
 <strong><em>Instance method 'items(dataSource:)' requires the types '[SectionModel]' and '[StudentModel]' be equivalent</em></strong>.
 any advise or help will be appreciated. thanks in advance</p>
 ","12139340","","12139340","","2019-10-13 12:13:36","2019-10-13 19:42:25","How to create multiple Sections in UICollectionView with multiple Headers using RxDatasource","<ios><swift><iphone><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 4.0"
-"58825713","1","58826305","","2019-11-12 19:49:44","","0","402","<p>I'm using RxDataSources and trying to make a ""toggle"" function for cell selection — i.e., to allow cells (in a single-selection tableView) to be selected and deselected by tapping. I'm using 
+"58825713","1","58826305","","2019-11-12 19:49:44","","0","410","<p>I'm using RxDataSources and trying to make a ""toggle"" function for cell selection — i.e., to allow cells (in a single-selection tableView) to be selected and deselected by tapping. I'm using 
 <code>tableView.rx.itemSelected</code> to get the selection, and <code>self?.tableView.deselectRow(at: indexPath, animated: false)</code> to deselect the cell, if it is currently in the selected state. This seems to basically work, but I want to respond to the deselection. I was assuming that <code>self?.tableView.deselectRow(at: indexPath, animated: false)</code> would result in <code>tableView.rx.itemDeselected</code> being called, but that never happens. I'm obviously missing something. </p>
 
 <p>Any thoughts appreciated.</p>
 ","4321521","","","","","2019-11-12 20:38:02","RxDataSources itemDeselected not getting called","<ios><swift><uitableview><rx-swift><rxdatasources>","1","0","1","","","CC BY-SA 4.0"
-"58937977","1","","","2019-11-19 15:50:51","","0","610","<p>I want to pass expandable tableView from default to Rx, but i found trouble that i can't use properly <strong>numberOfRownInSection</strong>. </p>
+"58937977","1","","","2019-11-19 15:50:51","","0","618","<p>I want to pass expandable tableView from default to Rx, but i found trouble that i can't use properly <strong>numberOfRownInSection</strong>. </p>
 
 <p>Now the logic is... when you struct has flag <strong>isExpandable = false</strong>, row count is <strong>0</strong> </p>
 
@@ -2340,7 +2340,7 @@ func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -&g
         .disposed(by: disposeBag)
 </code></pre>
 ","9506836","","","","","2019-12-18 13:54:06","Swift 5 RxDataSource expandable cells","<swift><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 4.0"
-"59130233","1","59141653","","2019-12-01 21:39:27","","0","686","<p><strong>I am creating my tableview programmatically</strong></p>
+"59130233","1","59141653","","2019-12-01 21:39:27","","0","691","<p><strong>I am creating my tableview programmatically</strong></p>
 
 <pre><code>extension UITableView {
 static var tableView: UITableView {
@@ -2394,9 +2394,9 @@ static var tableView: UITableView {
 
 <p>I've looked at the documentation for properly settings tableview's datasource and have done my fair share of research. <strong>I'm stumped and need help.</strong> </p>
 ","6074750","","10584330","","2019-12-02 08:57:00","2019-12-02 15:06:16","Tableview data isn't being set while using RxSwift","<ios><swift><xcode><reactive><rxdatasources>","1","4","","","","CC BY-SA 4.0"
-"59190408","1","59197785","","2019-12-05 07:45:11","","-2","347","<p>where should I put UITableView Data Sources (I am using RxDataSources) when using MVVM-C architecture?</p>
+"59190408","1","59197785","","2019-12-05 07:45:11","","-2","348","<p>where should I put UITableView Data Sources (I am using RxDataSources) when using MVVM-C architecture?</p>
 ","12484280","","","","","2019-12-05 14:55:11","Table View Data Source in MVVM-C","<swift><mvvm><rx-swift><rxdatasources>","1","4","","2019-12-05 16:10:50","","CC BY-SA 4.0"
-"59715153","1","59716978","","2020-01-13 10:50:28","","0","1845","<p>I am having some issues with the <code>RxDataSources</code> cell reload animations for <code>RxSwift</code>. I have a simple table setup like so:</p>
+"59715153","1","59716978","","2020-01-13 10:50:28","","0","1877","<p>I am having some issues with the <code>RxDataSources</code> cell reload animations for <code>RxSwift</code>. I have a simple table setup like so:</p>
 
 <pre><code>import UIKit
 import RxDataSources
@@ -2506,7 +2506,7 @@ class TestTableViewCell: UITableViewCell {
 
 <p>Is this a <em>reload</em> animation or <em>insert</em> animation? I have no idea if the table reloads or inserts when the data is updated, I can't find any information in the documents. Any pointers on this would be greatly appreciated!</p>
 ","4083744","","","","","2021-07-23 22:14:06","RxDataSources cell reload animations not working properly","<ios><swift><rx-swift><rxdatasources>","2","0","1","","","CC BY-SA 4.0"
-"59727464","1","59733505","","2020-01-14 04:19:10","","0","1038","<p>I am having an issue with cell animations using <code>RxSwift</code> on a <code>UICollectionView</code>, my simple setup is as follows:</p>
+"59727464","1","59733505","","2020-01-14 04:19:10","","0","1056","<p>I am having an issue with cell animations using <code>RxSwift</code> on a <code>UICollectionView</code>, my simple setup is as follows:</p>
 
 <pre><code>collectionView.register(UINib(nibName: ""CustomCollectionCell"", bundle: nil), forCellWithReuseIdentifier: ""cell"")
 
@@ -2573,7 +2573,7 @@ extension SectionOfCustomDataAnimated: AnimatableSectionModelType {
 
 <p>The problem is that the collection view <em>does</em> animate however it seems it <em>always</em> uses a fade style animation. Choosing a different option such as <code>.bottom</code> in the example above still results in the same fade animation. I have used similar logic on a table view before and there was no issue, I only seem to have the issue in collection views. How can I get the different style of animations to work?</p>
 ","4083744","","","","","2020-01-14 12:09:08","RxDataSources collection view cell always uses fade for insert cell animation, can't change to a different animation","<ios><swift><uicollectionview><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 4.0"
-"60764306","1","60766279","","2020-03-19 20:06:32","","0","118","<p>Binding a sectioned table with <a href=""https://github.com/RxSwiftCommunity/RxDataSources"" rel=""nofollow noreferrer"">RxDataSources</a> using a <a href=""https://github.com/RxSwiftCommunity/RxDataSources/blob/master/Sources/RxDataSources/TableViewSectionedDataSource.swift"" rel=""nofollow noreferrer"">TableViewSectionedDataSource</a>, requires sections which conform to <a href=""https://github.com/RxSwiftCommunity/RxDataSources/blob/master/Sources/Differentiator/SectionModelType.swift"" rel=""nofollow noreferrer"">SectionModelType</a>.</p>
+"60764306","1","60766279","","2020-03-19 20:06:32","","0","121","<p>Binding a sectioned table with <a href=""https://github.com/RxSwiftCommunity/RxDataSources"" rel=""nofollow noreferrer"">RxDataSources</a> using a <a href=""https://github.com/RxSwiftCommunity/RxDataSources/blob/master/Sources/RxDataSources/TableViewSectionedDataSource.swift"" rel=""nofollow noreferrer"">TableViewSectionedDataSource</a>, requires sections which conform to <a href=""https://github.com/RxSwiftCommunity/RxDataSources/blob/master/Sources/Differentiator/SectionModelType.swift"" rel=""nofollow noreferrer"">SectionModelType</a>.</p>
 
 <p>This <a href=""https://github.com/RxSwiftCommunity/RxDataSources/blob/master/Sources/Differentiator/SectionModelType.swift"" rel=""nofollow noreferrer"">SectionModelType</a> protocol has the following initializer as one of it's requirements: </p>
 
@@ -2606,7 +2606,7 @@ e.g.
 <p>Any pointers to either get clarity more on existing implementation, or achieving above points would be really helpful.
 P.S.: I am already working in a huge code base which uses Rx, so not using Rx, or moving to SwiftUI etc is not what I am looking for.</p>
 ","219971","","219971","","2020-03-19 20:17:25","2020-03-19 23:02:03","Clarity on init with `Self` requirement of SectionModelType in RxDataSources","<swift><rx-swift><rxdatasources>","1","0","","","","CC BY-SA 4.0"
-"61028715","1","","","2020-04-04 13:20:26","","1","982","<p>RxDatasource in RxSwift [RxTableViewSectionedAnimatedDataSource] Reload Animation don't update data source. What mistake I am doing? I am even unable to bind my action with button properly.</p>
+"61028715","1","","","2020-04-04 13:20:26","","1","990","<p>RxDatasource in RxSwift [RxTableViewSectionedAnimatedDataSource] Reload Animation don't update data source. What mistake I am doing? I am even unable to bind my action with button properly.</p>
 
 <p>TableDataSource and Table editing commands</p>
 
@@ -3051,7 +3051,7 @@ func bind(to viewModel: ModelProductsViewModel) {
 
 </code></pre>
 ","2187976","","2187976","","2020-05-21 15:45:43","2020-05-21 15:45:43","leak in CollectionView using RxDataSources and RxSwift","<ios><swift><rx-swift><rxdatasources>","0","2","","","","CC BY-SA 4.0"
-"63776621","1","","","2020-09-07 11:21:07","","2","436","<p>I'm using <code>RxSwift</code> with <code>RxDataSources</code> framework to setup a tableview:</p>
+"63776621","1","","","2020-09-07 11:21:07","","2","448","<p>I'm using <code>RxSwift</code> with <code>RxDataSources</code> framework to setup a tableview:</p>
 <pre><code>let dataSource = RxTableViewSectionedAnimatedDataSource&lt;AnimatableSectionModel&lt;String, String&gt;&gt;(configureCell: { _, tableView, indexPath, item -&gt; UITableViewCell in
        let cell = tableView.dequeueReusableCellwithIdentifier: &quot;TestCell&quot;, for: indexPath)
        cell.configure()
@@ -3093,7 +3093,7 @@ vm.cellViewModels
 <p>Doing it without RxSwift, works for swipe actions.</p>
 <p>Does anyone know how to get <code>trailingSwipeActionsConfigurationForRowAt</code> to work with RxDatasources, as I can only get <code>viewForHeaderInSection</code> to work?</p>
 ","7766093","","","","","2020-09-07 11:21:07","RxSwift TableView with swipe actions","<ios><swift><uitableview><rx-swift><rxdatasources>","0","1","","","","CC BY-SA 4.0"
-"63874815","1","63876720","","2020-09-13 19:35:23","","1","134","<p>I'm using RxSwift and currently, I have a list of addresses that could be edited inline</p>
+"63874815","1","63876720","","2020-09-13 19:35:23","","1","136","<p>I'm using RxSwift and currently, I have a list of addresses that could be edited inline</p>
 <p>I.E: The user clicks on a button and the cell is transformed into editing mode essentially displaying a few UITextFields</p>
 <p>Now the problem is that when I bind the input of my TextField to my model the TableView gets reloaded and therefore keyboard dismisses, I've also tried RxAnimatableDataSource but no avail it still dismisses the keyboard on each keystroke.</p>
 <p>ViewModel:</p>
@@ -3279,7 +3279,7 @@ vm.cellViewModels
 </code></pre>
 <p>It then refreshes, but too often, so I prefere to change id only on button tap.</p>
 ","4415642","","","","","2021-01-11 18:04:11","RxTableViewSectionedAnimatableDataSource does not call configureCell on item identity change","<tableview><rx-swift><rxdatasources>","0","1","","","","CC BY-SA 4.0"
-"65894545","1","65895262","","2021-01-26 01:04:41","","1","332","<p><strong>Problem</strong>: CollectionView header and footer are not shown before results are retrieved from network service. They are shown after items are retrieved from service.</p>
+"65894545","1","65895262","","2021-01-26 01:04:41","","1","340","<p><strong>Problem</strong>: CollectionView header and footer are not shown before results are retrieved from network service. They are shown after items are retrieved from service.</p>
 <p><strong>Result I want:</strong>: Show CollectionView header and footer before items are retrieved from api call</p>
 <p><strong>What i've tried:</strong>
 Used different datasource with header and footer on initial viewDidLoad and set that datasource to nil when results loaded. Didn't work</p>
@@ -3374,7 +3374,7 @@ extension ViewController {
 }
 </code></pre>
 ","6740231","","","","","2021-01-26 02:49:34","RxDataSources headerView and footerView","<rx-swift><rxdatasources>","1","0","","","","CC BY-SA 4.0"
-"66367805","1","67175627","","2021-02-25 11:42:34","","0","210","<p>An overview of what I am trying to achieve I am trying to make a notifications tableview and each notification is group by its created date, so the tableview sections will be the number of created date, each section with the notifications created at this date in the section title.
+"66367805","1","67175627","","2021-02-25 11:42:34","","0","226","<p>An overview of what I am trying to achieve I am trying to make a notifications tableview and each notification is group by its created date, so the tableview sections will be the number of created date, each section with the notifications created at this date in the section title.
 I have searched a lot but didn't get an absolute answer how to make with RxDataSource
 the array is dynamic get loaded with dates received through an API?</p>
 <pre><code>class T : UITableViewDataSource {
@@ -3471,7 +3471,7 @@ extension NotificationSectionViewModel: SectionModelType {
         }]
 </code></pre>
 ","8397675","","8397675","","2021-02-27 06:55:18","2021-04-20 08:55:13","How to make Dynamic sections with RxDataSource?","<ios><swift><rx-swift><rxdatasources>","2","0","0","","","CC BY-SA 4.0"
-"67410853","1","67413407","","2021-05-06 01:52:23","","1","94","<p>Initially the app shows UIViewCollection with one section and then new sections appears after receiving the content. A user scrolls the collection and new sections add to the bottom of the collection.</p>
+"67410853","1","67413407","","2021-05-06 01:52:23","","1","101","<p>Initially the app shows UIViewCollection with one section and then new sections appears after receiving the content. A user scrolls the collection and new sections add to the bottom of the collection.</p>
 <p>I use MVVM, so in my ViewModel I add a new section to the content array (model.content) and then notify the Publisher that binded to collectionView.rx.items(dataSource: self.dataSource).</p>
 <p>So every time I add the section the collection is flashing and all cells are reloading that makes horrible user experience everything flashing, flickering, pictures disappearing and appearing. Is there a way not to reload all the collection but only the difference. I thought it should work like this by default. Maybe the method of notifying the BehaviorSubject is wrong idea?</p>
 <p>I also tried to use the RxTableViewSectionedAnimatedDataSource but in this way everything disappearing and move the user to the very top of the collection view after every new section had beed added.</p>
@@ -3534,7 +3534,7 @@ struct ItemCellModel {
 }
 </code></pre>
 ","2831157","","2831157","","2021-05-06 18:32:18","2021-05-07 22:38:42","RxDataSources flashing and flickering on every change in the datasource content","<ios><swift><rx-swift><rxdatasources>","2","2","","","","CC BY-SA 4.0"
-"67913373","1","67927056","","2021-06-10 01:09:35","","1","37","<p>I have an issue where [unowned self] was changed to [weak self] within the dataSource function used for a CollectionView using RxDataSource due to a memory leak. I now received a crash from returning a blank collectionViewCell that doesn't have a reuseIdentifier. I understand that I need to return a cell with a reuseID.</p>
+"67913373","1","67927056","","2021-06-10 01:09:35","","1","38","<p>I have an issue where [unowned self] was changed to [weak self] within the dataSource function used for a CollectionView using RxDataSource due to a memory leak. I now received a crash from returning a blank collectionViewCell that doesn't have a reuseIdentifier. I understand that I need to return a cell with a reuseID.</p>
 <p>What changes are suggested to deal with this properly?</p>
 <p>Someone suggested making collectionView.dataSource = nil in viewDidLoad() would fix this...</p>
 <p>I was thinking instead of returning CanvasItemCollectionViewCell() in the 'guard' check,

@@ -1,5 +1,5 @@
 Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCount,Body,OwnerUserId,OwnerDisplayName,LastEditorUserId,LastEditorDisplayName,LastEditDate,LastActivityDate,Title,Tags,AnswerCount,CommentCount,FavoriteCount,ClosedDate,CommunityOwnedDate,ContentLicense
-"50176029","1","50176203","","2018-05-04 13:23:29","","27","25526","<p>I updated my angular project and all my dependencies to latest version. Without to much trouble I solved most of the dependency issues, but I'm still stuck on RxJS. Here is my package.json: </p>
+"50176029","1","50176203","","2018-05-04 13:23:29","","27","25588","<p>I updated my angular project and all my dependencies to latest version. Without to much trouble I solved most of the dependency issues, but I'm still stuck on RxJS. Here is my package.json: </p>
 
 <pre><code>  ""dependencies"": {
     ""@angular-devkit/build-angular"": ""^0.6.0"",
@@ -64,7 +64,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 <p><a href=""https://i.stack.imgur.com/2e8UB.png"" rel=""noreferrer""><img src=""https://i.stack.imgur.com/2e8UB.png"" alt=""enter image description here""></a></p>
 ","3468639","","5735030","","2019-07-18 16:02:26","2019-07-30 06:07:25","rxjs/Subscription has no exported member 'Subscription'","<javascript><angular><npm><rxjs><rxjs-compat>","4","3","5","","","CC BY-SA 4.0"
-"50412389","1","50412516","","2018-05-18 13:26:14","","2","1557","<p>I upgraded my Angular application from version 5.2 to 6.0 with the instructions from <a href=""https://update.angular.io"" rel=""nofollow noreferrer"">https://update.angular.io</a>. </p>
+"50412389","1","50412516","","2018-05-18 13:26:14","","2","1562","<p>I upgraded my Angular application from version 5.2 to 6.0 with the instructions from <a href=""https://update.angular.io"" rel=""nofollow noreferrer"">https://update.angular.io</a>. </p>
 
 <p>Now my Angular application doesn't build because of the ""rxjs-5-to-6-migrate"" migration:</p>
 
@@ -110,7 +110,7 @@ import { catchError, map } from 'rxjs/operators';
 this.http.get('/api/appsettings/get').pipe(map(data =&gt; { return true; }), catchError(() =&gt; { return of(false); }));
 </code></pre>
 ","2301612","","2301612","","2018-05-18 13:55:33","2018-05-18 14:21:28","Property 'map' does not exist on type 'Observable' after upgrading rxjs to 6","<angular><rxjs><rxjs5><rxjs6><rxjs-compat>","3","2","1","","","CC BY-SA 4.0"
-"50530792","1","50587851","","2018-05-25 13:53:19","","2","777","<p>We've <a href=""https://github.com/ReactiveX/rxjs/blob/master/MIGRATION.md"" rel=""nofollow noreferrer"">updated</a> our project to use Angular &amp; Rxjs 6 and all works fine.  </p>
+"50530792","1","50587851","","2018-05-25 13:53:19","","2","780","<p>We've <a href=""https://github.com/ReactiveX/rxjs/blob/master/MIGRATION.md"" rel=""nofollow noreferrer"">updated</a> our project to use Angular &amp; Rxjs 6 and all works fine.  </p>
 
 <p>We've also updated the code to use the pipe operators, so we would like to drop <code>rxjs-compat</code>.<br>
 The only issue is that one of our dependencies still uses the old import syntax for Observable and Subject.</p>
@@ -123,13 +123,13 @@ import { Subject } from 'rxjs/Subject';
 
 <p>The library does not do anything fancy with Observable and Subject, and doesn't use any operators, so it seems overkill to import the full rxjs-compat package.</p>
 ","281252","","310726","","2018-05-25 14:03:41","2018-05-30 03:26:32","How to use only a part of rxjs-compat, or write a custom rxjs-compat?","<rxjs><rxjs6><rxjs-compat>","2","2","","","","CC BY-SA 4.0"
-"50860934","1","","","2018-06-14 15:21:35","","0","251","<p>I am upgrading from rxjs 5.5 to 6.2.1. I went through the code base and made all the changes suggested in the rxjs migration document, changed imports, piping instead of chaining, etc. When I run my <code>npm install</code> the <code>build.bundle.rxjs</code> script throws an error on fetch for rxjs-compat and says it is loading rxjs/Rx, which I can find no reference to in my code base. Has anyone else seen similar problems when upgrading their rxjs?</p>
+"50860934","1","","","2018-06-14 15:21:35","","0","253","<p>I am upgrading from rxjs 5.5 to 6.2.1. I went through the code base and made all the changes suggested in the rxjs migration document, changed imports, piping instead of chaining, etc. When I run my <code>npm install</code> the <code>build.bundle.rxjs</code> script throws an error on fetch for rxjs-compat and says it is loading rxjs/Rx, which I can find no reference to in my code base. Has anyone else seen similar problems when upgrading their rxjs?</p>
 
 <p>EDIT:</p>
 
 <p>I found that the source of the error is coming from various packages inside of my node_modules. They are using the deprecated import paths. </p>
 ","6915873","","6915873","","2018-06-14 16:03:47","2018-06-14 16:03:47","When migrating to rxjs 6 gulp build.bundle.rxjs throws error","<angular><rxjs5><rxjs6><rxjs-compat>","0","2","","","","CC BY-SA 4.0"
-"54590880","1","","","2019-02-08 10:53:59","","0","75","<p>I have just upgraded my Angular 5 project to 6 following the usual guide. I have updated my packages and have also installed the rxjs-compat package and run the following to migrate from rxjs 5 to rxjs 6 </p>
+"54590880","1","","","2019-02-08 10:53:59","","0","76","<p>I have just upgraded my Angular 5 project to 6 following the usual guide. I have updated my packages and have also installed the rxjs-compat package and run the following to migrate from rxjs 5 to rxjs 6 </p>
 
 <pre><code>npm install -g rxjs-tslint
 

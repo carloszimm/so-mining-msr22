@@ -1,5 +1,5 @@
 Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCount,Body,OwnerUserId,OwnerDisplayName,LastEditorUserId,LastEditorDisplayName,LastEditDate,LastActivityDate,Title,Tags,AnswerCount,CommentCount,FavoriteCount,ClosedDate,CommunityOwnedDate,ContentLicense
-"67296273","1","","","2021-04-28 08:09:12","","0","23","<p>I can't seem to find a way to set the nested properties of my state.</p>
+"67296273","1","","","2021-04-28 08:09:12","","0","24","<p>I can't seem to find a way to set the nested properties of my state.</p>
 <pre><code>// state
 {
   name,

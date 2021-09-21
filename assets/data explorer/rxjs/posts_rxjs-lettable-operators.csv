@@ -21,7 +21,7 @@ Observable.of(...)
 
 <p>EDIT: Not a duplicate, this question is about using Observable.create() as a lettable operator, and not about importing and using lettable static operators as Observable.of()</p>
 ","7721207","","7721207","","2017-11-30 10:18:24","2018-01-27 11:49:28","RxJS lettable operators for Observable.create","<typescript><rxjs><reactive-programming><rxjs-lettable-operators>","1","2","","","","CC BY-SA 3.0"
-"47600201","1","47600954","","2017-12-01 19:26:45","","17","21149","<p>How do I do the following with lettable operators and pipe?</p>
+"47600201","1","47600954","","2017-12-01 19:26:45","","17","21297","<p>How do I do the following with lettable operators and pipe?</p>
 
 <pre class=""lang-js prettyprint-override""><code>    this.httpClient
       .get(url)
@@ -51,7 +51,7 @@ Observable.of(...)
 
 <p>but I wasn't sure if this was the correct operator to use.</p>
 ","2094116","","2094116","","2019-03-20 15:03:52","2019-03-20 15:03:52","How do you catch with a pipe?","<angular><rxjs><observable><rxjs-lettable-operators>","1","7","4","","","CC BY-SA 4.0"
-"47889865","1","47890642","","2017-12-19 15:07:36","","4","6752","<p>I have an Angular 4 Component that is calling a Service to get data. Not the strangest of situations. After I retrieve the data and need to transform it and filter it. Apparently the way to do this nowadays is to use pipe.</p>
+"47889865","1","47890642","","2017-12-19 15:07:36","","4","6763","<p>I have an Angular 4 Component that is calling a Service to get data. Not the strangest of situations. After I retrieve the data and need to transform it and filter it. Apparently the way to do this nowadays is to use pipe.</p>
 
 <p>In my Component:</p>
 
@@ -102,7 +102,7 @@ import { map, filter } from 'rxjs/operators';
 
 <p>I would expect that object to be passed on based on the filterShippingUnit filter.</p>
 ","214676","","5394220","","2017-12-19 17:01:02","2017-12-19 17:01:02","Rxjs pipe not working with angular´s Http.get()","<angular><typescript><rxjs><angular2-http><rxjs-lettable-operators>","1","8","1","","","CC BY-SA 3.0"
-"47927723","1","","","2017-12-21 15:07:45","","1","1488","<p>I have a structure I would like to flatten into one homogeneous array. The source array looks like this:</p>
+"47927723","1","","","2017-12-21 15:07:45","","1","1493","<p>I have a structure I would like to flatten into one homogeneous array. The source array looks like this:</p>
 
 <pre><code>[
   {
@@ -204,7 +204,7 @@ ajax.getJSON('https://example.com/api/test')
 
 <p>How would I use the <code>do</code> operator between these commands?</p>
 ","1624862","","","","","2018-05-23 12:01:18","How would I use `do` as an RxJS lettable operator?","<javascript><rxjs><rxjs5><rxjs-lettable-operators>","1","0","","","","CC BY-SA 3.0"
-"48069225","1","48073663","","2018-01-02 23:25:54","","0","643","<p>I am attempting to do some <code>string</code> manipulation in <code>rjxs</code>, and while I <strong>can</strong> accomplish it with the built in behaviors on the <code>string</code> class and the <code>array</code> class in <code>Javascript</code>, I'm wanting to use this as an exercise to learn even more about <code>rxjs</code> and understand a fluent code-flow better.</p>
+"48069225","1","48073663","","2018-01-02 23:25:54","","0","645","<p>I am attempting to do some <code>string</code> manipulation in <code>rjxs</code>, and while I <strong>can</strong> accomplish it with the built in behaviors on the <code>string</code> class and the <code>array</code> class in <code>Javascript</code>, I'm wanting to use this as an exercise to learn even more about <code>rxjs</code> and understand a fluent code-flow better.</p>
 
 <p>To that end, it's imperative to me that I discover a way to do it that can fit in a <code>fluent</code> solution, instead of a series of variable assignments like I see in most <code>rxjs</code> examples.</p>
 
@@ -373,7 +373,7 @@ It would be something like this:</p>
 
 <p>Thanks!</p>
 ","4819485","","","","","2018-02-14 12:02:38","rxjs with the pipe operator","<angular><rxjs><rxjs-lettable-operators>","1","1","","","","CC BY-SA 3.0"
-"48206418","1","48208553","","2018-01-11 11:52:42","","1","1031","<p>struggling with angular and observables.</p>
+"48206418","1","48208553","","2018-01-11 11:52:42","","1","1034","<p>struggling with angular and observables.</p>
 
 <p>I have a observable like this:</p>
 
@@ -596,7 +596,7 @@ import { mergeMap } from 'rxjs/operators/mergeMap';
 
 <p>How can this be done with observables?</p>
 ","799853","","","","","2018-03-15 16:09:20","rxjs - Iterate back in Observables","<rxjs><rxjs5><angular2-observables><rxjs-lettable-operators>","1","2","","","","CC BY-SA 3.0"
-"49526346","1","49528833","","2018-03-28 04:52:17","","0","442","<p>I'm composing multiple observables using an observable's <code>pipe</code> method and I'd like to emit a final composite value when all observables in the array emit.</p>
+"49526346","1","49528833","","2018-03-28 04:52:17","","0","446","<p>I'm composing multiple observables using an observable's <code>pipe</code> method and I'd like to emit a final composite value when all observables in the array emit.</p>
 
 <pre class=""lang-js prettyprint-override""><code>import { apiSvc } from '../lib/api-service'
 
@@ -640,7 +640,7 @@ observableOf(uris).pipe(
 
 <p>The <code>zip</code> operator is sort of in the ballpark but it doesn't appear to work on arrays of observables. Is there a lettable operator that works like <code>forkJoin</code> and can be used with <code>pipe</code>?</p>
 ","1861779","","1861779","","2018-03-28 13:46:04","2018-03-28 13:46:04","RXJS 5 - Emit a single composite value from an array of observables when all sources emit","<rxjs><rxjs5><rxjs-lettable-operators>","1","1","","","","CC BY-SA 3.0"
-"51849873","1","","","2018-08-14 21:16:27","","1","1107","<p>I have 2 observables like this:</p>
+"51849873","1","","","2018-08-14 21:16:27","","1","1110","<p>I have 2 observables like this:</p>
 
 <pre><code>return this.loaded$.pipe(
             switchMap((isLoaded: boolean) =&gt; {

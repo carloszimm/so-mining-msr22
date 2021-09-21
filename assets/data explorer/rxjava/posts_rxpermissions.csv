@@ -44,7 +44,7 @@ Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCoun
 }
 </code></pre>
 ","3672184","","","","","2016-08-07 15:57:39","unfortunately package installer has stopped","<android><rx-java><rxpermissions>","1","4","","","","CC BY-SA 3.0"
-"41188176","1","42056516","","2016-12-16 16:02:21","","1","870","<p>I want to avoid ask others permission if the user not grant one.</p>
+"41188176","1","42056516","","2016-12-16 16:02:21","","1","871","<p>I want to avoid ask others permission if the user not grant one.</p>
 
 <p>For example: I ask for read/write external storage and camera, if the user deny the first, the library ask for camera permission, camera permission is redundant in this case.</p>
 
@@ -60,7 +60,7 @@ Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCoun
 
 <p>I think I could use requestEach, but I dont know how stop to emit items if one permission is not granted and also I cant obtain the final result, if the user grant all permissions.</p>
 ","3796083","","","","","2017-02-05 19:50:57","Avoid ask others permission if one is not granted with RxPermissions","<android><rx-android><rxpermissions>","1","0","0","","","CC BY-SA 3.0"
-"48931751","1","48931868","","2018-02-22 15:54:20","","1","219","<p>I use RxPermission library to handle runtime permissions easily,</p>
+"48931751","1","48931868","","2018-02-22 15:54:20","","1","221","<p>I use RxPermission library to handle runtime permissions easily,</p>
 
 <p>In my app I ask for location:</p>
 
@@ -157,7 +157,7 @@ Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCoun
 
 <p>eaxctly at this line  <code>.subscribe(granted -&gt; {</code></p>
 ","6683139","","","","","2018-02-22 16:00:00","RxPermission causes Internal Error in release mode","<java><android><rx-java><rx-java2><rxpermissions>","1","0","1","","","CC BY-SA 3.0"
-"53238489","1","","","2018-11-10 11:28:27","","-1","339","<p>My app needs below permissions. Which has been incorporated in AndroidManifest.xml</p>
+"53238489","1","","","2018-11-10 11:28:27","","-1","340","<p>My app needs below permissions. Which has been incorporated in AndroidManifest.xml</p>
 
 <pre><code>&lt;uses-permission android:name=""android.permission.ACCESS_COARSE_LOCATION""/&gt;
 &lt;uses-permission android:name=""android.permission.ACCESS_FINE_LOCATION""/&gt;
@@ -342,7 +342,7 @@ override fun showContactList(selectedContacts: ArrayList&lt;Contact&gt;) {
 
 <p>Thank you </p>
 ","7482730","","7482730","","2019-03-14 06:50:57","2019-05-29 12:39:50","Android: View returning null","<android><android-fragments><kotlin><mvp><rxpermissions>","3","2","","","","CC BY-SA 4.0"
-"56445573","1","","","2019-06-04 14:04:52","","1","166","<p>I'm using <code>RxPermissions</code> to handle permissions in my Android app.
+"56445573","1","","","2019-06-04 14:04:52","","1","169","<p>I'm using <code>RxPermissions</code> to handle permissions in my Android app.
 For example I have the following code inside a <code>button's onClickListener</code> </p>
 
 <pre><code>Disposable mDispo = new RxPermissions(this)
@@ -365,7 +365,7 @@ For example I have the following code inside a <code>button's onClickListener</c
 
 <p>How can I make the custom dialog appear at the next button <code>click</code> only if the user has checked the <code>Don't ask again</code> option previously? </p>
 ","3170486","","","","","2019-06-04 14:04:52","RxPermissions deny access","<android><permissions><dialog><rxpermissions>","0","3","","","","CC BY-SA 4.0"
-"64756731","1","","","2020-11-09 17:52:13","","1","94","<p>I want to use the<a href=""https://github.com/tbruyelle/RxPermissions"" rel=""nofollow noreferrer"">tbruyelle
+"64756731","1","","","2020-11-09 17:52:13","","1","101","<p>I want to use the<a href=""https://github.com/tbruyelle/RxPermissions"" rel=""nofollow noreferrer"">tbruyelle
 RxPermissions</a> library  in my project. I can not call the <code>subcribe</code> method like here</p>
 <pre><code>rxPermissions
     .request(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -400,7 +400,7 @@ implementation 'com.github.tbruyelle:rxpermissions:0.12'
   
 </code></pre>
 ","9128819","","","","","2020-11-09 17:52:13","Conflict with RxPermission","<gradle><rxpermissions>","0","0","","","","CC BY-SA 4.0"
-"66437641","1","","","2021-03-02 10:31:16","","0","279","<p>I'm using RxPermissions to handle permissions inside my project.</p>
+"66437641","1","","","2021-03-02 10:31:16","","0","292","<p>I'm using RxPermissions to handle permissions inside my project.</p>
 <pre><code> 'com.github.tbruyelle:rxpermissions:0.12'
  'io.reactivex.rxjava3:rxjava:3.0.4'
 </code></pre>

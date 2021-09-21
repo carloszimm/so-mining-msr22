@@ -1,5 +1,5 @@
 Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCount,Body,OwnerUserId,OwnerDisplayName,LastEditorUserId,LastEditorDisplayName,LastEditDate,LastActivityDate,Title,Tags,AnswerCount,CommentCount,FavoriteCount,ClosedDate,CommunityOwnedDate,ContentLicense
-"45872463","1","45872598","","2017-08-24 23:43:47","","0","732","<p>I have a data flow like this:</p>
+"45872463","1","45872598","","2017-08-24 23:43:47","","0","735","<p>I have a data flow like this:</p>
 
 <pre><code>Observable
     .fromFuture(
@@ -61,7 +61,7 @@ Looks like the stream never ends.</p>
 Or, more generally, is it a good approach when working with RX?
 Should I rethink it in another way?</p>
 ","750510","","750510","","2018-12-18 01:14:32","2018-12-18 01:14:32","How to skip exceptions silently in RxJava2?","<rx-java><reactive-programming><rx-java2><rx-kotlin><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"46523605","1","","","2017-10-02 10:16:15","","1","756","<p>Using <code>RxJava2</code> <code>RxKotlin</code> and <code>Room</code>, I need to query the database for an open hunt. That means that I search for a hunt that contains an attribute called <code>closed</code> with value <code>false</code>. Once the hunt has been found, it needs to switch the query to that particular hunt.</p>
+"46523605","1","","","2017-10-02 10:16:15","","1","758","<p>Using <code>RxJava2</code> <code>RxKotlin</code> and <code>Room</code>, I need to query the database for an open hunt. That means that I search for a hunt that contains an attribute called <code>closed</code> with value <code>false</code>. Once the hunt has been found, it needs to switch the query to that particular hunt.</p>
 
 <p>I have 2 methods for those queries:</p>
 
@@ -113,7 +113,7 @@ companion object {
 
 <p>Is there a similar method already built in RxJava2? If not, how would you implement it?</p>
 ","1354302","","1354302","","2017-10-02 10:41:16","2017-10-02 13:30:56","Change observable on condition met - RxJava2","<android><kotlin><rx-java2><rx-kotlin2>","2","0","","","","CC BY-SA 3.0"
-"46589849","1","46595044","","2017-10-05 15:47:35","","0","1129","<p>Here is short snippet of code:</p>
+"46589849","1","46595044","","2017-10-05 15:47:35","","0","1132","<p>Here is short snippet of code:</p>
 
 <pre><code>    val subject = BehaviorSubject.createDefault(emptyList&lt;Int&gt;())
     subject.onNext(Arrays.asList(1, 2, 3))
@@ -126,7 +126,7 @@ companion object {
 
 <p>Why <code>onComplete</code> doesn't not call here? What I should do for working this code? Because in original code I can not use <code>.toList()</code> method. </p>
 ","4981663","","","","","2017-10-05 21:26:58","RxJava2: onComplete not called with flatMapIterable","<kotlin><rx-java2><rx-kotlin2>","1","5","","","","CC BY-SA 3.0"
-"47009101","1","","","2017-10-30 06:19:00","","0","529","<p>I am using RxJava 2.* and I want to merge the results of two observables (one from retrofit and another from room) by using zip operator(feel free to suggest better).</p>
+"47009101","1","","","2017-10-30 06:19:00","","0","530","<p>I am using RxJava 2.* and I want to merge the results of two observables (one from retrofit and another from room) by using zip operator(feel free to suggest better).</p>
 
 <p>Model objects that come from remote server are different from the one coming out of Room Database. </p>
 
@@ -186,7 +186,7 @@ abstract fun categories(): Observable&lt;List&lt;KmagCategory&gt;&gt;
 <p>My question is now:
 What is the idiomatic way to divide a stream into streams on one specific sub type?</p>
 ","3139545","","2597143","","2018-10-24 13:19:55","2018-10-24 13:19:55","RxJava/RxKotlin split stream depending on subtype","<kotlin><rx-java><rx-kotlin><rx-kotlin2><rx-javafx>","1","0","","","","CC BY-SA 3.0"
-"47376858","1","","","2017-11-19 12:28:54","","1","413","<p>Im stuck getting the following example working as expected, I have tried using <code>zip</code> and <code>combineLatest</code> and as show below <code>withLatestFrom</code> however non of them gives the expected output.</p>
+"47376858","1","","","2017-11-19 12:28:54","","1","414","<p>Im stuck getting the following example working as expected, I have tried using <code>zip</code> and <code>combineLatest</code> and as show below <code>withLatestFrom</code> however non of them gives the expected output.</p>
 <pre><code>@Test
 fun thereCanBeOnlyOne() {
     val s1 = BehaviorSubject.create&lt;Int&gt;()
@@ -212,7 +212,7 @@ fun thereCanBeOnlyOne() {
 <p>333 - 444</p>
 </blockquote>
 ","3139545","","-1","","2020-06-20 09:12:55","2017-11-19 12:42:14","Combine two subject only when one changes and get latest from other","<rx-java><rx-java2><reactivex><rx-kotlin><rx-kotlin2>","1","0","","","","CC BY-SA 3.0"
-"47534447","1","","","2017-11-28 14:50:47","","16","9732","<p>Suppose you want to insert a Completable in your Observable chain, such as for each emitted element, there is a completable that runs and blocks until it completes, what option would you choose? (here the <code>Completable.complete()</code> is just to make an example)</p>
+"47534447","1","","","2017-11-28 14:50:47","","16","9783","<p>Suppose you want to insert a Completable in your Observable chain, such as for each emitted element, there is a completable that runs and blocks until it completes, what option would you choose? (here the <code>Completable.complete()</code> is just to make an example)</p>
 
 <ol>
 <li><p><code>.flatMap { Completable.complete().andThen(Observable.just(it)) }</code></p></li>
@@ -281,7 +281,7 @@ fun thereCanBeOnlyOne() {
     }]
 </code></pre>
 ","1820178","","","","","2017-12-14 01:09:58","rxkotlin groupby is not working","<rx-kotlin2>","1","5","","","","CC BY-SA 3.0"
-"47953791","1","47971299","","2017-12-23 15:40:44","","3","4122","<p>I know how to do this in <a href=""https://stackoverflow.com/questions/38811923/how-to-use-rxjava-combinelatest-operator-with-more-than-9-observables"">RxJava 2</a>.</p>
+"47953791","1","47971299","","2017-12-23 15:40:44","","3","4132","<p>I know how to do this in <a href=""https://stackoverflow.com/questions/38811923/how-to-use-rxjava-combinelatest-operator-with-more-than-9-observables"">RxJava 2</a>.</p>
 
 <p>And I know how <a href=""https://stackoverflow.com/questions/42725749/observable-combinelatest-type-inference-in-kotlin"">RxKotlin</a> helps with similar issues.</p>
 
@@ -385,7 +385,7 @@ abstract class RxFlyweight&lt;in T : Any, C : Any, R : Any&gt; {
 }
 </code></pre>
 ","4407321","","4407321","","2018-01-07 23:48:21","2018-01-07 23:48:21","Resettable Single Rx pattern","<rx-java2><rx-kotlin2>","0","7","","","","CC BY-SA 3.0"
-"48398348","1","48411925","","2018-01-23 09:35:22","","1","1065","<p>I have my observables defined like this </p>
+"48398348","1","48411925","","2018-01-23 09:35:22","","1","1068","<p>I have my observables defined like this </p>
 
 <pre><code>    val initLoading = Observable.fromCallable { println(""${System.currentTimeMillis()}"") }
             .subscribeOn(Schedulers.computation())
@@ -472,7 +472,7 @@ Just to make it simple i created an example using a list of numbers each number 
 
 <p>on refresh press ill get <code>[5]</code></p>
 ","7442122","","544406","","2018-01-25 08:26:31","2018-01-29 22:57:02","Rx how to create a list that updates or refreshes on request","<android><rx-java2><rx-android><rx-kotlin2>","2","6","1","","","CC BY-SA 3.0"
-"48570561","1","48570680","","2018-02-01 19:43:36","","0","456","<p>I want to build a async operation that iterates chars in given string. I have a char array taken by <code>""mystring"".toCharArray()</code>. I want to iterate each 10th character by using RX.</p>
+"48570561","1","48570680","","2018-02-01 19:43:36","","0","458","<p>I want to build a async operation that iterates chars in given string. I have a char array taken by <code>""mystring"".toCharArray()</code>. I want to iterate each 10th character by using RX.</p>
 
 <p>I know i can do it with <a href=""https://developer.android.com/reference/android/os/AsyncTask.html"" rel=""nofollow noreferrer"">AsyncTask</a> and for-loops but i thought RX would be more elegant solution. I have read <a href=""http://reactivex.io/documentation/operators.html"" rel=""nofollow noreferrer"">documentations</a> but did not recognize how to do it.</p>
 
@@ -536,7 +536,7 @@ so everytime I want to change a setting I'm calling the rest client and then upd
 <li>On getSettings method, should I use the callback or just return the settingsSubject value?</li>
 </ol>
 ","6949710","","6949710","","2018-02-24 10:46:47","2018-03-07 22:29:46","What is the right approach using rxkotlin or rxjava in android when communicating with server and db?","<android><dagger-2><rx-kotlin2>","1","0","","","","CC BY-SA 3.0"
-"49076391","1","49077269","","2018-03-02 19:53:21","","2","143","<p>I'm facing this problem. Im using room to create the local database of my app. Let's say i have an Entity call User and a UserDao. It looks like this:</p>
+"49076391","1","49077269","","2018-03-02 19:53:21","","2","145","<p>I'm facing this problem. Im using room to create the local database of my app. Let's say i have an Entity call User and a UserDao. It looks like this:</p>
 
 <pre><code>@Dao
 interface UserDao: BaseDao&lt;User&gt;{
@@ -560,7 +560,7 @@ interface UserDao: BaseDao&lt;User&gt;{
 
 <p>Any idea how to do this in a clean way? </p>
 ","5420543","","7756492","","2018-04-16 08:43:41","2018-04-16 08:43:41","How to implement different kinds of return to the same query using Room and Android Rx?","<android><rx-android><rx-kotlin2>","2","0","1","","","CC BY-SA 3.0"
-"49215549","1","49215842","","2018-03-11 00:51:10","","1","113","<p>I have an rx chain that calls an API through Retrofit. I subscribe to my API service, with standard rx <code>subscribe({...})</code> method and pass a lambda to it. Unfortunately when  my call is finally completed, all the code I have added to be executed inside lambda is totally ignored. AndroidStudio suggested a fix which basically adds an inline function <code>run</code> to my lamda and... it magically works. I have no idea what's happening. Why does it not work without <code>run</code>? What does <code>run</code> do?</p>
+"49215549","1","49215842","","2018-03-11 00:51:10","","1","116","<p>I have an rx chain that calls an API through Retrofit. I subscribe to my API service, with standard rx <code>subscribe({...})</code> method and pass a lambda to it. Unfortunately when  my call is finally completed, all the code I have added to be executed inside lambda is totally ignored. AndroidStudio suggested a fix which basically adds an inline function <code>run</code> to my lamda and... it magically works. I have no idea what's happening. Why does it not work without <code>run</code>? What does <code>run</code> do?</p>
 
 <p>The code follows:</p>
 
@@ -577,7 +577,7 @@ interface UserDao: BaseDao&lt;User&gt;{
             })
 </code></pre>
 ","1939370","","","","","2018-03-11 03:44:54","Lambda's are ignored until ""run"" is added","<kotlin><rx-kotlin2>","2","0","","","","CC BY-SA 3.0"
-"49257702","1","49280175","","2018-03-13 13:40:14","","0","1479","<p>What I trying to do is listen to socket data and convert into an observable string that my UI can Subscribe this event and do Change on UI </p>
+"49257702","1","49280175","","2018-03-13 13:40:14","","0","1491","<p>What I trying to do is listen to socket data and convert into an observable string that my UI can Subscribe this event and do Change on UI </p>
 
 <p>So far I created a class SocketConnection maintain in dagger connection happen properly and received data and able to do with interface correctly, but want to apply with rxkotlin. </p>
 
@@ -705,9 +705,9 @@ interface UserDao: BaseDao&lt;User&gt;{
 
 <p>Please let me know what i doing wrong thanx in advance </p>
 ","9054548","","9054548","","2018-03-14 12:14:00","2018-03-14 14:22:45","RxKotlin with Socket.io in Android","<android><socket.io><kotlin><rx-kotlin2>","1","4","","","","CC BY-SA 3.0"
-"49524051","1","","","2018-03-27 23:47:32","","0","341","<p>Can I use Rx Kotlin + Rx Android without adding Rx Java? Or Rx Kotlin is depended upon Rx Java.</p>
+"49524051","1","","","2018-03-27 23:47:32","","0","342","<p>Can I use Rx Kotlin + Rx Android without adding Rx Java? Or Rx Kotlin is depended upon Rx Java.</p>
 ","1268634","","","","","2018-04-04 14:12:37","Is RxKotlin Depend upon RxJava in Android?","<rx-android><rx-kotlin2>","1","0","","","","CC BY-SA 3.0"
-"49683093","1","49683405","","2018-04-05 23:35:57","","1","426","<p>my problem is this. I have the next code</p>
+"49683093","1","49683405","","2018-04-05 23:35:57","","1","430","<p>my problem is this. I have the next code</p>
 
 <pre><code>Observable.fromIterable(this)
             .flatMap { project -&gt;
@@ -727,7 +727,7 @@ interface UserDao: BaseDao&lt;User&gt;{
 
 <p>So, I'm getting a date from a Room table in my android application. I'm using an async method because the room queries need to be done in a different thread from UI. So, with the result, I want to build a new query to a remote database. The problem is I want to be sure that date is already initialized at the moment I create my query. With that in mind, I use await method, but an error is given to me. it said I cant call await function in a no suspend function. So, can you think of a way to solve this? or how to fix it? thank you </p>
 ","5420543","","1904517","","2018-04-11 06:05:44","2018-04-11 06:05:44","How to use await method inside a flatMap?","<android><kotlin><rx-java><kotlinx.coroutines><rx-kotlin2>","1","0","","","","CC BY-SA 3.0"
-"49685851","1","49686992","","2018-04-06 05:20:03","","1","536","<p>I use RxJava 2 <code>Observable</code> to wrap barcode scanner in one of my app. This snippet show how I subscribe to <code>Observable</code> and listen to it's events</p>
+"49685851","1","49686992","","2018-04-06 05:20:03","","1","537","<p>I use RxJava 2 <code>Observable</code> to wrap barcode scanner in one of my app. This snippet show how I subscribe to <code>Observable</code> and listen to it's events</p>
 
 <pre><code>override fun start() {
     disposables.addAll(subscribeToBarcodeReader(), loadUser())
@@ -779,7 +779,7 @@ class OrbFoldersPresenterTests {
 
 <p>I'm expecting that when I call <code>presenter.start()</code> presenter must subscribe to <code>barcodeObservable</code> and receive <code>onNext()</code> event with object I've provided. But this isn't happening. What am I doing wrong? </p>
 ","1120398","","","","","2018-04-06 06:49:05","RxJava 2 mock Observable doesn't work","<android><kotlin><rx-java2><rx-kotlin2>","2","0","","","","CC BY-SA 3.0"
-"49810518","1","49811822","","2018-04-13 06:23:15","","8","2418","<p>I'm having a scenario where I need to periodically call an API to check for a result. I'm using <code>Flowable.interval</code> to create an interval function which calls the API.</p>
+"49810518","1","49811822","","2018-04-13 06:23:15","","8","2429","<p>I'm having a scenario where I need to periodically call an API to check for a result. I'm using <code>Flowable.interval</code> to create an interval function which calls the API.</p>
 
 <p>However, I'm having trouble with backpressure. In my example below, a new single is created on each tick in the interval. The desired effect is to only call the API if a call is not already in progress</p>
 
@@ -870,7 +870,7 @@ Flowable.interval(1, 1, TimeUnit.SECONDS).filter {
 
 <p>How do I implement a Flowable to allow this behavior?</p>
 ","6275844","","472495","","2018-05-08 10:23:30","2018-05-08 10:23:30","Implement shared Flowable in RxKotlin with dynamic parameters","<android><rx-java2><rx-android><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"50358932","1","","","2018-05-15 20:46:38","","0","1147","<p>I'm using RxJava2 with Kotlin. I don't know why but I always have this error :</p>
+"50358932","1","","","2018-05-15 20:46:38","","0","1149","<p>I'm using RxJava2 with Kotlin. I don't know why but I always have this error :</p>
 
 <blockquote>
   <p>io.reactivex.exceptions.OnErrorNotImplementedException: An operation is not implemented: not implemented</p>
@@ -1051,11 +1051,11 @@ $ gradle build
   </ul>
 </blockquote>
 ","1988515","","","","","2018-06-28 00:14:16","RxKotlin repo gradle build compilation fails with gradle 4.7 (JDK 1.8)","<kotlin><rx-kotlin><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"51110189","1","51110389","","2018-06-29 22:37:37","","1","104","<p>I've got an observable: <code>Observable.create&lt;Boolean&gt; {emitter = it}</code>, to which I push some values. I want it to publish a 'false' value, as soon as some specific time period has passed without any value being pushed to that emitter.</p>
+"51110189","1","51110389","","2018-06-29 22:37:37","","1","105","<p>I've got an observable: <code>Observable.create&lt;Boolean&gt; {emitter = it}</code>, to which I push some values. I want it to publish a 'false' value, as soon as some specific time period has passed without any value being pushed to that emitter.</p>
 
 <p>How is that possible with RxJava/Kotlin 2?</p>
 ","2728815","","","","","2018-06-30 15:02:20","Emit value if specific time has passed after last item","<java><kotlin><rx-java2><rx-android><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"51185759","1","51186490","","2018-07-05 07:39:56","","3","3499","<p>I have code that does blocking operation in while loop (downloads some data from a server). Client does not know how many items are going to be returned in each step. Loop breaks when N items are downloaded.</p>
+"51185759","1","51186490","","2018-07-05 07:39:56","","3","3527","<p>I have code that does blocking operation in while loop (downloads some data from a server). Client does not know how many items are going to be returned in each step. Loop breaks when N items are downloaded.</p>
 
 <pre><code>val n = 10
 val list = ArrayList&lt;T&gt;()
@@ -1069,7 +1069,7 @@ while (list.size &lt; n) {
 
 <p><code>downloadItems</code> performs blocking HTTP call and returns list. Now let's assume <code>downloadItems</code> changes and new return type is <code>Observable&lt;Item&gt;</code>. How could I change the code to use RxJava without performing something like <code>blockingGet</code>?</p>
 ","1740335","","1740335","","2018-07-05 16:54:07","2018-07-05 18:24:13","Converting loop with condition into RxJava stream","<android><rx-java><rx-java2><rx-kotlin><rx-kotlin2>","2","0","1","","","CC BY-SA 4.0"
-"51280700","1","51281307","","2018-07-11 08:28:26","","0","1320","<p>I have a method that returns an Observable like this:</p>
+"51280700","1","51281307","","2018-07-11 08:28:26","","0","1323","<p>I have a method that returns an Observable like this:</p>
 
 <pre><code>open fun get(): Observable&lt;Response&gt; {
 
@@ -1107,7 +1107,7 @@ state.subscribe(...)
 
 <p>this subscription must be called every state updates</p>
 ","1803735","","","","","2018-07-13 19:03:01","Rx Kotlin/Java Observable on state","<java><android><kotlin><rx-java2><rx-kotlin2>","1","1","","","","CC BY-SA 4.0"
-"51403135","1","","","2018-07-18 13:22:04","","0","220","<p>I'm new to RxJava and am having a hard time with handling error cases. The application is in Kotlin but it probably won't make much of a difference. The scenario is basically user authentication and then performing an action but if the user is not authorized/has a bad auth token I generate an exception and want to cease processing. Right now I have my function that checks tokens and it looks like this. </p>
+"51403135","1","","","2018-07-18 13:22:04","","0","221","<p>I'm new to RxJava and am having a hard time with handling error cases. The application is in Kotlin but it probably won't make much of a difference. The scenario is basically user authentication and then performing an action but if the user is not authorized/has a bad auth token I generate an exception and want to cease processing. Right now I have my function that checks tokens and it looks like this. </p>
 
 <pre><code>fun checkAuthority(authToken: AuthToken, requiredAuthority: Authority): Completable =
     authorityRepository.getAuthorities(authToken)
@@ -1210,7 +1210,7 @@ fun getAllWithCards(): Flowable&lt;List&lt;DeckWithCards&gt;&gt;
 
 <p>Thats all its works! Thank you for the answer. It helped me a lot !</p>
 ","5269276","","5269276","","2018-07-24 20:03:10","2018-08-15 11:44:53","RxJava make a call for every single list item","<android><kotlin><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"51667657","1","51671047","","2018-08-03 07:44:25","","0","2377","<p>I am using Room with RxJava/RxKotlin Flowable following <a href=""https://medium.com/google-developers/room-rxjava-acb0cd4f3757"" rel=""nofollow noreferrer"">this</a> article. I got it running but the got issue using it with ViewPager with 3 fragments.</p>
+"51667657","1","51671047","","2018-08-03 07:44:25","","0","2392","<p>I am using Room with RxJava/RxKotlin Flowable following <a href=""https://medium.com/google-developers/room-rxjava-acb0cd4f3757"" rel=""nofollow noreferrer"">this</a> article. I got it running but the got issue using it with ViewPager with 3 fragments.</p>
 
 <p>I will walk you through my code little bit:</p>
 
@@ -1342,7 +1342,7 @@ So log is:</p>
 <p>No <code>doOnNext</code> and no main thread for <code>wrongThreadObserver</code>
 What i do wrong?</p>
 ","10208467","","9389285","","2018-08-10 12:58:15","2018-08-13 12:59:37","RxKotlin - Wrong subscribeOn, observeOn thread changing for Subject out of Activity?","<android><multithreading><kotlin-android-extensions><rx-kotlin><rx-kotlin2>","1","1","","","","CC BY-SA 4.0"
-"52140160","1","","","2018-09-02 18:57:33","","0","220","<p>I have an Async call, in which callback listener I've put the emitter.onNext(). This async call is inside a for-in (I know the list size). I would like call onComplete() when last element has been emitted in onNext().</p>
+"52140160","1","","","2018-09-02 18:57:33","","0","221","<p>I have an Async call, in which callback listener I've put the emitter.onNext(). This async call is inside a for-in (I know the list size). I would like call onComplete() when last element has been emitted in onNext().</p>
 
 <pre><code>for (anItem in itemList) {
 
@@ -1364,7 +1364,7 @@ What i do wrong?</p>
 
 <p>What is the proper way to handle with this situation? I need the onComplete to show the view and remove the loading/progress bar.</p>
 ","9697465","","9697465","","2018-09-02 22:02:05","2018-09-02 22:02:05","How to call emitter.onComplete() when emitter.onNext() are on async loop","<android><kotlin><reactive-programming><rx-java2><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"52190121","1","","","2018-09-05 16:55:30","","0","2303","<p>I am new to the Rx world so please bear with me.</p>
+"52190121","1","","","2018-09-05 16:55:30","","0","2314","<p>I am new to the Rx world so please bear with me.</p>
 
 <p>My code is in Kotlin but a Java code will help also.</p>
 
@@ -1440,7 +1440,7 @@ What i do wrong?</p>
 
 <p>So my question is in step 2, could anyone help me with that code with RxJava2? Thank you.</p>
 ","7725586","","7725586","","2018-09-06 07:41:36","2018-12-19 03:56:33","How can I ensure the first Observable is subscribed before the second one emits in RxJava2?","<rx-java2><mosby><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"52358275","1","52358500","","2018-09-16 20:51:49","","0","3336","<p>This question is related to Android and life-cycles.
+"52358275","1","52358500","","2018-09-16 20:51:49","","0","3362","<p>This question is related to Android and life-cycles.
 Previously, I would have a series of subjects and subscribe to them on creation.</p>
 
 <p>Upon destruction, I would mark all the subjects as complete, assuming that it disposes all subscribers.</p>
@@ -1460,7 +1460,7 @@ fun onDestroy() {
 }
 </code></pre>
 ","4407321","","9530467","","2018-09-17 04:38:22","2018-09-17 04:38:22","Disposing of observables","<android><rx-java2><rx-kotlin2>","2","2","","","","CC BY-SA 4.0"
-"52544735","1","","","2018-09-27 20:33:27","","2","989","<p>I have a data provider that has an <code>Observable&lt;Int&gt;</code> as part of the public API. My class under test maps this into a <code>Observable&lt;String&gt;</code>.</p>
+"52544735","1","","","2018-09-27 20:33:27","","2","995","<p>I have a data provider that has an <code>Observable&lt;Int&gt;</code> as part of the public API. My class under test maps this into a <code>Observable&lt;String&gt;</code>.</p>
 
 <p>How do I create a mock so that it can send out different values on the data provider's observable?</p>
 
@@ -1566,7 +1566,7 @@ class MockKTests {
 
 <p>Thank you in advance</p>
 ","408780","","408780","","2018-10-04 08:53:42","2018-10-22 10:22:01","Reuse part of RxJava stream","<rx-java><rx-java2><rx-kotlin><rx-kotlin2>","2","3","","","","CC BY-SA 4.0"
-"53034295","1","","","2018-10-28 17:32:42","","0","1499","<p>Unfortunately, I can't understand how to check Observable.</p>
+"53034295","1","","","2018-10-28 17:32:42","","0","1509","<p>Unfortunately, I can't understand how to check Observable.</p>
 
 <p>Depending on connection - I want to get my data from network or DB.</p>
 
@@ -1746,7 +1746,7 @@ Now the issue is only the listener in the service gets the events and the activi
 
 <p>Now when i remove the listener form the service then activity starts receiving events. I have used the operator <strong>share</strong> for sharing the observable but it doesn't seem to work</p>
 ","6048312","","","","","2018-11-24 18:57:38","share() operator not working for Observable in Rxjava","<android><rx-java2><rx-android><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"53653297","1","53663648","","2018-12-06 14:12:15","","1","607","<p>I'm just starting using RxJava and I'm struggling to figure out how to use observables the right way.</p>
+"53653297","1","53663648","","2018-12-06 14:12:15","","1","617","<p>I'm just starting using RxJava and I'm struggling to figure out how to use observables the right way.</p>
 
 <p>Down below I have a pager and I'd like to call a web service on page scroll avoiding to many useless calls.</p>
 
@@ -1812,7 +1812,7 @@ Now the issue is only the listener in the service gets the events and the activi
 <pre><code>btnAddItem.isEnabled = it
 </code></pre>
 ","1559039","","5191371","","2018-12-10 07:07:23","2018-12-10 07:07:23","Android rxKotlin crash in subcribe combineLatest","<android><kotlin><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"54028855","1","54029853","","2019-01-03 19:47:36","","1","917","<p>I try to write a transformation function which is used with <code>compose()</code> in order to reduce boilerplate code. It's pretty simple like this:</p>
+"54028855","1","54029853","","2019-01-03 19:47:36","","1","923","<p>I try to write a transformation function which is used with <code>compose()</code> in order to reduce boilerplate code. It's pretty simple like this:</p>
 
 <pre><code>    fun &lt;R&gt; withSchedulers(): ObservableTransformer&lt;R, R&gt; {
         return ObservableTransformer {
@@ -1873,7 +1873,7 @@ publishSubject
 
 <p>Please help, Thanks in Advance,</p>
 ","4051419","","","","","2019-01-25 09:30:22","How can we buffer items in each milliseconds and stream each item at constant time interval","<android><kotlin><rx-java><rx-java2><rx-kotlin2>","2","7","","","","CC BY-SA 4.0"
-"54225878","1","","","2019-01-16 21:45:39","","0","408","<p>I have two different Observables which behaves as</p>
+"54225878","1","","","2019-01-16 21:45:39","","0","412","<p>I have two different Observables which behaves as</p>
 
 <p>Observable one behavior -> This will get created and one DisposableObserver will get subscribed to it and reacts to items emitted by the Observable One. This will be running continuously until app is closed.</p>
 
@@ -1881,7 +1881,7 @@ publishSubject
 
 <p>How can I make second Observable emit values based on Observable one emitted values and dispose it after complete ?</p>
 ","3416215","","3416215","","2019-01-16 23:55:51","2019-01-17 14:03:55","One Observable should emit items based on another Observable emitted items and both Observables are not connected","<rx-java><rx-java2><rx-kotlin2>","2","0","","","","CC BY-SA 4.0"
-"55139062","1","55163021","","2019-03-13 10:01:37","","0","138","<p>How to implement a <strong>Observable.concatEagerDelayError</strong> or an equivalent in RxJava2/RxKotlin2 ?</p>
+"55139062","1","55163021","","2019-03-13 10:01:37","","0","140","<p>How to implement a <strong>Observable.concatEagerDelayError</strong> or an equivalent in RxJava2/RxKotlin2 ?</p>
 
 <p>There is :</p>
 
@@ -1916,7 +1916,7 @@ publishSubject
 
 <p>I want same behaviour but eagerly for selectAll() and getAll() because there is no reason to wait from db to launch network call.</p>
 ","4911053","","4911053","","2019-03-14 13:35:18","2019-03-14 13:41:31","How to concatEagerDelayError in RxJava2","<rx-java2><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"55262210","1","","","2019-03-20 13:44:41","","3","791","<p>For unit testing in kotlin android, I have been using the mocking framework MockK. Have used RxKotlin. I have used Completable observable to notify the ViewModel about the status of API. Based on the completable, the status will be updated to success or failure in ViewModel. My question is how to mock the completable observable of RxKotlin using MockK and check the status in the unit test function based on the mocked completable.</p>
+"55262210","1","","","2019-03-20 13:44:41","","3","797","<p>For unit testing in kotlin android, I have been using the mocking framework MockK. Have used RxKotlin. I have used Completable observable to notify the ViewModel about the status of API. Based on the completable, the status will be updated to success or failure in ViewModel. My question is how to mock the completable observable of RxKotlin using MockK and check the status in the unit test function based on the mocked completable.</p>
 
 <p><strong>Snippet</strong></p>
 
@@ -1933,7 +1933,7 @@ testobserver.assertComplete()
 
 <p>How to subscribe the testobserver with the completable return mock function call</p>
 ","9584758","","4775478","","2019-09-20 19:19:41","2019-09-20 19:19:41","How to mock completable of RxKotlin using MockK(Mock Framework)","<android><unit-testing><rx-java2><mockk><rx-kotlin2>","0","2","","","","CC BY-SA 4.0"
-"55374888","1","55441869","","2019-03-27 10:23:52","","0","145","<h2>First, some background (maybe there is a better way of doing this):</h2>
+"55374888","1","55441869","","2019-03-27 10:23:52","","0","146","<h2>First, some background (maybe there is a better way of doing this):</h2>
 
 <p>We have a module that emits incoming Bluetooth messages on a specific Observable. We then process this messages, and finally subscribe at the end to send messages forward. This processing could change at some time, which for most of the processing means recreating the intermediate Observables, and all observables that depend on it (as they would be processing invalid data now). </p>
 
@@ -2136,7 +2136,7 @@ data class Experimental(
 
 <p>Is there a nicer way to express that?</p>
 ","3612643","","3612643","","2019-04-05 07:26:04","2019-04-08 15:12:31","RxJava/RxKotlin: combineLatest that already completes if one source completes (not all)","<rx-java2><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"55557230","1","55562345","","2019-04-07 08:54:57","","2","315","<p>I have a <code>Flowable&lt;T&gt;</code> and errors that are subtype of <code>IgnoreThisError</code> I want to ignore (resulting in graceful completion), all other errors should be propagated downstream.</p>
+"55557230","1","55562345","","2019-04-07 08:54:57","","2","319","<p>I have a <code>Flowable&lt;T&gt;</code> and errors that are subtype of <code>IgnoreThisError</code> I want to ignore (resulting in graceful completion), all other errors should be propagated downstream.</p>
 
 <p>Kotlin example:</p>
 
@@ -2218,7 +2218,7 @@ val g = f.onErrorComplete { it is IgnoreThisError }
 
 <p>What am I getting wrong?</p>
 ","3612643","","","","","2019-04-10 07:04:51","No `MissingBackpressureException` exception with `Flowable.interval` and blocking chain","<rx-java2><rx-kotlin2>","0","5","","","","CC BY-SA 4.0"
-"55727396","1","55737305","","2019-04-17 12:18:07","","0","181","<p>After struggling for a few days now, on what seems to be a simple task, I come to you guys:)</p>
+"55727396","1","55737305","","2019-04-17 12:18:07","","0","182","<p>After struggling for a few days now, on what seems to be a simple task, I come to you guys:)</p>
 
 <p>Idea is simple. I have two streams/observables, 'left' and 'right'.
 I want items from 'right' to buffer/collect/aggregate to 'current' item in 'left'.<br>
@@ -2394,7 +2394,7 @@ So i will be calling the above like this</p>
 <p>is there is any other solution to perform like this type of transformer ?
 Any help</p>
 ","9344496","","1047418","","2019-05-08 10:04:08","2019-05-08 10:04:08","Android - Generic type as a Expressions In ObservableTransformer","<android><kotlin><rx-java2><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"56053542","1","56054379","","2019-05-09 06:38:55","","2","544","<p>Since sealed is like enum object so i decided to use sealed class for network response, were it contains success or failure if it is success it contains data else error message<br>
+"56053542","1","56054379","","2019-05-09 06:38:55","","2","547","<p>Since sealed is like enum object so i decided to use sealed class for network response, were it contains success or failure if it is success it contains data else error message<br>
 Example</p>
 
 <pre><code>  sealed class Result {
@@ -2432,7 +2432,7 @@ Example</p>
 <p>is there is any other solution ?<br>
 Any help</p>
 ","9344496","","","","","2019-05-09 07:36:03","Android - Kotlin Sealed class with Rxkotlin filter","<android><kotlin><rx-java><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"56130742","1","","","2019-05-14 12:39:54","","1","63","<p>I have a chaining operation in my application, Where i have a list of some data, i will iterate through the list with <code>iteratable observable</code> once the iteration completes, i will perform some other operation which does not depends on the previous list, so what i need is in between these two operation i need to block(or barrier) until the first completes and proceed with second one.</p>
+"56130742","1","","","2019-05-14 12:39:54","","1","64","<p>I have a chaining operation in my application, Where i have a list of some data, i will iterate through the list with <code>iteratable observable</code> once the iteration completes, i will perform some other operation which does not depends on the previous list, so what i need is in between these two operation i need to block(or barrier) until the first completes and proceed with second one.</p>
 
 <p>Example</p>
 
@@ -2479,7 +2479,7 @@ and second {{""a"", ""b""}, {""c"", ""d""}, {""e"", ""f""}}</p>
 
 <p>I expect the output to be {""aa"", ""bb"", ""ca"", ""db"", ""ea"", ""fb""}</p>
 ","7624868","","8200936","","2019-05-24 11:42:27","2019-05-24 11:42:27","Is there a way to reuse one observable until second will get onComplete() in zip?","<java><kotlin><rx-java2><rx-kotlin2>","2","1","","","","CC BY-SA 4.0"
-"56343675","1","56343797","","2019-05-28 13:46:15","","0","80","<p>I'm using room database and need to add rxKotlin to my project, so when I use this code:</p>
+"56343675","1","56343797","","2019-05-28 13:46:15","","0","81","<p>I'm using room database and need to add rxKotlin to my project, so when I use this code:</p>
 
 <pre><code>`implementation 'io.reactivex.rxjava2:rxkotlin:2.0.1'`
 </code></pre>
@@ -2491,7 +2491,7 @@ and second {{""a"", ""b""}, {""c"", ""d""}, {""e"", ""f""}}</p>
 
 <p>how can I fix it?</p>
 ","9470643","","1000551","","2019-05-28 15:25:07","2019-05-28 15:25:07","how to fix ""can't resolve rxkotlin"" in android","<android><kotlin><rx-kotlin2>","2","0","","","","CC BY-SA 4.0"
-"56403533","1","","","2019-06-01 02:58:20","","1","274","<p>When I was trying to upgrade my Android Studio to 3.4, the update does not go smoothly rather, some dependencies break. In my case, the RxJava/RxKotlin dependencies are breaking without giving any clue. Even that is happening randomly as I have RxJava/RxKotlin Code in each of my <strong>4 modules</strong> but the dependency is failing in <strong>only one</strong> module. </p>
+"56403533","1","","","2019-06-01 02:58:20","","1","276","<p>When I was trying to upgrade my Android Studio to 3.4, the update does not go smoothly rather, some dependencies break. In my case, the RxJava/RxKotlin dependencies are breaking without giving any clue. Even that is happening randomly as I have RxJava/RxKotlin Code in each of my <strong>4 modules</strong> but the dependency is failing in <strong>only one</strong> module. </p>
 
 <p><a href=""https://i.stack.imgur.com/lmnlZ.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/lmnlZ.png"" alt=""enter image description here""></a></p>
 
@@ -2570,7 +2570,7 @@ fun getSomeDataFromNetworkProcessWithDB() {
 <p>my problem with the above code is all these network and db operation is working sequentially with the same thread, since we have give the threadpool of size 3 it must send the 3 network request parallely, but the request is going sequentially<br>
 Can anyone help me out this problem ?</p>
 ","9344496","","9344496","","2019-06-03 10:46:00","2019-06-03 18:17:11","Handling Executors in RxKotlin","<android><rx-java2><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"56660075","1","","","2019-06-19 04:29:48","","1","88","<p>I have a list of items say for example list of integers, if any of the integer is null, i need to consume the error and proceed with the next item</p>
+"56660075","1","","","2019-06-19 04:29:48","","1","90","<p>I have a list of items say for example list of integers, if any of the integer is null, i need to consume the error and proceed with the next item</p>
 
 <p>For example</p>
 
@@ -2602,10 +2602,10 @@ Can anyone help me out this problem ?</p>
 
 <p>But my problem is after <code>-1</code> it is not getting proceeded with item <code>5</code>, it stops there, Can anyone help me out with this ?</p>
 ","9344496","","","","","2019-06-19 06:49:24","How to handle errors in rxjava chain in android?","<android><rx-java><rx-kotlin><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"56740292","1","","","2019-06-24 16:03:53","","0","268","<p>I've tried some examples with viewmodels and databinding using BehaviorSubjects and other Observables. Now I have real (data class) object in Kotlin, which holds most of the state. It is basically pojo, but independent from viewmodel and has no observables.
+"56740292","1","","","2019-06-24 16:03:53","","0","272","<p>I've tried some examples with viewmodels and databinding using BehaviorSubjects and other Observables. Now I have real (data class) object in Kotlin, which holds most of the state. It is basically pojo, but independent from viewmodel and has no observables.
 I don't understand how can I bind this automatically to ex. TextView in android without creating external observable variables in viewmodel and some boilercode. I'd think this is something very common in mvvm pattern. Or am I missing something totally?</p>
 ","4070660","","4070660","","2019-06-24 16:17:42","2019-06-25 15:20:03","Model properties binding in android viewmodel","<rx-java><rx-java2><rx-android><rx-kotlin><rx-kotlin2>","1","1","","","","CC BY-SA 4.0"
-"56771102","1","56778346","","2019-06-26 10:50:35","","0","225","<p>I need to handle error globally in my application for network service, i am using Rxjava2CallAdapterFactory in my retrofit service. So In order to handle error globally i searched through various sites and i got a solution. But i do know how this works.</p>
+"56771102","1","56778346","","2019-06-26 10:50:35","","0","226","<p>I need to handle error globally in my application for network service, i am using Rxjava2CallAdapterFactory in my retrofit service. So In order to handle error globally i searched through various sites and i got a solution. But i do know how this works.</p>
 
 <pre><code>class RxErrorAdapter private constructor() : CallAdapter.Factory() {
 
@@ -2638,7 +2638,7 @@ I don't understand how can I bind this automatically to ex. TextView in android 
 
 <p>Can anyone explain on this ?</p>
 ","9344496","","9344496","","2019-06-27 05:33:47","2019-06-27 05:33:47","RxJava2 Error Handling Wrapper For Retrofit Service","<android><retrofit><rx-java2><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"57132058","1","57132969","","2019-07-21 09:56:21","","2","379","<p>I am need that i will be calling a completable method in the chain, after it completes, it needs to continue the chain with <code>Map</code> operator<br>
+"57132058","1","57132969","","2019-07-21 09:56:21","","2","385","<p>I am need that i will be calling a completable method in the chain, after it completes, it needs to continue the chain with <code>Map</code> operator<br>
 <strong>Example</strong></p>
 
 <pre><code>Single.just(someOperation())
@@ -2731,7 +2731,7 @@ I don't understand how can I bind this automatically to ex. TextView in android 
 
 <p>None of these are great solutions, is what I suggested in the right direction? Or is there a better way?</p>
 ","6382655","","","","","2019-08-01 07:39:28","Perform non-transformative action on each item in observable before onNext","<android><kotlin><rx-java><rx-java2><rx-kotlin2>","1","1","","","","CC BY-SA 4.0"
-"57342833","1","57348985","","2019-08-03 23:48:27","","4","530","<p>Using a simple RxKotlin Single, I'm receiving either a <code>android.view.ViewRootImpl$CalledFromWrongThreadException</code> exception, or by adding <code>.observeOn(AndroidSchedulers.mainThread())</code>, I'm getting a <code>NetworkOnMainThread</code> exception. </p>
+"57342833","1","57348985","","2019-08-03 23:48:27","","4","539","<p>Using a simple RxKotlin Single, I'm receiving either a <code>android.view.ViewRootImpl$CalledFromWrongThreadException</code> exception, or by adding <code>.observeOn(AndroidSchedulers.mainThread())</code>, I'm getting a <code>NetworkOnMainThread</code> exception. </p>
 
 <pre><code>fun loadStaffCalendar() {
         var calendarParser = CalendarParser()
@@ -2838,7 +2838,7 @@ public interface BearApi {
 }
 </code></pre>
 ","10943915","","10943915","","2019-08-04 16:14:06","2019-08-04 17:53:04","Single causes either Network on Main Thread or View Root from Wrong Thread exceptions","<android><kotlin><rx-kotlin2>","2","3","","","","CC BY-SA 4.0"
-"57529032","1","57530072","","2019-08-16 17:46:49","","1","145","<p>What I wanted to do is to have a Flowable with a backpressure buffer of one item that keeps the latest one produced from a stream.</p>
+"57529032","1","57530072","","2019-08-16 17:46:49","","1","147","<p>What I wanted to do is to have a Flowable with a backpressure buffer of one item that keeps the latest one produced from a stream.</p>
 
 <p>I've tried to use Flowable.onBackpressureBuffer(1, () -> {}, BackpressureOverflowStrategy.DROP_OLDEST). However, it doesn't work as I expected</p>
 
@@ -2853,7 +2853,7 @@ public interface BearApi {
 
 <p>The output I expected is a sequence of integers, not necessarily contiguous, that should includes the last item 9,999. However, it only printed the first a few contiguous numbers like 0, 1, 2, 3, 4..., different each time, but not the last number 9,999.</p>
 ","10919945","","","","","2019-08-16 19:22:41","What's the behavior of onBackpressureBuffer in RxJava2","<java><kotlin><rx-java2><rx-kotlin2>","1","0","0","","","CC BY-SA 4.0"
-"57738495","1","57746848","","2019-08-31 13:39:52","","1","37","<p>I'm writing messenger server on grpc with rxjava2 stubs, and I stuck on combining my singles.</p>
+"57738495","1","57746848","","2019-08-31 13:39:52","","1","38","<p>I'm writing messenger server on grpc with rxjava2 stubs, and I stuck on combining my singles.</p>
 
 <p>I'm have tried some sort of</p>
 
@@ -2867,7 +2867,7 @@ public interface BearApi {
 
 <p>It looks so unbeauty then all of the examples, so is there a way to combine all of this singles to one line?</p>
 ","10064300","","","","","2019-09-01 14:31:18","How to handle a multiple singles?","<rx-java2><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"57815436","1","57817329","","2019-09-06 03:43:44","","0","198","<p>If in ActivityA, it keep reference to </p>
+"57815436","1","57817329","","2019-09-06 03:43:44","","0","200","<p>If in ActivityA, it keep reference to </p>
 
 <pre><code>private val subjectA: PublishSubject&lt;ObjectB&gt; = PublishSubject.create()
 private var dispose: Disposable? = null
@@ -2935,7 +2935,7 @@ private fun calculateAcceleration(event: SensorEvent): Float {
 
 <p>I expect the output of the observable was like [11.234473, 9.768473, 13.23543], however, I get  [9.768473, 9.768473, 9.768473]. Main point is that the values in the buffer should be different after I move the phone during the buffer lifetime, but they are not.</p>
 ","12035106","","7615937","","2019-12-12 07:38:31","2019-12-12 07:38:31","Observable returns list of the same values","<android><kotlin><observable><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"57882282","1","57883043","","2019-09-11 04:46:09","","2","2861","<p>I am using rxjava for some uploading task to server, Whenever task initiated fragment or activity is destroyed i will be disposing the subscription to avoid memory leak, But what i want is even after the fragment/activity destroyed i need to continue the task running in the background, Is there is any way to achieve this ?</p>
+"57882282","1","57883043","","2019-09-11 04:46:09","","2","2894","<p>I am using rxjava for some uploading task to server, Whenever task initiated fragment or activity is destroyed i will be disposing the subscription to avoid memory leak, But what i want is even after the fragment/activity destroyed i need to continue the task running in the background, Is there is any way to achieve this ?</p>
 
 <p>Example</p>
 
@@ -3028,7 +3028,7 @@ action:onComplete
 <p>seems not quite readable.
 So is there any operator witch could simplify that code?      </p>
 ","1461568","","1461568","","2019-09-29 18:18:43","2019-09-29 18:42:26","How to filter list emitted by observable using result from another observable rx kotlin?","<rx-java2><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"58290474","1","","","2019-10-08 16:29:00","","0","96","<p>After going through some discussions about when to dispose a <code>CompositeDisposable</code>, I wonder why we can't just add a <code>.dispose()</code> after <code>.subscribe()</code> in code.</p>
+"58290474","1","","","2019-10-08 16:29:00","","0","98","<p>After going through some discussions about when to dispose a <code>CompositeDisposable</code>, I wonder why we can't just add a <code>.dispose()</code> after <code>.subscribe()</code> in code.</p>
 
 <pre><code>Observable.just(0)
     .doOnNext{...}
@@ -3038,7 +3038,7 @@ So is there any operator witch could simplify that code?      </p>
 
 <p>What is actually happen if the code is like this? Is it ok to write like this? (instead of <code>.addTo(compositeDisposable)</code>)</p>
 ","5655480","","","","","2019-10-08 17:06:16","What is the problem of adding .dispose() after .subscribe()","<android><rx-java2><rx-kotlin2>","1","3","","","","CC BY-SA 4.0"
-"58512028","1","58512127","","2019-10-22 20:42:11","","2","472","<p>I'm trying to create <strong>unit tests</strong> for the method of my ViewModel below, which uses <strong>RxJava/RxKotlin</strong>.</p>
+"58512028","1","58512127","","2019-10-22 20:42:11","","2","483","<p>I'm trying to create <strong>unit tests</strong> for the method of my ViewModel below, which uses <strong>RxJava/RxKotlin</strong>.</p>
 
 <pre><code>fun doLogin(address: String, serial: String) {
     mLoading.value = true
@@ -3075,7 +3075,7 @@ So is there any operator witch could simplify that code?      </p>
 
 <p>Thanks.</p>
 ","7173179","","7173179","","2019-10-22 21:30:55","2019-10-22 21:30:55","Schedulers.io() Throwing NullPointerException in my Unit Tests","<android><unit-testing><rx-java2><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"58733432","1","","","2019-11-06 15:22:43","","0","190","<p>I have this Android Kotlin code with a list of completables that are merged into a bigger one with <code>mergeDelayError()</code>, that has a timeout. When the timeout is reached, I get <code>java.util.concurrent.TimeoutException: The source did not signal an event for 250 milliseconds and has been terminated.</code></p>
+"58733432","1","","","2019-11-06 15:22:43","","0","192","<p>I have this Android Kotlin code with a list of completables that are merged into a bigger one with <code>mergeDelayError()</code>, that has a timeout. When the timeout is reached, I get <code>java.util.concurrent.TimeoutException: The source did not signal an event for 250 milliseconds and has been terminated.</code></p>
 
 <p>How can I tell which one of the small completables on the list reached the timeout without signaling/emitting anything (the actual list has more than two BTW). My ideal solution would replace such exception with something like: <code>Exception: The following operations reached a timeout: Check initial settings, Check server</code>, or at least an specific log line printed out by each timed-out completable.</p>
 
@@ -3110,7 +3110,7 @@ So is there any operator witch could simplify that code?      </p>
         composition.add(bigDisposable)
 </code></pre>
 ","1152134","","","","","2019-11-06 18:33:43","How to tell which Completables in a mergeDelayError did not signal on timeout","<android><observable><rx-java2><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"59091578","1","59100045","","2019-11-28 14:58:57","","1","85","<p>To start I have the following Moshi json.</p>
+"59091578","1","59100045","","2019-11-28 14:58:57","","1","86","<p>To start I have the following Moshi json.</p>
 
 <pre><code>@JsonClass(generateAdapter = true)
 data class OrderDetails(
@@ -3276,7 +3276,7 @@ data class SaleInfo(val salesReference: String)
 
 <p>Many thanks for any suggestions</p>
 ","70942","","70942","","2020-03-09 15:58:56","2020-03-12 17:56:16","Subscribing to 2 observables but only subscribe to the second one if a condition is true for the first one","<rx-java2><rx-kotlin2>","1","2","","","","CC BY-SA 4.0"
-"60796695","1","","","2020-03-22 06:54:06","","0","96","<p>I am new to Rx and I am making one API call using Rx. It is working but the problem is that it is continuously making the API after I received response or error. I am using the MVVM pattern. </p>
+"60796695","1","","","2020-03-22 06:54:06","","0","97","<p>I am new to Rx and I am making one API call using Rx. It is working but the problem is that it is continuously making the API after I received response or error. I am using the MVVM pattern. </p>
 
 <p>Here is my code how I am observing result in View Model:</p>
 
@@ -3376,7 +3376,7 @@ private fun isTokenValid(username: String, password: String, authResponse: AuthM
 }
 </code></pre>
 ","2017921","","2017921","","2020-04-05 07:45:11","2020-04-05 10:27:54","RxJava ConcatArrayDelayError and filters: returning an error only if both sources fail","<android><observable><rx-java2><repository-pattern><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"61450873","1","61450938","","2020-04-27 02:36:04","","0","82","<p>I'm trying to convert the input streams into the file. So when user selects 1 image, it all works well. But when user selects multiple images, for example 4 then the below code is not working as expected; I see only 2 files path in Log statement. </p>
+"61450873","1","61450938","","2020-04-27 02:36:04","","0","89","<p>I'm trying to convert the input streams into the file. So when user selects 1 image, it all works well. But when user selects multiple images, for example 4 then the below code is not working as expected; I see only 2 files path in Log statement. </p>
 
 <pre><code>
 compositeDisposable.add(Observable.fromIterable(inputStreamList)
@@ -3431,7 +3431,7 @@ fun saveInputStreamToFile(input: InputStream, directory: File, height: Int): Fil
 
 <p>I want the next input stream to be taken only once the current input stream is converted to file. How to achieve this? Please help</p>
 ","3128784","","","","","2020-04-27 03:02:53","How to make the map wait till the current index item is finished processing and then take the next item for processing using RxJava?","<android><kotlin><rx-java2><rx-android><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"61615794","1","","","2020-05-05 14:43:07","","0","124","<p>I have a publish subject with multiple subscribers: </p>
+"61615794","1","","","2020-05-05 14:43:07","","0","128","<p>I have a publish subject with multiple subscribers: </p>
 
 <p>Here is the class: </p>
 
@@ -3530,7 +3530,7 @@ Subscriber3 19 Hello
 
 <p>Is this order of execution guaranteed? As I am not able to find relevant documentation regarding this. </p>
 ","2822178","","2822178","","2020-05-05 15:51:08","2020-05-06 08:48:23","Order of events received by subscribers of a Publish Subject","<kotlin><rx-java><rx-java2><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"62216211","1","62217720","","2020-06-05 13:14:55","","0","351","<p>So I'm completely new to rx-java/rx-kotlin and haven't heard about it until I where to write a HTTP filter in Micronaut (<a href=""https://docs.micronaut.io/latest/guide/index.html#filters"" rel=""nofollow noreferrer"">https://docs.micronaut.io/latest/guide/index.html#filters</a>) which caught me off guard since I've only done regular JAX-RS filters.</p>
+"62216211","1","62217720","","2020-06-05 13:14:55","","0","354","<p>So I'm completely new to rx-java/rx-kotlin and haven't heard about it until I where to write a HTTP filter in Micronaut (<a href=""https://docs.micronaut.io/latest/guide/index.html#filters"" rel=""nofollow noreferrer"">https://docs.micronaut.io/latest/guide/index.html#filters</a>) which caught me off guard since I've only done regular JAX-RS filters.</p>
 
 <p>So after doing some trial-and-error I came up with this. </p>
 
@@ -3557,14 +3557,14 @@ Subscriber3 19 Hello
 
 <p>What I'd like to do is to improve the exception handling and return a 500 in the case an exception is thrown (like if the remote service called by <code>remoteClient</code> isn't reachable. How can I accomplish this? I haven't got anything else to work other than the solution above to return an empty list for the next observer.</p>
 ","9602455","","9602455","","2020-06-05 13:38:10","2020-06-05 14:30:31","How to handle exception when doing request to external service and return status accordingly in Micronaut filter","<rx-java2><micronaut><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"63535869","1","","","2020-08-22 11:51:29","","0","95","<p>I have a scenario where I have to fetch some string asynchronously. I would like to create a method where I can listen to when this value is fetched successfully and then provided to the listener.
+"63535869","1","","","2020-08-22 11:51:29","","0","97","<p>I have a scenario where I have to fetch some string asynchronously. I would like to create a method where I can listen to when this value is fetched successfully and then provided to the listener.
 Now, this can be done easily via many ways including a callback listener or a lambda.</p>
 <p>But what do I use so that all subsequent calls to this method, also provide the string back - without having to fetch it again, as it has already been fetched once. So a solution where the listener is still attached but is provided the value right away since it is available.
 I know how to do this via old fashioned callback listeners, where the value is stored and then for subsequent calls it can be returned right away via the callback.</p>
 <p>But is there a more compact/sophisticated way to do it, let's say via Rx?</p>
 <p>Thanks.</p>
 ","966739","","","","","2020-08-23 08:20:53","RxJava/RxKotlin: Wait for value to be fetched async and then provide to all subscribers","<kotlin><asynchronous><listener><rx-java2><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"63574115","1","63574703","","2020-08-25 07:36:11","","1","80","<p>I have the following class, which exposes a Single to fetch an ID.</p>
+"63574115","1","63574703","","2020-08-25 07:36:11","","1","81","<p>I have the following class, which exposes a Single to fetch an ID.</p>
 <p>This is used to fetch the ID on init of that class and later others can also use this to get the ID.</p>
 <p>Any where else from where I subscribe to this Single, I am able to get the ID. But in the init method here, this method doesn't seem to start and fetch the ID.</p>
 <p>Could someone please help me understand what I am missing?
@@ -3597,13 +3597,13 @@ private fun fetchId(emitter: SingleEmitter&lt;String&gt;) {
 </code></pre>
 <p>}</p>
 ","966739","","","","","2020-08-25 08:15:43","RxKotlin, RxJava: Observable/Single not starting","<observable><rx-java><rx-java2><publish-subscribe><rx-kotlin2>","1","0","","","","CC BY-SA 4.0"
-"63777591","1","63787395","","2020-09-07 12:25:27","","3","3619","<p>I am new to Android development with Kotlin and I am struggling on finding any useful documentation on how to create a simple GET and POST requests with the best current practices as possible. I am coming from an Angular development and there we used a reactive development using RxJS.</p>
+"63777591","1","63787395","","2020-09-07 12:25:27","","3","3703","<p>I am new to Android development with Kotlin and I am struggling on finding any useful documentation on how to create a simple GET and POST requests with the best current practices as possible. I am coming from an Angular development and there we used a reactive development using RxJS.</p>
 <p>Normally I would create a service file that would hold all my request functions, then I would use this service in whichever component and subscribe to the observable.</p>
 <p>How would you do this in Android? Is there a good started example of things that have to be created. From the first look, everything looks so complicated and over-engineered</p>
 ","8358839","","","","","2020-09-08 05:05:18","Simple HTTP request example in Android using Kotlin","<android><kotlin><rx-android><rx-kotlin><rx-kotlin2>","3","1","1","","","CC BY-SA 4.0"
-"64273179","1","","","2020-10-09 02:36:34","","0","182","<p>I am getting callback event from an object twice sometime thrice but I need to collect only one object that will be the latest one. Is it possible with RX kotlin?</p>
+"64273179","1","","","2020-10-09 02:36:34","","0","187","<p>I am getting callback event from an object twice sometime thrice but I need to collect only one object that will be the latest one. Is it possible with RX kotlin?</p>
 ","5751854","","","","","2021-04-26 10:15:27","RXKotlin - How to receive single event","<android><kotlin><rx-java><rx-kotlin2>","3","1","","","","CC BY-SA 4.0"
-"65040953","1","65163363","","2020-11-27 16:48:09","","0","47","<p>I have a method which perform network request and return Observable with mutable list of data class.
+"65040953","1","65163363","","2020-11-27 16:48:09","","0","48","<p>I have a method which perform network request and return Observable with mutable list of data class.
 Sometimes this method fails with 403 error. I need call YouTubeClient.getApiKey() method for getting new Api key and repeat request to network. How to do it? I read a lot of similar topics but didn't find working decision.</p>
 <p>This code of utility method, when i try to call retryWhen() method</p>
 <pre><code>private fun searchRequestWrapper(query: String): Observable&lt;MutableList&lt;Video&gt;&gt; {
@@ -3681,7 +3681,7 @@ Result(totalProfit: BigDecimal)</p>
 source.groupBy{ it }.subscribe { showresult(it) }
 </code></pre>
 ","1154390","","10082297","","2021-04-10 23:28:30","2021-04-12 09:27:43","RxKotlin COUNT with GROUP BY and return a list","<kotlin><rx-java><rx-kotlin><rx-kotlin2>","1","2","","","","CC BY-SA 4.0"
-"67293882","1","67295389","","2021-04-28 04:42:01","","0","45","<p>I'm trying to create a BLE service that will scan for devices and using rxKotlin create an observable that will allow another class to observe when a device is found. I'm confused on how to create the observable that will allow another class to subscribe and tutorials are all over the place. Can someone give me a pointer on how to do so or a good tutorial.</p>
+"67293882","1","67295389","","2021-04-28 04:42:01","","0","46","<p>I'm trying to create a BLE service that will scan for devices and using rxKotlin create an observable that will allow another class to observe when a device is found. I'm confused on how to create the observable that will allow another class to subscribe and tutorials are all over the place. Can someone give me a pointer on how to do so or a good tutorial.</p>
 <p>Bluetoothservice class callback where devices are discovered</p>
 <pre><code>var foundDeviceObservable: Observable&lt;BluetoothDevice&gt; = Observable.create {  }
 

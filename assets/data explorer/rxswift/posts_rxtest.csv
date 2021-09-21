@@ -1,5 +1,5 @@
 Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCount,Body,OwnerUserId,OwnerDisplayName,LastEditorUserId,LastEditorDisplayName,LastEditDate,LastActivityDate,Title,Tags,AnswerCount,CommentCount,FavoriteCount,ClosedDate,CommunityOwnedDate,ContentLicense
-"50465639","1","50465640","","2018-05-22 10:39:24","","4","1857","<p>I am trying to run the following test from <strong>Chapter 16: Testing with RxTest</strong> of <strong><a href=""https://store.raywenderlich.com/products/rxswift"" rel=""nofollow noreferrer"">Raywenderlich RxSwift</a></strong> book:</p>
+"50465639","1","50465640","","2018-05-22 10:39:24","","4","1874","<p>I am trying to run the following test from <strong>Chapter 16: Testing with RxTest</strong> of <strong><a href=""https://store.raywenderlich.com/products/rxswift"" rel=""nofollow noreferrer"">Raywenderlich RxSwift</a></strong> book:</p>
 
 <pre><code>import XCTest
 import RxSwift
@@ -62,7 +62,7 @@ XCTAssertEqual(""rayWenderlichGreen"", try! colorNameObservable.toBlocking().fir
 
 <p><a href=""https://forums.raywenderlich.com/t/chapter-16-testing-with-rxtest/34926"" rel=""nofollow noreferrer"">Unfortunately, there is no support for this issue in Raywenderlich's forums.</a></p>
 ","3409515","","1000551","","2018-05-23 19:13:50","2018-05-23 19:13:50","RxTest: Undefined symbols for architecture x86_64 and arm64","<ios><swift><rx-swift><rx-cocoa><rxtest>","1","0","","","","CC BY-SA 4.0"
-"52128465","1","","","2018-09-01 13:15:36","","1","1230","<p>I'm trying to understand how to correctly use <code>TestScheduler</code> from <code>RxTest 4.2</code> for <code>RxSwift 4.2</code>.</p>
+"52128465","1","","","2018-09-01 13:15:36","","1","1243","<p>I'm trying to understand how to correctly use <code>TestScheduler</code> from <code>RxTest 4.2</code> for <code>RxSwift 4.2</code>.</p>
 
 <p><strong>How do I correctly create TestScheduler and pass it events which would terminate the scheduler after all events are executed?</strong></p>
 
@@ -103,7 +103,7 @@ XCTAssertEqual(""rayWenderlichGreen"", try! colorNameObservable.toBlocking().fir
     }
 </code></pre>
 ","967484","","","","","2018-09-03 09:40:31","iOS RxSwift - testing with RxTest and TestScheduler does not end / terminate test case","<swift><unit-testing><rx-swift><swift4.2><rxtest>","1","1","","","","CC BY-SA 4.0"
-"53468918","1","53470402","","2018-11-25 15:18:44","","3","1148","<p>I have mock interactor and router for unit tests on presenter
+"53468918","1","53470402","","2018-11-25 15:18:44","","3","1155","<p>I have mock interactor and router for unit tests on presenter
 presenter method: </p>
 
 <p><i> </p>
@@ -169,7 +169,7 @@ presenter method: </p>
 <p>I tried with XCTestExpectation and fulfill in do(onNext:{}) block and get the same results, work only without subscribeOn background.
 Method work correct on device and simulator, presenterMethod is treggered on switch and emit correct events. How this test should be written to work with SubscribeOn background?  </p>
 ","7339866","","","","","2018-11-25 20:02:07","RxSwift TestScheduler don't work if subscribeOn background","<ios><swift><rx-swift><reactivex><rxtest>","1","0","1","","","CC BY-SA 4.0"
-"54037818","1","","","2019-01-04 11:09:32","","0","743","<p>I'm having trouble testing a BehaviorRelay. The following minimal code binds an observable to a BehaviorRelay, but when testing, the tests won't end and are hung - the observable keeps emitting events, because it starts with <code>Observable.timer</code>. When getting rid of the <code>bindRx</code> method and testing the observable only, it works without a problem. But I'd like to test the class properly - does that make sense?</p>
+"54037818","1","","","2019-01-04 11:09:32","","0","744","<p>I'm having trouble testing a BehaviorRelay. The following minimal code binds an observable to a BehaviorRelay, but when testing, the tests won't end and are hung - the observable keeps emitting events, because it starts with <code>Observable.timer</code>. When getting rid of the <code>bindRx</code> method and testing the observable only, it works without a problem. But I'd like to test the class properly - does that make sense?</p>
 
 <p>How do I go about making this work?</p>
 
@@ -239,7 +239,7 @@ class TestObjectFetcherTests: XCTestCase {
 }
 </code></pre>
 ","414365","","","","","2019-01-05 22:56:42","Testing BehaviorSubject/Relay in RxSwift","<ios><swift><rx-swift><rxtest>","1","2","","","","CC BY-SA 4.0"
-"56425073","1","56506817","","2019-06-03 10:04:41","","1","397","<p>I'm trying to test the main functionality of my ViewModel. The important step is to test te loaded state completed. But for sure, for a better test it could be interesting to test al states.</p>
+"56425073","1","56506817","","2019-06-03 10:04:41","","1","403","<p>I'm trying to test the main functionality of my ViewModel. The important step is to test te loaded state completed. But for sure, for a better test it could be interesting to test al states.</p>
 
 <p>I was reading a lot of post and information about RxTest and RxBlocking but I'm not able to test this module. If someone can help me, it would be great!</p>
 
@@ -328,7 +328,7 @@ class ProductsViewModel {
 
 <p>The goal is to be able to test all of ProductsViewState after viewmodel.requestData() is being called</p>
 ","2468765","","506441","","2019-06-08 13:33:56","2019-06-08 13:33:56","Test PublishSubject for ViewState","<mvvm><rx-swift><rxtest><rx-blocking>","1","11","","","","CC BY-SA 4.0"
-"56541855","1","56543768","","2019-06-11 10:38:21","","2","441","<p>I would like to perform a test in one of my ViewModels that contains a BehaviorRelay object called ""nearByCity"" that it is bind to BehaviorRelay called ""isNearBy"". That's how my view model looks like.</p>
+"56541855","1","56543768","","2019-06-11 10:38:21","","2","448","<p>I would like to perform a test in one of my ViewModels that contains a BehaviorRelay object called ""nearByCity"" that it is bind to BehaviorRelay called ""isNearBy"". That's how my view model looks like.</p>
 
 <pre><code>class SearchViewViewModel: NSObject {
 
@@ -376,7 +376,7 @@ private extension SearchViewViewModel{
 
 <p>Thank you</p>
 ","1824565","","1824565","","2019-06-12 07:03:54","2019-06-12 07:03:54","Testing ViewModel in RxSwift","<unit-testing><rx-swift><rxtest>","1","1","","","","CC BY-SA 4.0"
-"56747818","1","56757988","","2019-06-25 06:11:11","","1","927","<p>It's my first time using <strong>RxTest</strong> and I am struggling how to do the following approach:</p>
+"56747818","1","56757988","","2019-06-25 06:11:11","","1","938","<p>It's my first time using <strong>RxTest</strong> and I am struggling how to do the following approach:</p>
 
 <pre class=""lang-swift prettyprint-override""><code>protocol ViewModelType {
     func transform(input: ViewModel.Input) -&gt; ViewModel.Output
@@ -484,7 +484,7 @@ struct ViewModel: ViewModelType {
     }
 </code></pre>
 ","11709138","","","","","2019-08-09 11:33:40","How can I assert the output of an observable that uses latest from text inputs","<swift><reactive-programming><xctest><rx-swift><rxtest>","1","3","","","","CC BY-SA 4.0"
-"57776236","1","","","2019-09-03 17:22:22","","0","300","<p>I am trying to write test cases and trying to access a method which returns Single object. For this I want to use toBlocking but I am not able to access it and getting following error:    </p>
+"57776236","1","","","2019-09-03 17:22:22","","0","303","<p>I am trying to write test cases and trying to access a method which returns Single object. For this I want to use toBlocking but I am not able to access it and getting following error:    </p>
 
 <blockquote>
   <p>Value of type 'Single&lt;[Property]>' (aka
@@ -511,7 +511,7 @@ import RxSwift
 import XCTest
 </code></pre>
 ","9692737","","9692737","","2019-09-03 17:36:48","2019-09-05 09:14:34","Unable to access toBlocking() in xctest","<swift><rx-swift><rxtest>","1","0","","","","CC BY-SA 4.0"
-"59325425","1","63844842","","2019-12-13 15:23:53","","1","267","<p>Something consider me a long time. Lets say that we have written test class: </p>
+"59325425","1","63844842","","2019-12-13 15:23:53","","1","276","<p>Something consider me a long time. Lets say that we have written test class: </p>
 
 <pre><code>final class BearerTokenManagerTests: XCTestCase {
 
@@ -598,7 +598,7 @@ import XCTest
 
 <p>Could someone share their experience? Do you clean up stuff in <code>tearDown</code>? Is reseting properties in <code>setUp</code> enough? </p>
 ","4219574","","4219574","","2019-12-13 15:46:10","2020-09-13 13:05:40","Is `tearDown` calling necessary?","<swift><xcode><xctestcase><rxtest>","1","1","1","","","CC BY-SA 4.0"
-"59467791","1","59468477","","2019-12-24 11:01:00","","0","651","<p>A ViewModel has an input (an observer) which is bound to <code>tap</code> event of <code>UIButton</code> in <code>UIViewController</code>. This observer is of type <code>AnyObserver&lt;Void&gt;</code>.</p>
+"59467791","1","59468477","","2019-12-24 11:01:00","","0","660","<p>A ViewModel has an input (an observer) which is bound to <code>tap</code> event of <code>UIButton</code> in <code>UIViewController</code>. This observer is of type <code>AnyObserver&lt;Void&gt;</code>.</p>
 
 <p>In my unit test, this is what I'm expecting:</p>
 
@@ -629,7 +629,7 @@ voidEventsObserver = scheduler.createObserver(Void.self)
 
 <p>In Rx, <code>Void</code> events are normal and to properly test ViewModel, one needs to compare them. e.g. <code>.next(0, ())</code>, <code>.completed(0)</code> etc. <code>Void</code> is not <code>Equatable</code> and it doesn't make sense to make it <code>Equatable</code>. However, I need to assert if the event is <code>.next</code> or <code>.error</code> or <code>.completed</code>. How do I assert that part?</p>
 ","10384998","","","","","2019-12-24 11:56:05","RxTest - How to compare Event<Void> as Void is not Equatable","<swift><rx-swift><rxtest>","1","0","","","","CC BY-SA 4.0"
-"59813484","1","59816678","","2020-01-19 19:12:06","","1","980","<p>I have just started learning RxSwift and trying to build a sample application to practice these concepts. </p>
+"59813484","1","59816678","","2020-01-19 19:12:06","","1","1001","<p>I have just started learning RxSwift and trying to build a sample application to practice these concepts. </p>
 
 <p>I have written a QuestionViewModel that loads list of questions from QuestionOps class. QuestionOps has a function getQuestions that returns Single&lt;[Question]>.</p>
 
@@ -723,14 +723,14 @@ func testLoadedDataIsDisplayedCorrectly() {
 }
 </code></pre>
 ","4160530","","","","","2020-01-20 03:32:20","Mocking and Validating Results in RxSwift Unit Testing","<ios><rx-swift><rxtest>","1","0","1","","","CC BY-SA 4.0"
-"61178081","1","","","2020-04-12 20:58:06","","0","97","<pre><code>observable.subscribe(onNext: { _ in
+"61178081","1","","","2020-04-12 20:58:06","","0","98","<pre><code>observable.subscribe(onNext: { _ in
     somePrivateFunction()
 })
 </code></pre>
 
 <p>What is the RxSwift way to test that when <code>observable</code> receives an event the <code>somePrivateFunction</code> actually gets called or not? Since the subscription and the function are in the same class I can't mock it.</p>
 ","3490203","","","","","2020-04-13 09:10:50","How to test a private function inside an RxSwift observer?","<ios><swift><rx-swift><quick-nimble><rxtest>","1","1","","","","CC BY-SA 4.0"
-"62016565","1","","","2020-05-26 07:16:08","","0","49","<p>I would like to emit two different signals for two different sources, but I get crash 
+"62016565","1","","","2020-05-26 07:16:08","","0","50","<p>I would like to emit two different signals for two different sources, but I get crash 
 <code>Thread 1: EXC_BAD_ACCESS (code=1, address=0x0)</code> in <code>RxSwift/Event.swift</code> in line 29: <code>return ""next(\(value))""</code> </p>
 
 <p>this is my simplified code:</p>
@@ -766,7 +766,7 @@ func testLoadedDataIsDisplayedCorrectly() {
 
 <p>Can I create two different scheduler's observables?</p>
 ","2493555","","","","","2020-05-26 10:55:39","RxSwift TestScheduler for two sources","<swift><rx-swift><rxtest>","1","0","","","","CC BY-SA 4.0"
-"63016739","1","","","2020-07-21 14:26:10","","-1","77","<p>I'm trying to write some tests for my application, that uses rxSwift. In particular, I'd like to test, writing unit tests, a webview. I'm using RxWebKit to get observables over some properties like navigationCompleted or NavigationFailed and so on.
+"63016739","1","","","2020-07-21 14:26:10","","-1","78","<p>I'm trying to write some tests for my application, that uses rxSwift. In particular, I'd like to test, writing unit tests, a webview. I'm using RxWebKit to get observables over some properties like navigationCompleted or NavigationFailed and so on.
 For example: <code>webView.rx.didFailNavigation.asDriver()</code>. These observables are given as input to my viewModel.
 But i'm not sure how to write these tests to simulate, for example, a failed navigation and so an emission of this kind of observable.
 In the specific case, i want to simulate a <code>Driver&lt;(webView: WKWebView, navigation: WKNavigation, error: Error)&gt;</code> (that is the same type of the one associated to <code>webView.rx.didFailNavigation.asDriver()</code>).
@@ -783,7 +783,7 @@ can someone give me a simple example?</p>
 <li>Has RxTest resolved this issue ?</li>
 </ol>
 ","1927625","","12336305","","2020-08-22 08:41:57","2020-08-27 15:39:09","RxTest is still using libswiftXCTest.dylib","<ios><rx-swift><rxtest>","2","0","","","","CC BY-SA 4.0"
-"64088444","1","64088524","","2020-09-27 12:25:31","","0","118","<p>I have a strange issue in my testing code. I want to test a <code>BehaviourRelay</code> in my view model changes from status <code>.fetching</code> to <code>.saving</code>. I have the following test code:</p>
+"64088444","1","64088524","","2020-09-27 12:25:31","","0","120","<p>I have a strange issue in my testing code. I want to test a <code>BehaviourRelay</code> in my view model changes from status <code>.fetching</code> to <code>.saving</code>. I have the following test code:</p>
 <pre><code>class BankViewModelTests: XCTestCase {
     
     private var scheduler: TestScheduler!
@@ -856,7 +856,7 @@ extension BankViewModelTests {
 <p>When I run the test I get the following message: <code>XCTAssertEqual failed: (&quot;[next(fetching) @ 0, next(saving) @ 10]&quot;) is not equal to (&quot;[next(fetching) @ 0, next(saving) @ 10]&quot;)</code></p>
 <p>Cleary these events are equivalent, so why is it failing?</p>
 ","4083744","","4083744","","2020-09-27 12:40:42","2020-09-27 13:02:02","XCTAssertEqual fails when using createColdObservable for RxTest","<swift><rx-swift><xctest><rxtest>","1","0","","","","CC BY-SA 4.0"
-"65117691","1","","","2020-12-02 23:31:29","","0","27","<p>I am a complete beginner in writing unit tests and trying to figure out how to test a ViewModel that makes use of the Giphy API.</p>
+"65117691","1","","","2020-12-02 23:31:29","","0","28","<p>I am a complete beginner in writing unit tests and trying to figure out how to test a ViewModel that makes use of the Giphy API.</p>
 <p>This is my ViewModel:</p>
 <pre><code>
 import androidx.hilt.lifecycle.ViewModelInject

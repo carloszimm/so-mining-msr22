@@ -1,5 +1,5 @@
 Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCount,Body,OwnerUserId,OwnerDisplayName,LastEditorUserId,LastEditorDisplayName,LastEditDate,LastActivityDate,Title,Tags,AnswerCount,CommentCount,FavoriteCount,ClosedDate,CommunityOwnedDate,ContentLicense
-"64317778","1","64317821","","2020-10-12 12:20:10","","1","88","<p>I'm trying to chain two reactive calls which return <code>Completable</code> using retrofit on android:</p>
+"64317778","1","64317821","","2020-10-12 12:20:10","","1","94","<p>I'm trying to chain two reactive calls which return <code>Completable</code> using retrofit on android:</p>
 <pre><code>val userRequest = ...
 val languageRequest = ...
 
@@ -17,7 +17,7 @@ fun updateMessagingUserLanguages(@Path(&quot;userId&quot;) userId: Long, @Body r
 <p>The first <code>Completable</code> succeed and returns a response with a 200 status. However, the second call is never triggered (it never appears in my log and does not pass my breakpoint).</p>
 <p>What am I missing here?</p>
 ","1370087","","","","","2020-10-12 12:22:20","RxJava Completable.andThen never triggers the second Completable","<android><kotlin><retrofit><rx-java><rx-java-completable>","1","0","","","","CC BY-SA 4.0"
-"66283257","1","","","2021-02-19 18:39:01","","0","22","<p>using kotlin, having code</p>
+"66283257","1","","","2021-02-19 18:39:01","","0","24","<p>using kotlin, having code</p>
 <pre><code>fun fetchRemoteDataApi(): Single&lt;RemoteDataResponse&gt; = networkApi.getData()
 
     // it is just a retrofit
@@ -72,7 +72,7 @@ private val remoteTopicUsers: Single&lt;List&lt;User&gt;&gt;
         }
 </code></pre>
 ","2987953","","","","","2021-02-19 21:48:05","rxjava, how to inspect the result of a Single","<kotlin><rx-java3><rx-java-completable>","1","0","","","","CC BY-SA 4.0"
-"68191518","1","","","2021-06-30 08:54:00","","0","48","<p>In my Android App I'm trying to save a file with input- and outputStream from the contentResolver. I'm using this saveImageExternal function in a Rx Completable.fromCallable and I got a FileNotFoundException because my uri was wrong, but the onError function from my observer was not called and the Completable completed. Why was onError not called? Can someone explain?</p>
+"68191518","1","","","2021-06-30 08:54:00","","0","57","<p>In my Android App I'm trying to save a file with input- and outputStream from the contentResolver. I'm using this saveImageExternal function in a Rx Completable.fromCallable and I got a FileNotFoundException because my uri was wrong, but the onError function from my observer was not called and the Completable completed. Why was onError not called? Can someone explain?</p>
 <pre><code>private fun saveImageExternal(file: File, uri: Uri, context: Context) {
         val resolver = context.contentResolver
         val outputStream = FileOutputStream(file)

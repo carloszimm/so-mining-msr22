@@ -1,5 +1,5 @@
 Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCount,Body,OwnerUserId,OwnerDisplayName,LastEditorUserId,LastEditorDisplayName,LastEditDate,LastActivityDate,Title,Tags,AnswerCount,CommentCount,FavoriteCount,ClosedDate,CommunityOwnedDate,ContentLicense
-"53329908","1","53497072","","2018-11-16 00:50:06","","4","1760","<p>The goal is simple: to join two firestore queries utilizing <code>rxjs</code>, <code>rxfire</code>, and the <code>rnfirebase</code> react native library.</p>
+"53329908","1","53497072","","2018-11-16 00:50:06","","4","1769","<p>The goal is simple: to join two firestore queries utilizing <code>rxjs</code>, <code>rxfire</code>, and the <code>rnfirebase</code> react native library.</p>
 
 <p>I've read multiple tutorials <a href=""https://medium.com/google-developer-experts/performing-or-queries-in-firebase-cloud-firestore-for-javascript-with-rxjs-c361671b201e"" rel=""nofollow noreferrer"">1</a>, <a href=""https://angularfirebase.com/lessons/introduction-to-rxfire-rxjs-for-firebase/"" rel=""nofollow noreferrer"">2</a> on joining queries, but they all fail with different errors.</p>
 
@@ -38,7 +38,7 @@ orQuery$.subscribe((result) =&gt; {
 
 <p>How can I successfully join two firestore queries (OR)?</p>
 ","179736","","10207459","","2018-11-27 10:39:56","2018-11-27 15:52:21","How can I join two Firestore queries using rxfire and rxjs (OR query)","<firebase><rxjs><google-cloud-firestore><rxfire>","1","1","5","","","CC BY-SA 4.0"
-"54191235","1","54191793","","2019-01-15 00:42:38","","1","537","<p>Summary: essentially I need something like <code>from Users where usergroupIds in [1,3,5]</code>.</p>
+"54191235","1","54191793","","2019-01-15 00:42:38","","1","539","<p>Summary: essentially I need something like <code>from Users where usergroupIds in [1,3,5]</code>.</p>
 
 <p>Given <code>usergroupIds$</code> emit an array of group IDs <code>[1,3,5]</code></p>
 
@@ -87,7 +87,7 @@ With help from @FanCheung:</p>
 
 <p>However, is there a way to use somehow flatten the results of <code>combinedUsers$</code>, and then carry out the <code>distinct</code> operator?</p>
 ","35634","","35634","","2019-01-15 19:44:09","2019-01-16 02:34:46","Combine Observables into a single Observable from a dynamic array of Observable?","<firebase><rxjs><google-cloud-firestore><rxfire>","2","0","","","","CC BY-SA 4.0"
-"54270412","1","","","2019-01-19 19:01:31","","1","132","<p>I want to be able to respond to errors from a call to collectionData. I added a catchError but it never gets called.  In fact, the collectionData emits a result with no elements.</p>
+"54270412","1","54271281","","2019-01-19 19:01:31","","1","133","<p>I want to be able to respond to errors from a call to collectionData. I added a catchError but it never gets called.  In fact, the collectionData emits a result with no elements.</p>
 
 <pre><code>export const bundleEpic = action$ =&gt; action$.pipe(
   ofType(BUNDLES_LOAD),
@@ -105,7 +105,7 @@ With help from @FanCheung:</p>
 
 <p>What is the proper way to handle errors using collectionData?</p>
 ","5422443","","7247920","","2019-01-19 19:07:30","2019-01-19 20:50:53","Trouble using catchError with RxFire firestore collectionData","<rxjs><redux-observable><rxfire>","1","1","1","","","CC BY-SA 4.0"
-"54278902","1","56435193","","2019-01-20 17:13:17","","2","5579","<p>I'm getting an error : storage/object-not-found when trying to upload a large image file in Google Cloud Storage using RxFire.</p>
+"54278902","1","56435193","","2019-01-20 17:13:17","","2","5634","<p>I'm getting an error : storage/object-not-found when trying to upload a large image file in Google Cloud Storage using RxFire.</p>
 
 <p>They say the image is not found in the bucket but when I check, i see them!</p>
 
@@ -144,7 +144,7 @@ serverResponse_: ""{↵  ""error"": {↵    ""code"": 404,↵    ""message"":
 ""Not Found.  Could not get object""↵  }↵}"", name_: ""FirebaseError""}
 </code></pre>
 ","9726037","","1033581","","2019-07-05 16:17:36","2019-07-05 16:17:36","Error: storage/object-not-found when trying to upload large image file","<firebase><google-cloud-storage><firebase-storage><rxfire>","1","5","","","","CC BY-SA 4.0"
-"54601988","1","","","2019-02-09 00:25:27","","2","121","<p>I have some RxFire code that listens to a Firestore collection query (representing <em>channels</em>) and, for each of the results, listens to a Realtime Database ref for documents (representing <em>messages</em> in that channel).</p>
+"54601988","1","","","2019-02-09 00:25:27","","2","122","<p>I have some RxFire code that listens to a Firestore collection query (representing <em>channels</em>) and, for each of the results, listens to a Realtime Database ref for documents (representing <em>messages</em> in that channel).</p>
 
 <p>The problem I'm running into is that the Realtime Database documents are re-downloaded every time the Firestore query changes, even if they're for a path/reference that hasn't changed.</p>
 
@@ -349,7 +349,7 @@ onDestroy(() =&gt; {
 
 <p>But the real question is: Can I update a subscription. Change the subscription without the unsubscribe?</p>
 ","675006","","675006","","2019-11-12 12:41:18","2020-02-23 15:36:49","Subscribe to a doc using Svelte / RxJs / RxFire. How can I update the subscription","<rxjs><svelte><derived><rxfire>","2","2","1","","","CC BY-SA 4.0"
-"60905731","1","60906330","","2020-03-28 19:14:53","","0","67","<p>I'm using RXFire and RXJS.</p>
+"60905731","1","60906330","","2020-03-28 19:14:53","","0","68","<p>I'm using RXFire and RXJS.</p>
 
 <pre><code>collectionData(firebase.firestore.collection('collectionname')).subscribe(x=&gt;console.log(x)
 </code></pre>
@@ -505,7 +505,7 @@ onDestroy(() =&gt; {
 
 <p>Thanks for everyone's help!</p>
 ","12728118","","12728118","","2020-03-29 17:04:23","2020-03-29 17:04:23","How do I force an observeable to complete?","<firebase><rxjs><xstate><rxfire>","1","1","","","","CC BY-SA 4.0"
-"63857049","1","63875497","","2020-09-12 05:13:58","","0","99","<p>I'm trying to create an epic that fetches data from firestore using rxfire. On every emission of a value, an action needs to be dispatched. My codes looks like this:</p>
+"63857049","1","63875497","","2020-09-12 05:13:58","","0","100","<p>I'm trying to create an epic that fetches data from firestore using rxfire. On every emission of a value, an action needs to be dispatched. My codes looks like this:</p>
 <pre class=""lang-typescript prettyprint-override""><code>const fetchMenu = (action$, _state$) =&gt; {
   return action$.pipe(
     ofType(Types.FETCH_MENU_REQUESTED),
@@ -526,7 +526,7 @@ onDestroy(() =&gt; {
 <p>However, I'm getting the error <code>Actions must be plain objects. Use custom middleware for async actions.</code></p>
 <p>As far as I understand, the <code>pipe</code> operator is wrapping my value in an observable and that's why I'm getting the error, but I'm not sure what to do so that it only returns the action. I'm still a bit new to rxjs so any help would be very appreciated.</p>
 ","8371765","","556629","","2020-09-12 22:04:40","2020-09-13 20:54:11","Error in epic with redux-observable and rxjs","<firebase><react-redux><rxjs><redux-observable><rxfire>","1","0","","","","CC BY-SA 4.0"
-"63936216","1","63936863","","2020-09-17 10:34:52","","1","128","<p>This js reduce works fine to handle the query result:</p>
+"63936216","1","63936863","","2020-09-17 10:34:52","","1","129","<p>This js reduce works fine to handle the query result:</p>
 <pre><code>function toc(current) {
   return {....};
 };
@@ -558,7 +558,7 @@ subscriptionNorm = collectionData(query, &quot;id&quot;)
 .subscribe(data =&gt; console.log(data));
 </code></pre>
 ","675006","","209103","","2020-09-17 13:59:40","2020-09-17 13:59:40","How does RxFire handels firestore queries","<javascript><google-cloud-firestore><rxjs><rxfire>","1","0","","","","CC BY-SA 4.0"
-"66152331","1","66226770","","2021-02-11 09:52:42","","0","45","<p>In my React app, I want to check whether a background firebase function has created the document in Firestore before updating my UI. So I use the docData function from RxFire to subscribe to changes in the specific, &quot;about-to-be-created-from-a-background-function&quot; doc:</p>
+"66152331","1","66226770","","2021-02-11 09:52:42","","0","46","<p>In my React app, I want to check whether a background firebase function has created the document in Firestore before updating my UI. So I use the docData function from RxFire to subscribe to changes in the specific, &quot;about-to-be-created-from-a-background-function&quot; doc:</p>
 <pre><code>const davidDocRef = db.doc('users/david');
 
 // meantime, a firebase function creates &quot;users/david&quot; doc in the background 
@@ -573,7 +573,7 @@ docData(davidDocRef,'uid').subscribe(userData =&gt; setUserId(userData.uid));
 <p>The problem is that userData.uid always returns &quot;david&quot; regardless of the doc being created in Firestore. What am I doing wrong? It seems like it's returning the uid from the path I've set in the reference instead of an actual document path that has been (or should have been) created in firestore. When I change the reference to look for &quot;users/foo&quot; then userData.uid still returns &quot;foo&quot; instead of undefined or throughing an error.</p>
 <p>In this case I can instead look for userData.name. This actually works as I get &quot;undefined&quot; if the document has not been stored in Firestore or &quot;David&quot; if it has, but I would expect the example above to work in a similar manner.</p>
 ","8389513","","8389513","","2021-02-12 14:50:15","2021-02-16 14:56:36","How to check that a document has been created in Firestore with RxFire","<javascript><google-cloud-firestore><rxfire>","1","2","","","","CC BY-SA 4.0"
-"66197552","1","","","2021-02-14 16:34:59","","0","249","<p>I am getting this error when running <code>npm run dev</code></p>
+"66197552","1","","","2021-02-14 16:34:59","","0","252","<p>I am getting this error when running <code>npm run dev</code></p>
 <pre><code>registerFunctions(firebase$1, fetch.bind(self));
                               ^
 ReferenceError: fetch is not defined
@@ -600,7 +600,7 @@ export const functions = firebase.functions();
 <p>Thanks,<br />
 J</p>
 ","271450","","271450","","2021-02-14 22:01:10","2021-08-27 11:17:48","sapper with firebase - fetch not defined","<firebase><svelte><svelte-3><sapper><rxfire>","2","2","","","","CC BY-SA 4.0"
-"68506314","1","68507679","","2021-07-24 01:23:38","","1","33","<p>I  am using rxfire to combine data from firestore in componentdidmount:</p>
+"68506314","1","68507679","","2021-07-24 01:23:38","","1","34","<p>I  am using rxfire to combine data from firestore in componentdidmount:</p>
 <pre><code>store$.pipe(
       withLatestFrom(items$),  
       map(([store, items]) =&gt; ({ items, ...store })),    

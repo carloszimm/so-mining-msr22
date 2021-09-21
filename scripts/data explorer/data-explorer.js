@@ -65,7 +65,7 @@ async function executeQuery(dist = 0) {
     for (let j = 0; j < tagNames[dist].length; j++) {
       await processQuery(buildQuery(tagNames[dist][j]));
       document.getElementById("resultSetsButton").click();
-      await timeoutPromiseResolve(10000); //10s
+      await timeoutPromiseResolve(5000); //5s
     }
     console.log("Done!");
   } catch (e) {

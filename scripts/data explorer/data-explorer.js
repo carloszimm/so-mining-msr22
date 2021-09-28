@@ -5,12 +5,10 @@
 */
 
 let tagNames = [
-  ["rx-java", "rx-java2", "rx-java3", "rxpermissions", "rx-java-completable", "rxpaparazzo"], //rxjava
-  ["rxjs", "rxjs5", "rxjs6", "rxjs-observables", "rxjs-pipeable-operators",
-    "reactive-extensions-js", "rxjs-marbles", "rxjs-dom", "rxjs-lettable-operators", "rxjs-subscriptions",
-    "rxfire", "rxjs-compat", "rxjs-test-scheduler", "rxjs-pipe", "rxjs7", "rx-angular"], //rxjs
+  ["rx-java", "rx-java2", "rx-java3"], //rxjava
+  ["rxjs", "rxjs5", "rxjs6","rxjs7"], //rxjs
   ["rx-kotlin", "rx-kotlin2"], //rxkotlin
-  ["rx-swift", "rxdatasources", "rxalamofire", "rxtest", "rx-blocking"] //rxswift
+  ["rx-swift"] //rxswift
 ];
 
 // loads the in-page CodeMirror instance

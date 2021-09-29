@@ -10,16 +10,18 @@ import (
 	"github.com/go-playground/validator/v10"
 )
 
-const DataExplorerPath string = "data explorer"
-const ResultPath string = "results"
+var (
+	CONSOLIDATED_SOURCES_PATH = filepath.Join(DATA_EXPLORER_PATH, "consolidated sources")
+	DATA_EXPLORER_PATH        = filepath.Join("assets", "data explorer")
+	RESULT_PATH               = filepath.Join("assets", "results")
+)
 
 type Config struct {
-	Dir         string `json:"dir" validate:"required"`
+	FileName    string `json:"fileName" validate:"required"`
 	Field       string `json:"field" validate:"required"`
 	MinTopics   int    `json:"minTopics" validate:"min=0"`
 	MaxTopics   int    `json:"maxTopics" validate:"min=0,gtefield=MinTopics"`
 	SampleWords int    `json:"sampleWords" validate:"required"`
-	FileName    string `json:"fileName" validate:"required"`
 }
 
 func ReadConfig() []Config {

@@ -11,24 +11,7 @@ import (
 	"github.com/gocarina/gocsv"
 )
 
-func ReadPostsCSVs(filesPath string, files []fs.FileInfo) []*types.Post {
-	c := make(chan []*types.Post)
-
-	for _, f := range files {
-		go readPostsCSV(filepath.Join(filesPath, f.Name()), c)
-	}
-
-	var resultPosts [][]*types.Post
-
-	for i := 0; i < len(files); i++ {
-		posts := <-c
-		resultPosts = append(resultPosts, posts)
-	}
-
-	return sortPosts(removeDuplicates(resultPosts))
-}
-
-func sortPosts(posts []*types.Post) []*types.Post {
+func SortPosts(posts []*types.Post) []*types.Post {
 	sort.SliceStable(posts, func(i, j int) bool {
 		return posts[i].Id < posts[j].Id
 	})
@@ -54,7 +37,7 @@ func removeDuplicates(postsArray [][]*types.Post) []*types.Post {
 	return result
 }
 
-func readPostsCSV(path string, c chan []*types.Post) {
+func ReadPostsCSV(path string, c chan []*types.Post) {
 	postsFile, err := os.OpenFile(path, os.O_RDWR|os.O_CREATE, os.ModePerm)
 	util.CheckError(err)
 	defer postsFile.Close()
@@ -66,4 +49,30 @@ func readPostsCSV(path string, c chan []*types.Post) {
 	}
 
 	c <- posts
+}
+
+func ReadPostsCSVs(filesPath string, files []fs.FileInfo) []*types.Post {
+	c := make(chan []*types.Post)
+
+	for _, f := range files {
+		go ReadPostsCSV(filepath.Join(filesPath, f.Name()), c)
+	}
+
+	var resultPosts [][]*types.Post
+
+	for i := 0; i < len(files); i++ {
+		posts := <-c
+		resultPosts = append(resultPosts, posts)
+	}
+
+	return SortPosts(removeDuplicates(resultPosts))
+}
+
+func WritePostsCSV(path string, posts []*types.Post) {
+	f, err := os.Create(path)
+	util.CheckError(err)
+	defer f.Close()
+
+	err = gocsv.MarshalFile(&posts, f)
+	util.CheckError(err)
 }

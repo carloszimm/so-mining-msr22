@@ -14,12 +14,12 @@ import (
 )
 
 func WriteFolder(folderPath string) {
-	err := os.MkdirAll(filepath.Join(config.ResultPath, folderPath), os.ModePerm)
+	err := os.MkdirAll(filepath.Join(config.RESULT_PATH, folderPath), os.ModePerm)
 	util.CheckError(err)
 }
 
 func WriteTopicDist(cfg config.Config, topics int, data [][]types.WordDist) {
-	filePath := filepath.Join(config.ResultPath,
+	filePath := filepath.Join(config.RESULT_PATH,
 		cfg.FileName, fmt.Sprintf("%s_%s_%d_%s.csv", cfg.FileName, "topicdist", topics, cfg.Field))
 	file, err := os.Create(filePath)
 	util.CheckError(err)

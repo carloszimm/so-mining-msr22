@@ -6,7 +6,7 @@
 
 let tagNames = [
   ["rx-java", "rx-java2", "rx-java3"], //rxjava
-  ["rxjs", "rxjs5", "rxjs6","rxjs7"], //rxjs
+  ["rxjs", "rxjs5", "rxjs6", "rxjs7"], //rxjs
   ["rx-kotlin", "rx-kotlin2"], //rxkotlin
   ["rx-swift"] //rxswift
 ];

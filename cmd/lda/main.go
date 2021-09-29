@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"path/filepath"
 
@@ -24,9 +23,6 @@ func main() {
 	for _, cfg := range configs {
 		filesPath = filepath.Join(config.CONSOLIDATED_SOURCES_PATH, cfg.FileName+".csv")
 
-		/* files, err := ioutil.ReadDir(filesPath)
-		util.CheckError(err)
-		*/
 		c := make(chan []*types.Post)
 		go csvUtils.ReadPostsCSV(filesPath, c)
 		posts := <-c
@@ -39,14 +35,17 @@ func main() {
 		for text := range out {
 			corpus = append(corpus, text)
 		}
-		log.Println("Preprocessing finished! Running LDA...")
+		log.Println("Preprocessing finished!")
+		log.Println("Running LDA...")
 
 		if cfg.MinTopics > 0 {
 			csvUtils.WriteFolder(cfg.FileName)
 			for i := cfg.MinTopics; i <= cfg.MaxTopics; i++ {
+				log.Println("Running for", i, "topics")
 				docTopicDist, topicWordDist := lda.LDA(i, cfg.SampleWords, corpus)
-				fmt.Println(docTopicDist, topicWordDist)
+
 				go csvUtils.WriteTopicDist(cfg, i, topicWordDist)
+				go csvUtils.WriteDocTopicDist(cfg, i, posts, docTopicDist)
 			}
 		}
 

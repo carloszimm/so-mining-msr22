@@ -22,6 +22,9 @@ func (wd WordDist) String() string {
 func SortLdaDesc(i interface{}) {
 	switch dist := i.(type) {
 	case []TopicDist:
+		sort.SliceStable(dist, func(i, j int) bool {
+			return dist[i].Probability > dist[j].Probability
+		})
 	case []WordDist:
 		sort.SliceStable(dist, func(i, j int) bool {
 			return dist[i].Probability > dist[j].Probability

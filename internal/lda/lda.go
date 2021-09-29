@@ -27,6 +27,8 @@ func LDA(topics int, wordsTopicSample int, corpus []string) ([][]types.TopicDist
 			docTopicDist[doc] = append(docTopicDist[doc],
 				types.TopicDist{Topic: topic, Probability: docsOverTopics.At(topic, doc)})
 		}
+
+		types.SortLdaDesc(docTopicDist[doc])
 	}
 
 	// Examine Topic over word probability distribution

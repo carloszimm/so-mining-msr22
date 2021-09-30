@@ -14,15 +14,20 @@ import (
 )
 
 func WriteFolder(folderPath string) {
-	err := os.RemoveAll(filepath.Join(config.RESULT_PATH, folderPath))
+	err := os.MkdirAll(filepath.Join(config.RESULT_PATH, folderPath), os.ModePerm)
 	util.CheckError(err)
-	err = os.MkdirAll(filepath.Join(config.RESULT_PATH, folderPath), os.ModePerm)
+}
+
+func RemoveAllFolders(folderPath string) {
+	err := os.RemoveAll(filepath.Join(config.RESULT_PATH, folderPath))
 	util.CheckError(err)
 }
 
 func WriteTopicDist(cfg config.Config, topics int, data [][]types.WordDist) {
 	filePath := filepath.Join(config.RESULT_PATH,
-		cfg.FileName, fmt.Sprintf("%s_%s_%d_%s.csv", cfg.FileName, "topicdist", topics, cfg.Field))
+		cfg.FileName, cfg.Field, strconv.Itoa(topics),
+		fmt.Sprintf("%s_%s_%d_%s.csv", cfg.FileName, "topicdist", topics, cfg.Field))
+
 	file, err := os.Create(filePath)
 	util.CheckError(err)
 
@@ -47,7 +52,9 @@ func WriteTopicDist(cfg config.Config, topics int, data [][]types.WordDist) {
 
 func WriteDocTopicDist(cfg config.Config, topics int, posts []*types.Post, data [][]types.TopicDist) {
 	filePath := filepath.Join(config.RESULT_PATH,
-		cfg.FileName, fmt.Sprintf("%s_%s_%d_%s.csv", cfg.FileName, "doctopicdist", topics, cfg.Field))
+		cfg.FileName, cfg.Field, strconv.Itoa(topics),
+		fmt.Sprintf("%s_%s_%d_%s.csv", cfg.FileName, "doctopicdist", topics, cfg.Field))
+
 	file, err := os.Create(filePath)
 	util.CheckError(err)
 

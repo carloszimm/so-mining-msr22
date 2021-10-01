@@ -21,7 +21,7 @@ func init() {
 	stopwords.LoadStopWordsFromFile(filepath.Join("assets", "stopwords.txt"), "en", "\n")
 }
 
-func SetupPipeline(posts []*types.Post, field string) <-chan string {
+func SetupLDAPipeline(posts []*types.Post, field string) <-chan string {
 	out := processPosts(posts, field)
 	out = removeTags(out)
 	out = removeStrangeChars(out)

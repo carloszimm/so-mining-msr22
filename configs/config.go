@@ -13,7 +13,8 @@ import (
 var (
 	CONSOLIDATED_SOURCES_PATH = filepath.Join(DATA_EXPLORER_PATH, "consolidated sources")
 	DATA_EXPLORER_PATH        = filepath.Join("assets", "data explorer")
-	RESULT_PATH               = filepath.Join("assets", "results")
+	LDA_RESULT_PATH           = filepath.Join("assets", "lda-results")
+	OPERATORS_PATH            = filepath.Join("assets", "operators")
 )
 
 type Config struct {

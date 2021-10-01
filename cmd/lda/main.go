@@ -33,7 +33,7 @@ func main() {
 
 		corpus := make([]string, 0, len(posts))
 
-		out := processing.SetupPipeline(posts, cfg.Field)
+		out := processing.SetupLDAPipeline(posts, cfg.Field)
 		for text := range out {
 			corpus = append(corpus, text)
 		}

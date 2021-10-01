@@ -5,6 +5,7 @@ go 1.17
 require (
 	github.com/PuerkitoBio/goquery v1.7.1
 	github.com/bbalet/stopwords v1.0.0
+	github.com/dlclark/regexp2 v1.4.0
 	github.com/go-playground/validator/v10 v10.9.0
 	github.com/gocarina/gocsv v0.0.0-20210516172204-ca9e8a8ddea8
 	github.com/james-bowman/nlp v0.0.0-20210511120306-26d441fa0ded

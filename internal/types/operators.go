@@ -100,21 +100,10 @@ func CreateOperators(path string, dist string) Operators {
 }
 
 func createCounter(opName string) func(string) int {
-	re := regexp2.MustCompile(
-		`(?:\.?`+opName+`\s*((?:\((?>[^()]+|\((?<open>)|\)(?<-open>))*(?(open)(?!))\)))*)+`, 0)
-
-	var counter func(s string) int
-	counter = func(s string) int {
-		results := util.Regexp2FindAllString(re, s)
-
-		sum := 0
-		for _, result := range results {
-			sum += (1 + counter(result[1].Capture.String()))
-		}
-
-		return sum
+	re := regexp2.MustCompile(`\.?(?<!\w)`+opName+`\s*\(`, 0)
+	return func(s string) int {
+		return len(util.Regexp2FindAllString(re, s))
 	}
-	return counter
 }
 
 func SortOperatorsCount(opCount []OperatorCount) {

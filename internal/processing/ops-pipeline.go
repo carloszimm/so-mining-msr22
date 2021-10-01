@@ -1,7 +1,6 @@
 package processing
 
 import (
-	"regexp"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -11,8 +10,8 @@ import (
 )
 
 var (
-	commentsReg = regexp.MustCompile(
-		`(?:/\*[^*]*\*+(?:[^/*][^*]*\*+)*/|//[^\n]*(?:\n|$))|("[^"\\]*(?:\\[\S\s][^"\\]*)*"|'[^'\\]*(?:\\[\S\s][^'\\]*)*'|[\S\s][^/"'\\]*)`)
+	commentsReg = regexp2.MustCompile(
+		`((?:(?:^[ \t]*)?(?:/\*[^*]*\*+(?:[^/*][^*]*\*+)*/(?:[ \t]*\r?\n(?=[ \t]*(?:\r?\n|/\*|//)))?|//(?:[^\\]|\\(?:\r?\n)?)*?(?:\r?\n(?=[ \t]*(?:\r?\n|/\*|//))|(?=\r?\n))))+)|("[^"\\]*(?:\\[\S\s][^"\\]*)*"|'[^'\\]*(?:\\[\S\s][^'\\]*)*'|(?:\r?\n|[\S\s])[^/"'\\\s]*)`, 0)
 	stringsReg = regexp2.MustCompile(
 		`(["'`+"`"+`])(?:(?=(\\?))\2.)*?\1`, 0)
 )
@@ -48,7 +47,7 @@ func retriveTag(in <-chan types.PostMsg) <-chan types.PostMsg {
 			util.CheckError(err)
 
 			// retrieve code, pre, blockquotes tags
-			postMsg.Body = doc.Find("code, pre, blockquotes").Text()
+			postMsg.Body = doc.Find("code").Text()
 
 			out <- postMsg
 		}
@@ -61,7 +60,9 @@ func removeComments(in <-chan types.PostMsg) <-chan types.PostMsg {
 	out := make(chan types.PostMsg, 10)
 	go func() {
 		for postMsg := range in {
-			postMsg.Body = commentsReg.ReplaceAllString(postMsg.Body, "$1")
+			for _, result := range util.Regexp2FindAllString(commentsReg, postMsg.Body) {
+				postMsg.Body = strings.Replace(postMsg.Body, result[1].String(), " ", 1)
+			}
 			out <- postMsg
 		}
 		close(out)
@@ -76,7 +77,7 @@ func removeStrings(in <-chan types.PostMsg) <-chan types.PostMsg {
 			results := util.Regexp2FindAllString(stringsReg, postMsg.Body)
 
 			for _, result := range results {
-				postMsg.Body = strings.ReplaceAll(postMsg.Body, result[0].String(), "")
+				postMsg.Body = strings.Replace(postMsg.Body, result[0].String(), "", 1)
 			}
 
 			out <- postMsg

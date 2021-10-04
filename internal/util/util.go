@@ -2,6 +2,8 @@ package util
 
 import (
 	"log"
+	"os"
+	"path/filepath"
 
 	"github.com/dlclark/regexp2"
 )
@@ -9,6 +11,20 @@ import (
 func CheckError(err error) {
 	if err != nil {
 		log.Fatal(err)
+	}
+}
+
+func WriteFolder(basePath string) func(string) {
+	return func(folderPath string) {
+		err := os.MkdirAll(filepath.Join(basePath, folderPath), os.ModePerm)
+		CheckError(err)
+	}
+}
+
+func RemoveAllFolders(basePath string) func(string) {
+	return func(folderPath string) {
+		err := os.RemoveAll(filepath.Join(basePath, folderPath))
+		CheckError(err)
 	}
 }
 

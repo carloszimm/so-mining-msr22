@@ -1,4 +1,4 @@
-package csvUtils
+package csvUtil
 
 import (
 	"io/fs"

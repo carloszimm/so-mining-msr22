@@ -4,12 +4,14 @@ import (
 	"log"
 	"path/filepath"
 	"strconv"
+	"sync"
 
 	config "github.com/carloszimm/stack-mining/configs"
 	csvUtils "github.com/carloszimm/stack-mining/internal/csv"
 	"github.com/carloszimm/stack-mining/internal/lda"
 	"github.com/carloszimm/stack-mining/internal/processing"
 	"github.com/carloszimm/stack-mining/internal/types"
+	"github.com/carloszimm/stack-mining/internal/util"
 )
 
 var configs []config.Config
@@ -20,6 +22,8 @@ func init() {
 
 func main() {
 	var filesPath string
+	removeAllFolders := util.RemoveAllFolders(config.LDA_RESULT_PATH)
+	writeFolder := util.WriteFolder(config.LDA_RESULT_PATH)
 
 	for _, cfg := range configs {
 		filesPath = filepath.Join(config.CONSOLIDATED_SOURCES_PATH, cfg.FileName+".csv")
@@ -43,17 +47,19 @@ func main() {
 
 		if cfg.MinTopics > 0 {
 			//clean existing folders
-			csvUtils.RemoveAllFolders(filepath.Join(cfg.FileName, cfg.Field))
+			removeAllFolders(filepath.Join(cfg.FileName, cfg.Field))
 
 			for i := cfg.MinTopics; i <= cfg.MaxTopics; i++ {
 				log.Println("Running for", i, "topics")
 				docTopicDist, topicWordDist := lda.LDA(i, cfg.SampleWords, corpus)
 
 				//(re)create folders
-				csvUtils.WriteFolder(filepath.Join(cfg.FileName, cfg.Field, strconv.Itoa(i)))
-
-				go csvUtils.WriteTopicDist(cfg, i, topicWordDist)
-				go csvUtils.WriteDocTopicDist(cfg, i, posts, docTopicDist)
+				writeFolder(filepath.Join(cfg.FileName, cfg.Field, strconv.Itoa(i)))
+				var wg sync.WaitGroup
+				wg.Add(2)
+				go csvUtils.WriteTopicDist(&wg, cfg, i, topicWordDist)
+				go csvUtils.WriteDocTopicDist(&wg, cfg, i, posts, docTopicDist)
+				wg.Wait()
 			}
 		}
 

@@ -28,7 +28,7 @@ function getDistName() {
 
 fs.rmdir(destFolder, { recursive: true, force: true }, err => {
 	if (err) {
-		throw err;
+		console.error(err);
 		process.exit(1);
 	}
 
@@ -47,16 +47,24 @@ fs.rmdir(destFolder, { recursive: true, force: true }, err => {
 
 				index = index === "" ? 0 : parseInt(index);
 
-				fs.rename(path.join(srcFolder, file),
-					path.join(destFolder, "posts_" + tagNames[dist][index] + ".csv"),
-					err => {
-						if (err) {
-							throw err;
-							process.exit(1);
-						}
-					});
+				if (index < tagNames[dist].length) {
+					rename(file, "posts_" + tagNames[dist][index] + ".csv")
+				} else {
+					let i = index % tagNames[dist].length;
+					rename(file, "posts_" + tagNames[dist][i] + "_withAnswers.csv")
+				}
 			}
 		});
 	});
 });
 
+function rename(file, name) {
+	fs.rename(path.join(srcFolder, file),
+		path.join(destFolder, name),
+		err => {
+			if (err) {
+				throw err;
+				process.exit(1);
+			}
+		});
+}

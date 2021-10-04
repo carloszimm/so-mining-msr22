@@ -20,6 +20,18 @@ on p.Id = ps.PostId inner join Tags t on ps.TagId = t.Id and
 t.TagName = '${tagName}' where p.ParentId is null order by p.Id`;
 }
 
+function buildQueryWithAnswers(tagName) {
+  return `select pu.* from (
+select p.* from posts p inner join PostTags ps
+on p.Id = ps.PostId inner join Tags t on ps.TagId = t.Id and
+t.TagName = '${tagName}' where p.ParentId is null
+union
+select * from posts where Id in (select p.AcceptedAnswerId from posts p inner join PostTags ps
+on p.Id = ps.PostId inner join Tags t on ps.TagId = t.Id and
+t.TagName = '${tagName}' where p.ParentId is null and p.AcceptedAnswerId is not null)
+) pu order by pu.Id`;
+}
+
 function writeQuery(query) {
   editor.clearHistory();
   editor.setValue(query);
@@ -58,17 +70,25 @@ async function processQuery(query) {
   await verifyResult(5000); //5s
 }
 
-async function executeQuery(dist = 0) {
-  try {
-    for (let j = 0; j < tagNames[dist].length; j++) {
-      await processQuery(buildQuery(tagNames[dist][j]));
-      document.getElementById("resultSetsButton").click();
-      await timeoutPromiseResolve(5000); //5s
+function execute(builder, dist) {
+  return async function () {
+    try {
+      for (let j = 0; j < tagNames[dist].length; j++) {
+        await processQuery(builder(tagNames[dist][j]));
+        document.getElementById("resultSetsButton").click();
+        if (j + 1 !== tagNames[dist].length)
+          await timeoutPromiseResolve(5000); //5s
+      }
+      console.log("Done!");
+    } catch (e) {
+      console.log(e);
     }
-    console.log("Done!");
-  } catch (e) {
-    console.log(e);
   }
+}
+
+async function executeQuery(dist = 0) {
+  await execute(buildQuery, dist)()
+  await execute(buildQueryWithAnswers, dist)()
 }
 
 executeQuery(0); //rxjava

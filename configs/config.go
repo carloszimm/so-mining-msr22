@@ -15,6 +15,7 @@ var (
 	DATA_EXPLORER_PATH        = filepath.Join("assets", "data explorer")
 	LDA_RESULT_PATH           = filepath.Join("assets", "lda-results")
 	OPERATORS_PATH            = filepath.Join("assets", "operators")
+	OPERATORS_RESULT_PATH     = filepath.Join("assets", "operators-search")
 )
 
 type Config struct {

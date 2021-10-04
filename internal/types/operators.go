@@ -23,8 +23,17 @@ type CountMsg struct {
 }
 
 type OperatorCount struct {
-	OpName string
-	Total  int
+	Operator string
+	Total    int
+}
+
+type OperatorStats struct {
+	Sum    int
+	Mean   float64
+	StdDev float64
+	Min    int
+	Max    int
+	Median int
 }
 
 type Operators struct {
@@ -108,6 +117,6 @@ func createCounter(opName string) func(string) int {
 
 func SortOperatorsCount(opCount []OperatorCount) {
 	sort.SliceStable(opCount, func(i, j int) bool {
-		return opCount[i].OpName < opCount[j].OpName
+		return opCount[i].Operator < opCount[j].Operator
 	})
 }

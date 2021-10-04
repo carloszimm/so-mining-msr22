@@ -1,31 +1,91 @@
 package main
 
 import (
-	"fmt"
+	"io/ioutil"
 	"path/filepath"
+	"regexp"
+	"strings"
+	"sync"
 
 	config "github.com/carloszimm/stack-mining/configs"
 	csvUtils "github.com/carloszimm/stack-mining/internal/csv"
+	"github.com/carloszimm/stack-mining/internal/json"
 	"github.com/carloszimm/stack-mining/internal/processing"
+	"github.com/carloszimm/stack-mining/internal/stats"
 	"github.com/carloszimm/stack-mining/internal/types"
+	"github.com/carloszimm/stack-mining/internal/util"
 )
 
-func main() {
-	operators := types.CreateOperators("rxjs 7.3.0.json", "rxjs")
-	filesPath := filepath.Join(config.CONSOLIDATED_SOURCES_PATH, "rxjs.csv")
+var sources []string
+var removeAllResultPath = util.RemoveAllFolders(config.OPERATORS_RESULT_PATH)
 
-	c := make(chan []*types.Post)
-	go csvUtils.ReadPostsCSV(filesPath, c)
-	posts := <-c
+func init() {
+	files, err := ioutil.ReadDir(config.CONSOLIDATED_SOURCES_PATH)
+	util.CheckError(err)
 
-	resultChannel := processing.SetupOpsPipeline(posts, operators)
-
-	result := <-resultChannel
-
-	test := types.OperatorCount{}
-	for _, val := range result {
-		test.OpName = val[5].OpName
-		test.Total += val[5].Total
+	for _, f := range files {
+		if !f.IsDir() && !strings.Contains(f.Name(), "all") {
+			sources = append(sources, f.Name())
+		}
 	}
-	fmt.Println(test)
+}
+
+func main() {
+	operatorsFiles, err := ioutil.ReadDir(config.OPERATORS_PATH)
+	util.CheckError(err)
+
+	for _, opFile := range operatorsFiles {
+		for _, source := range sources {
+			distFileName := strings.TrimSuffix(source, filepath.Ext(source))
+			dist := strings.Split(distFileName, "_")[0]
+
+			if regexp.MustCompile("(?i)" + dist + ".*").MatchString(opFile.Name()) {
+				operators := types.CreateOperators(opFile.Name(), dist)
+				filesPath := filepath.Join(config.CONSOLIDATED_SOURCES_PATH, source)
+
+				c := make(chan []*types.Post)
+				go csvUtils.ReadPostsCSV(filesPath, c)
+				posts := <-c
+
+				resultChannel := processing.SetupOpsPipeline(posts, operators)
+
+				result := <-resultChannel
+
+				generateResults(
+					strings.TrimSuffix(opFile.Name(), filepath.Ext(opFile.Name()))+"_"+distFileName,
+					result)
+			}
+		}
+	}
+}
+
+func generateResults(path string, result map[int][]types.OperatorCount) {
+	removeOldFiles(path)
+
+	opsCount := make(map[string][]int)
+
+	for _, val := range result {
+		for _, opCount := range val {
+			opsCount[opCount.Operator] = append(opsCount[opCount.Operator], opCount.Total)
+		}
+	}
+
+	resultStats := stats.GenerateOpsStats(opsCount)
+
+	var wg sync.WaitGroup
+	wg.Add(2)
+	go json.WriteOpsSearchResult(&wg, filepath.Join(config.OPERATORS_RESULT_PATH, path), resultStats)
+	go csvUtils.WriteOpsSearchResult(&wg, filepath.Join(config.OPERATORS_RESULT_PATH, path), resultStats)
+	wg.Wait()
+}
+
+func removeOldFiles(path string) {
+	resultFiles, err := ioutil.ReadDir(config.OPERATORS_RESULT_PATH)
+	util.CheckError(err)
+
+	for _, resultFile := range resultFiles {
+		if strings.Contains(resultFile.Name(), path) {
+			removeAllResultPath(resultFile.Name())
+		}
+	}
 }

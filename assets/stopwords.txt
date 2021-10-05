@@ -28,6 +28,7 @@ ago
 ah
 ahead
 ain't
+aint
 all
 allow
 allows
@@ -171,6 +172,7 @@ currently
 d
 dare
 daren't
+darent
 date
 de
 dear
@@ -181,6 +183,7 @@ despite
 detail
 did
 didn't
+didnt
 differ
 different
 differently
@@ -188,8 +191,10 @@ directly
 do
 does
 doesn't
+doesnt
 doing
 don't
+dont
 done
 down
 downed
@@ -308,6 +313,7 @@ groups
 h
 had
 hadn't
+hadnt
 half
 happens
 hardly
@@ -316,6 +322,7 @@ hasn't
 hasnt
 have
 haven't
+havent
 having
 he
 he'd
@@ -394,6 +401,7 @@ invention
 inward
 is
 isn't
+isnt
 it
 it'd
 it'll
@@ -460,6 +468,7 @@ many
 may
 maybe
 mayn't
+maynt
 me
 mean
 means
@@ -472,6 +481,7 @@ merely
 mg
 might
 mightn't
+mightnt
 mill
 million
 mine
@@ -490,6 +500,7 @@ much
 mug
 must
 mustn't
+mustnt
 my
 myse
 myself
@@ -507,6 +518,7 @@ need
 needed
 needing
 needn't
+neednt
 needs
 neither
 never
@@ -575,6 +587,7 @@ others
 otherwise
 ought
 oughtn't
+oughtnt
 our
 ours
 ourselves
@@ -690,6 +703,7 @@ seven
 several
 shall
 shan't
+shant
 she
 she'd
 she'll
@@ -698,6 +712,7 @@ shed
 shes
 should
 shouldn't
+shouldnt
 show
 showed
 showing
@@ -893,6 +908,7 @@ wanting
 wants
 was
 wasn't
+wasnt
 way
 ways
 we
@@ -907,6 +923,7 @@ wells
 went
 were
 weren't
+werent
 what
 what'll
 what's
@@ -952,6 +969,7 @@ with
 within
 without
 won't
+wont
 wonder
 words
 work
@@ -961,6 +979,7 @@ works
 world
 would
 wouldn't
+wouldnt
 written
 www
 x

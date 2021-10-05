@@ -29,7 +29,7 @@ func WriteTopicDist(wg *sync.WaitGroup, cfg config.Config, topics int, data [][]
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
 
-	err = writer.Write([]string{"Topics", "Proportions", "Words"})
+	err = writer.Write([]string{"Topics", "Words_Proportions", "Words"})
 	util.CheckError(err)
 
 	for topic, record := range data {

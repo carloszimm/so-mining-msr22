@@ -9,7 +9,6 @@ import (
 
 	config "github.com/carloszimm/stack-mining/configs"
 	csvUtils "github.com/carloszimm/stack-mining/internal/csv"
-	"github.com/carloszimm/stack-mining/internal/json"
 	"github.com/carloszimm/stack-mining/internal/processing"
 	"github.com/carloszimm/stack-mining/internal/stats"
 	"github.com/carloszimm/stack-mining/internal/types"
@@ -62,20 +61,20 @@ func main() {
 func generateResults(path string, result map[int][]types.OperatorCount) {
 	removeOldFiles(path)
 
-	opsCount := make(map[string][]int)
-
-	for _, val := range result {
-		for _, opCount := range val {
-			opsCount[opCount.Operator] = append(opsCount[opCount.Operator], opCount.Total)
-		}
-	}
+	opsCount := types.AggregateByOperator(result)
 
 	resultStats := stats.GenerateOpsStats(opsCount)
 
 	var wg sync.WaitGroup
 	wg.Add(2)
-	go json.WriteOpsSearchResult(&wg, filepath.Join(config.OPERATORS_RESULT_PATH, path), resultStats)
-	go csvUtils.WriteOpsSearchResult(&wg, filepath.Join(config.OPERATORS_RESULT_PATH, path), resultStats)
+	go func() {
+		defer wg.Done()
+		util.WriteJSON(filepath.Join(config.OPERATORS_RESULT_PATH, path), result)
+	}()
+	go func() {
+		defer wg.Done()
+		csvUtils.WriteOpsSearchResult(filepath.Join(config.OPERATORS_RESULT_PATH, path), resultStats)
+	}()
 	wg.Wait()
 }
 

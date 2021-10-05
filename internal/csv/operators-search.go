@@ -6,15 +6,12 @@ import (
 	"os"
 	"reflect"
 	"sort"
-	"sync"
 
 	"github.com/carloszimm/stack-mining/internal/types"
 	"github.com/carloszimm/stack-mining/internal/util"
 )
 
-func WriteOpsSearchResult(wg *sync.WaitGroup, path string, opsStats map[string]types.OperatorStats) {
-	defer wg.Done()
-
+func WriteOpsSearchResult(path string, opsStats map[string]types.OperatorStats) {
 	f, err := os.Create(path + ".csv")
 	util.CheckError(err)
 	defer f.Close()

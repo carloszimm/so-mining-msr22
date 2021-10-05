@@ -120,3 +120,28 @@ func SortOperatorsCount(opCount []OperatorCount) {
 		return opCount[i].Operator < opCount[j].Operator
 	})
 }
+
+func CloseAllInOps(inOps []chan PostMsg) {
+	for _, in := range inOps {
+		close(in)
+	}
+}
+
+func AggregateByOperator(result interface{}) map[string][]int {
+	opsCount := make(map[string][]int)
+	switch r := result.(type) {
+	case map[int][]OperatorCount:
+		for _, val := range r {
+			for _, opCount := range val {
+				opsCount[opCount.Operator] = append(opsCount[opCount.Operator], opCount.Total)
+			}
+		}
+	case map[string][]OperatorCount:
+		for _, val := range r {
+			for _, opCount := range val {
+				opsCount[opCount.Operator] = append(opsCount[opCount.Operator], opCount.Total)
+			}
+		}
+	}
+	return opsCount
+}

@@ -1,6 +1,7 @@
 package util
 
 import (
+	"encoding/json"
 	"log"
 	"os"
 	"path/filepath"
@@ -36,4 +37,12 @@ func Regexp2FindAllString(re *regexp2.Regexp, s string) [][]regexp2.Group {
 		m, _ = re.FindNextMatch(m)
 	}
 	return matches
+}
+
+func WriteJSON(path string, data interface{}) {
+	j, err := json.Marshal(data)
+	CheckError(err)
+
+	err = os.WriteFile(path+".json", j, 0644)
+	CheckError(err)
 }

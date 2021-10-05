@@ -94,6 +94,7 @@ func dispatchToOpsCounters(in <-chan types.PostMsg, inOps []chan types.PostMsg) 
 				inOp <- postMsg
 			}
 		}
+		types.CloseAllInOps(inOps)
 	}()
 }
 

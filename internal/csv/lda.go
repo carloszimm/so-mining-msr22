@@ -29,16 +29,20 @@ func WriteTopicDist(wg *sync.WaitGroup, cfg config.Config, topics int, data [][]
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
 
-	err = writer.Write([]string{"Topics", "Words"})
+	err = writer.Write([]string{"Topics", "Proportions", "Words"})
 	util.CheckError(err)
 
 	for topic, record := range data {
 		words := ""
+		proportions := ""
 		for _, wordDist := range record {
 			words += (wordDist.Word + " ")
+			proportions += fmt.Sprintf("%f ", wordDist.Probability)
 		}
 		words = strings.TrimSpace(words)
-		err := writer.Write([]string{strconv.Itoa(topic), words})
+		proportions = strings.TrimSpace(proportions)
+
+		err := writer.Write([]string{strconv.Itoa(topic), proportions, words})
 		util.CheckError(err)
 	}
 }
@@ -58,12 +62,12 @@ func WriteDocTopicDist(wg *sync.WaitGroup, cfg config.Config, topics int, posts 
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
 
-	err = writer.Write([]string{"Post_ID", "Dominant_Topic", "Topic_Percent"})
+	err = writer.Write([]string{"Post_ID", "Dominant_Topic", "Topic_Proportion"})
 	util.CheckError(err)
 
 	for doc, topics := range data {
 		err := writer.Write([]string{strconv.Itoa(posts[doc].Id),
-			strconv.Itoa(topics[0].Topic), fmt.Sprintf("%.3f", topics[0].Probability*100)})
+			strconv.Itoa(topics[0].Topic), fmt.Sprintf("%f", topics[0].Probability)})
 		util.CheckError(err)
 	}
 }

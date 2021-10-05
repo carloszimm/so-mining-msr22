@@ -12,10 +12,7 @@ import (
 	"github.com/kljensen/snowball"
 )
 
-var (
-	puctReg *regexp.Regexp = regexp.MustCompile(`\p{P}`)
-	specReg                = regexp.MustCompile(`[^\w\s\p{P}]`)
-)
+var specReg = regexp.MustCompile(`[^\w\s']+|(\w)*\d(\w)*`)
 
 func init() {
 	stopwords.LoadStopWordsFromFile(filepath.Join("assets", "stopwords.txt"), "en", "\n")
@@ -24,9 +21,8 @@ func init() {
 func SetupLDAPipeline(posts []*types.Post, field string) <-chan string {
 	out := processPosts(posts, field)
 	out = removeTags(out)
-	out = removeStrangeChars(out)
+	out = removeSpecialChars(out)
 	out = removeStopWords(out)
-	out = removePunct(out)
 	out = stem(out)
 	return out
 }
@@ -61,12 +57,12 @@ func removeTags(in <-chan string) <-chan string {
 	return out
 }
 
-func removeStrangeChars(in <-chan string) <-chan string {
+func removeSpecialChars(in <-chan string) <-chan string {
 	out := make(chan string)
 	go func() {
 		for text := range in {
-			// remove strange chars
-			out <- specReg.ReplaceAllString(text, "")
+			// remove strange chars, punctuations, and numbers
+			out <- specReg.ReplaceAllString(text, " ")
 		}
 		close(out)
 	}()
@@ -80,19 +76,6 @@ func removeStopWords(in <-chan string) <-chan string {
 	go func() {
 		for text := range in {
 			out <- stopwords.CleanString(text, "en", false)
-		}
-		close(out)
-	}()
-	return out
-}
-
-func removePunct(in <-chan string) <-chan string {
-	out := make(chan string)
-
-	go func() {
-		for text := range in {
-			// remove puctuation
-			out <- puctReg.ReplaceAllString(text, "")
 		}
 		close(out)
 	}()

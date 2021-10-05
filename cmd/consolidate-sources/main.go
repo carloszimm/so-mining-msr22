@@ -57,7 +57,7 @@ func main() {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
-			writeResults("WithAnswers", distPostsWithAnswers)
+			writeResults("_withAnswers", distPostsWithAnswers)
 		}()
 	}
 	wg.Wait()

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"strings"
 	"sync"
@@ -14,12 +15,29 @@ import (
 	"github.com/carloszimm/stack-mining/internal/util"
 )
 
+var regex = regexp.MustCompile(`\[|\]`)
+
 func WriteTopicDist(wg *sync.WaitGroup, cfg config.Config, topics int, data [][]types.WordDist) {
 	defer wg.Done()
 
-	filePath := filepath.Join(config.LDA_RESULT_PATH,
+	baseFilePath := filepath.Join(config.LDA_RESULT_PATH,
 		cfg.FileName, cfg.Field, strconv.Itoa(topics),
-		fmt.Sprintf("%s_%s_%d_%s.csv", cfg.FileName, "topicdist", topics, cfg.Field))
+		fmt.Sprintf("%s_%s_%d_%s", cfg.FileName, "topicdist", topics, cfg.Field))
+
+	var wGroup sync.WaitGroup
+	wGroup.Add(2)
+	func() {
+		defer wGroup.Done()
+		writeTopWords(baseFilePath, cfg, topics, data)
+	}()
+	func() {
+		defer wGroup.Done()
+		writeComplete(baseFilePath, cfg, topics, data)
+	}()
+	wGroup.Wait()
+}
+func writeTopWords(baseFilePath string, cfg config.Config, topics int, data [][]types.WordDist) {
+	filePath := baseFilePath + " - topwords.csv"
 
 	file, err := os.Create(filePath)
 	util.CheckError(err)
@@ -29,20 +47,38 @@ func WriteTopicDist(wg *sync.WaitGroup, cfg config.Config, topics int, data [][]
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
 
-	err = writer.Write([]string{"Topics", "Words_Proportions", "Words"})
+	err = writer.Write([]string{"Topics", fmt.Sprintf("%s_%d_%s", "Top", cfg.SampleWords, "Words")})
 	util.CheckError(err)
 
 	for topic, record := range data {
-		words := ""
-		proportions := ""
-		for _, wordDist := range record {
-			words += (wordDist.Word + " ")
-			proportions += fmt.Sprintf("%f ", wordDist.Probability)
+		topWordsSlice := record[:cfg.SampleWords]
+		topWords := ""
+		for _, word := range topWordsSlice {
+			topWords += (word.Word + " ")
 		}
-		words = strings.TrimSpace(words)
-		proportions = strings.TrimSpace(proportions)
 
-		err := writer.Write([]string{strconv.Itoa(topic), proportions, words})
+		err := writer.Write([]string{strconv.Itoa(topic), strings.TrimSpace(topWords)})
+		util.CheckError(err)
+	}
+}
+func writeComplete(baseFilePath string, cfg config.Config, topics int, data [][]types.WordDist) {
+	filePath := baseFilePath + ".csv"
+
+	file, err := os.Create(filePath)
+	util.CheckError(err)
+
+	defer file.Close()
+
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	err = writer.Write([]string{"Topics", "Words"})
+	util.CheckError(err)
+
+	for topic, record := range data {
+		words := regex.ReplaceAllString(fmt.Sprint(record), "")
+
+		err := writer.Write([]string{strconv.Itoa(topic), words})
 		util.CheckError(err)
 	}
 }
@@ -62,12 +98,14 @@ func WriteDocTopicDist(wg *sync.WaitGroup, cfg config.Config, topics int, posts 
 	writer := csv.NewWriter(file)
 	defer writer.Flush()
 
-	err = writer.Write([]string{"Post_ID", "Dominant_Topic", "Topic_Proportion"})
+	err = writer.Write([]string{"Post_ID", "Dominant_Topic", "Topic_Proportion", "Topics"})
 	util.CheckError(err)
 
 	for doc, topics := range data {
+		allTopics := regex.ReplaceAllString(fmt.Sprint(topics), "")
 		err := writer.Write([]string{strconv.Itoa(posts[doc].Id),
-			strconv.Itoa(topics[0].Topic), fmt.Sprintf("%f", topics[0].Probability)})
+			strconv.Itoa(topics[0].Topic), fmt.Sprintf("%f", topics[0].Probability),
+			allTopics})
 		util.CheckError(err)
 	}
 }

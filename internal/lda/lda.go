@@ -6,7 +6,7 @@ import (
 	"github.com/james-bowman/nlp"
 )
 
-func LDA(topics int, wordsTopicSample int, corpus []string) ([][]types.TopicDist, [][]types.WordDist) {
+func LDA(topics int, corpus []string) ([][]types.TopicDist, [][]types.WordDist) {
 
 	vectoriser := nlp.NewCountVectoriser()
 	lda := nlp.NewLatentDirichletAllocation(topics)
@@ -51,7 +51,6 @@ func LDA(topics int, wordsTopicSample int, corpus []string) ([][]types.TopicDist
 		}
 
 		types.SortLdaDesc(topicWordDist[topic])
-		topicWordDist[topic] = topicWordDist[topic][:wordsTopicSample]
 	}
 
 	return docTopicDist, topicWordDist

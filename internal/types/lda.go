@@ -10,13 +10,17 @@ type TopicDist struct {
 	Probability float64
 }
 
+func (td TopicDist) String() string {
+	return fmt.Sprintf("%v(%f)", td.Topic, td.Probability)
+}
+
 type WordDist struct {
 	Word        string
 	Probability float64
 }
 
 func (wd WordDist) String() string {
-	return fmt.Sprintf("%v(%.3f%%)", wd.Word, wd.Probability*100)
+	return fmt.Sprintf("%v(%f)", wd.Word, wd.Probability)
 }
 
 func SortLdaDesc(i interface{}) {

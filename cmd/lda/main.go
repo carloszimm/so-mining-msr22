@@ -51,7 +51,7 @@ func main() {
 
 			for i := cfg.MinTopics; i <= cfg.MaxTopics; i++ {
 				log.Println("Running for", i, "topics")
-				docTopicDist, topicWordDist := lda.LDA(i, cfg.SampleWords, corpus)
+				docTopicDist, topicWordDist := lda.LDA(i, corpus)
 
 				//(re)create folders
 				writeFolder(filepath.Join(cfg.FileName, cfg.Field, strconv.Itoa(i)))

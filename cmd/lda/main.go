@@ -49,9 +49,13 @@ func main() {
 			//clean existing folders
 			removeAllFolders(filepath.Join(cfg.FileName, cfg.Field))
 
+			var perplexities []float64
+
 			for i := cfg.MinTopics; i <= cfg.MaxTopics; i++ {
 				log.Println("Running for", i, "topics")
-				docTopicDist, topicWordDist := lda.LDA(i, corpus)
+				docTopicDist, topicWordDist, perplexity := lda.LDA(i, corpus)
+
+				perplexities = append(perplexities, perplexity)
 
 				//(re)create folders
 				writeFolder(filepath.Join(cfg.FileName, cfg.Field, strconv.Itoa(i)))
@@ -61,6 +65,8 @@ func main() {
 				go csvUtils.WriteDocTopicDist(&wg, cfg, i, posts, docTopicDist)
 				wg.Wait()
 			}
+
+			csvUtils.WritePerplexities(cfg, perplexities)
 		}
 
 		log.Println("LDA finished!")

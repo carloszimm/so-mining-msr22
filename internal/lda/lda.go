@@ -6,13 +6,15 @@ import (
 	"github.com/james-bowman/nlp"
 )
 
-func LDA(topics int, corpus []string) ([][]types.TopicDist, [][]types.WordDist) {
+func LDA(topics int, corpus []string) ([][]types.TopicDist, [][]types.WordDist, float64) {
 
 	vectoriser := nlp.NewCountVectoriser()
 	lda := nlp.NewLatentDirichletAllocation(topics)
-	pipeline := nlp.NewPipeline(vectoriser, lda)
 
-	docsOverTopics, err := pipeline.FitTransform(corpus...)
+	vectorisedData, err := vectoriser.FitTransform(corpus...)
+	util.CheckError(err)
+
+	docsOverTopics, err := lda.FitTransform(vectorisedData)
 	util.CheckError(err)
 
 	// Examine Document over topic probability distribution
@@ -53,5 +55,5 @@ func LDA(topics int, corpus []string) ([][]types.TopicDist, [][]types.WordDist) 
 		types.SortLdaDesc(topicWordDist[topic])
 	}
 
-	return docTopicDist, topicWordDist
+	return docTopicDist, topicWordDist, lda.Perplexity(vectorisedData)
 }

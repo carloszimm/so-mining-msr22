@@ -109,3 +109,31 @@ func WriteDocTopicDist(wg *sync.WaitGroup, cfg config.Config, topics int, posts 
 		util.CheckError(err)
 	}
 }
+
+func WritePerplexities(cfg config.Config, perplexities []float64) {
+	filePath := filepath.Join(config.LDA_RESULT_PATH,
+		cfg.FileName, cfg.Field, "perplexity.csv")
+
+	file, err := os.Create(filePath)
+	util.CheckError(err)
+
+	defer file.Close()
+
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	err = writer.Write([]string{"Topics", "Perplexity", "Decrease"})
+	util.CheckError(err)
+
+	originalNumber := perplexities[0]
+
+	for i, perplexity := range perplexities {
+		decrease := ((originalNumber - perplexity) / originalNumber) * 100
+
+		err := writer.Write([]string{strconv.Itoa(cfg.MinTopics + i),
+			fmt.Sprint(perplexity), fmt.Sprint(decrease)})
+		util.CheckError(err)
+
+		originalNumber = perplexity
+	}
+}

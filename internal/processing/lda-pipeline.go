@@ -12,7 +12,11 @@ import (
 	"github.com/kljensen/snowball"
 )
 
-var specReg = regexp.MustCompile(`[^\w\s']+|(\w)*\d(\w)*`)
+var (
+	specReg = regexp.MustCompile(`[^\w\s']+|(\w)*\d(\w)*`)
+	urlReg  = regexp.
+		MustCompile(`(http|https):\/\/[\w\-_]+(\.[\w\-_]+)+[\w\-\.,@?^=%&amp;:\/~‌​\+#]*[\w\-\@?^=%&amp‌​;\/~\+#]`)
+)
 
 func init() {
 	stopwords.LoadStopWordsFromFile(filepath.Join("assets", "stopwords.txt"), "en", "\n")
@@ -21,6 +25,7 @@ func init() {
 func SetupLDAPipeline(posts []*types.Post, field string) <-chan string {
 	out := processPosts(posts, field)
 	out = removeTags(out)
+	out = removeURLs(out)
 	out = removeSpecialChars(out)
 	out = removeStopWords(out)
 	out = stem(out)
@@ -51,6 +56,17 @@ func removeTags(in <-chan string) <-chan string {
 
 			// get text from html
 			out <- doc.Find("body").Text()
+		}
+		close(out)
+	}()
+	return out
+}
+
+func removeURLs(in <-chan string) <-chan string {
+	out := make(chan string)
+	go func() {
+		for text := range in {
+			out <- urlReg.ReplaceAllString(text, " ")
 		}
 		close(out)
 	}()

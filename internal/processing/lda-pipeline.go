@@ -25,6 +25,7 @@ func init() {
 func SetupLDAPipeline(posts []*types.Post, field string) <-chan string {
 	out := processPosts(posts, field)
 	out = removeTags(out)
+	out = cleanSpaces(out)
 	out = removeURLs(out)
 	out = removeSpecialChars(out)
 	out = removeStopWords(out)
@@ -56,6 +57,18 @@ func removeTags(in <-chan string) <-chan string {
 
 			// get text from html
 			out <- doc.Find("body").Text()
+		}
+		close(out)
+	}()
+	return out
+}
+
+func cleanSpaces(in <-chan string) <-chan string {
+	out := make(chan string)
+	spacesReg := regexp.MustCompile(`\s+`)
+	go func() {
+		for text := range in {
+			out <- spacesReg.ReplaceAllString(text, " ")
 		}
 		close(out)
 	}()
@@ -108,9 +121,14 @@ func stem(in <-chan string) <-chan string {
 			text = ""
 
 			for _, textPart := range textSplitted {
-				stemmed, err := snowball.Stem(textPart, "english", false)
-				util.CheckError(err)
-				text += (stemmed + " ")
+				if len(textPart) > 1 { //skip one-letter words
+					stemmed, err := snowball.Stem(textPart, "english", false)
+					util.CheckError(err)
+
+					if len(stemmed) > 1 { //skip one-letter words
+						text += (stemmed + " ")
+					}
+				}
 			}
 
 			out <- strings.TrimSpace(text)

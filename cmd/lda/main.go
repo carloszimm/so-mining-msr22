@@ -3,7 +3,9 @@ package main
 import (
 	"log"
 	"path/filepath"
+	"regexp"
 	"strconv"
+	"strings"
 	"sync"
 
 	config "github.com/carloszimm/stack-mining/configs"
@@ -18,6 +20,52 @@ var configs []config.Config
 
 func init() {
 	configs = config.ReadConfig()
+}
+
+func wordPresence(s string) map[string]bool {
+	words := strings.Fields(s)
+	wordCount := make(map[string]bool)
+	for _, word := range words {
+		wordCount[word] = true
+	}
+
+	return wordCount
+}
+
+func rmCommonUncommonWords(corpus []string) []string {
+	wordCount := make(map[string][]int)
+	var presence map[string]bool
+	for i, words := range corpus {
+		presence = wordPresence(words)
+		for key := range presence {
+			wordCount[key] = append(wordCount[key], i)
+		}
+	}
+	unCommon := 20
+	common := len(corpus) / 2 //50%
+	spacesReg := regexp.MustCompile(`\s+`)
+
+	for word, presences := range wordCount {
+		length := len(presences)
+		if length < unCommon || length > common {
+			for _, index := range presences {
+				corpus[index] =
+					strings.TrimSpace(
+						spacesReg.ReplaceAllString(
+							strings.ReplaceAll(corpus[index], word, ""), " "))
+			}
+		}
+	}
+
+	return corpus
+}
+
+func countWords(corpus []string) int {
+	count := 0
+	for _, w := range corpus {
+		count += len(strings.Fields(w))
+	}
+	return count
 }
 
 func main() {
@@ -42,7 +90,11 @@ func main() {
 			corpus = append(corpus, text)
 		}
 
+		corpus = rmCommonUncommonWords(corpus)
+		count := countWords(corpus)
 		log.Println("Preprocessing finished!")
+		log.Println("Total words:", count)
+
 		log.Println("Running LDA...")
 
 		if cfg.MinTopics > 0 {

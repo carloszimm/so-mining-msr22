@@ -1,14 +1,24 @@
 package lda
 
 import (
+	"fmt"
+
 	"github.com/carloszimm/stack-mining/internal/types"
 	"github.com/carloszimm/stack-mining/internal/util"
 	"github.com/james-bowman/nlp"
 )
 
+var stopWords []string
+
+func init() {
+	for ch := 'a'; ch <= 'z'; ch++ {
+		stopWords = append(stopWords, fmt.Sprintf("%c", ch))
+	}
+}
+
 func LDA(topics int, corpus []string) ([][]types.TopicDist, [][]types.WordDist, float64) {
 
-	vectoriser := nlp.NewCountVectoriser()
+	vectoriser := nlp.NewCountVectoriser(stopWords...)
 	lda := nlp.NewLatentDirichletAllocation(topics)
 
 	vectorisedData, err := vectoriser.FitTransform(corpus...)

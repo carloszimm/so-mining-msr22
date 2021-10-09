@@ -13,9 +13,12 @@ import (
 )
 
 var (
-	specReg = regexp.MustCompile(`[^\w\s']+|(\w)*\d(\w)*`)
-	urlReg  = regexp.
-		MustCompile(`(http|https):\/\/[\w\-_]+(\.[\w\-_]+)+[\w\-\.,@?^=%&amp;:\/~‌​\+#]*[\w\-\@?^=%&amp‌​;\/~\+#]`)
+	regularCharsReg      = regexp.MustCompile(`[^\p{Common}\p{Latin}]+`)
+	spacesReg            = regexp.MustCompile(`\s+`)
+	pointSymbolNumberReg = regexp.MustCompile(`[\._$\d\-]+`)
+	puctReg              = regexp.MustCompile(`[\p{P}\p{S}\p{Z}]+`) //puctuation, symbol, separator
+	urlReg               = regexp.
+				MustCompile(`(http|ftp|https):\/\/[\w-]+(\.[\w-]+)*([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?`)
 )
 
 func init() {
@@ -24,11 +27,13 @@ func init() {
 
 func SetupLDAPipeline(posts []*types.Post, field string) <-chan string {
 	out := processPosts(posts, field)
-	out = removeTags(out)
+	out = rmTags(out)
+	out = rmStrangeChars(out)
 	out = cleanSpaces(out)
-	out = removeURLs(out)
-	out = removeSpecialChars(out)
-	out = removeStopWords(out)
+	out = rmURLs(out)
+	out = rmPointSymbolNumber(out)
+	out = rmStopWords(out)
+	out = rmPunct(out)
 	out = stem(out)
 	return out
 }
@@ -44,7 +49,7 @@ func processPosts(posts []*types.Post, field string) <-chan string {
 	return out
 }
 
-func removeTags(in <-chan string) <-chan string {
+func rmTags(in <-chan string) <-chan string {
 	out := make(chan string)
 	go func() {
 		for text := range in {
@@ -63,19 +68,30 @@ func removeTags(in <-chan string) <-chan string {
 	return out
 }
 
-func cleanSpaces(in <-chan string) <-chan string {
+func rmStrangeChars(in <-chan string) <-chan string {
 	out := make(chan string)
-	spacesReg := regexp.MustCompile(`\s+`)
 	go func() {
 		for text := range in {
-			out <- spacesReg.ReplaceAllString(text, " ")
+			// remove strange chars
+			out <- regularCharsReg.ReplaceAllString(text, " ")
 		}
 		close(out)
 	}()
 	return out
 }
 
-func removeURLs(in <-chan string) <-chan string {
+func cleanSpaces(in <-chan string) <-chan string {
+	out := make(chan string)
+	go func() {
+		for text := range in {
+			out <- strings.TrimSpace(spacesReg.ReplaceAllString(text, " "))
+		}
+		close(out)
+	}()
+	return out
+}
+
+func rmURLs(in <-chan string) <-chan string {
 	out := make(chan string)
 	go func() {
 		for text := range in {
@@ -86,21 +102,35 @@ func removeURLs(in <-chan string) <-chan string {
 	return out
 }
 
-func removeSpecialChars(in <-chan string) <-chan string {
+func rmPointSymbolNumber(in <-chan string) <-chan string {
 	out := make(chan string)
 	go func() {
 		for text := range in {
-			// remove strange chars, punctuations, and numbers
-			out <- specReg.ReplaceAllString(text, " ")
+			newText := ""
+			for _, txt := range strings.Fields(text) {
+				newText += (pointSymbolNumberReg.ReplaceAllString(txt, "") + " ")
+			}
+			out <- strings.TrimSpace(newText)
 		}
 		close(out)
 	}()
 	return out
 }
 
-// already maps to lowercase letters
+func rmPunct(in <-chan string) <-chan string {
+	out := make(chan string)
+	go func() {
+		for text := range in {
+			out <- puctReg.ReplaceAllString(text, " ")
+		}
+		close(out)
+	}()
+	return out
+}
+
+// already maps to lowercase letters and removes exceding spaces
 // https://github.com/bbalet/stopwords/blob/master/stopwords.go
-func removeStopWords(in <-chan string) <-chan string {
+func rmStopWords(in <-chan string) <-chan string {
 	out := make(chan string)
 	go func() {
 		for text := range in {
@@ -117,21 +147,19 @@ func stem(in <-chan string) <-chan string {
 	out := make(chan string)
 	go func() {
 		for text := range in {
-			textSplitted := strings.Fields(text)
-			text = ""
-
-			for _, textPart := range textSplitted {
+			newText := ""
+			for _, textPart := range strings.Fields(text) {
 				if len(textPart) > 1 { //skip one-letter words
 					stemmed, err := snowball.Stem(textPart, "english", false)
 					util.CheckError(err)
 
 					if len(stemmed) > 1 { //skip one-letter words
-						text += (stemmed + " ")
+						newText += (stemmed + " ")
 					}
 				}
 			}
 
-			out <- strings.TrimSpace(text)
+			out <- strings.TrimSpace(newText)
 		}
 		close(out)
 	}()

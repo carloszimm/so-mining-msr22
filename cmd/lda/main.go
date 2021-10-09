@@ -23,9 +23,8 @@ func init() {
 }
 
 func wordPresence(s string) map[string]bool {
-	words := strings.Fields(s)
 	wordCount := make(map[string]bool)
-	for _, word := range words {
+	for _, word := range strings.Fields(s) {
 		wordCount[word] = true
 	}
 
@@ -42,7 +41,7 @@ func rmCommonUncommonWords(corpus []string) []string {
 		}
 	}
 	unCommon := 20
-	common := len(corpus) / 2 //50%
+	common := len(corpus) / 2 //50% of documents
 	spacesReg := regexp.MustCompile(`\s+`)
 
 	for word, presences := range wordCount {
@@ -52,7 +51,7 @@ func rmCommonUncommonWords(corpus []string) []string {
 				corpus[index] =
 					strings.TrimSpace(
 						spacesReg.ReplaceAllString(
-							strings.ReplaceAll(corpus[index], word, ""), " "))
+							strings.ReplaceAll(corpus[index], word, " "), " "))
 			}
 		}
 	}

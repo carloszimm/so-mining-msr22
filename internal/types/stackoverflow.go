@@ -61,3 +61,12 @@ func GetFieldString(v *Post, field string) string {
 	f := reflect.Indirect(r).FieldByName(field)
 	return string(f.String())
 }
+
+func SearchPost(posts []*Post, postId int) *Post {
+	for _, post := range posts {
+		if post.Id == postId {
+			return post
+		}
+	}
+	return nil
+}

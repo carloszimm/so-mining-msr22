@@ -16,6 +16,7 @@ var (
 	LDA_RESULT_PATH           = filepath.Join("assets", "lda-results")
 	OPERATORS_PATH            = filepath.Join("assets", "operators")
 	OPERATORS_RESULT_PATH     = filepath.Join("assets", "operators-search")
+	OPENSORT_RESULT_PATH      = filepath.Join("assets", "opensort")
 )
 
 type Config struct {

@@ -10,6 +10,7 @@ import (
 	"github.com/carloszimm/stack-mining/internal/types"
 	"github.com/carloszimm/stack-mining/internal/util"
 	"github.com/kljensen/snowball"
+	"mvdan.cc/xurls/v2"
 )
 
 var (
@@ -17,8 +18,6 @@ var (
 	spacesReg            = regexp.MustCompile(`\s+`)
 	pointSymbolNumberReg = regexp.MustCompile(`[\._$\d\-]+`)
 	puctReg              = regexp.MustCompile(`[\p{P}\p{S}\p{Z}]+`) //puctuation, symbol, separator
-	urlReg               = regexp.
-				MustCompile(`(http|ftp|https):\/\/[\w-]+(\.[\w-]+)*([\w.,@?^=%&amp;:\/~+#-]*[\w@?^=%&amp;\/~+#-])?`)
 )
 
 func init() {
@@ -93,9 +92,10 @@ func cleanSpaces(in <-chan string) <-chan string {
 
 func rmURLs(in <-chan string) <-chan string {
 	out := make(chan string)
+	rxStrict := xurls.Strict()
 	go func() {
 		for text := range in {
-			out <- urlReg.ReplaceAllString(text, " ")
+			out <- rxStrict.ReplaceAllString(text, " ")
 		}
 		close(out)
 	}()

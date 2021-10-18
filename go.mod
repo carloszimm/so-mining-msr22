@@ -11,6 +11,7 @@ require (
 	github.com/james-bowman/nlp v0.0.0-20210511120306-26d441fa0ded
 	github.com/kljensen/snowball v0.6.0
 	github.com/montanaflynn/stats v0.6.6
+	mvdan.cc/xurls/v2 v2.3.0
 )
 
 require (

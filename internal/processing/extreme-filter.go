@@ -1,7 +1,6 @@
 package processing
 
 import (
-	"regexp"
 	"strings"
 )
 
@@ -18,7 +17,17 @@ func wordPresence(s string) map[string]void {
 	return wordCount
 }
 
-func RmExtremes(corpus []string) []string {
+func filter(corpus []string, index int, word string) {
+	var str strings.Builder
+	for _, w := range strings.Fields(corpus[index]) {
+		if w != word {
+			str.WriteString(w + " ")
+		}
+	}
+	corpus[index] = strings.TrimSpace(str.String())
+}
+
+func RmExtremes(corpus []string) {
 	wordCount := make(map[string][]int)
 	var presence map[string]void
 	for i, words := range corpus {
@@ -27,21 +36,16 @@ func RmExtremes(corpus []string) []string {
 			wordCount[key] = append(wordCount[key], i)
 		}
 	}
+
 	unCommon := 20
 	common := len(corpus) / 2 //50% of documents
-	spacesReg := regexp.MustCompile(`\s+`)
 
 	for word, presences := range wordCount {
 		length := len(presences)
 		if length < unCommon || length > common {
 			for _, index := range presences {
-				corpus[index] =
-					strings.TrimSpace(
-						spacesReg.ReplaceAllString(
-							strings.ReplaceAll(corpus[index], word, " "), " "))
+				filter(corpus, index, word)
 			}
 		}
 	}
-
-	return corpus
 }

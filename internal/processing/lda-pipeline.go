@@ -173,7 +173,8 @@ func filterExtremes(in <-chan string) <-chan []string {
 		for text := range in {
 			corpus = append(corpus, text)
 		}
-		out <- RmExtremes(corpus)
+		RmExtremes(corpus)
+		out <- corpus
 		close(out)
 	}()
 	return out

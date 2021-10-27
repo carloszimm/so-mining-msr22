@@ -1,16 +1,10 @@
 [
   {
-    "fileName": "all",
-    "field": "Title",
-    "minTopics": 0,
-    "maxTopics": 0,
-    "sampleWords": 20
-  },
-  {
-    "fileName": "all",
+    "fileName": "all_withAnswers",
     "field": "Body",
-    "minTopics": 0,
-    "maxTopics": 0,
+    "combineTitleBody": true,
+    "minTopics": 10,
+    "maxTopics": 35,
     "sampleWords": 20
   }
 ]

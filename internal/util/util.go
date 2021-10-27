@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/dlclark/regexp2"
 )
@@ -45,4 +46,12 @@ func WriteJSON(path string, data interface{}) {
 
 	err = os.WriteFile(path+".json", j, 0644)
 	CheckError(err)
+}
+
+func CountWords(corpus []string) int {
+	count := 0
+	for _, w := range corpus {
+		count += len(strings.Fields(w))
+	}
+	return count
 }

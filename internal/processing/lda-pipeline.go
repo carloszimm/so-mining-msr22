@@ -24,7 +24,7 @@ func init() {
 	stopwords.LoadStopWordsFromFile(filepath.Join("assets", "stopwords.txt"), "en", "\n")
 }
 
-func SetupLDAPipeline(posts []*types.Post, field string) <-chan string {
+func SetupLDAPipeline(posts []*types.Post, field string) <-chan []string {
 	out := processPosts(posts, field)
 	out = rmTags(out)
 	out = rmStrangeChars(out)
@@ -34,7 +34,7 @@ func SetupLDAPipeline(posts []*types.Post, field string) <-chan string {
 	out = rmStopWords(out)
 	out = rmPunct(out)
 	out = stem(out)
-	return out
+	return filterExtremes(out)
 }
 
 func processPosts(posts []*types.Post, field string) <-chan string {
@@ -161,6 +161,19 @@ func stem(in <-chan string) <-chan string {
 
 			out <- strings.TrimSpace(newText)
 		}
+		close(out)
+	}()
+	return out
+}
+
+func filterExtremes(in <-chan string) <-chan []string {
+	out := make(chan []string)
+	go func() {
+		var corpus []string
+		for text := range in {
+			corpus = append(corpus, text)
+		}
+		out <- RmExtremes(corpus)
 		close(out)
 	}()
 	return out

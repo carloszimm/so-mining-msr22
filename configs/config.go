@@ -20,11 +20,12 @@ var (
 )
 
 type Config struct {
-	FileName    string `json:"fileName" validate:"required"`
-	Field       string `json:"field" validate:"required"`
-	MinTopics   int    `json:"minTopics" validate:"min=0"`
-	MaxTopics   int    `json:"maxTopics" validate:"min=0,gtefield=MinTopics"`
-	SampleWords int    `json:"sampleWords" validate:"required"`
+	FileName         string `json:"fileName" validate:"required"`
+	Field            string `json:"field" validate:"required"`
+	CombineTitleBody bool   `json:"combineTitleBody"`
+	MinTopics        int    `json:"minTopics" validate:"min=0"`
+	MaxTopics        int    `json:"maxTopics" validate:"min=0,gtefield=MinTopics"`
+	SampleWords      int    `json:"sampleWords" validate:"required"`
 }
 
 func ReadConfig() []Config {

@@ -3,9 +3,7 @@ package main
 import (
 	"log"
 	"path/filepath"
-	"regexp"
 	"strconv"
-	"strings"
 	"sync"
 
 	config "github.com/carloszimm/stack-mining/configs"
@@ -22,49 +20,15 @@ func init() {
 	configs = config.ReadConfig()
 }
 
-func wordPresence(s string) map[string]bool {
-	wordCount := make(map[string]bool)
-	for _, word := range strings.Fields(s) {
-		wordCount[word] = true
-	}
-
-	return wordCount
-}
-
-func rmCommonUncommonWords(corpus []string) []string {
-	wordCount := make(map[string][]int)
-	var presence map[string]bool
-	for i, words := range corpus {
-		presence = wordPresence(words)
-		for key := range presence {
-			wordCount[key] = append(wordCount[key], i)
+func combineTitleBody(posts []*types.Post) {
+	for _, post := range posts {
+		if post.PostTypeId == 2 {
+			parentPost := types.SearchPost(posts, post.ParentId)
+			post.Body = parentPost.Title + " " + post.Body
+		} else {
+			post.Body = post.Title + " " + post.Body
 		}
 	}
-	unCommon := 20
-	common := len(corpus) / 2 //50% of documents
-	spacesReg := regexp.MustCompile(`\s+`)
-
-	for word, presences := range wordCount {
-		length := len(presences)
-		if length < unCommon || length > common {
-			for _, index := range presences {
-				corpus[index] =
-					strings.TrimSpace(
-						spacesReg.ReplaceAllString(
-							strings.ReplaceAll(corpus[index], word, " "), " "))
-			}
-		}
-	}
-
-	return corpus
-}
-
-func countWords(corpus []string) int {
-	count := 0
-	for _, w := range corpus {
-		count += len(strings.Fields(w))
-	}
-	return count
 }
 
 func main() {
@@ -79,20 +43,18 @@ func main() {
 		go csvUtils.ReadPostsCSV(filesPath, c)
 		posts := <-c
 
+		if cfg.CombineTitleBody {
+			combineTitleBody(posts)
+		}
+
 		log.Println("Processing:", len(posts), "documents for",
 			cfg.FileName+".csv", "using", cfg.Field, "field")
 
-		corpus := make([]string, 0, len(posts))
-
 		out := processing.SetupLDAPipeline(posts, cfg.Field)
-		for text := range out {
-			corpus = append(corpus, text)
-		}
+		corpus := <-out
 
-		corpus = rmCommonUncommonWords(corpus)
-		count := countWords(corpus)
 		log.Println("Preprocessing finished!")
-		log.Println("Total words:", count)
+		log.Println("Total words:", util.CountWords(corpus))
 
 		log.Println("Running LDA...")
 

@@ -1,5 +1,5 @@
 Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCount,Body,OwnerUserId,OwnerDisplayName,LastEditorUserId,LastEditorDisplayName,LastEditDate,LastActivityDate,Title,Tags,AnswerCount,CommentCount,FavoriteCount,ClosedDate,CommunityOwnedDate,ContentLicense
-"67349918","1","","","2021-05-01 19:02:39","","4","2012","<p>I have upgraded my Angular App dependency and successfully installed them. Unfortunately I am now unable to use 'rxjs'. Below is the error returned by the IDE.</p>
+"67349918","1","","","2021-05-01 19:02:39","","5","2354","<p>I have upgraded my Angular App dependency and successfully installed them. Unfortunately I am now unable to use 'rxjs'. Below is the error returned by the IDE.</p>
 <blockquote>
 <p>TS7016: Could not find a declaration file for module 'rxjs'.'C:/Path/to/project/node_modules/rxjs/dist/cjs/index.js' implicitly has an 'any' type.   Try <code>npm i --save-dev @types/rxjs</code> if it exists or add a new declaration (.d.ts) file containing `declare module 'rxjs';</p>
 </blockquote>
@@ -119,7 +119,7 @@ Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCoun
 </blockquote>
 <p>Is it possible to use rxjs v7 in an Angular v11 app?</p>
 ","13680115","","","","","2021-05-01 19:58:08","TS7016: Could not find a declaration file for module 'rxjs'","<angular><typescript><npm><rxjs><rxjs7>","1","0","","","","CC BY-SA 4.0"
-"67475984","1","","","2021-05-10 18:41:11","","0","100","<p>I upgraded my angular 11 projects <code>RxJS 7</code> and in web storm it suggested me to change some <code>Subject</code> imports, Once I update these imports I am getting below error</p>
+"67475984","1","","","2021-05-10 18:41:11","","0","119","<p>I upgraded my angular 11 projects <code>RxJS 7</code> and in web storm it suggested me to change some <code>Subject</code> imports, Once I update these imports I am getting below error</p>
 <pre><code>
 ERROR: node_modules/rxjs/dist/types/internal/ajax/types.d.ts:9:40 - error TS1110: Type expected.
 
@@ -139,13 +139,13 @@ An unhandled exception occurred: node_modules/rxjs/dist/types/internal/ajax/type
 </code></pre>
 <p>anyone resolved this issue of tried to migrate to <code>RxJs7</code>?</p>
 ","537647","","","","","2021-05-10 18:41:11","RXJS 7 - TS2693: 'AjaxDirection' only refers to a type, but is being used as a value here","<angular><rxjs><rxjs7>","0","6","","","","CC BY-SA 4.0"
-"68694758","1","","","2021-08-07 17:39:21","","0","280","<p>I am trying <code>RxJs7</code> in my angular 12.2.0 project and it seems like the path of rxjs operator and method changed.</p>
+"68694758","1","","","2021-08-07 17:39:21","","0","353","<p>I am trying <code>RxJs7</code> in my angular 12.2.0 project and it seems like the path of rxjs operator and method changed.</p>
 <p>I am getting the below error</p>
 <pre><code>./dist/candypal/website/fesm2015/candypal-website.js:8:0-50 - Error: Module not found: Error: Package path ./index is not exported from package /Users/aniruddh/aniruddh/develop/experiment/candypal/node_modules/rxjs (see exports field in /Users/aniruddh/aniruddh/develop/experiment/candypal/node_modules/rxjs/package.json)
 
 </code></pre>
 <p>Note that the above error is coming from a library that uses rxjs7</p>
 ","537647","","","","","2021-08-07 17:39:21","Module not found: Error: Package path ./index is not exported from package node_modules/rxjs (see exports field in /node_modules/rxjs/package.json)","<angular><rxjs><angular12><rxjs7>","0","0","","","","CC BY-SA 4.0"
-"69041171","1","","","2021-09-03 07:39:28","","0","21","<p>TS7016: Could not find a declaration file for module 'rxjs'.'C:/Path/to/project/node_modules/rxjs/dist/cjs/index.js' implicitly has an 'any' type.   Try npm i --save-dev @types/rxjs if it exists or add a new declaration (.d.ts) file containing `declare module 'rxjs';</p>
+"69041171","1","","","2021-09-03 07:39:28","","0","32","<p>TS7016: Could not find a declaration file for module 'rxjs'.'C:/Path/to/project/node_modules/rxjs/dist/cjs/index.js' implicitly has an 'any' type.   Try npm i --save-dev @types/rxjs if it exists or add a new declaration (.d.ts) file containing `declare module 'rxjs';</p>
 <p>I have updated NestJs to version 8 and rxjs to 7. After that, imports stopped working. There was an index.ts file in the node_modules/rxjs folder before (in the 6th version). When installing the 7th version, it is removed.</p>
-","14750997","","","","","2021-09-03 07:39:28","NestJS. TS7016: Could not find a declaration file for module 'rxjs'","<angular><typescript><rxjs><rxjs7>","0","1","","","","CC BY-SA 4.0"
+","14750997","","","","","2021-10-13 17:43:18","NestJS. TS7016: Could not find a declaration file for module 'rxjs'","<angular><typescript><rxjs><rxjs7>","1","1","","","","CC BY-SA 4.0"

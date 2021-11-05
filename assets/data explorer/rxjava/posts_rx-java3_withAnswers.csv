@@ -1,5 +1,5 @@
 Id,PostTypeId,AcceptedAnswerId,ParentId,CreationDate,DeletionDate,Score,ViewCount,Body,OwnerUserId,OwnerDisplayName,LastEditorUserId,LastEditorDisplayName,LastEditDate,LastActivityDate,Title,Tags,AnswerCount,CommentCount,FavoriteCount,ClosedDate,CommunityOwnedDate,ContentLicense
-"49154069","1","49154248","","2018-03-07 14:16:59","","13","3463","<p>When creating an Observable like this: </p>
+"49154069","1","49154248","","2018-03-07 14:16:59","","14","3522","<p>When creating an Observable like this: </p>
 
 <pre><code>public void foo() {
 
@@ -23,11 +23,11 @@ private void bar() {
 
 <p>Why is that?</p>
 ","804967","","5739006","","2021-08-22 04:04:27","2021-08-22 04:04:27","Why is doOnDispose not called?","<java><rx-java><rx-java2><rx-java3>","1","0","3","","","CC BY-SA 3.0"
-"49154248","2","","49154069","2018-03-07 14:26:19","","27","","<p>You need to use the <code>doFinally()</code> operator. </p>
+"49154248","2","","49154069","2018-03-07 14:26:19","","28","","<p>You need to use the <code>doFinally()</code> operator. </p>
 
 <p><code>doOnDispose()</code> has a very narrow use case, where the observable is explicitly disposed. In your example, the observable terminates ""naturally"" by <code>onComplete()</code>. By the time that you call <code>dispose()</code>, the observable is done, and nothing will happen -- disposing a completed observable has no effect.</p>
 ","1241193","","61158","","2018-03-07 14:37:47","2018-03-07 14:37:47","","","","0","","","","CC BY-SA 3.0"
-"60970014","1","","","2020-04-01 11:39:51","","1","86","<p>I am trying to write a simple example that uses the <code>switchOnNext</code> operator. I want to generate an infinite stream of infinite streams. EAch individual stream will generate from 1 to infinity. </p>
+"60970014","1","","","2020-04-01 11:39:51","","1","87","<p>I am trying to write a simple example that uses the <code>switchOnNext</code> operator. I want to generate an infinite stream of infinite streams. EAch individual stream will generate from 1 to infinity. </p>
 
 <p>Using <code>switchOnNext</code> I would expect that each observable will emit it's first <code>n</code> elements, and then the next one, and so on.</p>
 
@@ -135,7 +135,7 @@ public class Main {
 }
 </code></pre>
 ","1225786","","","","","2020-04-01 11:39:51","RxJava `switchOnNext` with infinite streams","<java><rx-java><rx-java3>","0","2","","","","CC BY-SA 4.0"
-"61164480","1","61170006","","2020-04-11 22:23:23","","0","312","<p>I have multiple functions that return an <code>Observable&lt;String&gt;</code>. Each function execute command on the file system. I need to execute each function one after another and get the output of the function in the observable. At the end i want a single <code>Observable&lt;String&gt;</code> that contains the output of all the functions in the order of functions calls</p>
+"61164480","1","61170006","","2020-04-11 22:23:23","","0","341","<p>I have multiple functions that return an <code>Observable&lt;String&gt;</code>. Each function execute command on the file system. I need to execute each function one after another and get the output of the function in the observable. At the end i want a single <code>Observable&lt;String&gt;</code> that contains the output of all the functions in the order of functions calls</p>
 
 <p>Individually, each function work as expected but i need to merge output correctly.</p>
 
@@ -206,7 +206,7 @@ return result;
 );
 </code></pre>
 ","1387310","","","","","2020-04-12 10:27:20","","","","0","","","","CC BY-SA 4.0"
-"61377933","1","","","2020-04-23 01:41:03","","0","136","<p>I am using RxJava for a server microservice project, where using Jetty as HTTP Servlet server.</p>
+"61377933","1","","","2020-04-23 01:41:03","","0","147","<p>I am using RxJava for a server microservice project, where using Jetty as HTTP Servlet server.</p>
 
 <p>I am handling requests either from client or main server with Observable for different flows.
 When a request hitting the api below, I will return a Response after Observable finishes the job.</p>
@@ -244,7 +244,7 @@ Is it better to create a <code>CompositeDisposable</code>, then add disposable t
 
 <p>Thanks!</p>
 ","9036539","","9036539","","2020-04-23 07:09:18","2020-04-23 07:09:18","RxJava disposing Observable/Flowable in a microservice Server project","<server><rx-java><rx-java2><rx-java3>","0","2","","","","CC BY-SA 4.0"
-"61490318","1","","","2020-04-28 21:33:06","","2","1477","<p>I am having trouble implementing RxJava3/Retrofit2, what I need to accomplish is:</p>
+"61490318","1","","","2020-04-28 21:33:06","","2","1503","<p>I am having trouble implementing RxJava3/Retrofit2, what I need to accomplish is:</p>
 
 <p><strong>The general idea is to sync a cloud DB to an SqLite DB (Room) on a device.</strong>
 The DB could get large, around 100,000 registers or more, so the sync process can take some time, my first attempt was to do it in one request and get all registers, then save them to SqLite (Room), but this in some cases, depending on the device generated some out of memory exceptions, so after some research I found out that RxJava is the answer, also implementing some API call pagination as well.</p>
@@ -624,7 +624,7 @@ private void handleError(Throwable throwable) {
 <li>Right now I am using concatMap on the getAllHandleResults() method, as far as I understand, this operator execute the Retrofit calls in a sequential order, I am doing it this way, because before trying RX Java + Retrofit, I was using Volley + Room + LiveData + ViewModel + AsyncTask, I did notice that the DB insertion was done one at a time, this operation is slower than the Retrofit Call, and one insertion operation needs to wait to the previous insertion to finished, so now I have the DB part using Room + LiveData + ViewModel + AsyncTask, so when the insert method is invoke from the onNext method (this happens on the Main-thread), the insertion will be execute on an AsyncTask in the background Thread, do you have any recommendation on this matter? can be this DB part done as well using RX Java? do you have some web-page where I can get information about it? Once again, thanks a lot for your help. </li>
 </ol>
 ","2139348","","2139348","","2020-05-01 02:47:59","2020-05-01 02:47:59","Rxjava 3, retrofit2 and multiple calls problem","<android><retrofit2><android-room><rx-java3>","0","7","","","","CC BY-SA 4.0"
-"61588457","1","","","2020-05-04 08:55:10","","1","231","<p>this is a method written in RxJava</p>
+"61588457","1","","","2020-05-04 08:55:10","","1","236","<p>this is a method written in RxJava</p>
 
 <pre><code>    public Observable&lt;String&gt; method() {
     return model.getOffers()
@@ -694,7 +694,7 @@ Action0 has been changed to Action</p>
 <p>Can anyone help me? 
 Thank you!</p>
 ","13032345","","13032345","","2020-05-04 09:02:44","2020-05-04 09:02:44","RxJava method conversion to RxJava3","<java><android><rx-java><rx-java3>","0","2","","","","CC BY-SA 4.0"
-"61652896","1","","","2020-05-07 08:11:18","","1","258","<p>I have an API call which verifies some status against an ""Id"". The API returns Single or error. I have a list of such Id's, Only one Id is valid to return success or none (all id's return error). What I need is, Iterate through each Id and skip the errors from API call, until either a success or end of the list. I am able to achieve this sequentially. However, I am trying to do the same, using ParallelFlowable.
+"61652896","1","","","2020-05-07 08:11:18","","1","280","<p>I have an API call which verifies some status against an ""Id"". The API returns Single or error. I have a list of such Id's, Only one Id is valid to return success or none (all id's return error). What I need is, Iterate through each Id and skip the errors from API call, until either a success or end of the list. I am able to achieve this sequentially. However, I am trying to do the same, using ParallelFlowable.
 It works fine when an Id returns success, But when there is no id which returns success (all ids fail), then it just skip all the errors from API, but does not notify the subscriber after all the ids are validated. I am not sure how to handle this.</p>
 
 <pre><code>// API call
@@ -745,7 +745,7 @@ getStatus(listOf(""1"",""2"",""3"",""4"",""5"",))
 
 </code></pre>
 ","2571200","","2571200","","2020-05-12 05:56:13","2020-05-13 01:46:46","RxJava: Skip all the errors in fromIterable() and notify subscriber when all the items are emitted - Flowable.parallel execution","<android><rx-java2><flowable><rx-java3>","3","0","","","","CC BY-SA 4.0"
-"61696684","1","","","2020-05-09 12:25:56","","1","163","<p>I try to consume the Streaming API from Twitter: statuses/filter as the following link(1)
+"61696684","1","","","2020-05-09 12:25:56","","1","168","<p>I try to consume the Streaming API from Twitter: statuses/filter as the following link(1)
 (1)<a href=""https://stream.twitter.com/1.1/statuses/filter.json?track=twitter"" rel=""nofollow noreferrer"">https://stream.twitter.com/1.1/statuses/filter.json?track=twitter</a> </p>
 
 <p>Docs: <a href=""https://developer.twitter.com/en/docs/tweets/filter-realtime/api-reference/post-statuses-filter"" rel=""nofollow noreferrer"">https://developer.twitter.com/en/docs/tweets/filter-realtime/api-reference/post-statuses-filter</a></p>
@@ -908,7 +908,7 @@ class MainActivity : AppCompatActivity() {
 
 <p>Thank you all in advance.</p>
 ","3058271","","3058271","","2020-05-09 13:01:40","2020-05-09 13:01:40","Android Twitter API statuses/filter with Retrofit + RxJava: never hits onNext or onError","<android><kotlin><twitter><retrofit2><rx-java3>","0","3","0","","","CC BY-SA 4.0"
-"61704933","1","61764955","","2020-05-09 23:00:51","","3","1250","<p>I am trying to do the following; sync a cloud DB using Retrofit to a local SqLite DB (Room) on a device. The DB could get large, around 100,000 registers or more, so the sync process can take some time. So it send a first Retrofit request to get the number of register, so it can calculate the total number of pages, after that it will send multiple Retrofit Request, to get all the data from API, after each request, it saves the data to Room.</p>
+"61704933","1","61764955","","2020-05-09 23:00:51","","3","1258","<p>I am trying to do the following; sync a cloud DB using Retrofit to a local SqLite DB (Room) on a device. The DB could get large, around 100,000 registers or more, so the sync process can take some time. So it send a first Retrofit request to get the number of register, so it can calculate the total number of pages, after that it will send multiple Retrofit Request, to get all the data from API, after each request, it saves the data to Room.</p>
 
 <p>Right now, I am having trouble combining two RxJava calls or process, also on the second RxJava process, after a Retrofit call, there is a Room Insert of a List-of-Objets, but after the hole process ends, I notice that not 100% of all the records are inserted, every time that I run the process, the number of records inserted change, it is around 80% - 98%, but never 100%, even though all the Retrofit calls are sent.</p>
 
@@ -1235,7 +1235,7 @@ viewModel.getRecordsCount()
 
 <p>Log the error in <code>handleError</code> function and see what the actual problem is.</p>
 ","2235972","","","","","2020-05-13 01:42:25","","","","5","","","","CC BY-SA 4.0"
-"61801954","1","","","2020-05-14 16:03:09","","2","69","<p>RxAndroidBle is a great piece of software and has reduced development time for Ble projects and has increased stability and readability significantly.</p>
+"61801954","1","","","2020-05-14 16:03:09","","2","71","<p>RxAndroidBle is a great piece of software and has reduced development time for Ble projects and has increased stability and readability significantly.</p>
 
 <p>I just want to ask, what the status is of the rxjava3 branch of RxAndroidBle?
 It says it is a test branch and stale at this moment.
@@ -1247,7 +1247,7 @@ So is it not recommended to take the rxjava3 branch for production applications?
 
 <p>Greetings from t4rj4n</p>
 ","13542758","","","","","2020-05-14 16:03:09","What is the status of RxAndroidBle and RxJava3?","<bluetooth-lowenergy><rx-android><rxandroidble><rx-java3>","0","1","","","","CC BY-SA 4.0"
-"61819722","1","","","2020-05-15 12:53:40","","1","376","<p>I have three Integer observers like below :</p>
+"61819722","1","","","2020-05-15 12:53:40","","1","402","<p>I have three Integer observers like below :</p>
 
 <p>First Observer :</p>
 
@@ -1372,7 +1372,7 @@ D/MY_LOG: onNext Third 2
 
 <p>Why is there any ambiguity in such a case ?</p>
 ","9494420","","","","","2020-05-15 21:43:34","RxJava PublishSubject with and without ObserveOn","<rx-java><reactivex><rx-java3>","1","1","","","","CC BY-SA 4.0"
-"61827190","1","61827243","","2020-05-15 19:47:36","","1","342","<p>I have a fragment In which I have implemented some code :</p>
+"61827190","1","61827243","","2020-05-15 19:47:36","","1","366","<p>I have a fragment In which I have implemented some code :</p>
 
 <pre><code>    public void onViewCreated(@androidx.annotation.NonNull View v, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(v, savedInstanceState);
@@ -1479,7 +1479,7 @@ list.get(1); //consult in parallel  [urlX, urlY, urlZ]
 ","10071373","","10071373","","2020-05-19 03:47:50","2020-05-22 12:01:06","Group parallel calls in RX Java","<java><rx-java><rx-java3>","1","0","","","","CC BY-SA 4.0"
 "61931324","1","","","2020-05-21 09:25:32","","0","46","<p>I have multiple <code>Observable&lt;Boolean&gt;</code> delivering data from ""alert sensors"". They are delivering only value changes. How to wait until all of them switch to <code>false</code> which would indicate there is no alert anymore?</p>
 ","412409","","","","","2020-05-22 10:01:17","RxJava, wait for multiple Observables to provide desired result in the same time","<java><rx-java><reactive-programming><rx-java2><rx-java3>","2","0","","","","CC BY-SA 4.0"
-"61937367","1","61938069","","2020-05-21 14:57:01","","1","56","<p>In Ammonite, I execute the following codes...
+"61937367","1","61938069","","2020-05-21 14:57:01","","1","57","<p>In Ammonite, I execute the following codes...
 Trying to do an orderedMerge of two Flowables,</p>
 
 <pre><code>import $ivy.{
@@ -1544,7 +1544,7 @@ Flowables.orderedMerge(
 
 <p>For future reference <code>NoSuchMethodError</code> almost always indicates incompatible libraries. The unfound method in the exception message and the method at the top of the stacktrace are good indicators of which libraries are involved.</p>
 ","1374461","","1374461","","2020-05-21 15:38:31","2020-05-21 15:38:31","","","","0","","","","CC BY-SA 4.0"
-"62258222","1","62260657","","2020-06-08 08:44:33","","0","941","<p>I can't convert this method to RxJava3 despite having upgraded the dependencies</p>
+"62258222","1","62260657","","2020-06-08 08:44:33","","0","994","<p>I can't convert this method to RxJava3 despite having upgraded the dependencies</p>
 
 <pre><code>fun setSearchField(searchField: EditText) {
         searchDisposable = searchField.afterTextChangeEvents()
@@ -1612,7 +1612,7 @@ io.reactivex.disposables.Disposable!</p>
 <pre><code>implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
 </code></pre>
 ","7057156","","","","","2020-06-08 11:07:30","","","","0","","","","CC BY-SA 4.0"
-"62371640","1","","","2020-06-14 11:05:08","","6","3373","<p>I am using RxJava3 with Room in my project but I am getting the following error</p>
+"62371640","1","","","2020-06-14 11:05:08","","6","3466","<p>I am using RxJava3 with Room in my project but I am getting the following error</p>
 
 <p>error: Not sure how to convert a Cursor to this method's return type (io.reactivex.rxjava3.core.Flowable>)</p>
 
@@ -1631,7 +1631,7 @@ Flowable&lt;List&lt;WishListMovie&gt;&gt; getWishList();
 
 <p>I want to know how can I use RxJava 3 with Room or should I use RxJava 2 instead in my project.</p>
 ","11227994","","","","","2020-09-13 15:36:48","RxJava 3 support for Room","<android><rx-java><android-room><rx-java3>","4","0","","","","CC BY-SA 4.0"
-"62559431","1","62561339","","2020-06-24 16:08:12","","1","355","<p>Most of the <code>Flowable.subscribe()</code> overloads return a <code>Disposable</code> which enable a flow to be cleaned up. I'm in the habit of doing:</p>
+"62559431","1","62561339","","2020-06-24 16:08:12","","1","374","<p>Most of the <code>Flowable.subscribe()</code> overloads return a <code>Disposable</code> which enable a flow to be cleaned up. I'm in the habit of doing:</p>
 <pre class=""lang-java prettyprint-override""><code>Disposable d = Flowable.just()
     .map(...)
     .subscribe(
@@ -1662,7 +1662,7 @@ d.dispose();
 <p>Due to the Reactive-Streams specification, <code>Publisher.subscribe</code> returns <code>void</code> ...To remedy this, the method <code>E subscribeWith(E subscriber)</code> has been added to each base reactive class which returns its input subscriber/observer as is.</p>
 </blockquote>
 ","2073595","","2073595","","2020-06-24 19:59:46","2020-06-24 19:59:46","","","","7","","","","CC BY-SA 4.0"
-"62580094","1","","","2020-06-25 16:32:49","","0","20","<p>I have some <code>Flowable</code>s composed using <code>FlowableTransformer</code> like this:</p>
+"62580094","1","","","2020-06-25 16:32:49","","0","21","<p>I have some <code>Flowable</code>s composed using <code>FlowableTransformer</code> like this:</p>
 <pre><code>public static FlowableTransformer&lt;I, O&gt; transformer() {
     return f -&gt; {
         return Flowable.mergeArray(5, 5, f.filter(...).map(...), f.filter(...).map(...));
@@ -1694,12 +1694,12 @@ d.dispose();
 <p>However, I need to propogate cancellation up the full Flowable so that the source of items stops producing.</p>
 <p>Is there a way of doing that? Or should I go about the branching logic in a different way?</p>
 ","28190","","","","","2020-06-26 09:28:30","Cancellation across the Flowables when implementing branching logic","<java><rx-java><reactive-programming><rx-java3>","1","0","","","","CC BY-SA 4.0"
-"62762831","1","","","2020-07-06 19:04:37","","0","102","<p>Recently, our project was migrated to RxJava 3 from RxJava 2. When we run our tests in Firebase Test Lab, we see the app crashing during testing:</p>
+"62762831","1","","","2020-07-06 19:04:37","","0","109","<p>Recently, our project was migrated to RxJava 3 from RxJava 2. When we run our tests in Firebase Test Lab, we see the app crashing during testing:</p>
 <pre><code>java.lang.NoSuchMethodError: No static method fromRunnable(Ljava/lang/Runnable;)Lio/reactivex/rxjava3/disposables/Disposable; in class Lio/reactivex/rxjava3/disposables/Disposable; or its super classes (declaration of 'io.reactivex.rxjava3.disposables.Disposable' appears in /data/app/com.example.client.developer-OsNMqNiVevCOI094EihlVg==/base.apk!classes7.dex)
 </code></pre>
 <p>RxJava 3 contains static interface methods, as denoted <a href=""https://github.com/ReactiveX/RxJava/wiki/What%27s-different-in-3.0#disposables"" rel=""nofollow noreferrer"">here</a>, but the Android Gradle Plugin should be desugaring these usages and making them work on pre-Java 8 API levels. Does anyone know what is going on here?</p>
 ","895797","","","","","2020-07-06 19:04:37","No static method fromRunnable when running tests in Firebase Test Lab","<android><firebase><android-testing><firebase-test-lab><rx-java3>","0","2","","","","CC BY-SA 4.0"
-"62816267","1","62829523","","2020-07-09 13:41:41","","0","265","<p>I replaced the action call to Consumer in my code but while subscribing it keeps asking me to cast it to observer</p>
+"62816267","1","62829523","","2020-07-09 13:41:41","","0","284","<p>I replaced the action call to Consumer in my code but while subscribing it keeps asking me to cast it to observer</p>
 <p>Below is the code</p>
 <pre><code>public void fetchSubscriptionPlans(String url, String apiKey, String authToken,
                                    final Consumer&lt;List&lt;ContentDatum&gt;&gt; subscriptionPlans) {
@@ -1804,12 +1804,12 @@ I need to use exactly <code>PublishSubject</code> for giving me results as they 
 <pre><code>io.reactivex.rxjava3.core.Observable
 </code></pre>
 ","2569793","","","","","2020-07-10 07:44:51","","","","0","","","","CC BY-SA 4.0"
-"62896595","1","","","2020-07-14 13:41:15","","1","168","<p>Using RxJava3, given an <code>Observable</code> and a <code>Subject</code>, I can subscribe the Subject to the Observable:</p>
+"62896595","1","","","2020-07-14 13:41:15","","1","190","<p>Using RxJava3, given an <code>Observable</code> and a <code>Subject</code>, I can subscribe the Subject to the Observable:</p>
 <pre class=""lang-java prettyprint-override""><code>observable.subscribe(subject); // returns void, not a subscription
 </code></pre>
 <p>Later, my Subject is not interested anymore in the Observable, how to unsubscribe it from the Observable ?</p>
 ","287058","","11606728","","2020-07-14 13:45:03","2020-07-14 14:42:10","RxJava: how to unsubscribe a subject from an observable","<rx-java><rx-java3>","1","0","","","","CC BY-SA 4.0"
-"62963794","1","63253771","","2020-07-18 01:48:10","","2","126","<p>Is there an operator in RxJava, an external library or a way I'm missing to create a flowable/observable that recieves a function that controls the emission of data, like a valve?</p>
+"62963794","1","63253771","","2020-07-18 01:48:10","","2","131","<p>Is there an operator in RxJava, an external library or a way I'm missing to create a flowable/observable that recieves a function that controls the emission of data, like a valve?</p>
 <p>I have a huge json file I need to process but I have to get a portion of the file, a list of entities, process it and then get another portion, I have tried using windows(), buffer() but the BiFunction I pass to Flowable.generate() keeps executing after I recieved the first list and I haven't finished processing it. I also tried FlowableTransformers.valve() from hu.akarnokd.rxjava3.operators but it just piles up the items before the flatMap() function that process the list</p>
 <pre><code>private Flowable&lt;T&gt; flowable(InputStream inputStream) {
 
@@ -1885,7 +1885,7 @@ I need to use exactly <code>PublishSubject</code> for giving me results as they 
 }
 </code></pre>
 ","6580416","","6580416","","2020-07-27 19:26:29","2020-08-04 19:22:40","RxJava valve use case","<java><reactive-programming><rx-java2><rx-java3>","1","5","0","","","CC BY-SA 4.0"
-"62985598","1","","","2020-07-19 20:59:17","","0","49","<p>I'm new to RxJava, so would be great if someone could clarify this...</p>
+"62985598","1","","","2020-07-19 20:59:17","","0","50","<p>I'm new to RxJava, so would be great if someone could clarify this...</p>
 <p>Consider the following flow:</p>
 <ol>
 <li>Generate/emit an Integer each time a value is requested by a subscriber.</li>
@@ -1955,7 +1955,7 @@ As I can judge by the lambda's callstack, each time a group is created, it invok
 <p>Am I missing something fundamental here or there is no way to truly apply back pressure in such a use case?</p>
 <p>Thanks in advance.</p>
 ","11964844","","","","","2020-07-19 20:59:17","Flowable ignores Subscription.request when groupBy operator is used","<java><reactive-programming><reactive-streams><rx-java3>","0","5","","","","CC BY-SA 4.0"
-"62997465","1","62997715","","2020-07-20 14:20:43","","2","152","<p>Now I use nested loops with <code>ReplaySubject</code> to get multiple observables and this need to be converted without using any loops, just observables.</p>
+"62997465","1","62997715","","2020-07-20 14:20:43","","2","160","<p>Now I use nested loops with <code>ReplaySubject</code> to get multiple observables and this need to be converted without using any loops, just observables.</p>
 <pre><code>private Observable&lt;BaseUnit&gt; getUnitObservables(ArrayList&lt;Map&lt;Integer, Integer&gt;&gt; list, ReplaySubject&lt;BaseUnit&gt; subject) {
 
     ArrayList&lt;Observable&lt;BaseUnit&gt;&gt; observables = new ArrayList&lt;&gt;();
@@ -2010,7 +2010,7 @@ So totally should be 21 as I get in example above.</p>
 }
 </code></pre>
 ","2073595","","","","","2020-07-20 14:31:23","","","","0","","","","CC BY-SA 4.0"
-"63013443","1","63063646","","2020-07-21 11:24:52","","1","252","<p>Please, coorect me if I wrong in my conclusions about async work and give any suggestions how to make this work asynchronously.</p>
+"63013443","1","63063646","","2020-07-21 11:24:52","","1","276","<p>Please, coorect me if I wrong in my conclusions about async work and give any suggestions how to make this work asynchronously.</p>
 <p>This code performs setting result of calculations in grid cells.
 As I assume asynchronous work should display grid cells by portions. So if we have 8 cores as result we can see that 8 cells displayed and during some time another 8 and so on (in case if I set some time delay). But for now as result cells displaying become one by one.</p>
 <p>Model:</p>
@@ -2255,7 +2255,7 @@ public enum ListOperationName {
 }
 </code></pre>
 ","4974229","","4974229","","2020-07-23 14:48:41","2020-07-23 21:53:09","RxJava: how to make code working asynchronously?","<java><android><rx-java><rx-java3>","1","4","","","","CC BY-SA 4.0"
-"63055413","1","63055414","","2020-07-23 13:26:31","","2","915","<p>I want to use retrofit2 and rxjava3 but I see the following error</p>
+"63055413","1","63055414","","2020-07-23 13:26:31","","2","963","<p>I want to use retrofit2 and rxjava3 but I see the following error</p>
 <pre><code>Caused by: java.lang.IllegalArgumentException: Could not locate call adapter for io.reactivex.rxjava3.core.Observable&lt;java.lang.Object&gt;.
       Tried:
        * retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -2361,7 +2361,7 @@ public enum ListOperationName {
 </code></pre>
 <p>I removed <code>PublishSubject</code> - it seems redundant, you can just subscribe to the resulting <code>Observable</code>, no?</p>
 ","2734169","","","","","2020-07-23 21:53:09","","","","0","","","","CC BY-SA 4.0"
-"63088675","1","63160396","","2020-07-25 13:05:37","","0","141","<p>There is a very intuitive operator named <code>delayElements</code> available in the @ProjectReactor publisher Flux to introduce a delay between each element emitted. Say, for example, following cod emit an element per second.</p>
+"63088675","1","63160396","","2020-07-25 13:05:37","","0","152","<p>There is a very intuitive operator named <code>delayElements</code> available in the @ProjectReactor publisher Flux to introduce a delay between each element emitted. Say, for example, following cod emit an element per second.</p>
 <pre><code>Flux.fromIterable(List.of(1, 2, 3))
       .delayElements(Duration.ofSeconds(1))
       .map(i -&gt; i * 2)
@@ -2378,7 +2378,7 @@ Flowable.interval(1, TimeUnit.SECONDS)
 </code></pre>
 <p>Does anyone know a better way to do the above in @Rxjava?</p>
 ","2583726","","","","","2020-07-29 18:43:11","Delay Element in RxJava Flowable","<rx-java><project-reactor><rx-java3>","1","0","1","","","CC BY-SA 4.0"
-"63136488","1","","","2020-07-28 14:29:19","","0","34","<p>First time testing Rx, so please give some advice.</p>
+"63136488","1","","","2020-07-28 14:29:19","","0","35","<p>First time testing Rx, so please give some advice.</p>
 <p>Need to test observable chain in model that gives as a result 21 data objects:</p>
 <pre><code>    public Observable&lt;BaseUnit&gt; exec(int inputNumber) {
     return getListObservable(inputNumber).subscribeOn(Schedulers.computation())
@@ -2425,7 +2425,7 @@ Flowable.interval(1, TimeUnit.SECONDS)
   .subscribe(r -&gt; System.out.println(r));
 </code></pre>
 ","2583726","","","","","2020-07-29 18:43:11","","","","0","","","","CC BY-SA 4.0"
-"63189228","1","63195987","","2020-07-31 09:30:06","","1","93","<p>I am reading the content from file, I put some name into the file with new line separator but while reading the file by vertx file-system I am not able to provide the required filter. every-time it print all the data of file.</p>
+"63189228","1","63195987","","2020-07-31 09:30:06","","1","94","<p>I am reading the content from file, I put some name into the file with new line separator but while reading the file by vertx file-system I am not able to provide the required filter. every-time it print all the data of file.</p>
 <p>Here is the code snippet :-</p>
 <pre><code>vertx.fileSystem().open(&quot;data.txt&quot;, new OpenOptions(), handler -&gt; {
                 final AsyncFile asyncFile = handler.result();
@@ -2484,7 +2484,7 @@ Flowable.interval(1, TimeUnit.SECONDS)
 }
 </code></pre>
 ","6580416","","","","","2020-08-04 19:22:40","","","","0","","","","CC BY-SA 4.0"
-"63331118","1","63333117","","2020-08-09 20:40:01","","1","79","<p>Why is the <code>subscribe</code> never printing anything here? Just out of curiosity. This is bad practice anyways: I would normally use <code>observeOn</code> instead. However, I can't figure out why the <code>subscribe</code> is never reached...</p>
+"63331118","1","63333117","","2020-08-09 20:40:01","","1","86","<p>Why is the <code>subscribe</code> never printing anything here? Just out of curiosity. This is bad practice anyways: I would normally use <code>observeOn</code> instead. However, I can't figure out why the <code>subscribe</code> is never reached...</p>
 <pre><code>val subject: PublishSubject&lt;Int&gt; = PublishSubject.create()
 val countDownLatch = CountDownLatch(1)
 
@@ -2556,7 +2556,7 @@ subject.onNext(1)
 countDownLatch.await()
 </code></pre>
 ","365102","","365102","","2020-11-13 12:55:29","2020-11-13 12:55:29","","","","0","","","","CC BY-SA 4.0"
-"63518754","1","63635073","","2020-08-21 07:52:15","","2","171","<p>RxJava rule for testing with schedulers was</p>
+"63518754","1","63635073","","2020-08-21 07:52:15","","2","183","<p>RxJava rule for testing with schedulers was</p>
 <pre><code>import io.reactivex.Scheduler
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.internal.schedulers.ExecutorScheduler
@@ -2635,7 +2635,7 @@ class RxImmediateSchedulerRule : TestRule {
 <p>That's because <code>ExecutorScheduler</code> is an internal class an is not meant to be or expected to be used directly.</p>
 <p>The fairness is explained in the JavaDocs of <a href=""http://reactivex.io/RxJava/3.x/javadoc/io/reactivex/rxjava3/schedulers/Schedulers.html#from-java.util.concurrent.Executor-boolean-boolean-"" rel=""nofollow noreferrer""><code>Schedulers.from()</code></a>.</p>
 ","61158","","","","","2020-08-28 13:46:43","","","","2","","","","CC BY-SA 4.0"
-"63697844","1","","","2020-09-02 02:30:46","","0","282","<p>I'm playing around with reactive flows using RxJava2, Micronaut and Cassandra. I'm new to rxjava and not sure what is the correct way to return a of List Person in the best async manner?</p>
+"63697844","1","","","2020-09-02 02:30:46","","0","296","<p>I'm playing around with reactive flows using RxJava2, Micronaut and Cassandra. I'm new to rxjava and not sure what is the correct way to return a of List Person in the best async manner?</p>
 <p>data is coming from a Cassandra Dao interface</p>
 <pre><code>public interface PersonDAO {    
     @Query(&quot;SELECT * FROM cass_drop.person;&quot;)
@@ -2765,7 +2765,7 @@ public class App {
 <p>what is the cause making problem .how to solve above case?</p>
 <p>Thanks.</p>
 ","9948050","","","","","2020-09-11 09:50:40","After added SubscribeOn and ObserveOn in stream method chaining not getting trigger","<java><rx-java3>","1","0","","","","CC BY-SA 4.0"
-"63772661","1","","","2020-09-07 06:52:48","","2","100","<p>I stumbled upon a weird testScheduler behavior that I cannot wrap my head around. The code below is greatly simplified, but it origins in a real life issue.</p>
+"63772661","1","","","2020-09-07 06:52:48","","2","103","<p>I stumbled upon a weird testScheduler behavior that I cannot wrap my head around. The code below is greatly simplified, but it origins in a real life issue.</p>
 <p>Consider this test:</p>
 <pre><code>@Test
 fun testSchedulerFun(){
@@ -2801,12 +2801,12 @@ fun testSchedulerFun(){
 </ol>
 <p><strong>I want to know why</strong></p>
 ","1118475","","1118475","","2020-09-07 07:28:13","2020-09-11 09:42:35","rxjava testScheduler race condition","<unit-testing><kotlin><rx-java><rx-java3>","1","5","","","","CC BY-SA 4.0"
-"63841999","1","","","2020-09-11 06:41:56","","2","72","<p>I am new to RxAndroid, that's why referring to all the operators of Rx. I have found out that <code>observable.takeFirst()</code> is showing redline as it could not be found in RxJava3. Can anyone tell me what is the alternative to <code>takefirst()</code> method?</p>
+"63841999","1","","","2020-09-11 06:41:56","","2","79","<p>I am new to RxAndroid, that's why referring to all the operators of Rx. I have found out that <code>observable.takeFirst()</code> is showing redline as it could not be found in RxJava3. Can anyone tell me what is the alternative to <code>takefirst()</code> method?</p>
 ","2924305","","10682289","","2020-09-14 07:44:20","2020-09-14 07:44:20","What is the alternative to takeFirst method","<observable><rx-android><rx-java3>","1","0","","","","CC BY-SA 4.0"
 "63844688","2","","63702704","2020-09-11 09:50:40","","1","","<p>Looks like you don't wait for the async activity to finish in the <code>main</code> method and your application just quits. Recommended reading: <a href=""https://github.com/ReactiveX/RxJava#simple-background-computation"" rel=""nofollow noreferrer"">https://github.com/ReactiveX/RxJava#simple-background-computation</a></p>
 <p>You can workaround the problem by using <code>blockingSubscribe</code> instead of just <code>subscribe</code> in this particular case.</p>
 ","61158","","","","","2020-09-11 09:50:40","","","","0","","","","CC BY-SA 4.0"
-"64098293","1","","","2020-09-28 08:10:32","","0","40","<p>in below code lines</p>
+"64098293","1","","","2020-09-28 08:10:32","","0","42","<p>in below code lines</p>
 <pre><code>@Test
 fun rx() {
     val items = Observable.just(1, 2, 3, 4, 5)
@@ -2844,7 +2844,7 @@ fun rx() {
 <p>The each item 1, 2, 3, 4, 5 seem that it's not emitted sequentially.</p>
 <p>Is there any reason about that? and How can I fix it with using &quot;.observeOn(Schedulers.io())&quot; ?</p>
 ","5677633","","","","","2020-09-28 08:39:08","rxjava - items not emitted by sequentially","<android><rx-java><rx-java2><rx-java3>","1","1","","","","CC BY-SA 4.0"
-"64178233","1","64421934","","2020-10-02 21:03:08","","0","44","<p>Let's say I have an <code>Person</code> interface, that have an <code>name</code> observable:</p>
+"64178233","1","64421934","","2020-10-02 21:03:08","","0","45","<p>Let's say I have an <code>Person</code> interface, that have an <code>name</code> observable:</p>
 <pre><code>interface Person {
   Observable&lt;String&gt; name;
 }
@@ -2866,32 +2866,6 @@ fun rx() {
 <p>I kind of understand a logic of Observables, so I know they aren't designed to store any value. So what is &quot;an immutable observable with current value&quot; in RxJava?</p>
 <p>In Android there is a <code>LiveData</code> and <code>MutableLiveData</code>. To my understanding <code>MutableLiveData</code> is the equivalent of <code>BehaviorSubject</code>, so what is the equivalent of <code>LiveData</code> in RxJava?</p>
 ","7122582","","","","","2020-10-19 06:04:03","Observable that stores last value, but cannot push new ones?","<java><rx-java><reactive-programming><rx-java3>","2","1","1","","","CC BY-SA 4.0"
-"64284023","1","","","2020-10-09 16:36:31","","0","54","<p>I am trying to use reactive non blocking approach to create Rest API.</p>
-<pre><code>public HttpResponse&lt;Single&lt;ProductViewModel&gt;&gt; findById(String id) {
-        LOG.info(String.format(&quot;Finding the product with id : %s&quot;, id));
-        iProductManager.findById(id).subscribe(item -&gt; {
-            if (item == null)
-                return HttpResponse.notFound();
-            return HttpResponse.ok().eTag(item.getId())
-                    .location(new URI(String.format(&quot;/%s&quot;, item.getId())))
-                    .body(item);
-        }, error -&gt; {
-            LOG.error(error.getMessage());
-            return HttpResponse.status(HttpStatus.INTERNAL_SERVER_ERROR, &quot;URI Syntax Exception&quot;);
-        });
-    }
-</code></pre>
-<p>The below code has error on</p>
-<pre><code>return HttpResponse.ok().eTag(item.getId())
-                    .location(new URI(String.format(&quot;/%s&quot;, item.getId())))
-                    .body(item);
-</code></pre>
-<p>and in the error method, I want to create eTag and location header when returning the value. How can I achieve this</p>
-<p>#Error</p>
-<pre><code>Incompatible types: expected void but the lambda body is neither a statement expression nor a void-compatible block
-</code></pre>
-<p>Can someone show me the appropriate code for above in the reactive way using rxjava 3</p>
-","1162409","","","","","2020-10-09 16:36:31","Reactive Get method in Micronaut 2.1.0 with RXjava 3","<java><rx-java><micronaut><rx-java3><micronaut-rest>","0","0","","","","CC BY-SA 4.0"
 "64421934","2","","64178233","2020-10-19 06:04:03","","0","","<p>I've decided to create my own <code>LiveData</code>, using a field delegation</p>
 <pre><code>interface LiveData&lt;out T&gt; {
     val observable: Observable&lt;out T&gt;
@@ -2916,7 +2890,7 @@ class MutableLiveData&lt;T&gt;(initial: T) : LiveData&lt;T&gt; {
 }
 </code></pre>
 ","7122582","","","","","2020-10-19 06:04:03","","","","2","","","","CC BY-SA 4.0"
-"64444007","1","64444789","","2020-10-20 11:14:34","","1","78","<p>I need to check that an infinite observable (events from a device) emits ne specific event lets call it &quot;Started&quot; which is then followed by another one, &quot;Finished&quot;. However in between these two events, any number of different events can be received and they must be ignored. The result of this should be a Completable.complete() which is successful when the &quot;Started&quot; event was followed by the &quot;Finished&quot; event before a set timeout.</p>
+"64444007","1","64444789","","2020-10-20 11:14:34","","1","88","<p>I need to check that an infinite observable (events from a device) emits ne specific event lets call it &quot;Started&quot; which is then followed by another one, &quot;Finished&quot;. However in between these two events, any number of different events can be received and they must be ignored. The result of this should be a Completable.complete() which is successful when the &quot;Started&quot; event was followed by the &quot;Finished&quot; event before a set timeout.</p>
 <p>I have a working solution for this problem, however it looks ugly and too complex and I think there probably is a more elegant/simple solution. My current code looks like this, I have generalized my code so it is easier to understand, basically in this example I check that after the Flowable emits the number &quot;5&quot; before a timeout of 10 seconds the number &quot;8&quot; is received.:</p>
 <pre><code>    Flowable&lt;Long&gt; events = Flowable.interval(1, TimeUnit.SECONDS, testScheduler)
             .publish().autoConnect(1);
@@ -3004,7 +2978,7 @@ source
         .subscribe();
 </code></pre>
 ","8325761","","8325761","","2020-10-21 15:55:22","2020-10-21 15:55:22","","","","10","","","","CC BY-SA 4.0"
-"64456570","1","","","2020-10-21 04:12:59","","1","56","<p>here I have a flowable that emits elements every millisecond.</p>
+"64456570","1","","","2020-10-21 04:12:59","","1","61","<p>here I have a flowable that emits elements every millisecond.</p>
 <pre><code>   Flowable&lt;Long&gt; source = Flowable.interval(1,TimeUnit.MILLISECONDS).take(14000);
         source.map(e-&gt;{
             Log.d(&quot;TAGBefore&quot;,&quot;before &quot; + e);
@@ -3039,7 +3013,7 @@ source
 </code></pre>
 <p>However, when I check the console more (with other search filters), I realize that when 127 was emitted it already goes for 12794, so instead of 9688 it should not be 12794 or a close number that is when the observable is already free ?, I clarify that I am new in RxJava in case I said something wrong, thanks.</p>
 ","13446152","","","","","2020-10-21 09:19:49","Why is this happening in with onBackpressureDrop () in RxJava","<rx-java><reactive-programming><rx-java2><rx-android><rx-java3>","1","0","1","","","CC BY-SA 4.0"
-"64686530","1","","","2020-11-04 19:29:47","","2","77","<p>new to Micronaut and am wondering how people are handling errors. The example in the documentation uses blocking which I do not want to use to handle errors. Basically, what i'd like to do is be able to detect if error and if so, convert it to Errors class. If it can't convert to Errors class, let a global handler handle it. Does anyone have good sample code for my scenario? Below is my code. Thank you</p>
+"64686530","1","","","2020-11-04 19:29:47","","2","87","<p>new to Micronaut and am wondering how people are handling errors. The example in the documentation uses blocking which I do not want to use to handle errors. Basically, what i'd like to do is be able to detect if error and if so, convert it to Errors class. If it can't convert to Errors class, let a global handler handle it. Does anyone have good sample code for my scenario? Below is my code. Thank you</p>
 <pre><code>@Client(value = &quot;${my.host}&quot;, errorType = Errors.class)
 @Header(name = &quot;ClientId&quot;, value = &quot;${clientId}&quot;)
 @JacksonFeatures(enabledDeserializationFeatures = UNWRAP_ROOT_VALUE,
@@ -3072,7 +3046,7 @@ public interface MyClient {
 <p>this will subscribe and print <code>0, subscribe 1</code>. If I uncomment commented lines, I'll get only <code>0, 1, 2, 3</code>
 How do I get successful value in subscribe in given example?</p>
 ","1870447","","","","","2020-11-05 17:01:36","not getting success when using retryWhen","<rx-java><rx-java3>","0","1","","","","CC BY-SA 4.0"
-"64876856","1","64877492","","2020-11-17 14:07:19","","0","38","<p>I have class three classes. Pref, ClassA, and ClassB.</p>
+"64876856","1","64877492","","2020-11-17 14:07:19","","0","39","<p>I have class three classes. Pref, ClassA, and ClassB.</p>
 <pre><code>public class Pref{
      public static ArrayList&lt;Pref&gt; prefList;
      public static Observable&lt;ArrayList&lt;Pref&gt;&gt; observable;
@@ -3137,7 +3111,7 @@ source.onNext(&quot;test 3&quot;);
 </code></pre>
 <p>Or, in your case: in class <code>Pref</code>, you can use <code>public static PublishSubject&lt;ArrayList&lt;Pref&gt;&gt; source = PublishSubject.create();</code>. When loading the data, you can publish the new data using <code>onNext</code>, like this in <code>ClassB</code>: <code>Pref.source.onNext(loadDataFromSomeSource())</code></p>
 ","5428154","","","","","2020-11-17 14:46:29","","","","0","","","","CC BY-SA 4.0"
-"65001397","1","","","2020-11-25 08:58:16","","0","45","<p>I have an <code>Observable&lt;List&lt;Event&gt;&gt;</code> and I want this Observable to be shared by multiple Subscribers.
+"65001397","1","","","2020-11-25 08:58:16","","0","54","<p>I have an <code>Observable&lt;List&lt;Event&gt;&gt;</code> and I want this Observable to be shared by multiple Subscribers.
 Each Subscriber will filter each Event and process it.</p>
 <p>The <code>Observable&lt;List&lt;Event&gt;&gt;</code> has been created this way :</p>
 <pre><code>    @Override
@@ -3177,7 +3151,7 @@ Each Subscriber will filter each Event and process it.</p>
 <p>When trying : <code>newEvents.create()</code> I need to supply a <code>ObservableOnSubscribe</code> object, but I don't understand how to obtain it.</p>
 <p>What is the trick ?</p>
 ","4587314","","","","","2020-11-26 14:15:28","How to subscribe multiple Observers on a single Observable with RxJava?","<java><rx-java3>","1","0","","","","CC BY-SA 4.0"
-"65154637","1","","","2020-12-05 07:08:35","","0","91","<p>I am trying to understand how to use repeatWhen in RxJava. The javadoc is confusing, when I searched online someone suggested to use like below</p>
+"65154637","1","","","2020-12-05 07:08:35","","0","93","<p>I am trying to understand how to use repeatWhen in RxJava. The javadoc is confusing, when I searched online someone suggested to use like below</p>
 <p>MyRepeatFunction myRepeatFunction = new MyRepeatFunction(3);
 observable1.repeatWhen(myRepeatFunction).subscribe((t) -&gt; System.out.print(t));</p>
 <p>class MyRepeatFunction implements Function&lt;Observable, ObservableSource&gt; {
@@ -3195,7 +3169,7 @@ public @NonNull ObservableSource&lt;Object&gt; apply(@NonNull Observable&lt;Obje
 <p>The code &quot;return t.delay(1, TimeUnit.SECONDS);&quot; will make it continue forever. It doesn't stop until the main thread stops. I want to repeat the observable but only repeatCount times or till a particular is not true.</p>
 <p>I am confused. Help is appreciated.</p>
 ","14109018","","","","","2020-12-05 21:28:08","how to use RxJava repeatWhen","<rx-java3>","1","0","","","","CC BY-SA 4.0"
-"65160089","1","","","2020-12-05 17:48:48","","0","121","<p>Using reactivex to map and return the value from the method as below</p>
+"65160089","1","","","2020-12-05 17:48:48","","0","130","<p>Using reactivex to map and return the value from the method as below</p>
 <pre><code>public Single&lt;ProductViewModel&gt; Create(ProductViewModel model) {
         Product product = new Product();
         product.setName(model.getName());
@@ -3495,7 +3469,7 @@ class Service2 {
 </code></pre>
 <p>Now return type is <strong>Disposable</strong> type, is it possible to convert to other Type such as <code>Single&lt;String&gt;</code> I tried <code>flatMap</code> and <code>MAP</code>, but when I subscribe the method it is again converted to the <strong>Disposable</strong></p>
 ","1162409","","1968","","2020-12-14 10:47:33","2020-12-14 10:47:33","Mapping the return type of subscribe to other type","<java><rx-java><rx-java3>","0","11","","","","CC BY-SA 4.0"
-"65291131","1","65291478","","2020-12-14 14:53:08","","1","39","<p>I have trouble creating an Observable with the following conditions:</p>
+"65291131","1","65291478","","2020-12-14 14:53:08","","1","40","<p>I have trouble creating an Observable with the following conditions:</p>
 <ol>
 <li>Fetch items from API. API can return between 0 and 10 items.</li>
 <li>If less then 10 items is returned, request more items from the API.</li>
@@ -3527,7 +3501,7 @@ class Service2 {
 }
 </code></pre>
 ","61158","","","","","2020-12-14 15:14:54","","","","1","","","","CC BY-SA 4.0"
-"65336058","1","65336845","","2020-12-17 07:07:29","","2","102","<p>I want every item emitted from flatMap to run on its own thread<br />
+"65336058","1","65336845","","2020-12-17 07:07:29","","2","113","<p>I want every item emitted from flatMap to run on its own thread<br />
 This is a simplified example of a real usage where each item will be a url request.<br />
 Adding subscribeOn(Schedulers.io()) on each single still run on a single thread<br />
 What's the rule here?</p>
@@ -3593,7 +3567,7 @@ Observable.fromArray(array)
 ;
 </code></pre>
 ","61158","","","","","2020-12-17 08:13:16","","","","0","","","","CC BY-SA 4.0"
-"65340201","1","","","2020-12-17 11:52:06","","0","44","<p>I have a case in my app where I want to fetch from multiple sources and return first valid data. I'd think .concatDelayArray() and .first() would be valid choices for this, but using them causes a crash if any of the non-last Singles throw an error.</p>
+"65340201","1","","","2020-12-17 11:52:06","","0","45","<p>I have a case in my app where I want to fetch from multiple sources and return first valid data. I'd think .concatDelayArray() and .first() would be valid choices for this, but using them causes a crash if any of the non-last Singles throw an error.</p>
 <p>Here's my test case:</p>
 <pre><code>Single&lt;String&gt; first = Single.fromCallable(() -&gt; {
     throw new Exception(&quot;Random exception&quot;);
@@ -3645,7 +3619,7 @@ Thread-0: Received 2
 </code></pre>
 <p>Why is it so? Does RxJava by default run code emitting values(observable) and the code receiving values(observer) on same thread?</p>
 ","2444661","","286934","","2021-01-05 18:38:54","2021-01-05 18:38:54","Thread execution of value emitting code and value receiving code in RxJava","<java><rx-java3>","1","3","","","","CC BY-SA 4.0"
-"65569246","1","65575831","","2021-01-04 20:17:51","","0","58","<p>I've tried the Resilience4J example, but the rate limiter does not seem to obey my demands:</p>
+"65569246","1","65575831","","2021-01-04 20:17:51","","0","64","<p>I've tried the Resilience4J example, but the rate limiter does not seem to obey my demands:</p>
 <pre><code>@Test
 public void simpleReactiveWithRateLimiter() {
     RateLimiterConfig rateLimiterConfig = RateLimiterConfig.custom()
@@ -3666,7 +3640,7 @@ public void simpleReactiveWithRateLimiter() {
 "65575831","2","","65569246","2021-01-05 09:01:21","","1","","<p>the Resilience4j RateLimiter does not limit the rate of items consumed by one subscription (or emitted by one Flowable).
 The RateLimiter limits the number of (concurrent) subscriptions on one Flowable.
 For example if many clients want to subscribe to the same upstream Flowable, e.g. HTTP Call.</p>
-","5077433","","","","","2021-01-05 09:01:21","","","","1","","","","CC BY-SA 4.0"
+","5077433","","","","","2021-01-05 09:01:21","","","","0","","","","CC BY-SA 4.0"
 "65584391","2","","65546601","2021-01-05 18:17:13","","1","","<p>Let's see, what happens, if you use a <code>Thread</code> to execute a runnable:</p>
 <h2>Test</h2>
 <pre><code>@Test
@@ -3807,7 +3781,7 @@ I tried using flatMap's resultSelector as described here<br />
     });
 </code></pre>
 ","5178057","","5178057","","2021-01-07 22:19:55","2021-01-07 22:19:55","","","","2","","","","CC BY-SA 4.0"
-"65730487","1","","","2021-01-15 04:22:47","","0","172","<p>In RxJava what is the difference between Emitter interface and Observer interface ? both have same methods</p>
+"65730487","1","","","2021-01-15 04:22:47","","0","186","<p>In RxJava what is the difference between Emitter interface and Observer interface ? both have same methods</p>
 <pre><code>public interface Emitter&lt;@NonNull T&gt; {
 
     /**
@@ -3875,7 +3849,7 @@ public interface Observer&lt;@NonNull T&gt; {
 }
 </code></pre>
 ","3551773","","","","","2021-01-15 08:32:11","In RxJava what is the difference between Emitter interface and Observer interface ? both have same methods","<java><rx-java><rx-java2><reactive><rx-java3>","2","0","","","","CC BY-SA 4.0"
-"65809269","1","","","2021-01-20 12:09:05","","0","47","<p>I have AsyncTask where I perform downloading of data. But as Async is deprecated in Android 11 I want to switch from Async to RxJava. I want to use Volley with RxJava, is this possible as I am not getting any good solution to perform downloading of data using Volley and RxJava replacing AsyncTask&lt;&gt;</p>
+"65809269","1","","","2021-01-20 12:09:05","","0","49","<p>I have AsyncTask where I perform downloading of data. But as Async is deprecated in Android 11 I want to switch from Async to RxJava. I want to use Volley with RxJava, is this possible as I am not getting any good solution to perform downloading of data using Volley and RxJava replacing AsyncTask&lt;&gt;</p>
 <pre><code>public class DataDownloadAsyncTask extends AsyncTask&lt;Void,Void,Void&gt; { 
 
     @Override
@@ -3903,7 +3877,29 @@ public interface Observer&lt;@NonNull T&gt; {
 How to achieve this??????</p>
 <p>Please help as I am new in implementing RxJava.</p>
 ","7113477","","7113477","","2021-01-21 14:26:08","2021-01-21 14:26:08","How to replace AsyncTask with RxJava for downloading data from URL in Android","<android><android-asynctask><rx-java><deprecated><rx-java3>","0","0","","","","CC BY-SA 4.0"
-"65856535","1","65861311","","2021-01-23 06:49:23","","3","111","<p>I have an Observable, <code>source</code>, that may emit items at unpredictable times. I'm trying to use it to build another Observable that reliably emits its values every 500ms.</p>
+"65850433","1","","","2021-01-22 18:02:38","","0","30","<p>I have a list of events, and for each event, I have to subscribe to live updates(web socket).</p>
+<p>I request each event as below.</p>
+<pre><code>    private fun subscribeToEventUpdates(events: List&lt;Events&gt;): Flowable&lt;Result&lt;EventUpdateResult, EventUpdateError&gt;&gt; {
+        val eventUpdates = events.map { subscribeToEventUpdatesUseCase.invoke(it.id)) }
+
+        return Flowable.merge(eventUpdates)
+    }
+</code></pre>
+<p>And I am trying to subscribe to the events as below.</p>
+<pre><code>    private fun getUpdatesFoEvents(events: List&lt;Event&gt;) {
+        eventUpdatesDisposable?.dispose()
+        eventUpdatesDisposable = subscribeToEventUpdates(events)
+            .distinctUntilChanged()
+            .subscribe(
+                { onEventUpdate(it) },
+                { onEventUpdateFailure(it) }
+            )
+    }
+</code></pre>
+<p>When I log the <code>subscribeToEventUpdatesUseCase</code> I see that I receive the web socket updates but <code>subscribe</code> method in the <code>getUpdatesFoEvents</code> is never called.</p>
+<p>How may I receive the updates? Any help would be appreciated.</p>
+","2391964","","1115491","","2021-03-09 07:27:02","2021-03-09 07:27:02","Unable to subscribe to a Flowable","<java><rx-java><rx-kotlin><rx-java3>","0","1","","","","CC BY-SA 4.0"
+"65856535","1","65861311","","2021-01-23 06:49:23","","3","113","<p>I have an Observable, <code>source</code>, that may emit items at unpredictable times. I'm trying to use it to build another Observable that reliably emits its values every 500ms.</p>
 <p>Let's say that <code>source</code> emits values at these times:</p>
 <ul>
 <li>100ms - first item</li>
@@ -3971,7 +3967,7 @@ output:       -----1-----2-----3-----4-----------5-----6-
 </code></pre>
 <p><a href=""https://stackblitz.com/edit/rxjs-qdlktm?file=index.ts"" rel=""nofollow noreferrer"">https://stackblitz.com/edit/rxjs-qdlktm?file=index.ts</a></p>
 ","9423231","","9423231","","2021-01-28 21:40:23","2021-01-28 21:40:23","","","","0","","","","CC BY-SA 4.0"
-"65908423","1","","","2021-01-26 20:02:13","","1","250","<p>The problem is that I can use an <code>Observer</code> but I can't use a <code>SingleObserver</code>. It gives me this error:</p>
+"65908423","1","","","2021-01-26 20:02:13","","1","262","<p>The problem is that I can use an <code>Observer</code> but I can't use a <code>SingleObserver</code>. It gives me this error:</p>
 <pre><code>Inferred type 'E' for type parameter 'E' is not within its bound; should implement 'io.reactivex.rxjava3.core.Observer&lt;? super com.xxx.Network.Response.ResponseLogin&gt;'
 </code></pre>
 <p>and</p>
@@ -4082,7 +4078,7 @@ private Observable&lt;String&gt; getPreloadData(String link) {
 <p>System out shows this and this is more but still not all data</p>
 <p><a href=""https://i.stack.imgur.com/7UpZe.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/7UpZe.png"" alt=""enter image description here"" /></a></p>
 ","4974229","","","","","2021-02-07 20:43:16","Android: How to get correct html string via BufferedReader?","<android><bufferedreader><rx-java3>","0","1","","","","CC BY-SA 4.0"
-"66120330","1","","","2021-02-09 13:51:39","","1","55","<p>I'm trying to share the same Flowable to multiple subscribers based on an id, while each subscriber can cancel the subscription when it needs in order to unsubscribe. A new subscription should be created if all of the subscribers for a certain id unsubscribed and then another one tries to subscribe for that id. The following code is written in Kotlin, trying to achieve this functionality.</p>
+"66120330","1","","","2021-02-09 13:51:39","","1","60","<p>I'm trying to share the same Flowable to multiple subscribers based on an id, while each subscriber can cancel the subscription when it needs in order to unsubscribe. A new subscription should be created if all of the subscribers for a certain id unsubscribed and then another one tries to subscribe for that id. The following code is written in Kotlin, trying to achieve this functionality.</p>
 <pre><code>class SharedFlowProvider() {
     private val flowProvider = FlowProvider()
     private val eventFlowById = HashMap&lt;String, Flowable&lt;ComputedProperties&gt;&gt;()
@@ -4130,7 +4126,7 @@ override fun subscribeToProperties(subscriber: CancellableSubscriber&lt;Computed
 <p>I would appreciate some ideas on how I could achieve this functionality without a deadlock or a race condition.</p>
 <p>Thank you</p>
 ","15175374","","15175374","","2021-02-09 14:01:57","2021-02-09 14:01:57","RxJava3 - How to avoid deadlock when using doFinally with a thread-safe action while using the share operator?","<rx-java><rx-java2><rx-java3>","0","1","","","","CC BY-SA 4.0"
-"66177410","1","","","2021-02-12 18:46:12","","0","75","<p>I have a issue about Flowable. I've tried using a library of mongodb to connect with java reactivity (not spring-data), and I need to update a attribute in object of flowable, this att is &quot;downloadInCsv&quot;.
+"66177410","1","","","2021-02-12 18:46:12","","0","82","<p>I have a issue about Flowable. I've tried using a library of mongodb to connect with java reactivity (not spring-data), and I need to update a attribute in object of flowable, this att is &quot;downloadInCsv&quot;.
 I've used io.reactivex.rxjava3 and mongodb-driver-reactivestreams
 My attempt of solution was:</p>
 <pre><code>public Flowable&lt;LoanEntity&gt; updateStatus(Flowable&lt;LoanEntity&gt; loans) {
@@ -4156,7 +4152,7 @@ My attempt of solution was:</p>
 <p>the problem is Single.fromPublisher or maybe the flatMap in first flowable, because I couldn't use map to return the same loan, or maybe all of my code is wrong.</p>
 <p>Thanks for your answers.</p>
 ","10508681","","","","","2021-02-12 18:46:12","RxJava - Mongodb - In flowable, execute a publisher method one by one","<java><mongodb><rx-java3>","0","0","","","","CC BY-SA 4.0"
-"66234860","1","68869750","","2021-02-17 02:19:28","","0","49","<p>We upgraded our Auth0 Android library from 1.30 to 2.0 and some of our unit tests that use OkHttp's <code>MockWebServer</code> broke.</p>
+"66234860","1","68869750","","2021-02-17 02:19:28","","0","53","<p>We upgraded our Auth0 Android library from 1.30 to 2.0 and some of our unit tests that use OkHttp's <code>MockWebServer</code> broke.</p>
 <ol>
 <li>The first test fails with a <code>java.lang.ExceptionInInitializerError</code> which in turn is caused by <code>java.lang.RuntimeException: Method getMainLooper in android.os.Looper not mocked.</code></li>
 <li>Next three tests fail with <code>java.lang.NoClassDefFoundError: Could not initialize class com.auth0.android.request.internal.DefaultThreadSwitcher</code></li>
@@ -4261,7 +4257,7 @@ java.lang.InstantiationException
     }
 </code></pre>
 ","4612653","","4612653","","2021-02-17 02:43:49","2021-08-21 02:52:56","Unit tests involving MockWebServer fails with Auth0's Android library version 2","<android><auth0><junit5><mockk><rx-java3>","1","0","","","","CC BY-SA 4.0"
-"66283257","1","","","2021-02-19 18:39:01","","0","24","<p>using kotlin, having code</p>
+"66283257","1","","","2021-02-19 18:39:01","","0","29","<p>using kotlin, having code</p>
 <pre><code>fun fetchRemoteDataApi(): Single&lt;RemoteDataResponse&gt; = networkApi.getData()
 
     // it is just a retrofit
@@ -4323,7 +4319,7 @@ private val remoteTopicUsers: Single&lt;List&lt;User&gt;&gt;
 <p>I still don't understand the purpose of this prefetch, and why it is so big. I guess this means the operators below it will hold onto more than 1 emissions (by default 128). However, I can't imagine this is a good idea, since downstream operators will effectively be single threaded until we have more than 128 emissions from upstream? (e.g. if we have 130, the first 128 will be prefetched by one thread, and the last 2 will be given to the second one. And all other threads will do nothing.).</p>
 <p>I guess smaller objects in faster flowables should have a larger prefetch, since the cost of passing data between the rx chain will cost relatively more, so we want prefetch to be higher. I am not sure which numbers to pick here though.</p>
 ","7365866","","7365866","","2021-02-24 18:47:36","2021-02-24 18:47:36","What is/ how to select ""prefetch"" for parallel flowable?","<rx-java2><rx-java3>","0","3","","","","CC BY-SA 4.0"
-"66437641","1","","","2021-03-02 10:31:16","","0","313","<p>I'm using RxPermissions to handle permissions inside my project.</p>
+"66437641","1","","","2021-03-02 10:31:16","","0","350","<p>I'm using RxPermissions to handle permissions inside my project.</p>
 <pre><code> 'com.github.tbruyelle:rxpermissions:0.12'
  'io.reactivex.rxjava3:rxjava:3.0.4'
 </code></pre>
@@ -4351,7 +4347,7 @@ private val remoteTopicUsers: Single&lt;List&lt;User&gt;&gt;
             });
 </code></pre>
 ","3170486","","","","","2021-07-26 06:40:45","RxPermissions not called after permission granted","<android><rx-java><android-permissions><rx-java3><rxpermissions>","2","3","","","","CC BY-SA 4.0"
-"66506281","1","","","2021-03-06 13:40:43","","2","101","<p>I'm aware it's a complex question that cannot have a definite answer without posting a few hundreds of lines of code, which is why I'm looking for help through general ideas and pointers.</p>
+"66506281","1","","","2021-03-06 13:40:43","","2","107","<p>I'm aware it's a complex question that cannot have a definite answer without posting a few hundreds of lines of code, which is why I'm looking for help through general ideas and pointers.</p>
 <p>I have a Room <code>@Query</code> returning a RxJava3 <code>Flowable&lt;List&lt;...&gt;&gt;</code> which I subscribe to on RxJava thread <code>Schedulers.io()</code>, and observe from an activity-scoped <code>ViewModel</code> on RxJava thread <code>AndroidSchedulers.mainThread()</code>. The data is then stored in my ViewModel as <code>LiveData</code>, which plays better than RxJava when it comes to handle Android components' lifecycle.</p>
 <p>The idea is to have a clean and immediate data update pattern, not to have to handle disposal and re-subscription separately on each activity or fragment lifecycle event such as <code>onPaused</code> and <code>onResumed</code>, and being updated in the background even when my activity is hidden in order to avoid that awful refresh lag when returning to my activity. I was pretty amazed at that design pattern. I still am, but I'm beginning to have doubts.</p>
 <p>When starting another activity with the same design pattern, I do change a value and immediately get an updated <code>List&lt;...&gt;</code> from the other <code>ViewModel</code>. Different <code>Activity</code>, different <code>ViewModel</code>, same design, same database table. When returning to the first <code>Activity</code>, I find that the new data does never get updated: Room did not emit any update even though the data set has changed. I have to dispose and subscribe again in order to see the new data.</p>
@@ -4360,7 +4356,7 @@ private val remoteTopicUsers: Single&lt;List&lt;User&gt;&gt;
 <p>By the way, I also use Hilt in order to inject eveything as <code>@Singleton</code>.</p>
 <p>Thank you for your time :-)</p>
 ","9521509","","","","","2021-03-12 09:38:21","Why doesn't my Android ViewModel's Room RxJava3 Flowable publish any result when my Activity is paused?","<android-room><android-lifecycle><android-viewmodel><rx-java3>","1","0","1","","","CC BY-SA 4.0"
-"66513357","1","","","2021-03-07 05:00:22","","0","57","<p>Trying to use Flowable, do then, and finally using RxJava3.</p>
+"66513357","1","","","2021-03-07 05:00:22","","0","63","<p>Trying to use Flowable, do then, and finally using RxJava3.</p>
 <pre><code>public String post(Publisher&lt;CompletedFileUpload&gt; files) {
     return Flowable.fromPublisher(files).doOnNext(file -&gt; {
         MultipartBody requestBody = MultipartBody.builder()
@@ -4380,7 +4376,7 @@ private val remoteTopicUsers: Single&lt;List&lt;User&gt;&gt;
 <li>Finally return the string value</li>
 </ol>
 ","1162409","","","","","2021-03-08 15:15:48","Do then and finally with Flowable reactive x Java","<java><rx-java><rx-java2><reactivex><rx-java3>","1","4","","","","CC BY-SA 4.0"
-"66517449","1","66527019","","2021-03-07 14:14:06","","0","56","<p>I have the below method</p>
+"66517449","1","66527019","","2021-03-07 14:14:06","","0","61","<p>I have the below method</p>
 <pre><code>public Maybe&lt;HttpResponse&lt;?&gt;&gt; post(Publisher&lt;CompletedFileUpload&gt; files) {
         MultipartBody.Builder requestBody = MultipartBody.builder();
         return Flowable.fromPublisher(files).flatMap(file -&gt; {
@@ -4412,7 +4408,7 @@ private val remoteTopicUsers: Single&lt;List&lt;User&gt;&gt;
     ;
 </code></pre>
 ","61158","","","","","2021-03-08 09:12:32","","","","6","","","","CC BY-SA 4.0"
-"66562033","1","66569832","","2021-03-10 09:41:17","","0","38","<p>Perform task and finally return the value using Flowable rxjva3. I have below code</p>
+"66562033","1","66569832","","2021-03-10 09:41:17","","0","46","<p>Perform task and finally return the value using Flowable rxjva3. I have below code</p>
 <pre><code>public Maybe&lt;List&lt;String&gt;&gt; uploadObject(Publisher&lt;CompletedFileUpload&gt; images) {
         Storage storage = StorageOptions.getDefaultInstance().getService();
         var returnValue = Flowable.fromPublisher(images)
@@ -4454,7 +4450,7 @@ private val remoteTopicUsers: Single&lt;List&lt;User&gt;&gt;
 }).toMaybe();
 </code></pre>
 ","61158","","","","","2021-03-10 17:23:40","","","","0","","","","CC BY-SA 4.0"
-"66576755","1","66580513","","2021-03-11 05:01:52","","3","4463","<p>Getting an UndeliverableException while using <code>completable</code></p>
+"66576755","1","66580513","","2021-03-11 05:01:52","","3","5287","<p>Getting an UndeliverableException while using <code>completable</code></p>
 <pre><code>public Completable createBucketWithStorageClassAndLocation() {
         return Completable.complete()
                 .doFinally(() -&gt; {
@@ -4580,7 +4576,7 @@ Here is the ViewModel code:</p>
 ","15162021","","","","","2021-03-24 17:42:11","Random processing of retrofit2 requests","<android><kotlin><retrofit2><rx-java3>","1","2","","","","CC BY-SA 4.0"
 "66786464","2","","66781251","2021-03-24 17:42:11","","0","","<p>Thank you, Pawel. The problem really turned out to be in the API limit, I changed the provider and everything started working as it should.</p>
 ","15162021","","","","","2021-03-24 17:42:11","","","","0","","","","CC BY-SA 4.0"
-"66804625","1","","","2021-03-25 17:25:39","","0","81","<p>Have a controller:</p>
+"66804625","1","","","2021-03-25 17:25:39","","0","88","<p>Have a controller:</p>
 <pre><code>@Controller
 @CircuitBreaker
 public class ExampleController {
@@ -4663,11 +4659,11 @@ retryWhen
   .subscribe()
 </code></pre>
 ","2539472","","","","","2021-03-26 05:48:10","","","","0","","","","CC BY-SA 4.0"
-"66821383","1","","","2021-03-26 17:08:08","","0","33","<p>I am trying to find any video or course about RxJava and RxFirebase, but all I find is an endless number of videos repeating the same stuff, like an introduction.</p>
+"66821383","1","","","2021-03-26 17:08:08","","0","35","<p>I am trying to find any video or course about RxJava and RxFirebase, but all I find is an endless number of videos repeating the same stuff, like an introduction.</p>
 <p>Is there any course with a bit advanced stuff about rxAndroid and RxJava especially about RxFirebase?</p>
 <p>tnx</p>
 ","13560904","","","","","2021-03-26 17:08:08","How to Login Firebase user with RxJava","<firebase><android-studio><rx-java2><rx-android><rx-java3>","0","0","","","","CC BY-SA 4.0"
-"66911519","1","","","2021-04-01 21:01:45","","1","353","<p>For example, let's say I have a WebFilter that writes some Context</p>
+"66911519","1","","","2021-04-01 21:01:45","","0","412","<p>For example, let's say I have a WebFilter that writes some Context</p>
 <pre><code>public Mono&lt;Void&gt; filter(ServerWebExchange exchange, WebFilterChain chain) {
   return chain.filter(exchange)
     .contextWrite(Context.of(&quot;my-context&quot;, &quot;foobar&quot;));
@@ -4692,7 +4688,7 @@ public Single&lt;String&gt; test() throws Exception {
 <p>My guess is that since I'm not returning the Mono, nothing subscribes to this contextMono inside of the RxJava3Adapter. Is that the right explanation?</p>
 <p>Is there any way to return a Single while having the Context be passed in?</p>
 ","1007922","","6051176","","2021-04-02 15:01:58","2021-04-02 15:13:41","Why context is not propagated to (RxJava) Single from (Reactor) Mono?","<java><rx-java><spring-webflux><project-reactor><rx-java3>","1","1","","","","CC BY-SA 4.0"
-"66929272","1","66929928","","2021-04-03 08:50:01","","0","36","<p>I am using RxJava3 in my project and I can't write a request, I've been wrestling my head for several hours.</p>
+"66929272","1","66929928","","2021-04-03 08:50:01","","0","39","<p>I am using RxJava3 in my project and I can't write a request, I've been wrestling my head for several hours.</p>
 <p>I have List&lt;Stream&gt; and have a function that returns a Single&lt;List&lt;Topic&gt;&gt; by Stream, i want to get a Single&lt;Map&lt;Stream, List&lt;Topic&gt;&gt;&gt;,</p>
 <pre><code>fun getMockTopics(streamId: Long): Single&lt;List&lt;Topic&gt;&gt; {
         return Single.just(listOf(Topic(1, &quot;&quot;)))
@@ -4725,7 +4721,7 @@ override fun getTopics(streams: List&lt;Stream?&gt;): Single&lt;SteamTopics&gt; 
 }
 </code></pre>
 ","15177513","","","","","2021-04-03 10:12:40","","","","0","","","","CC BY-SA 4.0"
-"67063811","1","67064111","","2021-04-12 18:29:54","","0","46","<p>I am trying to use RxJava and return a <code>Single&lt;Long&gt;</code> when an insert to my room database is successful, but I have the following error when compiling:</p>
+"67063811","1","67064111","","2021-04-12 18:29:54","","0","67","<p>I am trying to use RxJava and return a <code>Single&lt;Long&gt;</code> when an insert to my room database is successful, but I have the following error when compiling:</p>
 <pre><code>Not sure how to handle insert method's return type.
     Single&lt;Long&gt; insert(List&lt;T&gt; obj);
 </code></pre>
@@ -4873,8 +4869,8 @@ androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 <blockquote>
 <p>RxJava3 Support: Room now supports RxJava3 types. Similar to RxJava2 you can declare DAO methods whose return type are Flowable, Single, Maybe and Completable. Additionally a new artifact androidx.room:room-rxjava3 is available to support RxJava3. (b/152427884)</p>
 </blockquote>
-","10082297","","","","","2021-04-12 18:53:37","","","","4","","","","CC BY-SA 4.0"
-"67130089","1","","","2021-04-16 17:59:02","","0","29","<p>How to print elements in buffer when using backpressure:</p>
+","10082297","","","","","2021-04-12 18:53:37","","","","3","","","","CC BY-SA 4.0"
+"67130089","1","","","2021-04-16 17:59:02","","0","36","<p>How to print elements in buffer when using backpressure:</p>
 <pre><code> Flowable.range(1, 1000)
                 .onBackpressureBuffer(20, () -&gt;{}, BackpressureOverflowStrategy.DROP_OLDEST)
                 .onBackpressureDrop(v -&gt; System.out.println(&quot;Dropped.. :&quot; + v))
@@ -4986,7 +4982,7 @@ subject
   .subscribe();
 </code></pre>
 ","61158","","","","","2021-04-26 07:02:43","","","","1","","","","CC BY-SA 4.0"
-"67336233","1","67366674","","2021-04-30 15:07:51","","0","29","<p>I'm using RxJava3 and I have the following code setup where I want to emit an item in the middle, between the first and second flowable. Is there a way to do it?</p>
+"67336233","1","67366674","","2021-04-30 15:07:51","","0","32","<p>I'm using RxJava3 and I have the following code setup where I want to emit an item in the middle, between the first and second flowable. Is there a way to do it?</p>
 <pre><code>firstFlowable.firstElement()
 //I want to emit an item here
 .flatMap { secondFlowable.firstElement() }
@@ -5013,7 +5009,7 @@ subject
 });
 </code></pre>
 ","61158","","","","","2021-05-03 09:40:59","","","","1","","","","CC BY-SA 4.0"
-"67457058","1","","","2021-05-09 11:13:14","","0","20","<p><strong>Overview</strong>
+"67457058","1","","","2021-05-09 11:13:14","","0","22","<p><strong>Overview</strong>
 I'm trying my best to follow the MVVM pattern. In my data model, I have an entity 'languages' and its corresponding DAO accessed via repository. This repository, in turn, feeds my viewmodel, and is instantiated via factory within my fragment. Or, from the other way, my fragment -&gt; ViewModelFactory -&gt; ViewModel -&gt; Repository -&gt; DAO -&gt; Entity</p>
 <p>I'm a bit confused as to where ArrayAdapters 'fit' into the MVVM pattern. The particular fragment is designed to display a bunch of fields (name, language, etc) to serve as a 'profile' creation page within the app.</p>
 <p><strong>Problem:</strong>
@@ -5313,7 +5309,7 @@ and
 </ol>
 <p>Thank you so much in advance for any light you can throw on this.</p>
 ","379486","","","","","2021-05-09 11:13:14","Issue Populating Spinner in Fragment from Room Database using RxJava3","<java><android><android-fragments><android-spinner><rx-java3>","0","0","","","","CC BY-SA 4.0"
-"67587532","1","67589856","","2021-05-18 13:46:35","","0","38","<p>I am trying to upload database entities in batches using workmanager. The work fires alright, however the service doing the paging doesn't work as expected.</p>
+"67587532","1","67589856","","2021-05-18 13:46:35","","0","39","<p>I am trying to upload database entities in batches using workmanager. The work fires alright, however the service doing the paging doesn't work as expected.</p>
 <p>What I would like to do:</p>
 <ol>
 <li>Paginate through the database entries I need to upload (last timestamp on the server is newer than on the client). Get the page as a <code>List</code></li>
@@ -5470,7 +5466,7 @@ Next-4
 Complete
 </code></pre>
 ","12026640","","12026640","","2021-05-18 16:27:24","2021-05-18 16:27:24","","","","0","","","","CC BY-SA 4.0"
-"67595613","1","","","2021-05-19 00:53:53","","0","37","<p>I have this function below:</p>
+"67595613","1","","","2021-05-19 00:53:53","","0","48","<p>I have this function below:</p>
 <pre><code>    fun setDefaultUser(): Completable {
         return userRepository.getUser()
             .flatMapCompletable { user -&gt;
@@ -5496,7 +5492,7 @@ Complete
 <p>What am I doing wrong here?</p>
 <p>Thanks</p>
 ","5179960","","","","","2021-05-19 00:53:53","RxJava: How to catch an error if a function that returns a Single throws an exception?","<android><kotlin><rx-java><rx-java2><rx-java3>","0","1","","","","CC BY-SA 4.0"
-"67809485","1","67822224","","2021-06-02 16:58:02","","0","36","<p>I'm converting some RxJava code to Kotlin Flow in a project.</p>
+"67809485","1","67822224","","2021-06-02 16:58:02","","0","40","<p>I'm converting some RxJava code to Kotlin Flow in a project.</p>
 <p>I came across a piece of code where <code>BehaviorSubject#onError(Throwable)</code> was being called.</p>
 <p>I didn't find any way to do it with a <code>Flow</code> object.</p>
 <pre><code>// RxJava
@@ -5513,7 +5509,7 @@ mutableSharedFlow.???
 <p>So you'd probably have to create a data class with slots for values and the exception, then use <code>takeWhile</code> to stop it.</p>
 <p>(Sidenote: I happen to have a <a href=""https://github.com/akarnokd/kotlin-flow-extensions#behaviorsubject"" rel=""nofollow noreferrer""><code>BehaviorSubject</code></a> for kotlin flow that does offer an <a href=""https://github.com/akarnokd/kotlin-flow-extensions/blob/master/src/test/kotlin/hu/akarnokd/kotlin/flow/BehaviorSubjectTest.kt#L95-L124"" rel=""nofollow noreferrer"">error channel</a>.)</p>
 ","61158","","","","","2021-06-03 13:17:10","","","","0","","","","CC BY-SA 4.0"
-"67856375","1","67856832","","2021-06-06 06:31:27","","0","73","<p>When I turned minifyEnabled in build.gradle to true, seems like rxjava3 suddenly can't work as expected, when I go through the log and the API response correctly.</p>
+"67856375","1","67856832","","2021-06-06 06:31:27","","0","83","<p>When I turned minifyEnabled in build.gradle to true, seems like rxjava3 suddenly can't work as expected, when I go through the log and the API response correctly.</p>
 <p>So what I do is create a empty new project.</p>
 <ol>
 <li><p>Import Rxjava3 (3.0.13):
@@ -5578,7 +5574,7 @@ I also add these lines in proguard-rules.pre file:</p>
 <pre><code>-dontwarn java.util.concurrent.**
 </code></pre>
 ","15690398","","","","","2021-06-06 07:41:23","","","","0","","","","CC BY-SA 4.0"
-"67930956","1","","","2021-06-11 03:36:24","","0","40","<p>I have an Activity that kicks off three fragments.
+"67930956","1","","","2021-06-11 03:36:24","","0","48","<p>I have an Activity that kicks off three fragments.
 The first is a loading splash screen where I just want to show the name of the app for a couple seconds.
 The second, in my current case, is a screen that gathers the users name and language.
 The third fragment will gather which languages they would like to learn. I'm trying to use an Observable in my ViewModel to hold my data, but the info entered at the first fragment is being lost upon switching to the second fragment.</p>
@@ -5747,7 +5743,7 @@ The third fragment will gather which languages they would like to learn. I'm try
 }
 </code></pre>
 ","379486","","","","","2021-06-11 03:36:24","RxJava Observable across fragments using shared ViewModel","<android><fragment><android-viewmodel><rx-java3>","0","4","","","","CC BY-SA 4.0"
-"67937772","1","67938511","","2021-06-11 13:20:32","","0","37","<p>I am new into RxJava and I was under the impression that for each event each subscriber is being notified. So if we have N subscribers and a stream of X events the <code>onNext</code> for each of the N subscribers would be called. But when I run the following code:</p>
+"67937772","1","67938511","","2021-06-11 13:20:32","","0","38","<p>I am new into RxJava and I was under the impression that for each event each subscriber is being notified. So if we have N subscribers and a stream of X events the <code>onNext</code> for each of the N subscribers would be called. But when I run the following code:</p>
 <pre><code>public static void main(String[] args) {
         Observable&lt;String&gt; source = Observable.create(emitter -&gt; {
             emitter.onNext(&quot;Hello&quot;);
@@ -5808,7 +5804,7 @@ Observer 2: RxJava
         source.subscribe(e -&gt; System.out.println(&quot;Observer 2: &quot; + e));
 </code></pre>
 ","61158","","61158","","2021-06-13 08:05:57","2021-06-13 08:05:57","","","","9","","","","CC BY-SA 4.0"
-"67946545","1","67946591","","2021-06-12 07:20:24","","0","537","<p>i have problem and really don't know how to fix this. I try to find similar posts several days, but didn't find.</p>
+"67946545","1","67946591","","2021-06-12 07:20:24","","0","608","<p>i have problem and really don't know how to fix this. I try to find similar posts several days, but didn't find.</p>
 <p>I use retrofit for parsing api and put it in  room database and use rxjava3
 because it will be asynchronously</p>
 <p>That my JSON</p>
@@ -6005,7 +6001,7 @@ data class Wind(
 <p>I suggest you try to use this and try again. Here is also a plugin that automatically generates data classes based of JSON. It might help you more.</p>
 <p><a href=""https://plugins.jetbrains.com/plugin/10054-generate-kotlin-data-classes-from-json"" rel=""nofollow noreferrer"">https://plugins.jetbrains.com/plugin/10054-generate-kotlin-data-classes-from-json</a></p>
 ","15690398","","","","","2021-06-12 07:26:25","","","","0","","","","CC BY-SA 4.0"
-"67983559","1","67988349","","2021-06-15 09:23:54","","0","52","<p>I am new to RxJava and if I understand correctly the <code>Observer</code> is passed the <code>Disposable</code> on the <code>onSubscribe</code> so it can manually stop the processing if the <code>dispose()</code> has already been called.<br />
+"67983559","1","67988349","","2021-06-15 09:23:54","","0","61","<p>I am new to RxJava and if I understand correctly the <code>Observer</code> is passed the <code>Disposable</code> on the <code>onSubscribe</code> so it can manually stop the processing if the <code>dispose()</code> has already been called.<br />
 I created the following code:</p>
 <pre><code>@NonNull Observable&lt;Long&gt; src = Observable.interval(1, TimeUnit.SECONDS);
 src.subscribe(new Observer&lt;Long&gt;() {
@@ -6103,7 +6099,7 @@ Observable&lt;Long&gt; src = Observable.interval(1, TimeUnit.SECONDS);
 sd.dispose();
 </code></pre>
 ","61158","","61158","","2021-06-16 08:50:26","2021-06-16 08:50:26","","","","7","","","","CC BY-SA 4.0"
-"68082725","1","68083755","","2021-06-22 11:27:35","","0","37","<p>I have DB table 'order' with 6000 rows and I want to create searching in it by number using switchmap for canceling previous request. But it's not work, it always returns result of previous request. What is wrong with my code?</p>
+"68082725","1","68083755","","2021-06-22 11:27:35","","0","39","<p>I have DB table 'order' with 6000 rows and I want to create searching in it by number using switchmap for canceling previous request. But it's not work, it always returns result of previous request. What is wrong with my code?</p>
 <p><strong>Example:</strong> enter 1..0..7 returns 107%, then 10%, then 1%. It should return only 107%</p>
 <pre><code>disposable.add(
                 Observable.just(orderParameter)
@@ -6175,7 +6171,7 @@ OrderParameter orderParameter = new OrderParameter();
           }, throwable -&gt; Timber.e(throwable.getMessage())));
 </code></pre>
 ","61158","","61158","","2021-06-23 06:38:17","2021-06-23 06:38:17","","","","1","","","","CC BY-SA 4.0"
-"68132838","1","68133748","","2021-06-25 14:42:17","","1","29","<p>I am new in RxJava and trying to understand it. I have the following source:</p>
+"68132838","1","68133748","","2021-06-25 14:42:17","","1","33","<p>I am new in RxJava and trying to understand it. I have the following source:</p>
 <pre><code>Observable&lt;Employee&gt; obs = Observable.just(
     new Employee(101, &quot;Jim&quot;, 68_000, 4.2),
     new Employee(123, &quot;Bill&quot;, 194_000, 6.7));  
@@ -6202,7 +6198,7 @@ obs.groupBy(e -&gt; e.getRating())
     .subscribe(System.out::println);
 </code></pre>
 ","2073595","","","","","2021-06-25 15:46:47","","","","10","","","","CC BY-SA 4.0"
-"68207167","1","","","2021-07-01 08:50:24","","1","20","<p>I am new in RxJava and trying to understand it. I have the following source:</p>
+"68207167","1","","","2021-07-01 08:50:24","","1","27","<p>I am new in RxJava and trying to understand it. I have the following source:</p>
 <pre><code>Observable&lt;Employee&gt; obs = Observable.just(
     new Employee(101, &quot;Jim&quot;, 68_000, 4.2),
     new Employee(123, &quot;Bill&quot;, 194_000, 6.7));  
@@ -6221,7 +6217,7 @@ If I do:</p>
 <p>It seems to print the list of values associated with the key.<br />
 But how does <code>flatMapSingle</code> exactly work? What is the difference with <code>flatMap</code>?</p>
 ","9055634","","","","","2021-07-01 09:52:50","flatMap and flatMap single for groupped observables","<rx-java><rx-java3>","1","0","","","","CC BY-SA 4.0"
-"68221945","1","68222170","","2021-07-02 08:24:44","","1","107","<p>This is my test code in Kotlin:</p>
+"68221945","1","68222170","","2021-07-02 08:24:44","","1","114","<p>This is my test code in Kotlin:</p>
 <pre><code>fun main() {
     rxjava()
 }
@@ -6322,7 +6318,7 @@ thread in subscription RxCachedThreadScheduler-1
         })
 </code></pre>
 ","61158","","","","","2021-07-02 08:42:52","","","","9","","","","CC BY-SA 4.0"
-"68228943","1","68229089","","2021-07-02 17:03:52","","0","57","<p>I want to call  api  using rxjava3 inside getCampaigns function in CampaignRepositoryImpl.kt class but I am getting following error <a href=""https://i.stack.imgur.com/PmQOJ.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/PmQOJ.png"" alt=""error"" /></a> A 'return' expression required in a function with a block body ('{...}')</p>
+"68228943","1","68229089","","2021-07-02 17:03:52","","0","66","<p>I want to call  api  using rxjava3 inside getCampaigns function in CampaignRepositoryImpl.kt class but I am getting following error <a href=""https://i.stack.imgur.com/PmQOJ.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/PmQOJ.png"" alt=""error"" /></a> A 'return' expression required in a function with a block body ('{...}')</p>
 <p>below  CampaignRepositoryImpl.kt class</p>
 <pre><code>import de.westwing.campaignbrowser.domain.Campaign
 import de.westwing.campaignbrowser.domain.CampaignRepository
@@ -6378,7 +6374,7 @@ class CampaignRepositoryImpl(private val apiInterface: ApiInterface) : CampaignR
 </code></pre>
 <p>This <code>map</code> call is taking a <code>CampaignResponse</code> and turning it into a <code>List&lt;Campaign&gt;</code>.</p>
 ","8298909","","8298909","","2021-07-02 18:48:43","2021-07-02 18:48:43","","","","4","","","","CC BY-SA 4.0"
-"68255705","1","","","2021-07-05 11:53:08","","0","10","<p>I have a problem when using Singles in a recyclerview, where the viewholders can be dragged.</p>
+"68255705","1","","","2021-07-05 11:53:08","","0","13","<p>I have a problem when using Singles in a recyclerview, where the viewholders can be dragged.</p>
 <p>I have a recyclerview with different types of viewholders. Every viewholder shows different content. In two of my viewholders, data are being diplayed by using Single ( Rx Java )  to emit the data. This recyclerview is also draggable, which means that the viewholders can change their positions. My problem is that when I drag a viewholder that uses Single ( Rx Java ), data are being displayed twice, in the old and in the new position of the viewholder.</p>
 <p>What I need is the data to be removed from the position that the viewholder was and only to be shown in the position that is being dragged to !</p>
 <p>I have tried disposing the observable when the viewholder is being removed from a position and then creating/ subscribing to it again when the viewholder is being created again.</p>
@@ -6387,7 +6383,7 @@ Nothing from the 2 things I have tried is working.</p>
 <p>What can I do to fix it ?
 Any help is appreciated.</p>
 ","10865112","","10865112","","2021-07-05 11:58:44","2021-07-05 11:58:44","Single Rx Java shows double data in draggable Reyclerview","<android><kotlin><rx-java><rx-java3>","0","0","","","","CC BY-SA 4.0"
-"68365256","1","","","2021-07-13 15:24:21","","0","28","<p>I have the below method which throws an exception and want to catch that exception on the global level</p>
+"68365256","1","","","2021-07-13 15:24:21","","0","32","<p>I have the below method which throws an exception and want to catch that exception on the global level</p>
 <pre><code>public Maybe&lt;FindProductCommand&gt; get(ProductSearchCriteriaCommand searchCriteria) {
         LOG.info(&quot;Controller --&gt; Finding all the products&quot;);
         return iProductManager.find(searchCriteria);
@@ -6415,9 +6411,9 @@ Any help is appreciated.</p>
 </code></pre>
 <p>However, getInstance().registerErrorHandler is not found in RxJavaPlugins</p>
 ","1162409","","","","","2021-07-13 15:24:21","Global error handling with RxJavaErrorHandler","<java><rx-java><rx-java2><reactivex><rx-java3>","0","3","","","","CC BY-SA 4.0"
-"68513706","1","","","2021-07-24 20:49:53","","0","19","<p>I wanna know more about RxJava PublishProcessor. Does it handle back pressure by default or we should add this behavior to it by onBackPressure funtions?</p>
+"68513706","1","","","2021-07-24 20:49:53","","0","23","<p>I wanna know more about RxJava PublishProcessor. Does it handle back pressure by default or we should add this behavior to it by onBackPressure funtions?</p>
 ","8532604","","","","","2021-07-26 07:06:38","Does RxJava PublishProcessor cares about back pressure by default?","<android><rx-java><rx-java2><rx-java3>","1","1","","","","CC BY-SA 4.0"
-"68803309","1","","","2021-08-16 13:03:44","","0","17","<p>I am implementing reading data from Firestore with RxJava3 and converting it to LiveData via LiveDataReactiveStreams. I have list of food items, and on click of the food I want to load details about that specific food. The problem is, that when user clicks one item and loads it, after clicking on second item he gets values from previous item for a second until new data is loaded.
+"68803309","1","","","2021-08-16 13:03:44","","0","19","<p>I am implementing reading data from Firestore with RxJava3 and converting it to LiveData via LiveDataReactiveStreams. I have list of food items, and on click of the food I want to load details about that specific food. The problem is, that when user clicks one item and loads it, after clicking on second item he gets values from previous item for a second until new data is loaded.
 I noticed that my flowable from repository is always triggering on new clicks and returning previous data, but I would like to display first loading state for new item and then display that loaded item.
 How would I prevent it from returning previous values, or clear that LiveData?</p>
 <p>Repository</p>
@@ -6479,7 +6475,7 @@ public Flowable&lt;Resource&lt;FoodDetailModel&gt;&gt; getFoodDetail(@NonNull St
 }
 </code></pre>
 ","14252974","","","","","2021-08-16 13:03:44","How to clear data from LiveDataReactiveStreams","<android><rx-java><android-livedata><rx-java3><android-livedata-transformations>","0","0","","","","CC BY-SA 4.0"
-"68851980","1","68852347","","2021-08-19 17:05:18","","0","64","<p>I'm adapting some sample code from what3words for accessing their API via their Java SDK. It uses RXJava.</p>
+"68851980","1","68852347","","2021-08-19 17:05:18","","0","72","<p>I'm adapting some sample code from what3words for accessing their API via their Java SDK. It uses RXJava.</p>
 <p>The sample code is:</p>
 <pre><code>Observable.fromCallable(() -&gt; wrapper.convertTo3wa(new Coordinates(51.2423, -0.12423)).execute())
         .subscribeOn(Schedulers.io())
@@ -6556,7 +6552,7 @@ public Flowable&lt;Resource&lt;FoodDetailModel&gt;&gt; getFoodDetail(@NonNull St
 ","2073595","","2073595","","2021-08-19 17:45:28","2021-08-19 17:45:28","","","","9","","","","CC BY-SA 4.0"
 "68869750","2","","66234860","2021-08-21 02:52:56","","0","","<p>Already fixed with version 2.3.0 of Auth0 android lib--see the README on how to solve this issue <a href=""https://github.com/auth0/Auth0.Android#unit-testing-with-junit-4-or-junit-5"" rel=""nofollow noreferrer"">here</a></p>
 ","4612653","","","","","2021-08-21 02:52:56","","","","0","","","","CC BY-SA 4.0"
-"68881889","1","","","2021-08-22 13:43:37","","1","16","<p>I want to pull asynchronous json data with retrofit and rxjava 3 in the foreground service and show it to the user as a notification, but so far I have not been successful.</p>
+"68881889","1","","","2021-08-22 13:43:37","","1","20","<p>I want to pull asynchronous json data with retrofit and rxjava 3 in the foreground service and show it to the user as a notification, but so far I have not been successful.</p>
 <pre><code>@Streaming
 @GET(&quot;v2/top-headlines&quot;)
 fun getDayNewsRxJava(
@@ -6599,17 +6595,186 @@ newsRetrofit.returnEveryDay().getDayNewsRxJava(&quot;language&quot; , &quot;apiK
 <p>I looked at different examples in this way, they did not use a very different structure, but I do not understand why an asynchronous call is not made.</p>
 <p>thanks for your help</p>
 ","15198949","","","","","2021-08-22 13:43:37","How to work Rxjava3 with Retrofit foreground service asynchronous","<android><kotlin><retrofit2><rx-java2><rx-java3>","0","0","","","","CC BY-SA 4.0"
-"68924101","1","","","2021-08-25 13:45:13","","0","16","<p>I am using <code>RxJava</code> with <code>ViewModel</code>, so when viewModel's <code>onCleared</code> method is called, I call <code>disposable.clear()</code>, being the disposable object a <code>CompositeDisposable</code>.</p>
+"68924101","1","","","2021-08-25 13:45:13","","0","20","<p>I am using <code>RxJava</code> with <code>ViewModel</code>, so when viewModel's <code>onCleared</code> method is called, I call <code>disposable.clear()</code>, being the disposable object a <code>CompositeDisposable</code>.</p>
 <p>The thing is that, sometimes, I concatenate several calls through the <code>flatMap</code> call returning different <code>Flowable</code> or <code>Single</code> objects, so I hav two questions:</p>
 <ol>
 <li><strong>Shall I add to the composite all the Flowable/Single objects I use in the flatMap calls? Or just the first one of the whole chain?</strong></li>
 <li><strong>Is there any way to know if I forgot to 'add into the composite' any disposable?</strong></li>
 </ol>
 ","9811147","","","","","2021-08-25 13:45:13","How to know if all disposables were cleared?","<android><rx-java><rx-java2><rx-java3><disposable>","0","0","","","","CC BY-SA 4.0"
-"69421918","1","","","2021-10-03 03:44:05","","0","7","<p>I have time consuming process in the subscriber. So while this is processed there will be other incoming messages. But this message is kind of trigger and doesn't contain any state. Hence it is not required to process all the messages. It would be enough to process the most recent message that will be there when subscriber finish the current one.</p>
+"69421918","1","","","2021-10-03 03:44:05","","0","23","<p>I have time consuming process in the subscriber. So while this is processed there will be other incoming messages. But this message is kind of trigger and doesn't contain any state. Hence it is not required to process all the messages. It would be enough to process the most recent message that will be there when subscriber finish the current one.</p>
 <p>I tried couple of ways.</p>
 <ol>
 <li>Configure back pressure strategy to drop. But, this wouldn't work because RXJava has internal buffer and backpressure only drops messages if that number is reached.</li>
 <li>ThrottleLast, Debounce, ..etc depends on time time period so even the subscriber is finished work it will wait. I need to get the latest as soon as subscriber finishes work.</li>
 </ol>
-","1270622","","","","","2021-10-03 03:44:05","RXJava drop and emit only the most recent message after waiting for subscriber to finish","<rx-java><rx-java2><vert.x><rx-java3>","0","0","","","","CC BY-SA 4.0"
+","1270622","","","","","2021-10-03 03:44:05","RXJava drop and emit only the most recent message after waiting for subscriber to finish","<rx-java><rx-java2><vert.x><rx-java3>","0","1","","","","CC BY-SA 4.0"
+"69512118","1","","","2021-10-10 03:43:41","","0","21","<p>I'm using RxJava3 Observers and Observables. But i have a problem.</p>
+<p>I have attached a screenshot below, please see the Toast on the bottom. I used <code>Thread.currentThread().toString()</code> And i got the Main, 5, Main output</p>
+<p><a href=""https://i.stack.imgur.com/l8pfZ.png"" rel=""nofollow noreferrer""><img src=""https://i.stack.imgur.com/l8pfZ.png"" alt=""Screenshot1"" /></a></p>
+<p>Now, here's my observable code</p>
+<pre><code>private void start(){
+        reactiveDataSource.getObservableList().subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(new Observer&lt;String&gt;() {
+            @Override
+            public void onSubscribe(Disposable d) {
+                Log.e(TAG, &quot;subscribed in observable list&quot;);
+                
+            }
+            
+            @Override
+            public void onNext(String item) {
+                Log.e(TAG, &quot;in observable list -&gt;&quot; + item);
+                if(item == &quot;D&quot;){
+                    Toast.makeText(getApplicationContext(), Thread.currentThread().toString(), Toast.LENGTH_SHORT).show();
+                } else {
+                    if(item == &quot;E&quot;){
+                        Toast.makeText(getApplicationContext(), &quot;E&quot;, Toast.LENGTH_SHORT).show();
+                    } else {
+                        if(item == &quot;F&quot;){
+                            Toast.makeText(getApplicationContext(), &quot;F&quot;, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+                
+            }
+            
+            @Override
+            public void onError(Throwable e) {
+                Log.e(TAG, &quot;error in observable list &quot; + e.getMessage());
+                Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                
+            }
+            
+            @Override
+            public void onComplete() {
+                Log.e(TAG, &quot;in observable list complete&quot;);
+                Toast.makeText(getApplicationContext(), &quot;Complete!!!&quot;, Toast.LENGTH_SHORT).show();
+                
+            }
+        });
+    }
+</code></pre>
+<p>ReactiveDataSource.java:</p>
+<pre><code>public Observable&lt;String&gt; getObservableList() {
+        List&lt;String&gt; createdList = new ArrayList&lt;&gt;();
+        createdList.add(&quot;D&quot;);
+        createdList.add(&quot;E&quot;);
+        createdList.add(&quot;F&quot;);
+        createdList.add(&quot;G&quot;);
+        return Observable.fromIterable(createdList);
+    }
+</code></pre>
+<p>I want to run my task inside <code>onNext()</code> method in the background thread. How do i achieve this?</p>
+<p>My Main UI thread still freezes during intensive tasks and <code>Thread.sleep(5000); </code> makes my MainUI freeze even if i placed this code on filter() operator of rxjava, trying to test and freeze my new thread.</p>
+<p>Is there something I'm doing wrong?</p>
+","9745182","","9745182","","2021-10-11 04:18:13","2021-10-11 09:32:18","RxJava Run A Task on another thread","<android><reactive-programming><rx-android><rx-java3>","1","1","","","","CC BY-SA 4.0"
+"69551311","1","","","2021-10-13 07:26:31","","1","23","<p>Any RxJava experts that can help me figure this one out?
+I have a function that returns a <code>Single&lt;ByteArray&gt;</code> based on some <code>position</code> parameter.
+Basically, I want to keep calling that function, until it returns an empty <code>ByteArray</code>.</p>
+<p>NOTE: The position parameter is supposed to indicate how many bytes where already read. E.g. first time it will be 0, next time it will be how many bytes where retrieved the first time, and so on.</p>
+<p>This is what I have now:</p>
+<pre><code>fun readBytes(position: Int) : Single&lt;ByteArray&gt;{ ... }
+
+
+fun readAllLogs() : Single&lt;LogEntry&gt; {
+
+    val oldPosition = AtomicInteger(0)
+    val position = AtomicInteger(0)
+    Observable.defer {
+        readBytes(position.get())
+    }.reduceWith({ LogEntry() }, { log, bytes -&gt; 
+        position.addAndGet(bytes.size)
+        log += bytes
+        log
+    }).repeatUntil { 
+
+        val canWeStop = position.get() == oldPosition.get()
+        oldPosition.set(position.get())
+        canWeStop
+
+    }.toObservable()
+}
+</code></pre>
+<p>For completeness, here's my LogEntry accumulator</p>
+<pre><code>data class LogEntry {
+    var data: ByteArray = byteArrayOf()
+        private set
+
+
+    operator fun plusAssign(bytes: ByteArray) {
+        data += bytes
+    }
+}
+</code></pre>
+<p><strong>Question 1:</strong>
+How can I exit this stream elegantly? E.g. not keeping track of separate variables outside the stream?</p>
+<p><strong>Question 2:</strong>
+Any optimizations I can make? I'm going from Single to Observable twice to be able to chain these operators. I'm sure that can be more efficient</p>
+","563904","","","","","2021-10-13 07:26:31","RxJava Reduce Single's until some dynamic condition is met","<android><kotlin><rx-java><rx-java3>","0","1","","","","CC BY-SA 4.0"
+"69781340","1","","","2021-10-30 19:09:08","","0","3","<p>I try to create an Observable from my location callback but i dont know how to realize setCancellable method.</p>
+<pre><code>fun getLastLocation():Observable&lt;Location&gt;{
+    return Observable.create { emitter -&gt;
+
+        if (ContextCompat.checkSelfPermission(
+                appContext,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            if (CheckLocationPremission(appContext)) {
+                if (isLocationEnabled(appContext)) {
+                     val listener = fusedLocationProviderClient.lastLocation.addOnCompleteListener { task -&gt;
+                        var location: Location? = task.result
+                        if (location == null) {
+                            NewLocationData()
+                        } else {
+                            Log.d(
+                                &quot;Debug:&quot;, &quot;Your Location:&quot; + location.longitude + &quot; &quot; + &quot;,&quot; +
+                                        &quot; Lat: &quot; + location.latitude + &quot;\n&quot; + getCityName(
+                                    location.latitude,
+                                    location.longitude
+                                )
+                            )
+                            emitter.onNext(location)
+                        }
+
+                    }
+                    emitter.setCancellable { listener.addOnCompleteListener { null }  }
+                } else {
+
+                }
+            } else {
+                ActivityResultContracts.RequestPermission()
+            }
+        }
+    emitter.onComplete()
+    }
+}
+</code></pre>
+<p>And i try get two calls which depends between themselfs but it does't work, i think problem  in setCancellable() method</p>
+<pre><code>fun getCurrentWeather(){
+    locationUtils.getLastLocation()
+        .flatMap {location -&gt;
+            return@flatMap getCurrentWeatherApi(location.longitude,location.latitude)
+        }
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe({ response -&gt; onCurrentResponse(response) }, { t -&gt; onFailure(t) })
+
+
+}
+</code></pre>
+<p>And my api method.</p>
+<pre><code>fun getCurrentWeatherApi(lat:Double,lon:Double): Observable&lt;CurrentWeatherResponse&gt; {
+    Log.d(TAG,&quot;gettingFromAPI&quot;)
+
+    return  apiHelper.getCurrentWeather(
+        lat,
+        lon,
+        API_KEY,
+        &quot;metric&quot;,
+        Locale.getDefault().displayLanguage)
+}
+</code></pre>
+","16197791","","","","","2021-10-30 19:09:08","Making an Observable from a location callback and try to get api call with location data","<callback><location><observable><retrofit2><rx-java3>","0","0","","","","CC BY-SA 4.0"

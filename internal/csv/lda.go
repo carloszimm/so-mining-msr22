@@ -17,11 +17,11 @@ import (
 
 var regex = regexp.MustCompile(`\[|\]`)
 
-func WriteTopicDist(wg *sync.WaitGroup, cfg config.Config, topics int, data [][]types.WordDist) {
+func WriteTopicDist(wg *sync.WaitGroup, cfg config.Config, basePath string, topics int,
+	data [][]types.WordDist) {
 	defer wg.Done()
 
-	baseFilePath := filepath.Join(config.LDA_RESULT_PATH,
-		cfg.FileName, cfg.Field, strconv.Itoa(topics),
+	baseFilePath := filepath.Join(basePath,
 		fmt.Sprintf("%s_%s_%d_%s", cfg.FileName, "topicdist", topics, cfg.Field))
 
 	var wGroup sync.WaitGroup
@@ -83,11 +83,11 @@ func writeComplete(baseFilePath string, cfg config.Config, topics int, data [][]
 	}
 }
 
-func WriteDocTopicDist(wg *sync.WaitGroup, cfg config.Config, topics int, posts []*types.Post, data [][]types.TopicDist) {
+func WriteDocTopicDist(wg *sync.WaitGroup, cfg config.Config, basePath string, topics int,
+	posts []*types.Post, data [][]types.TopicDist) {
 	defer wg.Done()
 
-	filePath := filepath.Join(config.LDA_RESULT_PATH,
-		cfg.FileName, cfg.Field, strconv.Itoa(topics),
+	filePath := filepath.Join(basePath,
 		fmt.Sprintf("%s_%s_%d_%s.csv", cfg.FileName, "doctopicdist", topics, cfg.Field))
 
 	file, err := os.Create(filePath)
@@ -110,9 +110,8 @@ func WriteDocTopicDist(wg *sync.WaitGroup, cfg config.Config, topics int, posts 
 	}
 }
 
-func WritePerplexities(cfg config.Config, perplexities []float64) {
-	filePath := filepath.Join(config.LDA_RESULT_PATH,
-		cfg.FileName, cfg.Field, "perplexity.csv")
+func WritePerplexities(cfg config.Config, basePath string, perplexities []float64) {
+	filePath := filepath.Join(basePath, "perplexity.csv")
 
 	file, err := os.Create(filePath)
 	util.CheckError(err)

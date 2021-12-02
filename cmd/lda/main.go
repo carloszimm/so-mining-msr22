@@ -4,6 +4,7 @@ import (
 	"log"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"sync"
 
 	config "github.com/carloszimm/stack-mining/configs"
@@ -12,6 +13,7 @@ import (
 	"github.com/carloszimm/stack-mining/internal/processing"
 	"github.com/carloszimm/stack-mining/internal/types"
 	"github.com/carloszimm/stack-mining/internal/util"
+	"github.com/golang-module/carbon/v2"
 )
 
 var configs []config.Config
@@ -33,8 +35,6 @@ func combineTitleBody(posts []*types.Post) {
 
 func main() {
 	var filesPath string
-	removeAllFolders := util.RemoveAllFolders(config.LDA_RESULT_PATH)
-	writeFolder := util.WriteFolder(config.LDA_RESULT_PATH)
 
 	for _, cfg := range configs {
 		filesPath = filepath.Join(config.CONSOLIDATED_SOURCES_PATH, cfg.FileName+".csv")
@@ -54,15 +54,23 @@ func main() {
 		corpus := <-out
 
 		log.Println("Preprocessing finished!")
-		log.Println("Total words:", util.CountWords(corpus))
+		totalWords := util.CountWords(corpus)
+		log.Println("Total words:", totalWords)
 
 		log.Println("Running LDA...")
 
 		if cfg.MinTopics > 0 {
-			//clean existing folders
-			removeAllFolders(filepath.Join(cfg.FileName, cfg.Field))
-
 			var perplexities []float64
+
+			basePath := filepath.Join(config.LDA_RESULT_PATH,
+				strings.ReplaceAll(carbon.Now().ToDateTimeString(), ":", "-"))
+
+			sum := types.Summary{
+				MinTopics:  cfg.MinTopics,
+				MaxTopics:  cfg.MaxTopics,
+				TotalWords: totalWords,
+				TotalDocs:  len(posts),
+				StartTime:  carbon.Now().ToDayDateTimeString()}
 
 			for i := cfg.MinTopics; i <= cfg.MaxTopics; i++ {
 				log.Println("Running for", i, "topics")
@@ -70,16 +78,22 @@ func main() {
 
 				perplexities = append(perplexities, perplexity)
 
-				//(re)create folders
-				writeFolder(filepath.Join(cfg.FileName, cfg.Field, strconv.Itoa(i)))
+				basePathWithTopic := filepath.Join(basePath, strconv.Itoa(i))
+				//create folder
+				util.WriteFolder(basePathWithTopic)
+
+				//write topic and doc x topic distribution
 				var wg sync.WaitGroup
 				wg.Add(2)
-				go csvUtils.WriteTopicDist(&wg, cfg, i, topicWordDist)
-				go csvUtils.WriteDocTopicDist(&wg, cfg, i, posts, docTopicDist)
+				go csvUtils.WriteTopicDist(&wg, cfg, basePathWithTopic, i, topicWordDist)
+				go csvUtils.WriteDocTopicDist(&wg, cfg, basePathWithTopic, i, posts, docTopicDist)
 				wg.Wait()
 			}
 
-			csvUtils.WritePerplexities(cfg, perplexities)
+			csvUtils.WritePerplexities(cfg, basePath, perplexities)
+
+			sum.EndTime = carbon.Now().ToDayDateTimeString()
+			types.WriteSummary(basePath, sum)
 		}
 
 		log.Println("LDA finished!")

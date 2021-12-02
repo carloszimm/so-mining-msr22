@@ -2,8 +2,28 @@ package types
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
 	"sort"
+
+	"github.com/carloszimm/stack-mining/internal/util"
 )
+
+type Summary struct {
+	StartTime  string
+	EndTime    string
+	MinTopics  int
+	MaxTopics  int
+	TotalDocs  int
+	TotalWords int
+}
+
+func WriteSummary(path string, sum Summary) {
+	template := "Start Time: %v\nEnd Time: %v\nTopics Range: %v-%v\nTotal of Documents: %v\nTotal of Words: %v\n"
+	text := fmt.Sprintf(template, sum.StartTime, sum.EndTime, sum.MinTopics, sum.MaxTopics, sum.TotalDocs, sum.TotalWords)
+	err := os.WriteFile(filepath.Join(path, "summary.txt"), []byte(text), 0644)
+	util.CheckError(err)
+}
 
 type TopicDist struct {
 	Topic       int

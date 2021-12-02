@@ -8,6 +8,7 @@ require (
 	github.com/dlclark/regexp2 v1.4.0
 	github.com/go-playground/validator/v10 v10.9.0
 	github.com/gocarina/gocsv v0.0.0-20210516172204-ca9e8a8ddea8
+	github.com/golang-module/carbon/v2 v2.0.1
 	github.com/james-bowman/nlp v0.0.0-20210511120306-26d441fa0ded
 	github.com/kljensen/snowball v0.6.0
 	github.com/montanaflynn/stats v0.6.6
@@ -29,3 +30,5 @@ require (
 	golang.org/x/text v0.3.6 // indirect
 	gonum.org/v1/gonum v0.9.3 // indirect
 )
+
+replace github.com/clipperhouse/jargon v1.0.7 => github.com/carloszimm/jargon v1.0.7

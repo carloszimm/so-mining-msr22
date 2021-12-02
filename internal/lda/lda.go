@@ -21,6 +21,8 @@ func LDA(topics int, corpus []string) ([][]types.TopicDist, [][]types.WordDist, 
 	vectoriser := nlp.NewCountVectoriser(stopWords...)
 	lda := nlp.NewLatentDirichletAllocation(topics)
 
+	lda.Alpha = 50 / float64(topics)
+
 	vectorisedData, err := vectoriser.FitTransform(corpus...)
 	util.CheckError(err)
 

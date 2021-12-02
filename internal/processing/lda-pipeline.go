@@ -16,7 +16,7 @@ import (
 var (
 	regularCharsReg      = regexp.MustCompile(`[^\p{Common}\p{Latin}]+`)
 	spacesReg            = regexp.MustCompile(`\s+`)
-	pointSymbolNumberReg = regexp.MustCompile(`[\._$\d\-]+`)
+	pointSymbolNumberReg = regexp.MustCompile(`[\._$\-@\d]+`)
 	puctReg              = regexp.MustCompile(`[\p{P}\p{S}\p{Z}]+`) //puctuation, symbol, separator
 )
 
@@ -72,7 +72,7 @@ func rmStrangeChars(in <-chan string) <-chan string {
 	go func() {
 		for text := range in {
 			// remove strange chars
-			out <- regularCharsReg.ReplaceAllString(text, " ")
+			out <- strings.ReplaceAll(regularCharsReg.ReplaceAllString(text, " "), "\uFFFD", " ")
 		}
 		close(out)
 	}()
@@ -101,6 +101,36 @@ func rmURLs(in <-chan string) <-chan string {
 	}()
 	return out
 }
+
+/*
+temporarily removed given problems with some mappings like:
+ -so -> shared-library
+ - if -> if-statement
+func applyJargon(in <-chan string) <-chan string {
+	out := make(chan string)
+	go func() {
+		for text := range in {
+			var newText strings.Builder
+
+			stream := jargon.TokenizeString(text).Filter(stackoverflow.Tags)
+			for stream.Scan() {
+				token := stream.Token()
+				if token.IsLemma() {
+					newText.WriteString(
+						strings.ReplaceAll(
+							strings.ReplaceAll(token.String(), "#", "sharp"), "+", "plus"))
+				} else {
+					newText.WriteString(token.String())
+				}
+			}
+			util.CheckError(stream.Err())
+
+			out <- strings.TrimSpace(newText.String())
+		}
+		close(out)
+	}()
+	return out
+} */
 
 func rmPointSymbolNumber(in <-chan string) <-chan string {
 	out := make(chan string)

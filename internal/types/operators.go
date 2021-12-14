@@ -12,11 +12,13 @@ import (
 	"github.com/dlclark/regexp2"
 )
 
+// type to store the only fields of interest (PostId and Body)
 type PostMsg struct {
 	PostId int
 	Body   string
 }
 
+// type to store the post id and some operator counting
 type CountMsg struct {
 	PostId int
 	OperatorCount
@@ -27,6 +29,7 @@ type OperatorCount struct {
 	Total    int
 }
 
+// type to hold operators' statistics (used only by the end of the process)
 type OperatorStats struct {
 	Sum    int
 	Mean   float64
@@ -36,6 +39,7 @@ type OperatorStats struct {
 	Median int
 }
 
+// type used to hold operators' names and generate workers per request
 type Operators struct {
 	Dist          string
 	operatorsList []string
@@ -49,6 +53,8 @@ func (ops *Operators) CreateWorkerOps() ([]chan PostMsg, chan CountMsg) {
 	inChannels := make([]chan PostMsg, len(ops.operatorsList))
 	outChannels := make([]chan CountMsg, len(ops.operatorsList))
 
+	// ranges through the operators list and creates a channel/worker for each operator
+	// stores output channels for futher merging and creation of a single channel
 	for i, op := range ops.operatorsList {
 		inChannel := make(chan PostMsg, 20)
 		inChannels[i] = inChannel
@@ -70,6 +76,7 @@ func createOpWorker(in <-chan PostMsg, opName string) chan CountMsg {
 	return out
 }
 
+// based on https://go.dev/blog/pipelines
 func mergeCountMsgs(cs ...chan CountMsg) chan CountMsg {
 	var wg sync.WaitGroup
 	out := make(chan CountMsg)
@@ -96,6 +103,7 @@ func mergeCountMsgs(cs ...chan CountMsg) chan CountMsg {
 	return out
 }
 
+// Dist is not used currently
 func CreateOperators(path string, dist string) Operators {
 	data, err := ioutil.ReadFile(filepath.Join(config.OPERATORS_PATH, path))
 	util.CheckError(err)
@@ -108,6 +116,8 @@ func CreateOperators(path string, dist string) Operators {
 	return ops
 }
 
+// (?<!\w) - negative look-behind to make sure the operator name isn't preceded by any character beside its own name
+// \s* - followed by zero or more spaces
 func createCounter(opName string) func(string) int {
 	re := regexp2.MustCompile(`\.?(?<!\w)`+opName+`\s*\(`, 0)
 	return func(s string) int {
@@ -115,6 +125,7 @@ func createCounter(opName string) func(string) int {
 	}
 }
 
+// sort operator count by operators' names
 func SortOperatorsCount(opCount []OperatorCount) {
 	sort.SliceStable(opCount, func(i, j int) bool {
 		return opCount[i].Operator < opCount[j].Operator
@@ -127,6 +138,7 @@ func CloseAllInOps(inOps []chan PostMsg) {
 	}
 }
 
+// returns a map containing operator name as key and an array of total counts as value
 func AggregateByOperator(result interface{}) map[string][]int {
 	opsCount := make(map[string][]int)
 	switch r := result.(type) {

@@ -31,6 +31,7 @@ func createMsgPosts(posts []*types.Post) <-chan types.PostMsg {
 	out := make(chan types.PostMsg)
 	go func() {
 		for _, val := range posts {
+			// transports only the posts' ids and bodies
 			out <- types.PostMsg{PostId: val.Id, Body: val.Body}
 		}
 		close(out)
@@ -60,6 +61,7 @@ func removeComments(in <-chan types.PostMsg) <-chan types.PostMsg {
 	out := make(chan types.PostMsg, 10)
 	go func() {
 		for postMsg := range in {
+			// loops through the matches, replacing them by space
 			for _, result := range util.Regexp2FindAllString(commentsReg, postMsg.Body) {
 				postMsg.Body = strings.Replace(postMsg.Body, result[1].String(), " ", 1)
 			}
@@ -75,7 +77,7 @@ func removeStrings(in <-chan types.PostMsg) <-chan types.PostMsg {
 	go func() {
 		for postMsg := range in {
 			results := util.Regexp2FindAllString(stringsReg, postMsg.Body)
-
+			// loops through the matches, replacing them by empty string
 			for _, result := range results {
 				postMsg.Body = strings.Replace(postMsg.Body, result[0].String(), "", 1)
 			}
@@ -87,6 +89,7 @@ func removeStrings(in <-chan types.PostMsg) <-chan types.PostMsg {
 	return out
 }
 
+// broadcast to operator counters(workers)
 func dispatchToOpsCounters(in <-chan types.PostMsg, inOps []chan types.PostMsg) {
 	go func() {
 		for postMsg := range in {
@@ -94,6 +97,7 @@ func dispatchToOpsCounters(in <-chan types.PostMsg, inOps []chan types.PostMsg) 
 				inOp <- postMsg
 			}
 		}
+		// closes all channels when done
 		types.CloseAllInOps(inOps)
 	}()
 }
@@ -106,6 +110,7 @@ func gatherResults(outOps chan types.CountMsg, totalMsgs int) <-chan map[int][]t
 			msg := <-outOps
 			result[msg.PostId] = append(result[msg.PostId], msg.OperatorCount)
 		}
+		// sort results by operators' names
 		for _, val := range result {
 			types.SortOperatorsCount(val)
 		}

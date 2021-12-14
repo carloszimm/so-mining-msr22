@@ -45,6 +45,9 @@ func main() {
 		}
 	}
 
+	// writes result folder if it doesn't exist
+	util.WriteFolder(config.CONSOLIDATED_SOURCES_PATH)
+
 	var wg sync.WaitGroup
 	if len(distPosts) > 0 {
 		wg.Add(1)

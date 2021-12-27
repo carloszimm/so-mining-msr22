@@ -7,7 +7,6 @@
 let tagNames = [
   ["rx-java", "rx-java2", "rx-java3"], //rxjava
   ["rxjs", "rxjs5", "rxjs6", "rxjs7"], //rxjs
-  ["rx-kotlin", "rx-kotlin2"], //rxkotlin
   ["rx-swift"] //rxswift
 ];
 
@@ -93,5 +92,4 @@ async function executeQuery(dist = 0) {
 
 executeQuery(0); //rxjava
 //executeQuery(1); //rxjs
-//executeQuery(2); //rxkotlin
-//executeQuery(3); //rxswift
+//executeQuery(2); //rxswift

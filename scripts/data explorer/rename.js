@@ -6,7 +6,6 @@ const dist = parseInt(process.argv[2]) || 0;
 let tagNames = [
 	["rx-java", "rx-java2", "rx-java3"], //rxjava
 	["rxjs", "rxjs5", "rxjs6", "rxjs7"], //rxjs
-	["rx-kotlin", "rx-kotlin2"], //rxkotlin
 	["rx-swift"] //rxswift
 ];
 
@@ -18,8 +17,6 @@ function getDistName() {
 		case 1:
 			return "rxjs";
 		case 2:
-			return "rxkotlin";
-		case 3:
 			return "rxswift";
 		default:
 			return "rxjava";
@@ -36,7 +33,7 @@ fs.rmdir(destFolder, { recursive: true, force: true }, err => {
 
 	fs.readdir(srcFolder, (err, files) => {
 		if (err) {
-			throw err;
+			console.error(err);
 			process.exit(1);
 		}
 		files.forEach(file => {
@@ -63,7 +60,7 @@ function rename(file, name) {
 		path.join(destFolder, name),
 		err => {
 			if (err) {
-				throw err;
+				console.error(err);
 				process.exit(1);
 			}
 		});

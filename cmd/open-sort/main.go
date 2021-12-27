@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"math/rand"
 	"path"
 	"time"
@@ -12,9 +13,10 @@ import (
 )
 
 const NUMBER_POSTS = 15
+const NUMBER_OF_TOPICS = "25"
 
 var (
-	DOCTOPICS_PATH = path.Join(config.LDA_RESULT_PATH, "2021-12-21 00-01-48", "25", "all_withAnswers_doctopicdist_25_Body.csv")
+	DOCTOPICS_PATH = path.Join(config.LDA_RESULT_PATH, "2021-12-21 00-01-48", NUMBER_OF_TOPICS, fmt.Sprintf("all_withAnswers_doctopicdist_%s_Body.csv", NUMBER_OF_TOPICS))
 	POSTS_PATH     = path.Join(config.CONSOLIDATED_SOURCES_PATH, "all_withAnswers.csv")
 )
 

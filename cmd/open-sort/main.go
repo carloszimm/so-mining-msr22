@@ -14,7 +14,7 @@ import (
 const NUMBER_POSTS = 15
 
 var (
-	DOCTOPICS_PATH = path.Join(config.LDA_RESULT_PATH, "all_withAnswers", "Body", "23", "all_withAnswers_doctopicdist_23_Body.csv")
+	DOCTOPICS_PATH = path.Join(config.LDA_RESULT_PATH, "2021-12-21 00-01-48", "25", "all_withAnswers_doctopicdist_25_Body.csv")
 	POSTS_PATH     = path.Join(config.CONSOLIDATED_SOURCES_PATH, "all_withAnswers.csv")
 )
 
@@ -42,7 +42,7 @@ func main() {
 			var randomPostIndex int
 			for {
 				randomPostIndex = getRandomPostIndex(len(shares[i]))
-				if shares[i][randomPostIndex].Proportion > 0.5 {
+				if shares[i][randomPostIndex].Proportion > 0.1 {
 					break
 				}
 			}
@@ -53,7 +53,7 @@ func main() {
 		}
 	}
 
-	util.WriteFolder(config.OPENSORT_RESULT_PATH)(".")
+	util.WriteFolder(config.OPENSORT_RESULT_PATH)
 
 	csvUtil.WriteOpenSort(
 		path.Join(config.OPENSORT_RESULT_PATH, "opensort.csv"), randomPosts)

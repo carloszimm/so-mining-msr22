@@ -118,8 +118,9 @@ func CreateOperators(path string, dist string) Operators {
 
 // (?<!\w) - negative look-behind to make sure the operator name isn't preceded by any character beside its own name
 // \s* - followed by zero or more spaces
+// { - for swift closures
 func createCounter(opName string) func(string) int {
-	re := regexp2.MustCompile(`\.?(?<!\w)`+opName+`\s*\(`, 0)
+	re := regexp2.MustCompile(opName+`|\.?(?<!\w)`+opName+`\s*(\(|{)`, 0)
 	return func(s string) int {
 		return len(util.Regexp2FindAllString(re, s))
 	}

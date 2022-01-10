@@ -47,7 +47,7 @@ func retriveTag(in <-chan types.PostMsg) <-chan types.PostMsg {
 			doc, err := goquery.NewDocumentFromReader(strings.NewReader(postMsg.Body))
 			util.CheckError(err)
 
-			// retrieve code, pre, blockquotes tags
+			// retrieve code tags
 			postMsg.Body = doc.Find("code").Text()
 
 			out <- postMsg

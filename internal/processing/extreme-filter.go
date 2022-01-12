@@ -37,8 +37,8 @@ func RmExtremes(corpus []string) {
 		}
 	}
 
-	unCommon := 20
-	common := len(corpus) / 2 //50% of documents
+	unCommon := 5                             //documents
+	common := int(0.9 * float64(len(corpus))) //90% of documents
 
 	for word, presences := range wordCount {
 		length := len(presences)

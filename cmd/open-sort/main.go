@@ -12,11 +12,14 @@ import (
 	"github.com/carloszimm/stack-mining/internal/util"
 )
 
-const NUMBER_POSTS = 15
-const NUMBER_OF_TOPICS = "31"
+const (
+	DATE             = "2022-01-12 02-21-28"
+	NUMBER_OF_TOPICS = "23"
+	NUMBER_POSTS     = 15
+)
 
 var (
-	DOCTOPICS_PATH = path.Join(config.LDA_RESULT_PATH, "2021-12-21 00-01-48", NUMBER_OF_TOPICS, fmt.Sprintf("all_withAnswers_doctopicdist_%s_Body.csv", NUMBER_OF_TOPICS))
+	DOCTOPICS_PATH = path.Join(config.LDA_RESULT_PATH, DATE, NUMBER_OF_TOPICS, fmt.Sprintf("all_withAnswers_doctopicdist_%s_Body.csv", NUMBER_OF_TOPICS))
 	POSTS_PATH     = path.Join(config.CONSOLIDATED_SOURCES_PATH, "all_withAnswers.csv")
 )
 

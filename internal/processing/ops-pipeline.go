@@ -76,11 +76,8 @@ func removeStrings(in <-chan types.PostMsg) <-chan types.PostMsg {
 	out := make(chan types.PostMsg)
 	go func() {
 		for postMsg := range in {
-			results := util.Regexp2FindAllString(stringsReg, postMsg.Body)
-			// loops through the matches, replacing them by empty string
-			for _, result := range results {
-				postMsg.Body = strings.Replace(postMsg.Body, result[0].String(), "", 1)
-			}
+			// replace strings by an empty one
+			postMsg.Body, _ = stringsReg.Replace(postMsg.Body, "", -1, -1)
 
 			out <- postMsg
 		}

@@ -9,6 +9,9 @@ import (
 	"github.com/dlclark/regexp2"
 )
 
+// comment pattern acquired from:
+// https://stackoverflow.com/questions/36725194/golang-regex-replace-excluding-quoted-strings
+
 var (
 	commentsReg = regexp2.MustCompile(
 		`((?:(?:^[ \t]*)?(?:/\*[^*]*\*+(?:[^/*][^*]*\*+)*/(?:[ \t]*\r?\n(?=[ \t]*(?:\r?\n|/\*|//)))?|//(?:[^\\]|\\(?:\r?\n)?)*?(?:\r?\n(?=[ \t]*(?:\r?\n|/\*|//))|(?=\r?\n))))+)|("[^"\\]*(?:\\[\S\s][^"\\]*)*"|'[^'\\]*(?:\\[\S\s][^'\\]*)*'|(?:\r?\n|[\S\s])[^/"'\\\s]*)`, 0)
@@ -24,7 +27,7 @@ func SetupOpsPipeline(posts []*types.Post, operators types.Operators) <-chan map
 	out = removeComments(out)
 	out = removeStrings(out)
 	dispatchToOpsCounters(out, inOps)
-	return gatherResults(outOps, len(posts)*len(operators.GetOperators()))
+	return gatherResults(outOps)
 }
 
 func createMsgPosts(posts []*types.Post) <-chan types.PostMsg {
@@ -61,10 +64,8 @@ func removeComments(in <-chan types.PostMsg) <-chan types.PostMsg {
 	out := make(chan types.PostMsg, 10)
 	go func() {
 		for postMsg := range in {
-			// loops through the matches, replacing them by space
-			for _, result := range util.Regexp2FindAllString(commentsReg, postMsg.Body) {
-				postMsg.Body = strings.Replace(postMsg.Body, result[1].String(), " ", 1)
-			}
+			// replaces comments by space
+			postMsg.Body, _ = commentsReg.Replace(postMsg.Body, "$2 ", -1, -1)
 			out <- postMsg
 		}
 		close(out)
@@ -76,7 +77,7 @@ func removeStrings(in <-chan types.PostMsg) <-chan types.PostMsg {
 	out := make(chan types.PostMsg)
 	go func() {
 		for postMsg := range in {
-			// replace strings by an empty one
+			// replaces strings by an empty one
 			postMsg.Body, _ = stringsReg.Replace(postMsg.Body, "", -1, -1)
 
 			out <- postMsg
@@ -99,12 +100,11 @@ func dispatchToOpsCounters(in <-chan types.PostMsg, inOps []chan types.PostMsg) 
 	}()
 }
 
-func gatherResults(outOps chan types.CountMsg, totalMsgs int) <-chan map[int][]types.OperatorCount {
+func gatherResults(outOps chan types.CountMsg) <-chan map[int][]types.OperatorCount {
 	out := make(chan map[int][]types.OperatorCount)
 	result := make(map[int][]types.OperatorCount)
 	go func() {
-		for i := 0; i < totalMsgs; i++ {
-			msg := <-outOps
+		for msg := range outOps {
 			result[msg.PostId] = append(result[msg.PostId], msg.OperatorCount)
 		}
 		// sort results by operators' names

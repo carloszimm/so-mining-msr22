@@ -2,17 +2,17 @@ package main
 
 import (
 	"io/ioutil"
+	"log"
 	"path/filepath"
 	"regexp"
 	"strings"
-	"sync"
 
 	config "github.com/carloszimm/stack-mining/configs"
 	csvUtils "github.com/carloszimm/stack-mining/internal/csv"
 	"github.com/carloszimm/stack-mining/internal/processing"
-	"github.com/carloszimm/stack-mining/internal/stats"
 	"github.com/carloszimm/stack-mining/internal/types"
 	"github.com/carloszimm/stack-mining/internal/util"
+	"github.com/iancoleman/orderedmap"
 )
 
 var sources []string
@@ -30,6 +30,7 @@ func init() {
 }
 
 func main() {
+	log.Println("Starting processing...")
 	operatorsFiles, err := ioutil.ReadDir(config.OPERATORS_PATH)
 	util.CheckError(err)
 
@@ -60,30 +61,15 @@ func main() {
 			}
 		}
 	}
+	log.Println("Processing finished!")
 }
 
-func generateResults(path string, result map[int][]types.OperatorCount) {
+func generateResults(path string, result *orderedmap.OrderedMap) {
 	// clean up old files
 	removeOldFiles(path)
 
-	opsCount := types.AggregateByOperator(result)
-	// statistics according to the operators
-	// opsCount is only used here
-	resultStats := stats.GenerateOpsStats(opsCount)
-
-	var wg sync.WaitGroup
-	wg.Add(2)
-	// writes the original result as JSON for future usage
-	go func() {
-		defer wg.Done()
-		util.WriteJSON(filepath.Join(config.OPERATORS_RESULT_PATH, path), result)
-	}()
-	// writes the statistics to CSV
-	go func() {
-		defer wg.Done()
-		csvUtils.WriteOpsSearchResult(filepath.Join(config.OPERATORS_RESULT_PATH, path), resultStats)
-	}()
-	wg.Wait()
+	// writes the result as JSON for future usage
+	util.WriteJSON(filepath.Join(config.OPERATORS_RESULT_PATH, path), result)
 }
 
 func removeOldFiles(path string) {

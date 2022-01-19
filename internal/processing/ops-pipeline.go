@@ -1,12 +1,15 @@
 package processing
 
 import (
+	"fmt"
+	"sort"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/carloszimm/stack-mining/internal/types"
 	"github.com/carloszimm/stack-mining/internal/util"
 	"github.com/dlclark/regexp2"
+	"github.com/iancoleman/orderedmap"
 )
 
 // comment pattern acquired from:
@@ -19,7 +22,7 @@ var (
 		`(["'`+"`"+`])(?:(?=(\\?))\2.)*?\1`, 0)
 )
 
-func SetupOpsPipeline(posts []*types.Post, operators types.Operators) <-chan map[int][]types.OperatorCount {
+func SetupOpsPipeline(posts []*types.Post, operators types.Operators) <-chan *orderedmap.OrderedMap {
 	inOps, outOps := operators.CreateWorkerOps()
 
 	out := createMsgPosts(posts)
@@ -100,16 +103,28 @@ func dispatchToOpsCounters(in <-chan types.PostMsg, inOps []chan types.PostMsg) 
 	}()
 }
 
-func gatherResults(outOps chan types.CountMsg) <-chan map[int][]types.OperatorCount {
-	out := make(chan map[int][]types.OperatorCount)
-	result := make(map[int][]types.OperatorCount)
+func gatherResults(outOps chan types.CountMsg) <-chan *orderedmap.OrderedMap {
+	out := make(chan *orderedmap.OrderedMap)
+	result := orderedmap.New()
 	go func() {
 		for msg := range outOps {
-			result[msg.PostId] = append(result[msg.PostId], msg.OperatorCount)
+			postId := fmt.Sprint(msg.PostId)
+			if _, ok := result.Get(postId); !ok {
+				// if doesn't exists yet, creat a new map
+				result.Set(postId, orderedmap.New())
+			}
+			mI, _ := result.Get(postId)
+			m := mI.(*orderedmap.OrderedMap)
+			m.Set(msg.OperatorCount.Operator, msg.OperatorCount.Total)
 		}
+		// sort result by post Id
+		result.SortKeys(sort.Strings)
 		// sort results by operators' names
-		for _, val := range result {
-			types.SortOperatorsCount(val)
+		keys := result.Keys()
+		for _, k := range keys {
+			valI, _ := result.Get(k)
+			val := valI.(*orderedmap.OrderedMap)
+			val.SortKeys(sort.Strings)
 		}
 		out <- result
 		close(out)

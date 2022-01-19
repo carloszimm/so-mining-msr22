@@ -2,13 +2,18 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
 	"path"
 	"sort"
+	"sync"
 
 	config "github.com/carloszimm/stack-mining/configs"
 	csvUtil "github.com/carloszimm/stack-mining/internal/csv"
 	"github.com/carloszimm/stack-mining/internal/types"
+	"github.com/carloszimm/stack-mining/internal/util"
 	"github.com/montanaflynn/stats"
+	"github.com/olekukonko/tablewriter"
 )
 
 const (
@@ -17,8 +22,9 @@ const (
 )
 
 var (
-	DOCTOPICS_PATH = path.Join(config.LDA_RESULT_PATH, DATE, NUMBER_OF_TOPICS, fmt.Sprintf("all_withAnswers_doctopicdist_%s_Body.csv", NUMBER_OF_TOPICS))
-	POSTS_PATH     = path.Join(config.CONSOLIDATED_SOURCES_PATH, "all_withAnswers.csv")
+	DOCTOPICS_PATH         = path.Join(config.LDA_RESULT_PATH, DATE, NUMBER_OF_TOPICS, fmt.Sprintf("all_withAnswers_doctopicdist_%s_Body.csv", NUMBER_OF_TOPICS))
+	POSTS_PATH             = path.Join(config.CONSOLIDATED_SOURCES_PATH, "all_withAnswers.csv")
+	RESULT_PROCESSING_PATH = path.Join("assets", "result-processing")
 )
 
 type topicTotal struct {
@@ -52,6 +58,54 @@ type difficulty struct {
 	medianTime            float64
 }
 
+func writeToTxt(path string, header []string, data [][]string) {
+	f, err := os.Create(path)
+	util.CheckError(err)
+	defer f.Close()
+
+	table := tablewriter.NewWriter(f)
+	table.SetHeader(header)
+
+	table.AppendBulk(data)
+
+	table.Render()
+}
+
+func writeBasicInfo(share []topicTotal) {
+	resultPath := path.Join(RESULT_PROCESSING_PATH, "topics_info.txt")
+	header := []string{"Topic", "Posts", "Percentage"}
+	var results [][]string
+	for _, t := range share {
+		results = append(results,
+			[]string{fmt.Sprint(t.topic), fmt.Sprint(t.total), fmt.Sprintf("%.1f", t.percentage)})
+	}
+	writeToTxt(resultPath, header, results)
+}
+
+func writePopularity(popularities []popularity) {
+	resultPath := path.Join(RESULT_PROCESSING_PATH, "popularity.txt")
+	header := []string{"Topic", "Avg. View", "Avg. Fav.", "Avg. Score"}
+	var results [][]string
+	for _, pop := range popularities {
+		results = append(results,
+			[]string{fmt.Sprint(pop.topic), fmt.Sprintf("%.1f", pop.avgView),
+				fmt.Sprintf("%.1f", pop.avgFavorite), fmt.Sprintf("%.1f", pop.avgScore)})
+	}
+	writeToTxt(resultPath, header, results)
+}
+
+func writeDifficulty(difficulties []difficulty) {
+	resultPath := path.Join(RESULT_PROCESSING_PATH, "difficulty.txt")
+	header := []string{"Topic", "Perc. No Acc. Answer", "Median Time(h)"}
+	var results [][]string
+	for _, diff := range difficulties {
+		results = append(results,
+			[]string{fmt.Sprint(diff.topic),
+				fmt.Sprintf("%.1f", diff.percentageNoAccAnswer), fmt.Sprintf("%.1f", diff.medianTime)})
+	}
+	writeToTxt(resultPath, header, results)
+}
+
 func basicInfo(shares map[int][]*types.DocTopic) {
 	share := make([]topicTotal, 0, len(shares))
 	totalDocs := 0
@@ -62,22 +116,25 @@ func basicInfo(shares map[int][]*types.DocTopic) {
 	}
 
 	for i := range share {
-		share[i].percentage = float64(share[i].total) / float64(totalDocs)
+		share[i].percentage = (float64(share[i].total) / float64(totalDocs)) * 100
 	}
 
 	sort.SliceStable(share, func(i, j int) bool {
 		return share[i].total > share[j].total
 	})
 
-	fmt.Println(share)
-	fmt.Println(totalDocs)
+	//fmt.Println(totalDocs)
+	writeBasicInfo(share)
 }
 
-func calculatePopularity(result chan []popularity, shares map[int][]*types.DocTopic, posts []*types.Post) {
+func calculatePopularity(shares map[int][]*types.DocTopic, posts []*types.Post) {
 	popRaw := make([]popularityRawData, 0, len(shares))
+
 	for t, docTopic := range shares {
 		popRawData := popularityRawData{topic: t}
+		// goes through the posts of that topic
 		for _, dT := range docTopic {
+			// retrieve info about post
 			post := types.SearchPost(posts, dT.PostId)
 			if post != nil && post.PostTypeId == 1 { //question post
 				popRawData.view = append(popRawData.view, post.ViewCount)
@@ -95,26 +152,28 @@ func calculatePopularity(result chan []popularity, shares map[int][]*types.DocTo
 		p.avgScore, _ = stats.Mean(stats.LoadRawData(raw.score))
 		popularities = append(popularities, p)
 	}
-
+	// sort slice descendingly
 	sort.SliceStable(popularities, func(i, j int) bool {
 		return popularities[i].avgView > popularities[j].avgView
 	})
 
-	//fmt.Println(popularities)
-	result <- popularities
+	writePopularity(popularities)
 }
 
-func calculateDifficulty(result chan []difficulty, shares map[int][]*types.DocTopic, posts []*types.Post) {
+func calculateDifficulty(shares map[int][]*types.DocTopic, posts []*types.Post) {
 	topicQuestions := make([]topicQuestion, 0, len(shares))
 
 	for t, docTopic := range shares {
 		tQ := topicQuestion{topic: t}
+		// goes through the posts of that topic
 		for _, dT := range docTopic {
+			// retrieve info about post
 			post := types.SearchPost(posts, dT.PostId)
 			if post != nil && post.PostTypeId == 1 { //question
 				tQ.questions = append(tQ.questions, post)
 			}
 		}
+		// stores the questions related to the current topic
 		topicQuestions = append(topicQuestions, tQ)
 	}
 
@@ -131,10 +190,11 @@ func calculateDifficulty(result chan []difficulty, shares map[int][]*types.DocTo
 			}
 		}
 
-		diff.percentageNoAccAnswer = float64(noAnswer) / float64(len(topicQ.questions))
+		diff.percentageNoAccAnswer = (float64(noAnswer) / float64(len(topicQ.questions)) * 100)
 
 		durations := make([]float64, 0, len(postWithAnswers))
 		for _, pAnswer := range postWithAnswers {
+			// retrieve info about accepted answer post
 			answer := types.SearchPost(posts, pAnswer.AcceptedAnswerId)
 			durations = append(durations, answer.CreationDate.Sub(pAnswer.CreationDate.Time).Hours())
 		}
@@ -143,18 +203,18 @@ func calculateDifficulty(result chan []difficulty, shares map[int][]*types.DocTo
 
 		difficulties = append(difficulties, diff)
 	}
-
+	// sort slice descendingly
 	sort.SliceStable(difficulties, func(i, j int) bool {
 		return difficulties[i].percentageNoAccAnswer > difficulties[j].percentageNoAccAnswer
 	})
 
-	//fmt.Println(difficulties)
-
-	result <- difficulties
+	writeDifficulty(difficulties)
 }
 
 func main() {
-	// loads docxtopic csv
+	log.Println("Starting Processing...")
+
+	// loads docXtopic csv
 	docTopics := csvUtil.ReadDocTopic(DOCTOPICS_PATH)
 	shares := types.GetTopicShare(docTopics)
 
@@ -163,17 +223,21 @@ func main() {
 	go csvUtil.ReadPostsCSV(POSTS_PATH, c)
 	posts := <-c
 
-	popularityChannel := make(chan []popularity)
-	difficultyChannel := make(chan []difficulty)
+	var wg sync.WaitGroup
+	wg.Add(3)
+	go func() {
+		defer wg.Done()
+		basicInfo(shares)
+	}()
+	go func() {
+		defer wg.Done()
+		calculatePopularity(shares, posts)
+	}()
+	go func() {
+		defer wg.Done()
+		calculateDifficulty(shares, posts)
+	}()
 
-	go calculatePopularity(popularityChannel, shares, posts)
-	go calculateDifficulty(difficultyChannel, shares, posts)
-
-	basicInfo(shares)
-
-	popularities := <-popularityChannel
-	difficulties := <-difficultyChannel
-
-	fmt.Println(popularities)
-	fmt.Println(difficulties)
+	wg.Wait()
+	log.Println("Processing Finished!")
 }

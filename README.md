@@ -1,12 +1,35 @@
 # Stack Mining
 Stack Overflow mining scripts used for the paper:
-> Mining the Usage of Reactive Programming API: A Mining Study on GitHub and Stack Overflow.
+> Mining the Usage of Reactive Programming APIs: A Mining Study on GitHub and Stack Overflow.
 
-## Requirements
+## Data
+Under the `/assets` folders, data either genereated by or collected for the scripts execution can be found. The table gives a brief description of each folder:
+
+| Folder   | Description         |
+| :------------- |:-------------|
+| data explorer | Contains posts collected from Stack Exchange Data Explorer |
+| extracted-posts | Includes JSON files having the posts related to the most relenvat topics (RQ3) |
+| lda-results | Contains the results of the last LDA execution |
+| operators-search | Includes the results for the operator search for Rx libraries |
+| operators | Includes JSON files consisting of Rx libraries' operators |
+| result-processing | Contains data presented in the Result section (RQ2) |
+
+The file `stopwords.txt` contains a list of stop words used during preprocessing.
+
+### LDA results
+The results for the last LDA (Latent Dirichlet Allocation) are available under `/assets/2022-01-12 02-21-28/`. As detailed in the paper, the execution with the following settings generated the most coherent results:
+| Parameter     | Value         |
+| :------------- |:-------------:|
+| Topic         | 23 |
+| HyperParameters | &alpha;=&eta;=0.01 |
+| Iterations | 1,000 |
+
+## Execution
+### Requirements
 Most of the scripts utilize Golang as the main language and they have be executed the following version:
 * Go version 1.17.5
 
-## Execution
+### Scripts
 The Go scripts are available under the `/cmd` folder
 ```go
 go run cmd/consolidate-sources/main.go

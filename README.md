@@ -25,9 +25,9 @@ The results for the last LDA (Latent Dirichlet Allocation) are available under `
 | Iterations | 1,000 |
 
 Each result is comprised of three CSV files following the bellow file name pattern:
-* [file name of the posts file]\_doctopicdist\_[#topics]\_[analyzed post field].csv
-* [file name of the posts file]\_topicdist\_[#topics]\_[analyzed post field].csv
-* [file name of the posts file]\_topicdist\_[#topics]\_[analyzed post field] - topwords.csv
+* [file name of the posts file]\_doctopicdist\_[#topics]\_[analyzed post field].csv - contains the posts' ids and their distribution of topics+proportion, including the dominant topic and its proportion in a separate column for easy retrieval;
+* [file name of the posts file]\_topicdist\_[#topics]\_[analyzed post field].csv - the topic distribution along with their words+proportion descendingly sorted by word proportion;
+* [file name of the posts file]\_topicdist\_[#topics]\_[analyzed post field] - topwords.csv - (extra) the same as the above one but presenting the topics only with their top words (set in [config](#configuration)) to facilitate the open card sorting technique.
 
 Where:
 * [file name of the posts file]: is a file under `assets/data explorer/consolidated sources` and set through [config](#configuration);
@@ -110,3 +110,31 @@ As detailed in the paper, these were the Stack Overflow tags used:
 * *rx-java*, *rx-java2*, *rx-java3* (RxJava)
 * *rxjs*, *rxjs5*, *rxjs6*, *rxjs7* (RxJS)
 * *rx-swift* (RxSwift)
+
+## Other Useful Information
+### Topic\# x Label Mapping
+| Topic #      | Label/Name    |
+| ------------ |:-------------|
+| 0 | Concurrency |
+| 1 | Stream Creation and Composition |
+| 2 | Typing and Correctness |
+| 3 | UI for Web-based Systems |
+| 4 | Input Validation |
+| 5 | Introductory Questions |
+| 6 | Testing and Debugging |
+| 7 | REST API Calls |
+| 8 | Android Development |
+| 9 | Data Access |
+| 10 | State Management and JavaScript |
+| 11 | Control Flow |
+| 12 | HTTP Handling |
+| 13 | Stream Manipulation |
+| 14 | Error Handling |
+| 15 | Stream Lifecycle |
+| 16 | Array Manipulation |
+| 17 | Web Development |
+| 18 | General Programming |
+| 19 | iOS Development |
+| 20 | Multicasting |
+| 21 | Timing |
+| 22 | Dependency Management  |

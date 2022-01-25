@@ -112,7 +112,7 @@ As detailed in the paper, these were the Stack Overflow tags used:
 * *rx-swift* (RxSwift)
 
 ## Other Useful Information
-### Topic\# x Label Mapping
+### Topic-Label Mapping
 | Topic #      | Label/Name    |
 | ------------ |:-------------|
 | 0 | Concurrency |

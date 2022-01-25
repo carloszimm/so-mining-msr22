@@ -39,39 +39,44 @@ Where:
 Most of the scripts utilize Golang as the main language and they have be executed the following version:
 * Go version 1.17.5
 
+Before execution of the Golang scripts, the following command must be issued in a terminal (inside the root of the project) to download the dependencies:
+```sh
+go mod tidy
+```
+
 ### Scripts
 The Go scripts are available under the `/cmd` folder
-```go
+```sh
 go run cmd/consolidate-sources/main.go
 ````
 :computer: Script to unify all the CSV acquired from [Stack Exchange Data Explorer](https://data.stackexchange.com/).
 
 :floppy_disk: After execution, the result is available at `assets/data explorer/consolidated sources/`.
-```go
+```sh
 go run cmd/extract-posts/main.go
 ```
 :computer: Script to extract post from a given topic.
 
 :floppy_disk: After execution, the result is available at `assets/extracted-posts`.
-```go
+```sh
 go run cmd/lda/main.go
 ```
 :computer: Script to execute the LDA algorithm.
 
 :floppy_disk: After execution, the result is available at `assets/lda-results`.
-```go
+```sh
 go run cmd/open-sort/main.go
 ```
 :computer: Script to generate random posts according to their topics and facilitate the open sort (topic labeling) execution.
 
 :floppy_disk: After execution, the result is available at `assets/opensort`.
-```go
+```sh
 go run cmd/operators-search/main.go
 ```
 :computer: Script to search for operators among the Stack Overflow posts.
 
 :floppy_disk: After execution, the result is available at `assets/operators-search`.
-```go
+```sh
 go run cmd/process-results/main.go
 ```
 :computer: Script to process results and generate info about the topics, the popularities and difficulties.
@@ -104,8 +109,19 @@ Possible requirements:
 * Node.js (tested with v14.17.5)
 
 We elaborated a tiny JS script to download the Stack Overflow posts (questions with and without accepted answers) related to the rx libraries from [Stack Exchange Data Explorer](https://data.stackexchange.com/) (SEDE).
-It's available at `/scripts/data explorer/data-explorer.js`. To execute it, one must: (1) be logged in SEDE, (2) place the script in the DevTools's **Console**, and
-(3) call `executeQuery` passing 0 (for RxJava), 1 (for RxJS), and 2 (for RxSwift) as a parameter. Moreover, there's a second script(`/scripts/data explorer/rename.js`) that can be used to move (and rename) the results to the their proper folder `/assets/data explorer/[rx library folder]`, so they can be further used by the `cmd/consolidate-sources/main.go` script. In order for this second JS script to work, one must place the results under `/scripts/data explorer/staging area` and call the script in a terminal (with node) and passing either 0 (for RxJava), 1 (for RxJS), and 2 (for RxSwift).
+It's available at `/scripts/data explorer/data-explorer.js`. To execute it, one must:
+1. Be logged in SEDE;
+2. Place the script in the DevTools's **Console**;
+3. Call `executeQuery` passing 0 (for RxJava), 1 (for RxJS), and 2 (for RxSwift) as a parameter.
+
+Moreover, there's a second script(`/scripts/data explorer/rename.js`) that can be used to move (and rename) the results to the their proper folder `/assets/data explorer/[rx library folder]`, so they can be further used by the `cmd/consolidate-sources/main.go` script. In order for this second JS script to work, one must place the results under `/scripts/data explorer/staging area` and call the script in a terminal (with node) and passing either 0 (for RxJava), 1 (for RxJS), and 2 (for RxSwift). For example:
+```sh
+node rename 0
+```
+Before execution of node.js script, one must execute the following terminal command within `/scripts/data explorer/`:
+```sh
+npm install
+```
 As detailed in the paper, these were the Stack Overflow tags used:
 * *rx-java*, *rx-java2*, *rx-java3* (RxJava)
 * *rxjs*, *rxjs5*, *rxjs6*, *rxjs7* (RxJS)

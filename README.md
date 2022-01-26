@@ -102,12 +102,12 @@ The LDA script require the setting of some configuration in a JSON(config.json) 
   }
 ```
 Where:
-* fileName(string): the name of the file with the posts(at `assets/data explorer/consolidated sources`);
-* field(string): the field to considered in LDA (either Title or Body);
-* combineTitleBody(boolean): set it to combine title and body and assign the result to the post's Body field (only applicable if `field` is set to `"Body"`);
-* minTopics(integer): the minimum quantity of posts to be generated;
-* maxTopics(integer): the maximum quantity of posts to be generated;
-* sampleWords(integer): the amount of sample *top* words to be included in an extra file with file name ending with ` - topwords`.
+* **fileName(string)**: the name of the file with the posts(at `assets/data explorer/consolidated sources`);
+* **field(string)**: the field to considered in LDA (either Title or Body);
+* **combineTitleBody(boolean)**: set it to combine title and body and assign the result to the post's Body field (only applicable if `field` is set to `"Body"`);
+* **minTopics(integer)**: the minimum quantity of posts to be generated;
+* **maxTopics(integer)**: the maximum quantity of posts to be generated;
+* **sampleWords(integer)**: the amount of sample *top* words to be included in an extra file with file name ending with ` - topwords`.
 
 #### Stack Exchange Data Explorer
 Possible requirements:

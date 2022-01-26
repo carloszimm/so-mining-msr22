@@ -25,9 +25,9 @@ The results for the last LDA (Latent Dirichlet Allocation) are available under `
 | Iterations | 1,000 |
 
 Each result is comprised of three CSV files following the bellow file name pattern:
-* _[file name of the posts file]_\_doctopicdist\__[#topics]_\__[analyzed post field]_.csv - contains the posts' ids and their distribution of topics+proportion, including the dominant topic and its proportion in a separate column for easy retrieval;
-* _[file name of the posts file]_\_topicdist\__[#topics]_\__[analyzed post field]_.csv - the topic distribution along with their words+proportion descendingly sorted by word proportion;
-* _[file name of the posts file]_\_topicdist\__[#topics]_\__[analyzed post field]_ - topwords.csv - (extra) the same as the above one but presenting the topics only with their top words (set in [config](#configuration)) to facilitate the open card sorting technique.
+* **_[file name of the posts file]_\_doctopicdist\__[#topics]_\__[analyzed post field]_.csv** - contains the posts' ids and their distribution of topics+proportion, including the dominant topic and its proportion in a separate column for easy retrieval;
+* **_[file name of the posts file]_\_topicdist\__[#topics]_\__[analyzed post field]_.csv** - the topic distribution along with their words+proportion descendingly sorted by word proportion;
+* **_[file name of the posts file]_\_topicdist\__[#topics]_\__[analyzed post field]_ - topwords.csv** - (extra) the same as the above one but presenting the topics only with their top words (set in [config](#configuration)) to facilitate the open card sorting technique.
 
 Where:
 * _[file name of the posts file]_: is a file under `assets/data explorer/consolidated sources` and set through [config](#configuration);

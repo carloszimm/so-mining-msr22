@@ -47,49 +47,49 @@ go mod tidy
 ### Scripts
 The Go scripts are available under the `/cmd` folder
 
-#### consolidate-sources
+##### consolidate-sources
 Script to unify all the CSV acquired from [Stack Exchange Data Explorer](https://data.stackexchange.com/).
 ```sh
 go run cmd/consolidate-sources/main.go
 ````
 &ensp;:floppy_disk: After execution, the result is available at `assets/data explorer/consolidated sources/`.
 
-#### extract-posts
+##### extract-posts
 Script to extract post from a given topic.
 ```sh
 go run cmd/extract-posts/main.go
 ```
 &ensp;:floppy_disk: After execution, the result is available at `assets/extracted-posts`.
 
-#### lda
+##### lda
 Script to execute the LDA algorithm.
 ```sh
 go run cmd/lda/main.go
 ``` 
 &ensp;:floppy_disk: After execution, the result is available at `assets/lda-results`.
 
-#### open-sort
+##### open-sort
 Script to generate random posts according to their topics and facilitate the open sort (topic labeling) execution.
 ```sh
 go run cmd/open-sort/main.go
 ```
 &ensp;:floppy_disk: After execution, the result is available at `assets/opensort`.
 
-#### operators-search
+##### operators-search
 Script to search for operators among the Stack Overflow posts.
 ```sh
 go run cmd/operators-search/main.go
 ```
 &ensp;:floppy_disk: After execution, the result is available at `assets/operators-search`.
 
-#### process-results
+##### process-results
 Script to process results and generate info about the topics, the popularities and difficulties.
 ```sh
 go run cmd/process-results/main.go
 ```
 &ensp;:floppy_disk: After execution, the result is available at `assets/result-processing`.
 
-### Configuration
+#### Configuration
 The LDA script require the setting of some configuration in a JSON(config.json) under `/configs` folder. This JSON is expecting a array of objects, each one representing a LDA execution. The objective must have the following structure (this is the object present by default in config.json):
 ```yaml
 {

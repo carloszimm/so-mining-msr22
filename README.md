@@ -25,19 +25,19 @@ The results for the last LDA (Latent Dirichlet Allocation) are available under `
 | Iterations | 1,000 |
 
 Each result is comprised of three CSV files following the bellow file name pattern:
-* [file name of the posts file]\_doctopicdist\_[#topics]\_[analyzed post field].csv - contains the posts' ids and their distribution of topics+proportion, including the dominant topic and its proportion in a separate column for easy retrieval;
-* [file name of the posts file]\_topicdist\_[#topics]\_[analyzed post field].csv - the topic distribution along with their words+proportion descendingly sorted by word proportion;
-* [file name of the posts file]\_topicdist\_[#topics]\_[analyzed post field] - topwords.csv - (extra) the same as the above one but presenting the topics only with their top words (set in [config](#configuration)) to facilitate the open card sorting technique.
+* _[file name of the posts file]_\_doctopicdist\__[#topics]_\__[analyzed post field]_.csv - contains the posts' ids and their distribution of topics+proportion, including the dominant topic and its proportion in a separate column for easy retrieval;
+* _[file name of the posts file]_\_topicdist\__[#topics]_\__[analyzed post field]_.csv - the topic distribution along with their words+proportion descendingly sorted by word proportion;
+* _[file name of the posts file]_\_topicdist\__[#topics]_\__[analyzed post field]_ - topwords.csv - (extra) the same as the above one but presenting the topics only with their top words (set in [config](#configuration)) to facilitate the open card sorting technique.
 
 Where:
-* [file name of the posts file]: is a file under `assets/data explorer/consolidated sources` and set through [config](#configuration);
-* [#topics]: number of topics for that specific execution;
-* [analyzed post field]: either Title or Body (see [Configuration](#configuration)).
+* _[file name of the posts file]_: is a file under `assets/data explorer/consolidated sources` and set through [config](#configuration);
+* _[#topics]_: number of topics for that specific execution;
+* _[analyzed post field]_: either Title or Body (see [Configuration](#configuration)).
 
 ## Execution
 ### Requirements
 Most of the scripts utilize Golang as the main language and they have be executed the following version:
-* Go version 1.17.5
+* Go v1.17.5
 
 Before execution of the Golang scripts, the following command must be issued in a terminal (inside the root of the project) to download the dependencies:
 ```sh
@@ -46,42 +46,48 @@ go mod tidy
 
 ### Scripts
 The Go scripts are available under the `/cmd` folder
+
+#### consolidate-sources
+Script to unify all the CSV acquired from [Stack Exchange Data Explorer](https://data.stackexchange.com/).
 ```sh
 go run cmd/consolidate-sources/main.go
 ````
-:computer: Script to unify all the CSV acquired from [Stack Exchange Data Explorer](https://data.stackexchange.com/).
+&ensp;:floppy_disk: After execution, the result is available at `assets/data explorer/consolidated sources/`.
 
-:floppy_disk: After execution, the result is available at `assets/data explorer/consolidated sources/`.
+#### extract-posts
+Script to extract post from a given topic.
 ```sh
 go run cmd/extract-posts/main.go
 ```
-:computer: Script to extract post from a given topic.
+&ensp;:floppy_disk: After execution, the result is available at `assets/extracted-posts`.
 
-:floppy_disk: After execution, the result is available at `assets/extracted-posts`.
+#### lda
+Script to execute the LDA algorithm.
 ```sh
 go run cmd/lda/main.go
-```
-:computer: Script to execute the LDA algorithm.
+``` 
+&ensp;:floppy_disk: After execution, the result is available at `assets/lda-results`.
 
-:floppy_disk: After execution, the result is available at `assets/lda-results`.
+#### open-sort
+Script to generate random posts according to their topics and facilitate the open sort (topic labeling) execution.
 ```sh
 go run cmd/open-sort/main.go
 ```
-:computer: Script to generate random posts according to their topics and facilitate the open sort (topic labeling) execution.
+&ensp;:floppy_disk: After execution, the result is available at `assets/opensort`.
 
-:floppy_disk: After execution, the result is available at `assets/opensort`.
+#### operators-search
+Script to search for operators among the Stack Overflow posts.
 ```sh
 go run cmd/operators-search/main.go
 ```
-:computer: Script to search for operators among the Stack Overflow posts.
+&ensp;:floppy_disk: After execution, the result is available at `assets/operators-search`.
 
-:floppy_disk: After execution, the result is available at `assets/operators-search`.
+#### process-results
+Script to process results and generate info about the topics, the popularities and difficulties.
 ```sh
 go run cmd/process-results/main.go
 ```
-:computer: Script to process results and generate info about the topics, the popularities and difficulties.
-
-:floppy_disk: After execution, the result is available at `assets/result-processing`.
+&ensp;:floppy_disk: After execution, the result is available at `assets/result-processing`.
 
 ### Configuration
 The LDA script require the setting of some configuration in a JSON(config.json) under `/configs` folder. This JSON is expecting a array of objects, each one representing a LDA execution. The objective must have the following structure (this is the object present by default in config.json):
@@ -128,6 +134,22 @@ As detailed in the paper, these were the Stack Overflow tags used:
 * *rx-swift* (RxSwift)
 
 ## Other Useful Information
+### Stack Overflow Removed Terms
+As defined in the preprocessing phase in the paper, some terms commonly found in the Stack Overflow posts were removed from the corpus. Those include:
+<blockquote>
+<code>differ</code>, <code>specif</code>, <code>deal</code>, <code>prefer</code>, <code>easili</code>, <code>easier</code>,
+<code>mind</code>, <code>current</code>, <code>solv</code>, <code>proper</code>, <code>modifi</code>, <code>explain</code>,
+<code>hope</code>, <code>help</code>, <code>wonder</code>, <code>altern</code>, <code>sens</code>, <code>entir</code>,
+<code>ps</code>, <code>solut</code>, <code>achiev</code>, <code>approach</code>, <code>answer</code>, <code>requir</code>,
+<code>lot</code>, <code>feel</code>, <code>pretti</code>, <code>easi</code>, <code>goal</code>, <code>think</code>,
+<code>complex</code>, <code>eleg</code>, <code>improv</code>, <code>look</code>, <code>complic</code>, <code>day</code>,
+<code>chang</code>, <code>issu</code>, <code>add</code>, <code>edit</code>, <code>remov</code>, <code>custom</code>,
+<code>suggest</code>, <code>comment</code>, <code>ad</code>, <code>refer</code>, <code>stackblitz</code>, <code>link</code>,
+<code>mention</code>, <code>detect</code>, <code>face</code>, <code>fix</code>, <code>attach</code>, <code>perfect</code>,
+<code>mark</code>, <code>reason</code>, <code>suppos</code>, <code>notic</code>, <code>snippet</code>, <code>demo</code>,
+<code>line</code>, <code>piec</code>, <code>appear</code>
+</blockquote>
+
 ### Topic-Label Mapping
 | Topic #      | Label/Name    |
 | ------------ |:-------------|

@@ -2,6 +2,10 @@
 Stack Overflow mining scripts used for the following paper during the 19th International Conference on Mining Software Repositories (MSR '22):
 > Mining the Usage of Reactive Programming APIs: A Mining Study on GitHub and Stack Overflow.
 
+Complementary scripts, also utilized during the paper production, are available in:
+* [GitHub Mining](https://github.com/carloszimm/gh-mining-msr22)
+* [Operators Scraping](https://github.com/carloszimm/rx-scraping-msr22)
+
 ## Data
 Under the folders in `/assets`, data either genereated by or collected for the scripts execution can be found. The table gives a brief description of each folder:
 
@@ -20,8 +24,8 @@ The file `stopwords.txt` contains a list of stop words used during preprocessing
 The results for the last LDA (Latent Dirichlet Allocation) are available under `/assets/2022-01-12 02-21-28/`. As detailed in the paper, the execution with the following settings generated the most coherent results:
 | Parameter     | Value         |
 | :------------- |:-------------:|
-| Topic         | 23 |
-| HyperParameters | &alpha;=&eta;=0.01 |
+| Topics         | 23 |
+| HyperParameters | &alpha;=&beta;=0.01 |
 | Iterations | 1,000 |
 
 Each result is comprised of three CSV files following the bellow file name pattern:
@@ -120,7 +124,7 @@ It's available at `/scripts/data explorer/data-explorer.js`. To execute it, one 
 2. Place the script in the DevTools's **Console**;
 3. Call `executeQuery` passing 0 (for RxJava), 1 (for RxJS), and 2 (for RxSwift) as a parameter.
 
-Moreover, there's a second script(`/scripts/data explorer/rename.js`) that can be used to move (and rename) the results to the their proper folder `/assets/data explorer/[rx library folder]`, so they can be further used by the `cmd/consolidate-sources/main.go` script. In order for this second JS script to work, one must place the results under `/scripts/data explorer/staging area` and call the script in a terminal (with node) and passing either 0 (for RxJava), 1 (for RxJS), and 2 (for RxSwift). For example:
+Moreover, there's a second script(`/scripts/data explorer/rename.js`) that can be used to move (and rename) the results to the their proper folder `/assets/data explorer/[rx library folder]`, so they can be further used by the Go [consolidate-sources](#consolidate-sources) script. In order for this second JS script to work, one must place the results under `/scripts/data explorer/staging area` and call the script in a terminal (with node) and passing either 0 (for RxJava), 1 (for RxJS), and 2 (for RxSwift). For example:
 ```sh
 node rename 0
 ```
@@ -176,3 +180,6 @@ As defined in the preprocessing phase in the paper, some terms commonly found in
 | 20 | Multicasting |
 | 21 | Timing |
 | 22 | Dependency Management  |
+
+### Tables and Figures
+Scripts used to produce some tables and figures present in the paper are located at the [GitHub Mining](https://github.com/carloszimm/gh-mining-msr22) repository. That was made to facilitate cross evaluation (GitHub + SO data) that some of those illustrations required.

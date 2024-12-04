@@ -56,42 +56,42 @@ Script to unify all the CSV acquired from [Stack Exchange Data Explorer](https:/
 ```sh
 go run cmd/consolidate-sources/main.go
 ````
-&ensp;:floppy_disk: After execution, the result is available at `assets/data explorer/consolidated sources/`.
+&ensp; :floppy_disk: After execution, the result is available at `assets/data explorer/consolidated sources/`.
 
 ##### extract-posts
 Script to extract post from a given topic.
 ```sh
 go run cmd/extract-posts/main.go
 ```
-&ensp;:floppy_disk: After execution, the result is available at `assets/extracted-posts`.
+&ensp; :floppy_disk: After execution, the result is available at `assets/extracted-posts`.
 
 ##### lda
 Script to execute the LDA algorithm.
 ```sh
 go run cmd/lda/main.go
 ``` 
-&ensp;:floppy_disk: After execution, the result is available at `assets/lda-results`.
+&ensp; :floppy_disk: After execution, the result is available at `assets/lda-results`.
 
 ##### open-sort
 Script to generate random posts according to their topics and facilitate the open sort (topic labeling) execution.
 ```sh
 go run cmd/open-sort/main.go
 ```
-&ensp;:floppy_disk: After execution, the result is available at `assets/opensort`.
+&ensp; :floppy_disk: After execution, the result is available at `assets/opensort`.
 
 ##### operators-search
 Script to search for operators among the Stack Overflow posts.
 ```sh
 go run cmd/operators-search/main.go
 ```
-&ensp;:floppy_disk: After execution, the result is available at `assets/operators-search`.
+&ensp; :floppy_disk: After execution, the result is available at `assets/operators-search`.
 
 ##### process-results
 Script to process results and generate info about the topics, the popularities and difficulties.
 ```sh
 go run cmd/process-results/main.go
 ```
-&ensp;:floppy_disk: After execution, the result is available at `assets/result-processing`.
+&ensp; :floppy_disk: After execution, the result is available at `assets/result-processing`.
 
 #### Configuration
 The LDA script require the setting of some configuration in a JSON(config.json) under `/configs` folder. This JSON is expecting a array of objects, each one representing a LDA execution. The objective must have the following structure (this is the object present by default in config.json):
